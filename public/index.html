@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Neoland Dungeon Idle - Un juego RPG Idle">
+<title>Neoland Dungeon Idle</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0e0e0e">
+<style>
+body {
+    background:#0e0e0e;
+    color:#ddd;
+    font-family: monospace;
+    padding:10px;
+    margin:0;
+    overflow-x:hidden;
+}
+h1,h2 { color:#ffa500; margin:5px 0; }
+.panel { border:1px solid #333; padding:8px; margin-bottom:8px; }
+button {
+    background:#222;
+    color:#fff;
+    border:1px solid #555;
+    padding:5px 8px;
+    margin:2px;
+    cursor:pointer;
+    font-size:14px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+button:hover { background:#444; }
+button:disabled { opacity:0.4; cursor:not-allowed; }
+.log { background:#000; height:180px; overflow-y:auto; padding:5px; font-size:13px; }
+.log .combat { color:#ff5555 }
+.log .loot { color:#55ff55 }
+.log .event { color:#55aaff }
+.log .death { color:#ff0000 }
+.log .rare { color:#c77dff }
+.log .xp { color:#55ffff }
+.stat { display:flex; justify-content:space-between; margin-bottom:2px; }
+.item { border-bottom:1px solid #333; padding:3px 0; font-size:14px; }
+.hidden { display:none }
+
+/* ==== MOBILE CSS ==== */
+@media (max-width:600px){
+    body { padding:5px; font-size:14px; }
+    .log { height:120px; font-size:12px; }
+    button { padding:4px 6px; font-size:12px; }
+    .stat { font-size:13px; }
+    .item { font-size:13px; }
+}
+</style>
+</head>
+<body>
+
+<h1>Neoland Dungeon Idle</h1>
+<button onclick="resetGame()">⚠️ Reset Juego</button>
+
+<div id="create" class="panel">
+    <h2>Crear personaje</h2>
+    <input id="nameInput" placeholder="Nombre del héroe">
+    <button onclick="createPlayer()">Comenzar</button>
+</div>
+
+<div id="game" class="hidden">
+
+<div class="panel">
+    <b>Jugador:</b> <span id="pName"></span><br>
+    <b>Vida:</b> <span id="hp"></span>/<span id="maxHp"></span><br>
+    <b>Nivel:</b> <span id="lvl"></span> |
+    <b>XP:</b> <span id="xp"></span><br>
+    <b>Mazmorra:</b> <span id="dungeon"></span> |
+    <b>Piso:</b> <span id="floor"></span> |
+    <b>Encuentro:</b> <span id="encounter"></span>
+</div>
+
+<div class="panel">
+    <h2>Stats</h2>
+    <div id="stats"></div>
+</div>
+
+<div class="panel">
+    <h2>Equipo equipado</h2>
+    <div id="equipped"></div>
+</div>
+
+<div class="panel">
+    <h2>Inventario</h2>
+    <div id="inventory"></div>
+    <b>Materiales:</b> <span id="materials"></span>
+</div>
+
+<div id="revivePanel" class="panel hidden">
+    <button onclick="revive()">💀 Has muerto, Revivir y continuar</button>
+</div>
+
+<div class="panel">
+    <h2>Exploración</h2>
+    Próximo encuentro en: <b><span id="timer">30</span>s</b>
+</div>
+
+<div class="panel">
+    <h2>Registro</h2>
+    <div id="log" class="log"></div>
+</div>
+
+<!-- POPUP INFO EQUIPO -->
+<div id="itemPopup" class="panel hidden">
+    <b id="popupName"></b><br>
+    <span id="popupDesc"></span><br>
+    <button onclick="closePopup()">Cerrar</button>
+</div>
+
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>

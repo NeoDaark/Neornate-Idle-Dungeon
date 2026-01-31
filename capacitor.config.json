@@ -1,0 +1,16 @@
+{
+  "appId": "com.neoland.dungeonidle",
+  "appName": "Neoland Dungeon Idle",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "minWebViewEngineVersion": 51
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

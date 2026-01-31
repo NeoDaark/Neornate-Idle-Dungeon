@@ -21,17 +21,24 @@ workflows:
         script: |
           cd ios/App
           pod install --repo-update
-      - name: Build iOS app
+      - name: Build iOS app for distribution
         script: |
           cd ios/App
-          xcodebuild build \
+          xcodebuild build-for-testing \
             -workspace App.xcworkspace \
             -scheme App \
-            -configuration Debug \
+            -configuration Release \
             -derivedDataPath build \
             -arch arm64 \
             -sdk iphoneos \
             CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
           cd ../..
+      - name: Create IPA
+        script: |
+          cd ios/App/build
+          mkdir -p Payload
+          cp -r Build/Products/Release-iphoneos/App.app Payload/
+          zip -r -q NeornateIdleDungeon.ipa Payload
+          cd ../../..
     artifacts:
-      - ios/App/build/Build/Products/Debug-iphoneos/App.app
+      - ios/App/build/NeornateIdleDungeon.ipa

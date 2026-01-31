@@ -10,7 +10,7 @@ const RARITIES = [
 ];
 const PREFIX = ["Oxidado","Antiguo","Bendito","Maldito"];
 const SUFFIX = ["del Titán","del Sabio","del Ladrón","del Vacío"];
-const EXPLORE_INTERVAL = 30;
+let EXPLORE_INTERVAL = 30;
 
 // Nombres temáticos para mazmorras
 const DUNGEON_NAMES = [

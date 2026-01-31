@@ -1,0 +1,35 @@
+{
+  "cli": {
+    "version": ">= 5.0.0"
+  },
+  "build": {
+    "preview": {
+      "ios": {
+        "resourceClass": "large"
+      }
+    },
+    "preview2": {
+      "ios": {
+        "resourceClass": "large"
+      }
+    },
+    "preview3": {
+      "ios": {
+        "resourceClass": "large"
+      }
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "large"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "serviceAccountKeyPath": "./fastlane/key.json",
+        "appleAppSpecificPassword": "@APPLE_APP_SPECIFIC_PASSWORD"
+      }
+    }
+  }
+}

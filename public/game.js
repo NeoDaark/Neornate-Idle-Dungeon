@@ -73,6 +73,7 @@ function render() {
     document.getElementById("maxHp").textContent = maxHp();
     document.getElementById("lvl").textContent = player.level;
     document.getElementById("xp").textContent = player.xp;
+    document.getElementById("xpNeeded").textContent = xpNeededToNextLevel();
     document.getElementById("dungeon").textContent = player.dungeon;
     document.getElementById("floor").textContent = player.floor;
     document.getElementById("encounter").textContent = player.encounter;
@@ -163,6 +164,30 @@ function getStatBreakdown(stat) {
         }
     }
     return {base, bonus, total: base + bonus};
+}
+
+/* ===================== LEVEL SYSTEM ===================== */
+function xpNeededForLevel(level) {
+    // Fórmula incremental suave: 50 * level^1.2
+    return Math.floor(50 * Math.pow(level, 1.2));
+}
+
+function xpNeededToNextLevel() {
+    return xpNeededForLevel(player.level);
+}
+
+function checkLevelUp() {
+    while(player.xp >= xpNeededToNextLevel()) {
+        player.xp -= xpNeededToNextLevel();
+        player.level++;
+        
+        // Bonus al subir de nivel: +1 a todos los stats
+        STATS.forEach(s => {
+            player.stats[s]++;
+        });
+        
+        log(`🎉 ¡NIVEL ${player.level}! Todos los stats +1`, "rare");
+    }
 }
 
 /* ===================== PLAYER CREATION ===================== */
@@ -282,6 +307,7 @@ function explore() {
             player.completedDungeons = player.dungeon;
             player.dungeon++;
             player.floor = 1;
+            player.hp = maxHp(); // Recuperar toda la vida al completar la mazmorra
             
             // Inicializar nuevo registro para la nueva mazmorra
             currentDungeonLog = [];
@@ -289,6 +315,8 @@ function explore() {
             dungeonNames[player.dungeon] = newDungeonName;
             localStorage.setItem("dungeonNames", JSON.stringify(dungeonNames));
             
+            log(`🏆 ¡MAZMORRA COMPLETADA!`, "rare");
+            log(`❤️ Vida completamente restaurada`, "loot");
             log(`🔓 Nueva mazmorra desbloqueada`, "rare");
             log(`📍 ${newDungeonName}`, "rare");
             log(`⚔️ Piso 1 - Encuentro 1`, "event");
@@ -307,42 +335,65 @@ function explore() {
 
 /* ===================== COMBAT ===================== */
 function combat() {
+    // El enemigo escala principalmente con la mazmorra y piso, no con los stats del jugador
+    const baseEnemyPower = 10 + (player.dungeon * 5) + (player.floor * 2);
+    
     let enemy = {
         name: `Enemigo piso ${player.floor}`,
-        hp: maxHp() - random(0,5),
+        hp: baseEnemyPower * 2,
         stats: {}
     };
+    
+    // Stats del enemigo basados en power, no en los stats del jugador
     STATS.forEach(s => {
-        enemy.stats[s] = Math.max(1, Math.floor(statTotal(s)*0.9));
+        enemy.stats[s] = Math.max(1, Math.floor(baseEnemyPower * 0.8));
     });
 
     log(`⚔️ ¡Encuentras a ${enemy.name}!`, "event");
 
-    let playerDmg = Math.max(1, statTotal("Fuerza") + (player.equipment.arma?.stats.Fuerza || 0) - random(0,2));
-    let enemyDmg = Math.max(1, enemy.stats.Fuerza - random(0,2));
-
-    enemy.hp -= playerDmg;
-    player.hp -= enemyDmg;
-
-    log(`💚 ¡Infliges ${playerDmg} daño!`, "loot");
-    log(`❤️ Recibes ${enemyDmg} daño`, "combat");
-
-    if(player.hp <= 0) {
-        death();
-    }
-    else if(enemy.hp <= 0){
-        let expGained = (player.dungeon * 5) + random(5, 15);
-        player.xp += expGained;
+    // Combate de múltiples rondas hasta que alguien muera
+    let round = 0;
+    while(player.hp > 0 && enemy.hp > 0 && round < 100) {
+        round++;
         
-        // Mensajes claros de victoria
-        log(`✅ ¡VICTORIA! Derrotas a ${enemy.name}`, "success");
-        log(`⭐ +${expGained} XP`, "xp");
+        let playerDmg = Math.max(2, Math.floor(statTotal("Fuerza") * 1.2 + (player.equipment.arma?.stats.Fuerza || 0) - random(0,2)));
+        let enemyDmg = Math.max(1, Math.floor(enemy.stats.Fuerza * 0.5 - random(0,2)));
+
+        enemy.hp -= playerDmg;
+        player.hp -= enemyDmg;
+
+        log(`💚 ¡Infliges ${playerDmg} daño!`, "loot");
+        log(`❤️ Recibes ${enemyDmg} daño`, "combat");
+
+        if(player.hp <= 0) {
+            death();
+            return;
+        }
         
-        // Probabilidad de loot
-        if(random(1,100) > 60) {
-            lootEvent();
-        } else {
-            log(`No hay botín esta vez...`, "info");
+        if(enemy.hp <= 0) {
+            let expGained = (player.dungeon * 5) + random(5, 15);
+            player.xp += expGained;
+            
+            // Recuperar 30% de la vida máxima después de cada victoria
+            const hpRecovered = Math.floor(maxHp() * 0.3);
+            player.hp = Math.min(maxHp(), player.hp + hpRecovered);
+            
+            // Mensajes claros de victoria
+            log(`✅ ¡VICTORIA! Derrotas a ${enemy.name}`, "success");
+            log(`⭐ +${expGained} XP`, "xp");
+            log(`💚 +${hpRecovered} Vida`, "loot");
+            
+            // Verificar subida de nivel
+            checkLevelUp();
+            
+            // Probabilidad de loot
+            if(random(1,100) > 60) {
+                lootEvent();
+            } else {
+                log(`No hay botín esta vez...`, "info");
+            }
+            render(); save();
+            return;
         }
     }
     
@@ -389,9 +440,23 @@ function toggleEquip(idx) {
 function dismantle(idx) {
     const item = player.inventory[idx];
     if(player.equipment[item.slot]?.id === item.id) return;
-    player.inventory.splice(idx,1);
-    player.materials++;
-    save(); render();
+    
+    // Recuperar 3/4 de los materiales usados para mejorar
+    // Cada mejora cuesta 4 materiales, así que cada mejora devuelve 3
+    const materialsRecovered = Math.floor((item.upgrade || 0) * 3);
+    player.materials += materialsRecovered;
+    
+    // Contar como 1 material por desmantelar el objeto base
+    player.materials += 1;
+    
+    if(materialsRecovered > 0) {
+        log(`♻️ Desmantelado: +${materialsRecovered + 1} materiales (incluye ${materialsRecovered} de ${item.upgrade * 4} usados)`, "loot");
+    } else {
+        log(`♻️ Desmantelado: +1 material`, "loot");
+    }
+    
+    player.inventory.splice(idx, 1);
+    save(); render(); renderLog();
 }
 
 /* ===================== MEJORAR EQUIPO ===================== */

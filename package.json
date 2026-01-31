@@ -11,15 +11,21 @@
     "sync": "capacitor sync",
     "open:android": "capacitor open android"
   },
-  "keywords": ["game", "idle", "rpg", "android"],
+  "keywords": [
+    "game",
+    "idle",
+    "rpg",
+    "android"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
   },
   "devDependencies": {
-    "@capacitor/core": "^5.0.0",
+    "@capacitor/android": "^5.0.0",
     "@capacitor/cli": "^5.0.0",
-    "@capacitor/android": "^5.0.0"
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/ios": "^5.7.8"
   }
 }

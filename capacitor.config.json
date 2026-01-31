@@ -8,6 +8,9 @@
   "android": {
     "minWebViewEngineVersion": 51
   },
+  "ios": {
+    "contentInset": "automatic"
+  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0

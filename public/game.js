@@ -212,21 +212,22 @@ function start() {
     // Detener cualquier intervalo anterior
     if(gameInterval) clearInterval(gameInterval);
     
-    // Cargar o inicializar el registro de la mazmorra actual
-    const dungeonLogKey = `dungeonLog_${player.dungeon}`;
-    const savedLog = localStorage.getItem(dungeonLogKey);
-    if(savedLog) {
-        currentDungeonLog = JSON.parse(savedLog);
-        renderLog(); // Renderizar el registro cargado
-    } else {
-        // Primera vez en esta mazmorra
-        currentDungeonLog = [];
-        const dungeonName = dungeonNames[player.dungeon] || generateDungeonName(player.dungeon);
-        dungeonNames[player.dungeon] = dungeonName;
-        localStorage.setItem("dungeonNames", JSON.stringify(dungeonNames));
-        log(`📍 ${dungeonName}`, "rare");
-        log(`⚔️ Piso ${player.floor} - Encuentro ${player.encounter}`, "event");
+    // Limpiar todos los logs de mazmorras guardados
+    const keysToDelete = [];
+    for(let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if(key && key.startsWith("dungeonLog_")) {
+            keysToDelete.push(key);
+        }
     }
+    keysToDelete.forEach(key => localStorage.removeItem(key));
+    
+    // Inicializar el registro de la mazmorra actual como vacío
+    currentDungeonLog = [];
+    const dungeonName = dungeonNames[player.dungeon] || generateDungeonName(player.dungeon);
+    dungeonNames[player.dungeon] = dungeonName;
+    localStorage.setItem("dungeonNames", JSON.stringify(dungeonNames));
+    log(dungeonName, "rare");
 
     if(player.lastTick){
         const elapsed = Math.floor((Date.now() - player.lastTick)/1000);

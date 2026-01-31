@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Neoland Dungeon Idle - Un juego RPG Idle">
-<title>Neoland Dungeon Idle</title>
+<meta name="description" content="Neornate - Idle Dungeon">
+<title>Neornate - Idle Dungeon</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0e0e0e">
 <style>
@@ -38,9 +38,73 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
 .log .death { color:#ff0000 }
 .log .rare { color:#c77dff }
 .log .xp { color:#55ffff }
-.stat { display:flex; justify-content:space-between; margin-bottom:2px; }
+.log .success { color:#00ff00; font-weight:bold; }
+.log .info { color:#aaaaaa }
+.stat { 
+    display:flex; 
+    justify-content:flex-start;
+    margin-bottom:2px; 
+    font-family: monospace;
+    align-items:center;
+}
+.stat-name {
+    width:60px;
+    text-align:left;
+}
+.stat-values {
+    text-align:right;
+    min-width:120px;
+    font-family: monospace;
+}
+.stat-base {
+    color:#999;
+    font-size:12px;
+}
 .item { border-bottom:1px solid #333; padding:3px 0; font-size:14px; }
 .hidden { display:none }
+
+/* ==== EQUIPO TABS ==== */
+.equipTab {
+    background:#1a1a1a;
+    color:#aaa;
+    border:1px solid #444;
+    padding:6px 10px;
+    margin-right:5px;
+    margin-bottom:8px;
+    cursor:pointer;
+    font-size:12px;
+    border-radius: 3px;
+    transition: all 0.2s;
+}
+.equipTab:hover {
+    background:#2a2a2a;
+    color:#fff;
+}
+.equipTab.active {
+    background:#ffa500;
+    color:#000;
+    border-color:#ffa500;
+}
+
+.equipped-in-tab {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    align-items:center;
+}
+
+.equipped-in-tab button {
+    flex-shrink:0;
+}
+
+/* ==== POPUP STYLES ==== */
+#itemPopup {
+    display:none;
+}
+
+#itemPopup.visible {
+    display:flex;
+}
 
 /* ==== MOBILE CSS ==== */
 @media (max-width:600px){
@@ -49,13 +113,29 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
     button { padding:4px 6px; font-size:12px; }
     .stat { font-size:13px; }
     .item { font-size:13px; }
+    
+    .equipTab {
+        padding:4px 6px;
+        margin-right:3px;
+        margin-bottom:5px;
+        font-size:11px;
+    }
+    
+    .equipped-in-tab {
+        flex-direction:column;
+        align-items:flex-start;
+    }
+    
+    .equipped-in-tab button {
+        margin-top:3px;
+        font-size:11px;
+    }
 }
 </style>
 </head>
 <body>
 
-<h1>Neoland Dungeon Idle</h1>
-<button onclick="resetGame()">⚠️ Reset Juego</button>
+<h1>Neornate - Idle Dungeon</h1>
 
 <div id="create" class="panel">
     <h2>Crear personaje</h2>
@@ -81,18 +161,16 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
 </div>
 
 <div class="panel">
-    <h2>Equipo equipado</h2>
-    <div id="equipped"></div>
-</div>
-
-<div class="panel">
-    <h2>Inventario</h2>
-    <div id="inventory"></div>
+    <h2>⚔️ Equipo</h2>
+    <div id="equipTabs" style="margin-bottom:10px;"></div>
+    <div id="inventoryBySlot"></div>
+    
     <b>Materiales:</b> <span id="materials"></span>
 </div>
 
 <div id="revivePanel" class="panel hidden">
-    <button onclick="revive()">💀 Has muerto, Revivir y continuar</button>
+    <h3>💀 Has muerto</h3>
+    <div id="dungeonSelector"></div>
 </div>
 
 <div class="panel">
@@ -106,10 +184,37 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
 </div>
 
 <!-- POPUP INFO EQUIPO -->
-<div id="itemPopup" class="panel hidden">
-    <b id="popupName"></b><br>
-    <span id="popupDesc"></span><br>
-    <button onclick="closePopup()">Cerrar</button>
+<div id="itemPopup" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:1000; padding:10px;">
+    <div class="panel" style="max-width:500px; max-height:90vh; overflow-y:auto; margin:auto; background:#1a1a1a; border:2px solid #ffa500;">
+        <b id="popupName" style="font-size:16px; color:#ffa500;"></b><br>
+        <hr style="border:none; border-top:1px solid #333; margin:8px 0;">
+        <span id="popupDesc"></span><br>
+        <button onclick="closePopup()" style="margin-top:10px; width:100%;">Cerrar</button>
+    </div>
+</div>
+
+<!-- POPUP CONFIRMACIÓN RESET -->
+<div id="resetConfirmPopup" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:1001; padding:10px; display:none;">
+    <div class="panel" style="max-width:400px; margin:auto; background:#1a1a1a; border:2px solid #ff5555;">
+        <b style="font-size:16px; color:#ff5555;">⚠️ Confirmar Reset</b><br>
+        <hr style="border:none; border-top:1px solid #333; margin:12px 0;">
+        <p style="color:#aaa; margin:0 0 12px 0;">Esto eliminará TODO tu progreso. No se puede deshacer.</p>
+        <div style="display:flex; gap:8px; justify-content:flex-end;">
+            <button onclick="cancelReset()" style="background:#333; color:#aaa;">Cancelar</button>
+            <button onclick="confirmReset()" style="background:#ff5555; color:#fff; font-weight:bold;">Confirmar Reset</button>
+        </div>
+    </div>
+</div>
+
+<!-- CONSOLA MODERNA -->
+<div id="customConsole" style="position:fixed; bottom:0; left:0; right:0; background:linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%); border-top:1px solid #333; max-height:200px; z-index:999; display:none; flex-direction:column; box-shadow: 0 -4px 12px rgba(0,0,0,0.8);">
+    <div id="consoleOutput" style="flex:1; overflow-y:auto; padding:12px; font-family:monospace; font-size:12px; color:#bbb;">
+    </div>
+    <div style="padding:10px; border-top:1px solid #333; display:flex; gap:8px; align-items:center;">
+        <span style="color:#666; font-size:11px;">></span>
+        <input id="consoleInput" type="text" placeholder="Comando..." style="flex:1; background:#0a0a0a; color:#fff; border:none; padding:6px 10px; font-family:monospace; font-size:12px; border-radius:2px; outline:none;" onkeypress="handleConsoleInput(event)">
+        <span style="color:#666; font-size:10px;">F1 para cerrar</span>
+    </div>
 </div>
 
 </div>

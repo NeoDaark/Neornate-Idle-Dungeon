@@ -424,29 +424,35 @@ function compareItems(idx) {
     comparison += `<div style="display:flex; gap:20px; margin-bottom:10px;">`;
     comparison += `<div style="flex:1;">`;
     comparison += `<b style="color:#55ff55;">📈 Equipado:</b><br>`;
-    comparison += `${equipped.name}<br>`;
-    comparison += `<small>+${equipped.upgrade}</small>`;
+    comparison += `${equipped.name}`;
     comparison += `</div>`;
     
     comparison += `<div style="flex:1;">`;
     comparison += `<b style="color:#55aaff;">🆚 Candidato:</b><br>`;
-    comparison += `${item.name}<br>`;
-    comparison += `<small>+${item.upgrade}</small>`;
+    comparison += `${item.name}`;
     comparison += `</div>`;
     comparison += `</div>`;
     comparison += `</div>`;
     
-    comparison += `<b>Estadísticas:</b><br>`;
+    comparison += `<b>Estadísticas (sin mejoras):</b><br>`;
     comparison += `<div style="font-size:12px; line-height:1.6;">`;
     STATS.forEach(s => {
-        const eqStat = (equipped.stats[s] || 0) + equipped.upgrade;
-        const itemStat = (item.stats[s] || 0) + item.upgrade;
+        const eqStat = equipped.stats[s] || 0;
+        const itemStat = item.stats[s] || 0;
         const diff = itemStat - eqStat;
         const symbol = diff > 0 ? "📈" : diff < 0 ? "📉" : "→";
         const color = diff > 0 ? "#55ff55" : diff < 0 ? "#ff5555" : "#aaa";
         comparison += `<div style="color:${color};">${s}: ${eqStat} ${symbol} ${itemStat} <b>(${diff > 0 ? '+' : ''}${diff})</b></div>`;
     });
     comparison += `</div>`;
+    
+    // Aviso sobre las mejoras del equipado
+    if(equipped.upgrade > 0) {
+        comparison += `<div style="border-top:1px solid #555; margin-top:10px; padding-top:10px; font-size:12px; color:#aaa;">`;
+        comparison += `<b style="color:#ff9900;">⚠️ Nota:</b> El objeto equipado está mejorado <b style="color:#ffa500;">+${equipped.upgrade}</b><br>`;
+        comparison += `Esto añade <b>+${equipped.upgrade}</b> a todos los stats.`;
+        comparison += `</div>`;
+    }
     
     document.getElementById("popupName").textContent = "Comparación de Equipo";
     document.getElementById("popupDesc").innerHTML = comparison;

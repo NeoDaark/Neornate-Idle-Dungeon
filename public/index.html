@@ -128,6 +128,88 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
     flex-shrink:0;
 }
 
+/* ==== NAVIGATION TABS ==== */
+.nav-bar {
+    display:flex;
+    gap:10px;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#1a1a1a;
+    border-top:1px solid #333;
+    z-index:100;
+    padding:8px;
+    justify-content:center;
+}
+
+.nav-bar.hidden {
+    display:none;
+}
+
+.nav-button {
+    background:#222;
+    color:#aaa;
+    border:1px solid #444;
+    padding:10px 15px;
+    cursor:pointer;
+    border-radius:4px;
+    font-size:12px;
+    transition:all 0.2s;
+    flex:1;
+    max-width:100px;
+    text-align:center;
+}
+
+.nav-button:hover {
+    background:#333;
+    color:#fff;
+    border-color:#555;
+}
+
+.nav-button.active {
+    background:#ffa500;
+    color:#000;
+    border-color:#ffa500;
+    font-weight:bold;
+}
+
+[data-tab] {
+    padding-bottom:80px;
+}
+
+[data-tab].hidden {
+    display:none;
+}
+
+.class-btn {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:15px 10px !important;
+    font-size:14px;
+    background:#1a1a1a !important;
+    border:2px solid #444 !important;
+    transition:all 0.3s;
+}
+
+.class-btn:hover {
+    background:#2a2a2a !important;
+    border-color:#666 !important;
+}
+
+.class-btn.active {
+    background:#ffa500 !important;
+    color:#000 !important;
+    border-color:#ffa500 !important;
+    font-weight:bold;
+}
+
+.class-btn.active span {
+    color:#000;
+}
+
 /* ==== POPUP STYLES ==== */
 #itemPopup {
     display:none;
@@ -166,52 +248,142 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
 </head>
 <body>
 
+<div id="loadingScreen" style="position:fixed; top:0; left:0; right:0; bottom:0; background:#0e0e0e; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; gap:20px;">
+    <h1 style="color:#ffa500; margin:0; font-size:32px;">Neornate</h1>
+    <div style="font-size:18px; color:#aaa;">Idle Dungeon</div>
+    <div style="width:200px; height:3px; background:#333; border-radius:2px; overflow:hidden;">
+        <div style="width:0%; height:100%; background:#ffa500; animation:loading 2s infinite;"></div>
+    </div>
+    <style>
+        @keyframes loading {
+            0% { width:0%; }
+            50% { width:100%; }
+            100% { width:0%; }
+        }
+    </style>
+</div>
+
 <h1>Neornate - Idle Dungeon</h1>
 
 <div id="create" class="panel">
     <h2>Crear personaje</h2>
-    <input id="nameInput" placeholder="Nombre del héroe">
-    <button onclick="createPlayer()">Comenzar</button>
+    <input id="nameInput" placeholder="Nombre del héroe" style="width:100%; padding:8px; margin-bottom:10px; background:#1a1a1a; color:#fff; border:1px solid #444; border-radius:4px;">
+    
+    <h3>Selecciona tu clase:</h3>
+    <div style="display:flex; gap:10px; margin-bottom:15px;">
+        <button onclick="selectClass('Warrior')" class="class-btn" data-class="Warrior" style="flex:1;">
+            ⚔️ Guerrero<br>
+            <span style="font-size:11px; color:#aaa;">Fuerza +2</span>
+        </button>
+        <button onclick="selectClass('Thief')" class="class-btn" data-class="Thief" style="flex:1;">
+            🗡️ Ladrón<br>
+            <span style="font-size:11px; color:#aaa;">Destreza +2</span>
+        </button>
+        <button onclick="selectClass('Mage')" class="class-btn" data-class="Mage" style="flex:1;">
+            🔮 Mago<br>
+            <span style="font-size:11px; color:#aaa;">Inteligencia +2</span>
+        </button>
+    </div>
+    
+    <span id="selectedClass" style="color:#aaa;">Selecciona una clase para comenzar</span>
+    <button id="startBtn" onclick="createPlayer()" disabled style="width:100%; margin-top:10px; padding:10px;">Comenzar</button>
 </div>
 
 <div id="game" class="hidden">
 
-<div class="panel">
-    <b>Jugador:</b> <span id="pName"></span><br>
-    <b>Vida:</b> <span id="hp"></span>/<span id="maxHp"></span><br>
-    <b>Nivel:</b> <span id="lvl"></span> |
-    <b>XP:</b> <span id="xp"></span> / <span id="xpNeeded"></span><br>
-    <b>Mazmorra:</b> <span id="dungeon"></span> |
-    <b>Piso:</b> <span id="floor"></span> |
-    <b>Encuentro:</b> <span id="encounter"></span>
+<!-- TAB: HOME -->
+<div data-tab="home" class="hidden">
+    <div class="panel">
+        <b>Jugador:</b> <span id="pName"></span><br>
+        <b>Vida:</b> <span id="hp"></span>/<span id="maxHp"></span><br>
+        <b>Nivel:</b> <span id="lvl"></span> |
+        <b>XP:</b> <span id="xp"></span> / <span id="xpNeeded"></span><br>
+        <b>Trabajo Actual:</b> <span id="currentJob"></span>
+    </div>
+
+    <div class="panel">
+        <h2>Stats</h2>
+        <div id="stats"></div>
+    </div>
+
+    <div id="revivePanel" class="panel hidden">
+        <h3>💀 Has muerto</h3>
+        <div id="dungeonSelector"></div>
+    </div>
 </div>
 
-<div class="panel">
-    <h2>Stats</h2>
-    <div id="stats"></div>
+<!-- TAB: EQUIPMENT -->
+<div data-tab="equipment" class="hidden">
+    <div class="panel">
+        <h2>⚔️ Equipo Equipado</h2>
+        <div id="equipment"></div>
+        <b>Materiales:</b> <span id="materials"></span>
+    </div>
+
+    <div class="panel">
+        <h2>� Inventario</h2>
+        <div id="inventory"></div>
+    </div>
 </div>
 
-<div class="panel">
-    <h2>⚔️ Equipo</h2>
-    <div id="equipTabs" style="margin-bottom:10px;"></div>
-    <div id="inventoryBySlot"></div>
-    
-    <b>Materiales:</b> <span id="materials"></span>
+<!-- TAB: GUILD -->
+<div data-tab="guild" class="hidden">
+    <div class="panel">
+        <h2>🏛️ Gremio</h2>
+        <p style="color:#aaa;">Sistema de Tiers - Próximamente</p>
+    </div>
 </div>
 
-<div id="revivePanel" class="panel hidden">
-    <h3>💀 Has muerto</h3>
-    <div id="dungeonSelector"></div>
+<!-- TAB: SHOP -->
+<div data-tab="shop" class="hidden">
+    <div class="panel">
+        <h2>🏪 Tienda</h2>
+        <p style="color:#aaa;">Sistema de Tienda - Próximamente</p>
+    </div>
 </div>
 
-<div class="panel">
-    <h2>Exploración</h2>
-    Próximo encuentro en: <b><span id="timer">30</span>s</b>
+<!-- TAB: JOBS -->
+<div data-tab="jobs" class="hidden">
+    <div class="panel">
+        <h2>💼 Trabajos</h2>
+        <p style="color:#aaa;">Sistema de Trabajos - Próximamente</p>
+    </div>
 </div>
 
-<div class="panel log-container">
-    <h2>Registro</h2>
-    <div id="log" class="log"></div>
+<!-- TAB: DUNGEONS -->
+<div data-tab="dungeons" class="hidden">
+    <div class="panel">
+        <h2>🗺️ Mazmorras</h2>
+        <p style="color:#aaa;">Mazmorras Desbloqueadas</p>
+        <div id="dungeonList"></div>
+    </div>
+</div>
+
+<!-- TAB: PREMIUM -->
+<div data-tab="premium" class="hidden">
+    <div class="panel">
+        <h2>👑 Premium</h2>
+        <p style="color:#aaa;">Sistema Premium - Próximamente</p>
+    </div>
+</div>
+<div data-tab="log" class="hidden">
+    <div class="panel log-container">
+        <h2>Registro</h2>
+        <div id="log" class="log"></div>
+    </div>
+</div>
+
+<!-- NAVIGATION BAR -->
+<div class="nav-bar hidden">
+    <button class="nav-button" data-nav="home">🏠 Inicio</button>
+    <button class="nav-button" data-nav="equipment">⚔️ Equipo</button>
+    <button class="nav-button" data-nav="guild">🏛️ Gremio</button>
+    <button class="nav-button" data-nav="shop">🏪 Tienda</button>
+    <button class="nav-button" data-nav="jobs">💼 Trabajos</button>
+    <button class="nav-button" data-nav="dungeons">🗺️ Mazmorras</button>
+    <button class="nav-button" data-nav="premium">👑 Premium</button>
+</div>
+
 </div>
 
 <!-- POPUP INFO EQUIPO -->
@@ -250,6 +422,6 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
 
 </div>
 
-<script src="game.js"></script>
+<script type="module" src="game-new.js"></script>
 </body>
 </html>

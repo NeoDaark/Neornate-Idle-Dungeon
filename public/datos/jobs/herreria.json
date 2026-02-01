@@ -1,0 +1,778 @@
+{
+  "id": "herreria",
+  "name": "🔨 Herrería",
+  "emoji": "🔨",
+  "type": "crafting",
+  "duration": 55,
+  "description": "Forja armas y equipo a partir de lingotes",
+  "requirements": {
+    "level": 1,
+    "inputs": [
+      {
+        "name": "lingote",
+        "quantity": 2
+      }
+    ]
+  },
+  "categories": {
+    "dagas": {
+      "name": "Dagas",
+      "emoji": "🗡️",
+      "lingotesRequired": 2,
+      "items": [
+        {
+          "name": "Daga de Cobre",
+          "level": 1,
+          "tier": "T1",
+          "inputLingote": "Cobre",
+          "xp": 20,
+          "value": 15
+        },
+        {
+          "name": "Daga de Carbón",
+          "level": 5,
+          "tier": "T1",
+          "inputLingote": "Carbón",
+          "xp": 25,
+          "value": 18
+        },
+        {
+          "name": "Daga de Hierro",
+          "level": 20,
+          "tier": "T2",
+          "inputLingote": "Hierro",
+          "xp": 50,
+          "value": 45
+        },
+        {
+          "name": "Daga de Plata",
+          "level": 25,
+          "tier": "T2",
+          "inputLingote": "Plata",
+          "xp": 60,
+          "value": 65
+        },
+        {
+          "name": "Daga de Tungsteno",
+          "level": 40,
+          "tier": "T3",
+          "inputLingote": "Tungsteno",
+          "xp": 85,
+          "value": 110
+        },
+        {
+          "name": "Daga de Oro",
+          "level": 50,
+          "tier": "T3",
+          "inputLingote": "Oro",
+          "xp": 100,
+          "value": 150
+        },
+        {
+          "name": "Daga de Platino",
+          "level": 60,
+          "tier": "T4",
+          "inputLingote": "Platino",
+          "xp": 150,
+          "value": 250
+        },
+        {
+          "name": "Daga de Obsidiana",
+          "level": 70,
+          "tier": "T4",
+          "inputLingote": "Obsidiana",
+          "xp": 170,
+          "value": 320
+        },
+        {
+          "name": "Daga de Cobalto",
+          "level": 80,
+          "tier": "T5",
+          "inputLingote": "Cobalto",
+          "xp": 220,
+          "value": 450
+        },
+        {
+          "name": "Daga de Mithril",
+          "level": 90,
+          "tier": "T5",
+          "inputLingote": "Mithril",
+          "xp": 260,
+          "value": 580
+        },
+        {
+          "name": "Daga de Oricalco",
+          "level": 100,
+          "tier": "T6",
+          "inputLingote": "Oricalco",
+          "xp": 320,
+          "value": 800
+        },
+        {
+          "name": "Daga de Adamantita",
+          "level": 110,
+          "tier": "T6",
+          "inputLingote": "Adamantita",
+          "xp": 360,
+          "value": 950
+        },
+        {
+          "name": "Daga de Titanio",
+          "level": 120,
+          "tier": "T7",
+          "inputLingote": "Titanio",
+          "xp": 480,
+          "value": 1400
+        },
+        {
+          "name": "Daga de Draconita",
+          "level": 150,
+          "tier": "T7",
+          "inputLingote": "Draconita",
+          "xp": 560,
+          "value": 1800
+        }
+      ]
+    },
+    "espadas1mano": {
+      "name": "Espadas 1 Mano",
+      "emoji": "⚔️",
+      "lingotesRequired": 4,
+      "items": [
+        {
+          "name": "Espada Corta de Cobre",
+          "level": 5,
+          "tier": "T1",
+          "inputLingote": "Cobre",
+          "xp": 40,
+          "value": 30
+        },
+        {
+          "name": "Espada Corta de Carbón",
+          "level": 10,
+          "tier": "T1",
+          "inputLingote": "Carbón",
+          "xp": 50,
+          "value": 40
+        },
+        {
+          "name": "Espada Corta de Hierro",
+          "level": 22,
+          "tier": "T2",
+          "inputLingote": "Hierro",
+          "xp": 85,
+          "value": 90
+        },
+        {
+          "name": "Espada Corta de Plata",
+          "level": 28,
+          "tier": "T2",
+          "inputLingote": "Plata",
+          "xp": 105,
+          "value": 135
+        },
+        {
+          "name": "Espada Corta de Tungsteno",
+          "level": 42,
+          "tier": "T3",
+          "inputLingote": "Tungsteno",
+          "xp": 150,
+          "value": 220
+        },
+        {
+          "name": "Espada Corta de Oro",
+          "level": 52,
+          "tier": "T3",
+          "inputLingote": "Oro",
+          "xp": 180,
+          "value": 300
+        },
+        {
+          "name": "Espada Corta de Platino",
+          "level": 62,
+          "tier": "T4",
+          "inputLingote": "Platino",
+          "xp": 270,
+          "value": 500
+        },
+        {
+          "name": "Espada Corta de Obsidiana",
+          "level": 72,
+          "tier": "T4",
+          "inputLingote": "Obsidiana",
+          "xp": 310,
+          "value": 650
+        },
+        {
+          "name": "Espada Corta de Cobalto",
+          "level": 82,
+          "tier": "T5",
+          "inputLingote": "Cobalto",
+          "xp": 400,
+          "value": 900
+        },
+        {
+          "name": "Espada Corta de Mithril",
+          "level": 92,
+          "tier": "T5",
+          "inputLingote": "Mithril",
+          "xp": 480,
+          "value": 1150
+        },
+        {
+          "name": "Espada Corta de Oricalco",
+          "level": 102,
+          "tier": "T6",
+          "inputLingote": "Oricalco",
+          "xp": 600,
+          "value": 1600
+        },
+        {
+          "name": "Espada Corta de Adamantita",
+          "level": 112,
+          "tier": "T6",
+          "inputLingote": "Adamantita",
+          "xp": 680,
+          "value": 1900
+        },
+        {
+          "name": "Espada Corta de Titanio",
+          "level": 125,
+          "tier": "T7",
+          "inputLingote": "Titanio",
+          "xp": 900,
+          "value": 2800
+        },
+        {
+          "name": "Espada Corta de Draconita",
+          "level": 160,
+          "tier": "T7",
+          "inputLingote": "Draconita",
+          "xp": 1050,
+          "value": 3600
+        }
+      ]
+    },
+    "espadas2manos": {
+      "name": "Espadas 2 Manos",
+      "emoji": "⚔️",
+      "lingotesRequired": 6,
+      "items": [
+        {
+          "name": "Espada Larga de Cobre",
+          "level": 10,
+          "tier": "T1",
+          "inputLingote": "Cobre",
+          "xp": 60,
+          "value": 50
+        },
+        {
+          "name": "Espada Larga de Carbón",
+          "level": 15,
+          "tier": "T1",
+          "inputLingote": "Carbón",
+          "xp": 75,
+          "value": 65
+        },
+        {
+          "name": "Espada Larga de Hierro",
+          "level": 25,
+          "tier": "T2",
+          "inputLingote": "Hierro",
+          "xp": 120,
+          "value": 150
+        },
+        {
+          "name": "Espada Larga de Plata",
+          "level": 32,
+          "tier": "T2",
+          "inputLingote": "Plata",
+          "xp": 150,
+          "value": 210
+        },
+        {
+          "name": "Espada Larga de Tungsteno",
+          "level": 45,
+          "tier": "T3",
+          "inputLingote": "Tungsteno",
+          "xp": 220,
+          "value": 350
+        },
+        {
+          "name": "Espada Larga de Oro",
+          "level": 55,
+          "tier": "T3",
+          "inputLingote": "Oro",
+          "xp": 270,
+          "value": 480
+        },
+        {
+          "name": "Espada Larga de Platino",
+          "level": 65,
+          "tier": "T4",
+          "inputLingote": "Platino",
+          "xp": 400,
+          "value": 800
+        },
+        {
+          "name": "Espada Larga de Obsidiana",
+          "level": 75,
+          "tier": "T4",
+          "inputLingote": "Obsidiana",
+          "xp": 460,
+          "value": 1000
+        },
+        {
+          "name": "Espada Larga de Cobalto",
+          "level": 85,
+          "tier": "T5",
+          "inputLingote": "Cobalto",
+          "xp": 600,
+          "value": 1450
+        },
+        {
+          "name": "Espada Larga de Mithril",
+          "level": 95,
+          "tier": "T5",
+          "inputLingote": "Mithril",
+          "xp": 720,
+          "value": 1850
+        },
+        {
+          "name": "Espada Larga de Oricalco",
+          "level": 105,
+          "tier": "T6",
+          "inputLingote": "Oricalco",
+          "xp": 900,
+          "value": 2600
+        },
+        {
+          "name": "Espada Larga de Adamantita",
+          "level": 115,
+          "tier": "T6",
+          "inputLingote": "Adamantita",
+          "xp": 1020,
+          "value": 3100
+        },
+        {
+          "name": "Espada Larga de Titanio",
+          "level": 130,
+          "tier": "T7",
+          "inputLingote": "Titanio",
+          "xp": 1350,
+          "value": 4500
+        },
+        {
+          "name": "Espada Larga de Draconita",
+          "level": 165,
+          "tier": "T7",
+          "inputLingote": "Draconita",
+          "xp": 1580,
+          "value": 5800
+        }
+      ]
+    },
+    "hachas1mano": {
+      "name": "Hachas 1 Mano",
+      "emoji": "🪓",
+      "lingotesRequired": 4,
+      "maderaRequired": 1,
+      "items": [
+        {
+          "name": "Hacha Corta de Cobre",
+          "level": 8,
+          "tier": "T1",
+          "inputLingote": "Cobre",
+          "inputMadera": "Blanda",
+          "xp": 45,
+          "value": 35
+        },
+        {
+          "name": "Hacha Corta de Carbón",
+          "level": 12,
+          "tier": "T1",
+          "inputLingote": "Carbón",
+          "inputMadera": "Común",
+          "xp": 55,
+          "value": 48
+        },
+        {
+          "name": "Hacha Corta de Hierro",
+          "level": 23,
+          "tier": "T2",
+          "inputLingote": "Hierro",
+          "inputMadera": "Roble",
+          "xp": 95,
+          "value": 110
+        },
+        {
+          "name": "Hacha Corta de Plata",
+          "level": 30,
+          "tier": "T2",
+          "inputLingote": "Plata",
+          "inputMadera": "Nogal",
+          "xp": 120,
+          "value": 160
+        },
+        {
+          "name": "Hacha Corta de Tungsteno",
+          "level": 43,
+          "tier": "T3",
+          "inputLingote": "Tungsteno",
+          "inputMadera": "Caoba",
+          "xp": 170,
+          "value": 280
+        },
+        {
+          "name": "Hacha Corta de Oro",
+          "level": 53,
+          "tier": "T3",
+          "inputLingote": "Oro",
+          "inputMadera": "Ébano",
+          "xp": 210,
+          "value": 380
+        },
+        {
+          "name": "Hacha Corta de Platino",
+          "level": 63,
+          "tier": "T4",
+          "inputLingote": "Platino",
+          "inputMadera": "Pétreo",
+          "xp": 310,
+          "value": 620
+        },
+        {
+          "name": "Hacha Corta de Obsidiana",
+          "level": 73,
+          "tier": "T4",
+          "inputLingote": "Obsidiana",
+          "inputMadera": "Ancestral",
+          "xp": 360,
+          "value": 800
+        },
+        {
+          "name": "Hacha Corta de Cobalto",
+          "level": 83,
+          "tier": "T5",
+          "inputLingote": "Cobalto",
+          "inputMadera": "Cristalina",
+          "xp": 480,
+          "value": 1100
+        },
+        {
+          "name": "Hacha Corta de Mithril",
+          "level": 93,
+          "tier": "T5",
+          "inputLingote": "Mithril",
+          "inputMadera": "Mágica",
+          "xp": 570,
+          "value": 1400
+        },
+        {
+          "name": "Hacha Corta de Oricalco",
+          "level": 103,
+          "tier": "T6",
+          "inputLingote": "Oricalco",
+          "inputMadera": "Sagrada",
+          "xp": 720,
+          "value": 1950
+        },
+        {
+          "name": "Hacha Corta de Adamantita",
+          "level": 113,
+          "tier": "T6",
+          "inputLingote": "Adamantita",
+          "inputMadera": "Primordial",
+          "xp": 820,
+          "value": 2350
+        },
+        {
+          "name": "Hacha Corta de Titanio",
+          "level": 128,
+          "tier": "T7",
+          "inputLingote": "Titanio",
+          "inputMadera": "Dimensional",
+          "xp": 1100,
+          "value": 3400
+        },
+        {
+          "name": "Hacha Corta de Draconita",
+          "level": 162,
+          "tier": "T7",
+          "inputLingote": "Draconita",
+          "inputMadera": "Divina",
+          "xp": 1280,
+          "value": 4500
+        }
+      ]
+    },
+    "hachas2manos": {
+      "name": "Hachas 2 Manos",
+      "emoji": "🪓",
+      "lingotesRequired": 6,
+      "maderaRequired": 1,
+      "items": [
+        {
+          "name": "Hacha Grande de Cobre",
+          "level": 15,
+          "tier": "T1",
+          "inputLingote": "Cobre",
+          "inputMadera": "Blanda",
+          "xp": 70,
+          "value": 55
+        },
+        {
+          "name": "Hacha Grande de Carbón",
+          "level": 18,
+          "tier": "T1",
+          "inputLingote": "Carbón",
+          "inputMadera": "Común",
+          "xp": 85,
+          "value": 75
+        },
+        {
+          "name": "Hacha Grande de Hierro",
+          "level": 28,
+          "tier": "T2",
+          "inputLingote": "Hierro",
+          "inputMadera": "Roble",
+          "xp": 140,
+          "value": 180
+        },
+        {
+          "name": "Hacha Grande de Plata",
+          "level": 35,
+          "tier": "T2",
+          "inputLingote": "Plata",
+          "inputMadera": "Nogal",
+          "xp": 180,
+          "value": 260
+        },
+        {
+          "name": "Hacha Grande de Tungsteno",
+          "level": 48,
+          "tier": "T3",
+          "inputLingote": "Tungsteno",
+          "inputMadera": "Caoba",
+          "xp": 250,
+          "value": 450
+        },
+        {
+          "name": "Hacha Grande de Oro",
+          "level": 58,
+          "tier": "T3",
+          "inputLingote": "Oro",
+          "inputMadera": "Ébano",
+          "xp": 310,
+          "value": 620
+        },
+        {
+          "name": "Hacha Grande de Platino",
+          "level": 68,
+          "tier": "T4",
+          "inputLingote": "Platino",
+          "inputMadera": "Pétreo",
+          "xp": 460,
+          "value": 1000
+        },
+        {
+          "name": "Hacha Grande de Obsidiana",
+          "level": 78,
+          "tier": "T4",
+          "inputLingote": "Obsidiana",
+          "inputMadera": "Ancestral",
+          "xp": 540,
+          "value": 1300
+        },
+        {
+          "name": "Hacha Grande de Cobalto",
+          "level": 88,
+          "tier": "T5",
+          "inputLingote": "Cobalto",
+          "inputMadera": "Cristalina",
+          "xp": 720,
+          "value": 1800
+        },
+        {
+          "name": "Hacha Grande de Mithril",
+          "level": 98,
+          "tier": "T5",
+          "inputLingote": "Mithril",
+          "inputMadera": "Mágica",
+          "xp": 860,
+          "value": 2300
+        },
+        {
+          "name": "Hacha Grande de Oricalco",
+          "level": 108,
+          "tier": "T6",
+          "inputLingote": "Oricalco",
+          "inputMadera": "Sagrada",
+          "xp": 1080,
+          "value": 3200
+        },
+        {
+          "name": "Hacha Grande de Adamantita",
+          "level": 118,
+          "tier": "T6",
+          "inputLingote": "Adamantita",
+          "inputMadera": "Primordial",
+          "xp": 1230,
+          "value": 3900
+        },
+        {
+          "name": "Hacha Grande de Titanio",
+          "level": 135,
+          "tier": "T7",
+          "inputLingote": "Titanio",
+          "inputMadera": "Dimensional",
+          "xp": 1650,
+          "value": 5600
+        },
+        {
+          "name": "Hacha Grande de Draconita",
+          "level": 170,
+          "tier": "T7",
+          "inputLingote": "Draconita",
+          "inputMadera": "Divina",
+          "xp": 1920,
+          "value": 7200
+        }
+      ]
+    },
+    "martillos": {
+      "name": "Martillos de Guerra",
+      "emoji": "🔨",
+      "lingotesRequired": 8,
+      "maderaRequired": 2,
+      "items": [
+        {
+          "name": "Martillo de Cobre",
+          "level": 18,
+          "tier": "T1",
+          "inputLingote": "Cobre",
+          "inputMadera": "Blanda",
+          "xp": 90,
+          "value": 70
+        },
+        {
+          "name": "Martillo de Carbón",
+          "level": 20,
+          "tier": "T1",
+          "inputLingote": "Carbón",
+          "inputMadera": "Común",
+          "xp": 110,
+          "value": 95
+        },
+        {
+          "name": "Martillo de Hierro",
+          "level": 32,
+          "tier": "T2",
+          "inputLingote": "Hierro",
+          "inputMadera": "Roble",
+          "xp": 180,
+          "value": 240
+        },
+        {
+          "name": "Martillo de Plata",
+          "level": 38,
+          "tier": "T2",
+          "inputLingote": "Plata",
+          "inputMadera": "Nogal",
+          "xp": 220,
+          "value": 350
+        },
+        {
+          "name": "Martillo de Tungsteno",
+          "level": 52,
+          "tier": "T3",
+          "inputLingote": "Tungsteno",
+          "inputMadera": "Caoba",
+          "xp": 330,
+          "value": 600
+        },
+        {
+          "name": "Martillo de Oro",
+          "level": 62,
+          "tier": "T3",
+          "inputLingote": "Oro",
+          "inputMadera": "Ébano",
+          "xp": 410,
+          "value": 850
+        },
+        {
+          "name": "Martillo de Platino",
+          "level": 72,
+          "tier": "T4",
+          "inputLingote": "Platino",
+          "inputMadera": "Pétreo",
+          "xp": 610,
+          "value": 1350
+        },
+        {
+          "name": "Martillo de Obsidiana",
+          "level": 82,
+          "tier": "T4",
+          "inputLingote": "Obsidiana",
+          "inputMadera": "Ancestral",
+          "xp": 720,
+          "value": 1750
+        },
+        {
+          "name": "Martillo de Cobalto",
+          "level": 92,
+          "tier": "T5",
+          "inputLingote": "Cobalto",
+          "inputMadera": "Cristalina",
+          "xp": 960,
+          "value": 2450
+        },
+        {
+          "name": "Martillo de Mithril",
+          "level": 102,
+          "tier": "T5",
+          "inputLingote": "Mithril",
+          "inputMadera": "Mágica",
+          "xp": 1150,
+          "value": 3100
+        },
+        {
+          "name": "Martillo de Oricalco",
+          "level": 112,
+          "tier": "T6",
+          "inputLingote": "Oricalco",
+          "inputMadera": "Sagrada",
+          "xp": 1440,
+          "value": 4400
+        },
+        {
+          "name": "Martillo de Adamantita",
+          "level": 122,
+          "tier": "T6",
+          "inputLingote": "Adamantita",
+          "inputMadera": "Primordial",
+          "xp": 1640,
+          "value": 5300
+        },
+        {
+          "name": "Martillo de Titanio",
+          "level": 140,
+          "tier": "T7",
+          "inputLingote": "Titanio",
+          "inputMadera": "Dimensional",
+          "xp": 2200,
+          "value": 7800
+        },
+        {
+          "name": "Martillo de Draconita",
+          "level": 175,
+          "tier": "T7",
+          "inputLingote": "Draconita",
+          "inputMadera": "Divina",
+          "xp": 2560,
+          "value": 10000
+        }
+      ]
+    }
+  }
+}

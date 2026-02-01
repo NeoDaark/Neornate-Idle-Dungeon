@@ -1,0 +1,164 @@
+{
+  "id": "fundicion",
+  "name": "🔥 Fundición",
+  "emoji": "🔥",
+  "type": "crafting",
+  "duration": 50,
+  "description": "Funde minerales con combustible para crear lingotes",
+  "requirements": {
+    "level": 1,
+    "inputs": [
+      {
+        "name": "mineral",
+        "quantity": 5
+      },
+      {
+        "name": "combustible",
+        "quantity": 2,
+        "accepts": ["Carbón", "Madera Blanda", "Madera Común", "Madera de Roble", "Madera de Nogal", "Madera de Caoba", "Madera de Ébano", "Madera Pétreo", "Madera Ancestral", "Madera Cristalina", "Madera Mágica", "Madera Sagrada", "Madera Primordial", "Madera Dimensional", "Madera Divina"]
+      }
+    ]
+  },
+  "products": {
+    "T1": [
+      {
+        "name": "Lingote de Cobre",
+        "level": 1,
+        "tier": "T1",
+        "inputMineral": "Cobre",
+        "quantity": 1,
+        "xp": 20,
+        "value": 12
+      },
+      {
+        "name": "Lingote de Carbón",
+        "level": 5,
+        "tier": "T1",
+        "inputMineral": "Carbón",
+        "quantity": 1,
+        "xp": 25,
+        "value": 15
+      }
+    ],
+    "T2": [
+      {
+        "name": "Lingote de Hierro",
+        "level": 20,
+        "tier": "T2",
+        "inputMineral": "Hierro",
+        "quantity": 1,
+        "xp": 45,
+        "value": 35
+      },
+      {
+        "name": "Lingote de Plata",
+        "level": 25,
+        "tier": "T2",
+        "inputMineral": "Plata",
+        "quantity": 1,
+        "xp": 55,
+        "value": 50
+      }
+    ],
+    "T3": [
+      {
+        "name": "Lingote de Tungsteno",
+        "level": 40,
+        "tier": "T3",
+        "inputMineral": "Tungsteno",
+        "quantity": 1,
+        "xp": 75,
+        "value": 70
+      },
+      {
+        "name": "Lingote de Oro",
+        "level": 45,
+        "tier": "T3",
+        "inputMineral": "Oro",
+        "quantity": 1,
+        "xp": 90,
+        "value": 110
+      }
+    ],
+    "T4": [
+      {
+        "name": "Lingote de Platino",
+        "level": 60,
+        "tier": "T4",
+        "inputMineral": "Platino",
+        "quantity": 1,
+        "xp": 130,
+        "value": 170
+      },
+      {
+        "name": "Lingote de Obsidiana",
+        "level": 65,
+        "tier": "T4",
+        "inputMineral": "Obsidiana",
+        "quantity": 1,
+        "xp": 150,
+        "value": 210
+      }
+    ],
+    "T5": [
+      {
+        "name": "Lingote de Cobalto",
+        "level": 80,
+        "tier": "T5",
+        "inputMineral": "Cobalto",
+        "quantity": 1,
+        "xp": 180,
+        "value": 280
+      },
+      {
+        "name": "Lingote de Mithril",
+        "level": 85,
+        "tier": "T5",
+        "inputMineral": "Mithril",
+        "quantity": 1,
+        "xp": 210,
+        "value": 350
+      }
+    ],
+    "T6": [
+      {
+        "name": "Lingote de Oricalco",
+        "level": 100,
+        "tier": "T6",
+        "inputMineral": "Oricalco",
+        "quantity": 1,
+        "xp": 260,
+        "value": 480
+      },
+      {
+        "name": "Lingote de Adamantita",
+        "level": 105,
+        "tier": "T6",
+        "inputMineral": "Adamantita",
+        "quantity": 1,
+        "xp": 300,
+        "value": 580
+      }
+    ],
+    "T7": [
+      {
+        "name": "Lingote de Titanio",
+        "level": 120,
+        "tier": "T7",
+        "inputMineral": "Titanio",
+        "quantity": 1,
+        "xp": 400,
+        "value": 800
+      },
+      {
+        "name": "Lingote de Draconita",
+        "level": 150,
+        "tier": "T7",
+        "inputMineral": "Draconita",
+        "quantity": 1,
+        "xp": 480,
+        "value": 1100
+      }
+    ]
+  }
+}

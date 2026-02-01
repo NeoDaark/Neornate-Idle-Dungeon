@@ -1,0 +1,140 @@
+{
+  "id": "mineria",
+  "name": "⛏️ Minería",
+  "emoji": "⛏️",
+  "type": "extraction",
+  "duration": 40,
+  "description": "Extrae minerales de las montañas",
+  "requirements": {
+    "level": 1
+  },
+  "products": {
+    "T1": [
+      {
+        "name": "Carbón",
+        "level": 1,
+        "tier": "T1",
+        "quantity": 2,
+        "xp": 10,
+        "value": 5,
+        "burnTime": 5
+      },
+      {
+        "name": "Cobre",
+        "level": 5,
+        "tier": "T1",
+        "quantity": 2,
+        "xp": 15,
+        "value": 8
+      }
+    ],
+    "T2": [
+      {
+        "name": "Hierro",
+        "level": 20,
+        "tier": "T2",
+        "quantity": 1,
+        "xp": 30,
+        "value": 20
+      },
+      {
+        "name": "Plata",
+        "level": 25,
+        "tier": "T2",
+        "quantity": 1,
+        "xp": 40,
+        "value": 30
+      }
+    ],
+    "T3": [
+      {
+        "name": "Tungsteno",
+        "level": 40,
+        "tier": "T3",
+        "quantity": 1,
+        "xp": 60,
+        "value": 50
+      },
+      {
+        "name": "Oro",
+        "level": 45,
+        "tier": "T3",
+        "quantity": 1,
+        "xp": 75,
+        "value": 75
+      }
+    ],
+    "T4": [
+      {
+        "name": "Platino",
+        "level": 60,
+        "tier": "T4",
+        "quantity": 1,
+        "xp": 100,
+        "value": 120
+      },
+      {
+        "name": "Obsidiana",
+        "level": 65,
+        "tier": "T4",
+        "quantity": 1,
+        "xp": 120,
+        "value": 150
+      }
+    ],
+    "T5": [
+      {
+        "name": "Cobalto",
+        "level": 80,
+        "tier": "T5",
+        "quantity": 1,
+        "xp": 150,
+        "value": 200
+      },
+      {
+        "name": "Mithril",
+        "level": 85,
+        "tier": "T5",
+        "quantity": 1,
+        "xp": 180,
+        "value": 250
+      }
+    ],
+    "T6": [
+      {
+        "name": "Oricalco",
+        "level": 100,
+        "tier": "T6",
+        "quantity": 1,
+        "xp": 220,
+        "value": 350
+      },
+      {
+        "name": "Adamantita",
+        "level": 105,
+        "tier": "T6",
+        "quantity": 1,
+        "xp": 260,
+        "value": 400
+      }
+    ],
+    "T7": [
+      {
+        "name": "Titanio",
+        "level": 120,
+        "tier": "T7",
+        "quantity": 1,
+        "xp": 350,
+        "value": 600
+      },
+      {
+        "name": "Draconita",
+        "level": 150,
+        "tier": "T7",
+        "quantity": 1,
+        "xp": 400,
+        "value": 800
+      }
+    ]
+  }
+}

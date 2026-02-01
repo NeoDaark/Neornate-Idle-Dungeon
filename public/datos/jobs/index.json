@@ -1,0 +1,107 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-01",
+  "jobs": [
+    {
+      "id": "mineria",
+      "name": "⛏️ Minería",
+      "emoji": "⛏️",
+      "type": "extraction",
+      "duration": 40,
+      "description": "Extrae minerales de las montañas"
+    },
+    {
+      "id": "tala",
+      "name": "🌲 Tala",
+      "emoji": "🌲",
+      "type": "extraction",
+      "duration": 45,
+      "description": "Tala árboles para obtener madera"
+    },
+    {
+      "id": "fundicion",
+      "name": "🔥 Fundición",
+      "emoji": "🔥",
+      "type": "crafting",
+      "duration": 50,
+      "description": "Funde minerales con combustible para crear lingotes"
+    },
+    {
+      "id": "herreria",
+      "name": "🔨 Herrería",
+      "emoji": "🔨",
+      "type": "crafting",
+      "duration": 55,
+      "description": "Forja armas y equipo a partir de lingotes"
+    },
+    {
+      "id": "pesca",
+      "name": "🎣 Pesca",
+      "emoji": "🎣",
+      "type": "extraction",
+      "duration": 35,
+      "description": "Pesca diferentes tipos de peces"
+    },
+    {
+      "id": "cocina",
+      "name": "🍳 Cocina",
+      "emoji": "🍳",
+      "type": "crafting",
+      "duration": 30,
+      "description": "Cocina peces para crear comidas nutritivas"
+    },
+    {
+      "id": "alquimia",
+      "name": "🧪 Alquimia",
+      "emoji": "🧪",
+      "type": "crafting",
+      "duration": 45,
+      "description": "Crea pociones mágicas a partir de minerales"
+    },
+    {
+      "id": "aventura",
+      "name": "⚔️ Aventura",
+      "emoji": "⚔️",
+      "type": "combat",
+      "duration": 60,
+      "description": "Combate contra monstruos y obtén recompensas"
+    }
+  ],
+  "tiers": {
+    "T1": {
+      "name": "Principiante",
+      "minLevel": 0,
+      "maxLevel": 20
+    },
+    "T2": {
+      "name": "Aprendiz",
+      "minLevel": 20,
+      "maxLevel": 40
+    },
+    "T3": {
+      "name": "Oficial",
+      "minLevel": 40,
+      "maxLevel": 60
+    },
+    "T4": {
+      "name": "Experto",
+      "minLevel": 60,
+      "maxLevel": 80
+    },
+    "T5": {
+      "name": "Maestro",
+      "minLevel": 80,
+      "maxLevel": 100
+    },
+    "T6": {
+      "name": "Legendario",
+      "minLevel": 100,
+      "maxLevel": 120
+    },
+    "T7": {
+      "name": "Divino",
+      "minLevel": 120,
+      "maxLevel": 200
+    }
+  }
+}

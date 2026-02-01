@@ -446,6 +446,200 @@ export const SKILLS = {
 
 ---
 
+## 📊 Sistema de Experiencia y Progresión de Niveles
+
+### 🎯 Objetivo de Diseño
+- **Evitar grind excesivo**: No se puede llegar al nivel máximo en un día
+- **Curva desafiante**: Aumenta exponencialmente por cada tier
+- **Tiempo realista**: ~30-40 días de juego activo para nivel 100
+- **Misma curva para todos**: Todos los oficios comparten la misma progresión
+
+### 📈 Tabla de Experiencia Necesaria por Nivel
+
+| Nivel | Tier | XP Acumulada | XP Requerida | Tiempo Estimado* |
+|-------|------|--------------|--------------|------------------|
+| 1 | T1 | 0 | 100 | 10 ciclos |
+| 2 | T1 | 100 | 150 | 15 ciclos |
+| 3 | T1 | 250 | 200 | 20 ciclos |
+| 4 | T1 | 450 | 250 | 25 ciclos |
+| 5 | T1 | 700 | 300 | 30 ciclos |
+| 6 | T1 | 1,000 | 350 | 35 ciclos |
+| 7 | T1 | 1,350 | 400 | 40 ciclos |
+| 8 | T1 | 1,750 | 450 | 45 ciclos |
+| 9 | T1 | 2,200 | 500 | 50 ciclos |
+| 10 | T1 | 2,700 | 550 | 55 ciclos |
+| 11 | T1 | 3,250 | 600 | 60 ciclos |
+| 12 | T1 | 3,850 | 700 | 70 ciclos |
+| 13 | T1 | 4,550 | 800 | 80 ciclos |
+| 14 | T1 | 5,350 | 900 | 90 ciclos |
+| 15 | T1 | 6,250 | 1,000 | 100 ciclos |
+| 16 | T1 | 7,250 | 1,100 | 110 ciclos |
+| 17 | T1 | 8,350 | 1,200 | 120 ciclos |
+| 18 | T1 | 9,550 | 1,300 | 130 ciclos |
+| 19 | T1 | 10,850 | 1,400 | 140 ciclos |
+| 20 | T1 | 12,250 | 1,500 | 150 ciclos |
+| 21 | T2 | 13,750 | 1,600 | 160 ciclos |
+| 22 | T2 | 15,350 | 1,750 | 175 ciclos |
+| 23 | T2 | 17,100 | 1,900 | 190 ciclos |
+| 24 | T2 | 19,000 | 2,100 | 210 ciclos |
+| 25 | T2 | 21,100 | 2,300 | 230 ciclos |
+| 26 | T2 | 23,400 | 2,500 | 250 ciclos |
+| 27 | T2 | 25,900 | 2,700 | 270 ciclos |
+| 28 | T2 | 28,600 | 2,900 | 290 ciclos |
+| 29 | T2 | 31,500 | 3,100 | 310 ciclos |
+| 30 | T2 | 34,600 | 3,300 | 330 ciclos |
+| 31 | T2 | 37,900 | 3,500 | 350 ciclos |
+| 32 | T2 | 41,400 | 3,700 | 370 ciclos |
+| 33 | T2 | 45,100 | 3,900 | 390 ciclos |
+| 34 | T2 | 49,000 | 4,100 | 410 ciclos |
+| 35 | T2 | 53,100 | 4,300 | 430 ciclos |
+| 36 | T2 | 57,400 | 4,500 | 450 ciclos |
+| 37 | T2 | 61,900 | 4,700 | 470 ciclos |
+| 38 | T2 | 66,600 | 4,900 | 490 ciclos |
+| 39 | T2 | 71,500 | 5,100 | 510 ciclos |
+| 40 | T2 | 76,600 | 5,300 | 530 ciclos |
+| 41 | T3 | 81,900 | 5,500 | 550 ciclos |
+| 42 | T3 | 87,400 | 5,800 | 580 ciclos |
+| 43 | T3 | 93,200 | 6,100 | 610 ciclos |
+| 44 | T3 | 99,300 | 6,400 | 640 ciclos |
+| 45 | T3 | 105,700 | 6,700 | 670 ciclos |
+| 46 | T3 | 112,400 | 7,000 | 700 ciclos |
+| 47 | T3 | 119,400 | 7,300 | 730 ciclos |
+| 48 | T3 | 126,700 | 7,600 | 760 ciclos |
+| 49 | T3 | 134,300 | 7,900 | 790 ciclos |
+| 50 | T3 | 142,200 | 8,200 | 820 ciclos |
+| 51 | T3 | 150,400 | 8,500 | 850 ciclos |
+| 52 | T3 | 158,900 | 8,800 | 880 ciclos |
+| 53 | T3 | 167,700 | 9,100 | 910 ciclos |
+| 54 | T3 | 176,800 | 9,400 | 940 ciclos |
+| 55 | T3 | 186,200 | 9,700 | 970 ciclos |
+| 56 | T3 | 195,900 | 10,000 | 1,000 ciclos |
+| 57 | T3 | 205,900 | 10,300 | 1,030 ciclos |
+| 58 | T3 | 216,200 | 10,600 | 1,060 ciclos |
+| 59 | T3 | 226,800 | 10,900 | 1,090 ciclos |
+| 60 | T3 | 237,700 | 11,200 | 1,120 ciclos |
+| 61 | T4 | 248,900 | 11,500 | 1,150 ciclos |
+| 62 | T4 | 260,400 | 11,900 | 1,190 ciclos |
+| 63 | T4 | 272,300 | 12,300 | 1,230 ciclos |
+| 64 | T4 | 284,600 | 12,700 | 1,270 ciclos |
+| 65 | T4 | 297,300 | 13,100 | 1,310 ciclos |
+| 66 | T4 | 310,400 | 13,500 | 1,350 ciclos |
+| 67 | T4 | 323,900 | 13,900 | 1,390 ciclos |
+| 68 | T4 | 337,800 | 14,300 | 1,430 ciclos |
+| 69 | T4 | 352,100 | 14,700 | 1,470 ciclos |
+| 70 | T4 | 366,800 | 15,100 | 1,510 ciclos |
+| 71 | T4 | 381,900 | 15,500 | 1,550 ciclos |
+| 72 | T4 | 397,400 | 15,900 | 1,590 ciclos |
+| 73 | T4 | 413,300 | 16,300 | 1,630 ciclos |
+| 74 | T4 | 429,600 | 16,700 | 1,670 ciclos |
+| 75 | T4 | 446,300 | 17,100 | 1,710 ciclos |
+| 76 | T4 | 463,400 | 17,500 | 1,750 ciclos |
+| 77 | T4 | 480,900 | 17,900 | 1,790 ciclos |
+| 78 | T4 | 498,800 | 18,300 | 1,830 ciclos |
+| 79 | T4 | 517,100 | 18,700 | 1,870 ciclos |
+| 80 | T4 | 535,800 | 19,100 | 1,910 ciclos |
+| 81 | T5 | 554,900 | 19,500 | 1,950 ciclos |
+| 82 | T5 | 574,400 | 20,000 | 2,000 ciclos |
+| 83 | T5 | 594,400 | 20,500 | 2,050 ciclos |
+| 84 | T5 | 614,900 | 21,000 | 2,100 ciclos |
+| 85 | T5 | 635,900 | 21,500 | 2,150 ciclos |
+| 86 | T5 | 657,400 | 22,000 | 2,200 ciclos |
+| 87 | T5 | 679,400 | 22,500 | 2,250 ciclos |
+| 88 | T5 | 701,900 | 23,000 | 2,300 ciclos |
+| 89 | T5 | 724,900 | 23,500 | 2,350 ciclos |
+| 90 | T5 | 748,400 | 24,000 | 2,400 ciclos |
+| 91 | T5 | 772,400 | 24,500 | 2,450 ciclos |
+| 92 | T5 | 796,900 | 25,000 | 2,500 ciclos |
+| 93 | T5 | 821,900 | 25,500 | 2,550 ciclos |
+| 94 | T5 | 847,400 | 26,000 | 2,600 ciclos |
+| 95 | T5 | 873,400 | 26,500 | 2,650 ciclos |
+| 96 | T5 | 899,900 | 27,000 | 2,700 ciclos |
+| 97 | T5 | 926,900 | 27,500 | 2,750 ciclos |
+| 98 | T5 | 954,400 | 28,000 | 2,800 ciclos |
+| 99 | T5 | 982,400 | 28,500 | 2,850 ciclos |
+| 100 | T5 | 1,010,900 | 29,000 | 2,900 ciclos |
+| 101 | T6 | 1,039,900 | 29,500 | 2,950 ciclos |
+| 102 | T6 | 1,069,400 | 30,000 | 3,000 ciclos |
+| 103 | T6 | 1,099,400 | 30,500 | 3,050 ciclos |
+| 104 | T6 | 1,129,900 | 31,000 | 3,100 ciclos |
+| 105 | T6 | 1,160,900 | 31,500 | 3,150 ciclos |
+| 106 | T6 | 1,192,400 | 32,000 | 3,200 ciclos |
+| 107 | T6 | 1,224,400 | 32,500 | 3,250 ciclos |
+| 108 | T6 | 1,256,900 | 33,000 | 3,300 ciclos |
+| 109 | T6 | 1,289,900 | 33,500 | 3,350 ciclos |
+| 110 | T6 | 1,323,400 | 34,000 | 3,400 ciclos |
+| 111 | T6 | 1,357,400 | 34,500 | 3,450 ciclos |
+| 112 | T6 | 1,391,900 | 35,000 | 3,500 ciclos |
+| 113 | T6 | 1,426,900 | 35,500 | 3,550 ciclos |
+| 114 | T6 | 1,462,400 | 36,000 | 3,600 ciclos |
+| 115 | T6 | 1,498,400 | 36,500 | 3,650 ciclos |
+| 116 | T6 | 1,534,900 | 37,000 | 3,700 ciclos |
+| 117 | T6 | 1,571,900 | 37,500 | 3,750 ciclos |
+| 118 | T6 | 1,609,400 | 38,000 | 3,800 ciclos |
+| 119 | T6 | 1,647,400 | 38,500 | 3,850 ciclos |
+| 120 | T6 | 1,685,900 | 39,000 | 3,900 ciclos |
+| 121 | T7 | 1,724,900 | 39,500 | 3,950 ciclos |
+| 122 | T7 | 1,764,400 | 40,000 | 4,000 ciclos |
+| ... | T7 | ... | +500 por nivel | ... |
+| 200 | T7 | 6,245,000+ | 80,000 | 8,000+ ciclos |
+
+*Tiempo estimado en ciclos promedio (varía según oficio y productos)
+
+### 📊 Análisis de Tiempo de Progresión
+
+#### Tiempo Total Estimado por Tier (con promedio de 1 ciclo cada 45s)
+
+| Tier | Niveles | Ciclos Totales | Horas | Días (8h/día) |
+|------|---------|----------------|-------|---------------|
+| T1 | 1-20 | ~1,500 | 18.75 | 2.3 |
+| T2 | 21-40 | ~5,300 | 66.25 | 8.3 |
+| T3 | 41-60 | ~9,500 | 118.75 | 14.8 |
+| T4 | 61-80 | ~14,200 | 177.5 | 22.2 |
+| T5 | 81-100 | ~19,000 | 237.5 | 29.7 |
+| T6 | 101-120 | ~23,800 | 297.5 | 37.2 |
+| **T7 (120)** | **Nivel Max** | **~40,000** | **500** | **62.5** |
+
+**Tiempo total para Nivel 100**: ~48 días a 8 horas/día
+**Tiempo total para Nivel 120**: ~104 días a 8 horas/día
+
+### 🎮 Mecanismos de Progresión Rápida (Opcionales)
+
+1. **Paralelismo**: Ejecutar múltiples oficios simultáneamente
+   - Combina Minería (40s) + Pesca (35s) = +75 XP en paralelo
+   
+2. **Productos de Alto XP**: 
+   - Minería T7 da 350+ XP por ciclo
+   - Herrería T7 da 2,560 XP por ciclo (MÁS RÁPIDO)
+   
+3. **Automatización**: Los ciclos continuos mientras el juego esté activo
+
+### ⚡ Fórmula de Experiencia
+
+```
+XP_siguiente_nivel = 100 + (nivel_actual × 50) + (tier × 300)
+
+Ejemplos:
+- Nivel 1: 100 XP
+- Nivel 5: 100 + (5 × 50) = 350 XP
+- Nivel 20: 100 + (20 × 50) + (T1 × 300) = 1,500 XP
+- Nivel 60: 100 + (60 × 50) + (T3 × 300) = 11,200 XP
+- Nivel 100: 100 + (100 × 50) + (T5 × 300) = 29,000 XP
+```
+
+### 🏆 Rewards y Hitos de Progresión
+
+| Hito | Nivel | Recompensa | Descripción |
+|------|-------|-----------|-------------|
+| Iniciado | 10 | Desbloquea productos T1 mejorados | Primera recompensa |
+| Aprendiz | 20 | Acceso a T2 completo | Transición de tier |
+| Oficial | 40 | Desbloquea mejor equipo T2 | Progreso medio |
+| Experto | 60 | Acceso a T4 y recompensas | Zona media-alta |
+| Maestro | 80 | Desbloquea armas legendarias | Top tier |
+| Leyenda | 100 | Acceso a contenido T6 | Casi máximo |
+| Divino | 120 | Máxima maestría del oficio | Nivel cap |
+
+---
+
 **Documento creado**: 1 de febrero de 2026  
 **Versión**: 1.0 - Diseño Inicial  
 **Estado**: Listo para implementación

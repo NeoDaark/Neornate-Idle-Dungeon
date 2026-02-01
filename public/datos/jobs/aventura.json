@@ -1,0 +1,108 @@
+{
+  "id": "aventura",
+  "name": "⚔️ Aventura",
+  "emoji": "⚔️",
+  "type": "combat",
+  "duration": 60,
+  "description": "Combate contra monstruos y obtén recompensas",
+  "requirements": {
+    "level": 1
+  },
+  "products": {
+    "T1": [
+      {
+        "name": "Cristal Débil",
+        "level": 1,
+        "tier": "T1",
+        "type": "crystal",
+        "quantity": 1,
+        "xp": 25,
+        "value": 20,
+        "rarity": 30,
+        "description": "Un cristal débil obtenido en aventuras básicas"
+      }
+    ],
+    "T2": [
+      {
+        "name": "Cristal Común",
+        "level": 20,
+        "tier": "T2",
+        "type": "crystal",
+        "quantity": 1,
+        "xp": 60,
+        "value": 50,
+        "rarity": 50,
+        "description": "Un cristal de rareza común"
+      }
+    ],
+    "T3": [
+      {
+        "name": "Cristal Refinado",
+        "level": 40,
+        "tier": "T3",
+        "type": "crystal",
+        "quantity": 1,
+        "xp": 100,
+        "value": 120,
+        "rarity": 60,
+        "description": "Un cristal refinado con buenas propiedades"
+      }
+    ],
+    "T4": [
+      {
+        "name": "Gema Preciosa",
+        "level": 60,
+        "tier": "T4",
+        "type": "gem",
+        "quantity": 1,
+        "xp": 160,
+        "value": 250,
+        "rarity": 70,
+        "description": "Una gema preciosa de alto valor"
+      }
+    ],
+    "T5": [
+      {
+        "name": "Gema Rara",
+        "level": 80,
+        "tier": "T5",
+        "type": "gem",
+        "quantity": 1,
+        "xp": 240,
+        "value": 450,
+        "rarity": 75,
+        "description": "Una gema rara con poder mágico"
+      }
+    ],
+    "T6": [
+      {
+        "name": "Gema Legendaria",
+        "level": 100,
+        "tier": "T6",
+        "type": "gem",
+        "quantity": 1,
+        "xp": 320,
+        "value": 750,
+        "rarity": 80,
+        "description": "Una gema legendaria extremadamente valiosa"
+      }
+    ],
+    "T7": [
+      {
+        "name": "Gema Divina",
+        "level": 120,
+        "tier": "T7",
+        "type": "gem",
+        "quantity": 1,
+        "xp": 450,
+        "value": 1200,
+        "rarity": 85,
+        "description": "Una gema divina de poder incomparable"
+      }
+    ]
+  },
+  "notes": {
+    "gemUses": "Las gemas y cristales pueden ser vendidos o utilizados para mejorar equipo",
+    "enchantmentBonus": "Cada tier ofrece mejor % de probabilidad en la mejora de equipo"
+  }
+}

@@ -10,6 +10,7 @@ export let exploring = true;
 export let currentEquipTab = "arma";
 export let gameInterval = null;
 export let lastTickTime = Date.now();
+export let money = 0;
 
 // Función para actualizar el player
 export function setPlayer(newPlayer) {

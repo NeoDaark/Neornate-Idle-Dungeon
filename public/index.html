@@ -349,16 +349,22 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
     </div>
 </div>
 
-<!-- TAB: EQUIPMENT -->
+<!-- TAB: INVENTORY -->
 <div data-tab="equipment" class="hidden">
     <div class="panel">
-        <h2>⚔️ Equipo Equipado</h2>
-        <div id="equipment"></div>
-        <b>Materiales:</b> <span id="materials"></span>
-    </div>
+        <h2>🎒 Inventario</h2>
+        
+        <div style="margin-bottom:15px; padding:10px; background:#1a1a1a; border-radius:4px; border-left:3px solid #ffa500;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                <span><b>💰 Dinero:</b> <span id="playerMoney" style="color:#ffa500;">0</span></span>
+                <span><b>📦 Materiales:</b> <span id="playerMaterials" style="color:#55ff55;">0</span></span>
+            </div>
+        </div>
 
-    <div class="panel">
-        <h2>� Inventario</h2>
+        <h3 style="margin-top:15px; border-bottom:1px solid #333; padding-bottom:8px;">⚔️ Equipo Equipado</h3>
+        <div id="equipment" style="margin-bottom:15px;"></div>
+
+        <h3 style="margin-top:15px; border-bottom:1px solid #333; padding-bottom:8px;">📦 Productos y Materiales</h3>
         <div id="inventory"></div>
     </div>
 </div>
@@ -383,7 +389,20 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
 <div data-tab="jobs" class="hidden">
     <div class="panel">
         <h2>💼 Trabajos</h2>
-        <p style="color:#aaa;">Sistema de Trabajos - Próximamente</p>
+        <div id="currentJobDisplay" style="margin-bottom:15px; padding:10px; background:#1a1a1a; border-radius:4px; display:none;">
+            <div style="font-size:14px; margin-bottom:8px;">
+                Trabajo actual: <b id="currentJobName"></b>
+            </div>
+            <div style="background:#0e0e0e; border:1px solid #333; border-radius:3px; overflow:hidden; height:20px; margin-bottom:8px;">
+                <div id="jobProgressBar" style="background:#ffa500; height:100%; width:0%; transition:width 0.1s;"></div>
+            </div>
+            <div style="display:flex; gap:5px;">
+                <span id="jobTimeLeft" style="flex:1; text-align:center;"></span>
+                <button onclick="cancelJob()" style="flex:1; padding:6px; font-size:11px; background:#ff5555; color:#fff;">❌ Cancelar</button>
+            </div>
+        </div>
+        
+        <div id="jobsList" style="display:grid; gap:10px;"></div>
     </div>
 </div>
 
@@ -413,7 +432,7 @@ button:disabled { opacity:0.4; cursor:not-allowed; }
 <!-- NAVIGATION BAR -->
 <div class="nav-bar hidden">
     <button class="nav-button" data-nav="home">🏠 Inicio</button>
-    <button class="nav-button" data-nav="equipment">⚔️ Equipo</button>
+    <button class="nav-button" data-nav="equipment">🎒 Inventario</button>
     <button class="nav-button" data-nav="guild">🏛️ Gremio</button>
     <button class="nav-button" data-nav="shop">🏪 Tienda</button>
     <button class="nav-button" data-nav="jobs">💼 Trabajos</button>

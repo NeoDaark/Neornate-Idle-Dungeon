@@ -1,5 +1,12 @@
 /* ===================== GAME MAIN ===================== */
-/* Este archivo es el punto de entrada que carga todos los módulos */
+/* Este archivo es el punto de entr    ui.render();
+    navigation.initNavigation();
+    navigation.showNavBar();
+    jobs.initSkills();
+    playerMod.setExploring(true);
+    playerMod.setCountdown(constants.EXPLORE_INTERVAL);
+    playerMod.setGameInterval(setInterval(tick, 1000));
+    hideLoadingScreen(); carga todos los módulos */
 
 // Importar módulos
 import * as constants from './modules/constants.js';
@@ -11,6 +18,11 @@ import * as combat from './modules/combat.js';
 import * as progression from './modules/progression.js';
 import * as navigation from './modules/navigation.js';
 import * as ui from './modules/ui.js';
+import * as jobs from './modules/jobs.js';
+
+// Declarar variables globales primero
+let selectedClass = null;
+let expandedJobs = {}; // Guardar qué trabajos están expandidos
 
 // Exponer globalmente para que funcione en HTML
 window.createPlayer = createPlayer;
@@ -24,8 +36,11 @@ window.compareItems = equipment.compareItems;
 window.render = ui.render;
 window.closePopup = closePopup;
 window.selectClass = selectClass;
-
-let selectedClass = null;
+window.startJob = jobs.startSkill;
+window.cancelJob = jobs.cancelJob;
+window.toggleJobExpanded = toggleJobExpanded;
+window.startJobWithProduct = startJobWithProduct;
+window.expandedJobs = expandedJobs; // Exponer para que ui.js pueda acceder
 
 function hideLoadingScreen() {
     const loadingScreen = document.getElementById("loadingScreen");
@@ -101,12 +116,18 @@ function start() {
 }
 
 function tick() {
-    if(!playerMod.player || playerMod.player.hp <=0 || !playerMod.exploring) return;
-    playerMod.setCountdown(playerMod.countdown - 1);
-    if(playerMod.countdown <= 0) {
-        explore();
-        playerMod.setCountdown(constants.EXPLORE_INTERVAL);
+    if(!playerMod.player || playerMod.player.hp <= 0) return;
+    
+    // Permitir que el juego siga avanzando aunque no esté explorando
+    // (ej: durante trabajos)
+    if(playerMod.exploring) {
+        playerMod.setCountdown(playerMod.countdown - 1);
+        if(playerMod.countdown <= 0) {
+            explore();
+            playerMod.setCountdown(constants.EXPLORE_INTERVAL);
+        }
     }
+    
     ui.render();
     playerMod.save();
 }
@@ -130,4 +151,15 @@ window.addEventListener("load", () => {
 
 function closePopup() {
     document.getElementById("itemPopup").classList.remove("visible");
+}
+
+function toggleJobExpanded(skillKey) {
+    expandedJobs[skillKey] = !expandedJobs[skillKey];
+    ui.renderJobs(); // Re-renderizar solo los trabajos
+}
+
+function startJobWithProduct(skillKey, productName) {
+    // Por ahora, usar startSkill normalmente
+    // En el futuro se puede guardar qué producto específico se quiere farmear
+    jobs.startSkill(skillKey);
 }

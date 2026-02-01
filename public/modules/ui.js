@@ -56,15 +56,36 @@ export function renderEquipment() {
     const equipmentDiv = document.getElementById("equipment");
     if(!equipmentDiv) return;
     
-    let html = `<div style="margin-bottom:10px;">`;
+    let html = `<div>`;
     
     SLOTS.forEach(slot => {
         const eq = player.equipment[slot];
         if(eq) {
-            html += `<div class="item" style="border-bottom:1px solid #333; padding:5px 0;">
-                <b>${slot}:</b> ${eq.name}`;
-            if(eq.upgrade > 0) html += ` <span style="color:#ffa500;">+${eq.upgrade}</span>`;
-            html += `</div>`;
+            // Obtener sprite aleatorio del archivo de items
+            const itemSpriteRow = Math.floor(Math.random() * 10);
+            const itemSpriteCol = Math.floor(Math.random() * 10);
+            const spriteX = itemSpriteCol * 16;
+            const spriteY = itemSpriteRow * 16;
+            
+            html += `<div class="equipment-slot">
+                <img class="equipment-sprite" src="oryx/oryx_16bit_fantasy_items_trans.png" 
+                     style="object-position: -${spriteX}px -${spriteY}px; object-fit: none; width:32px; height:32px;">
+                <div class="equipment-info">
+                    <div class="equipment-name">${eq.name}</div>
+                    <div class="equipment-stats">
+                        Ranura: <b>${slot}</b>`;
+            if(eq.upgrade > 0) html += ` | Mejorado: <b style="color:#ffa500;">+${eq.upgrade}</b>`;
+            html += `</div>
+                </div>
+                <button onclick="upgradeEquipped('${slot}')" style="padding:6px 10px; font-size:11px;">🔧</button>
+            </div>`;
+        } else {
+            html += `<div class="equipment-slot" style="opacity:0.5; border-style:dashed;">
+                <div style="width:32px; height:32px; background:#333; border-radius:2px;"></div>
+                <div class="equipment-info">
+                    <div style="color:#666;">Ranura vacía: <b>${slot}</b></div>
+                </div>
+            </div>`;
         }
     });
     
@@ -79,16 +100,47 @@ export function renderInventory() {
     if(!inventoryDiv) return;
     
     let html = `<div>`;
-    player.inventory.forEach((item, idx) => {
-        html += `<div class="item">
-            <b>${item.name}</b>`;
-        if(item.upgrade > 0) html += ` <span style="color:#ffa500;">+${item.upgrade}</span>`;
-        html += `
-            <button onclick="toggleEquip(${idx})">Equipar</button>
-            <button onclick="compareItems(${idx})">Comparar</button>
-            <button onclick="dismantle(${idx})">Desmantelar</button>
+    
+    if(player.inventory.length === 0) {
+        html += `<div style="text-align:center; color:#666; padding:20px;">
+            El inventario está vacío
         </div>`;
-    });
+    } else {
+        player.inventory.forEach((item, idx) => {
+            // Obtener sprite aleatorio del archivo de items
+            const itemSpriteRow = Math.floor(Math.random() * 10);
+            const itemSpriteCol = Math.floor(Math.random() * 10);
+            const spriteX = itemSpriteCol * 16;
+            const spriteY = itemSpriteRow * 16;
+            
+            // Color según raridad
+            const rarityColors = {
+                "Común": "#aaa",
+                "Raro": "#55ff55",
+                "Épico": "#cc88ff",
+                "Legendario": "#ffa500"
+            };
+            const rarityColor = rarityColors[item.rarity] || "#aaa";
+            
+            html += `<div style="background:#1a1a1a; border:1px solid #333; border-radius:4px; padding:10px; margin-bottom:8px;">
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                    <img style="object-position: -${spriteX}px -${spriteY}px; object-fit: none; width:32px; height:32px; image-rendering:pixelated; image-rendering:crisp-edges;" 
+                         src="oryx/oryx_16bit_fantasy_items_trans.png">
+                    <div style="flex:1;">
+                        <b style="color:${rarityColor};">${item.name}</b>`;
+            if(item.upgrade > 0) html += `<br><span style="color:#ffa500;">Mejorado: +${item.upgrade}</span>`;
+            html += `<br><span style="font-size:11px; color:#888;">Ranura: ${item.slot}</span>
+                    </div>
+                </div>
+                <div style="display:flex; gap:5px; margin-top:8px;">
+                    <button onclick="toggleEquip(${idx})" style="flex:1; padding:6px; font-size:11px;">📦 Equipar</button>
+                    <button onclick="compareItems(${idx})" style="flex:1; padding:6px; font-size:11px;">⚖️ Comparar</button>
+                    <button onclick="dismantle(${idx})" style="flex:1; padding:6px; font-size:11px;">♻️ Desmantelar</button>
+                </div>
+            </div>`;
+        });
+    }
+    
     html += `</div>`;
     inventoryDiv.innerHTML = html;
 }

@@ -8,7 +8,59 @@ Toda la interfaz de usuario DEBE estar preparada para múltiples idiomas desde e
 
 ## 🎯 Regla Fundamental
 
-**PROHIBIDO**: Hardcodear texto visible en componentes.
+**PROHIBIDO**: Hardcod## 🏷️ Estructura de Skills con Actions
+
+Desde v1.0.1, cada skill incluye un campo `action` que## 🎨 Convención de Claves
+
+| Tipo | Prefijo | Ejemplo |
+|------|---------|---------|
+| UI General | `ui.` | `ui.welcome`, `ui.button.start` |
+| Nombres de Skills | `skills.[skill].name` | `skills.mineria.name` |
+| Acciones de Skills | `skills.[skill].action` | `skills.mineria.action` (→ "Extraer") |
+| Descripciones de Skills | `skills.[skill].description` | `skills.mineria.description` |
+| Recursos - Nombre | `resources.[tipo].[id].name` | `resources.mineral.carbon.name` |
+| Recursos - Descripción | `resources.[tipo].[id].description` | `resources.mineral.carbon.description` |
+| Nombres de Items | `items.` | `items.carbon`, `items.espada_corta` |
+| Mensajes | `messages.` | `messages.success`, `messages.error` |
+| Labels/Etiquetas | `labels.` | `labels.level`, `labels.health` |
+| Errores | `errors.` | `errors.insufficient_resources` |é se está haciendo con el producto:
+
+```json
+{
+  "skills": {
+    "mineria": {
+      "name": "Minería",
+      "action": "Extraer",
+      "description": "Extrae minerales de la tierra"
+    },
+    "tala": {
+      "name": "Tala",
+      "action": "Cortar",
+      "description": "Corta árboles para obtener madera"
+    }
+  }
+}
+```
+
+### Uso en Componentes
+
+El `action` se usa para mostrar dinámicamente qué se está haciendo con cada producto:
+
+**En ProductSelector.vue:**
+```vue
+<!-- Muestra: "Extraer Carbón" en lugar de solo "Carbón" -->
+<h4>{{ skillAction }} {{ t(product.i18nKey) }}</h4>
+```
+
+**En SkillCard.vue (cuando está activo):**
+```vue
+<!-- Muestra: "Extrayendo... Extraer Carbón" en lugar de solo "Carbón" -->
+⏳ {{ t('labels.active') }} - {{ skillAction }} {{ t(skillState.currentProduct.i18nKey) }}
+```
+
+---
+
+## 🏷️ Estructura de Recursos Agrupados por Tipoar texto visible en componentes.
 
 ```vue
 <!-- ❌ MAL -->
@@ -211,12 +263,72 @@ export const useI18n = () => {
 
 ---
 
-## 🎨 Convención de Claves
+## �️ Estructura de Recursos Agrupados por Tipo
+
+Desde v1.0.1, los recursos están organizados jerárquicamente por **categoría de material** para mejor mantenimiento:
+
+### Estructura General
+
+```json
+{
+  "resources": {
+    "mineral": {
+      "carbon": {
+        "name": "Carbón",
+        "description": "Mineral básico de color oscuro..."
+      },
+      "cobre": {
+        "name": "Cobre",
+        "description": "Metal maleable de color rojizo..."
+      }
+    },
+    "wood": {
+      "madera-blanda": {
+        "name": "Madera Blanda",
+        "description": "Madera ligera de fácil corte..."
+      },
+      "roble": {
+        "name": "Madera de Roble",
+        "description": "Madera robusta y duradera..."
+      }
+    }
+  }
+}
+```
+
+### Acceso en Componentes
+
+```typescript
+// Para obtener el nombre
+t('resources.mineral.carbon.name')      // → "Carbón"
+t('resources.wood.roble.name')          // → "Madera de Roble"
+
+// Para obtener la descripción
+t('resources.mineral.carbon.description')
+t('resources.wood.roble.description')
+```
+
+### En skillProducts.ts
+
+```typescript
+{
+  id: 'carbon',
+  i18nKey: 'resources.mineral.carbon.name',
+  i18nDescriptionKey: 'resources.mineral.carbon.description',
+  // ... resto de propiedades
+}
+```
+
+---
+
+## �🎨 Convención de Claves
 
 | Tipo | Prefijo | Ejemplo |
 |------|---------|---------|
 | UI General | `ui.` | `ui.welcome`, `ui.button.start` |
 | Nombres de Skills | `skills.` | `skills.mineria`, `skills.pesca` |
+| Recursos - Nombre | `resources.[tipo].[id].name` | `resources.mineral.carbon.name` |
+| Recursos - Descripción | `resources.[tipo].[id].description` | `resources.mineral.carbon.description` |
 | Nombres de Items | `items.` | `items.carbon`, `items.espada_corta` |
 | Mensajes | `messages.` | `messages.success`, `messages.error` |
 | Labels/Etiquetas | `labels.` | `labels.level`, `labels.health` |

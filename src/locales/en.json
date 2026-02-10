@@ -16,16 +16,54 @@
       "settings": "Settings",
       "language": "Language",
       "toggle": "Toggle menu"
-    }
+    },
+    "blocked": "Blocked",
+    "m_blocked": "Unavailable materials",
+    "m_available": "Available materials",
+    "m_confirm": "Change Material",
+    "m_change_product": "Do you want to change material?",
+    "m_change_product_desc": "Current farming will be stopped.",
+    "m_accept": "Accept",
+    "m_cancel": "Cancel",
+    "unavailable": "Unavailable"
+
   },
   "skills": {
-    "mineria": "Mining",
-    "tala": "Woodcutting",
-    "fundicion": "Smelting",
-    "herreria": "Smithing",
-    "pesca": "Fishing",
-    "cocina": "Cooking",
-    "aventura": "Adventure"
+    "mineria": {
+      "name": "Mining",
+      "action": "Extract",
+      "description": "Extract minerals from the earth"
+    },
+    "tala": {
+      "name": "Woodcutting",
+      "action": "Cut",
+      "description": "Cut trees to get wood"
+    },
+    "fundicion": {
+      "name": "Smelting",
+      "action": "Smelt",
+      "description": "Smelt minerals into ingots"
+    },
+    "herreria": {
+      "name": "Smithing",
+      "action": "Forge",
+      "description": "Forge weapons and armor"
+    },
+    "pesca": {
+      "name": "Fishing",
+      "action": "Fish",
+      "description": "Fish in the river"
+    },
+    "cocina": {
+      "name": "Cooking",
+      "action": "Cook",
+      "description": "Prepare delicious meals"
+    },
+    "aventura": {
+      "name": "Adventure",
+      "action": "Explore",
+      "description": "Explore dungeons and combat"
+    }
   },
   "items": {
     "minerals": "Minerals",
@@ -33,6 +71,124 @@
     "fish": "Fish",
     "food": "Food",
     "ingots": "Ingots"
+  },
+  "resources": {
+    "mineral": {
+      "carbon": {
+        "name": "Coal",
+        "description": "Dark basic mineral. Perfect for beginners."
+      },
+      "cobre": {
+        "name": "Copper",
+        "description": "Malleable reddish metal. Easy to work with."
+      },
+      "hierro": {
+        "name": "Iron",
+        "description": "Durable gray metal. Excellent for tools."
+      },
+      "plata": {
+        "name": "Silver",
+        "description": "Precious shiny metal. Highly valuable on market."
+      },
+      "tungsteno": {
+        "name": "Tungsten",
+        "description": "Resistant high-hardness metal. Rare and valuable."
+      },
+      "oro": {
+        "name": "Gold",
+        "description": "Precious yellow metal. Extremely rare and expensive."
+      },
+      "platino": {
+        "name": "Platinum",
+        "description": "Noble silvery metal. Extraordinarily rare."
+      },
+      "obsidiana": {
+        "name": "Obsidian",
+        "description": "Black volcanic glass. Very sharp when broken."
+      },
+      "cobalto": {
+        "name": "Cobalt",
+        "description": "Exotic blue metal. Toxic but powerful."
+      },
+      "mithril": {
+        "name": "Mithril",
+        "description": "Mythical shiny metal. Legendary and nearly impossible to find."
+      },
+      "oricalco": {
+        "name": "Orichalcum",
+        "description": "Divine golden alloy. Symbol of supreme power."
+      },
+      "adamantita": {
+        "name": "Adamantite",
+        "description": "Indestructible metal. Legendary material."
+      },
+      "titanio": {
+        "name": "Titanium",
+        "description": "Extremely resistant metal. Forged by titans."
+      },
+      "draconita": {
+        "name": "Dragonite",
+        "description": "Mineral extracted from dragons. Latent draconic power."
+      }
+    },
+    "wood": {
+      "madera-blanda": {
+        "name": "Soft Wood",
+        "description": "Light wood easy to cut. Perfect for beginners."
+      },
+      "madera-comun": {
+        "name": "Common Wood",
+        "description": "Versatile general-purpose wood. Stable resource."
+      },
+      "roble": {
+        "name": "Oak Wood",
+        "description": "Robust and durable wood. Ideal for structures."
+      },
+      "nogal": {
+        "name": "Walnut Wood",
+        "description": "Dense dark wood. Excellent for fine finishes."
+      },
+      "caoba": {
+        "name": "Mahogany Wood",
+        "description": "Precious reddish wood. Highly appreciated by craftsmen."
+      },
+      "ebano": {
+        "name": "Ebony Wood",
+        "description": "Rare black wood. Symbol of elegance and power."
+      },
+      "petreo": {
+        "name": "Petrified Wood",
+        "description": "Fossilized wood almost turned to stone. Extremely hard."
+      },
+      "ancestral": {
+        "name": "Ancestral Wood",
+        "description": "Ancient wood from past ages. Imbued with history."
+      },
+      "cristalina": {
+        "name": "Crystalline Wood",
+        "description": "Transparent shiny wood. Almost translucent."
+      },
+      "magica": {
+        "name": "Magical Wood",
+        "description": "Enchanted wood with arcane power. Channels magic."
+      },
+      "sagrada": {
+        "name": "Sacred Wood",
+        "description": "Blessed wood from temples. Radiates peace and protection."
+      },
+      "primordial": {
+        "name": "Primordial Wood",
+        "description": "Wood from the first times. Essence of the ancient forest."
+      },
+      "dimensional": {
+        "name": "Dimensional Wood",
+        "description": "Wood from other dimensions. Defies the laws of physics."
+      },
+      "divina": {
+        "name": "Divine Wood",
+        "description": "Wood of the gods. Supreme celestial material."
+      }
+    }
   },
   "messages": {
     "loading": "Loading...",
@@ -51,7 +207,9 @@
     "tier": "Progression Tier",
     "language": "Language",
     "spanish": "Spanish",
-    "english": "English"
+    "english": "English",
+    "active": "Active",
+    "inactive": "Inactive"
   },
   "errors": {
     "notFound": "Not found",

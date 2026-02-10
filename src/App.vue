@@ -7,22 +7,61 @@ import { RouterView } from 'vue-router'
 import { useRouter } from 'vue-router'
 import { onMounted, onUnmounted } from 'vue'
 import { useGameStore } from '@/stores'
+import { useSkillsStore } from '@/stores/skillsStore'
+import { useInventoryStore } from '@/stores/inventoryStore'
+import { usePlayerStore } from '@/stores/playerStore'
+import { GAME_CONSTANTS } from '@/types/Game'
 
 const router = useRouter()
 const gameStore = useGameStore()
+const skillsStore = useSkillsStore()
+const inventoryStore = useInventoryStore()
+const playerStore = usePlayerStore()
 
-// Auto-save cada 30 segundos
+// Timers
 let saveInterval: ReturnType<typeof setInterval> | null = null
+let gameLoopInterval: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
   // Inicializar juego (cargar datos guardados)
   gameStore.initializeGame()
+  
+  // Cargar datos persistidos
+  skillsStore.loadFromLocalStorage()
+  inventoryStore.loadFromLocalStorage()
+  playerStore.loadFromLocalStorage()
+
+  // Game loop - actualiza cada 100ms
+  gameLoopInterval = setInterval(() => {
+    // Procesar skills activos
+    const activeSkills = skillsStore.activeSkills
+    
+    activeSkills.forEach(skill => {
+      const now = Date.now()
+      // Si el ciclo se completó
+      if (skill.cycleEndTime > 0 && now >= skill.cycleEndTime) {
+        const result = skillsStore.completeCycle(skill.skill, inventoryStore)
+        
+        // Si se completó correctamente y el skill sigue activo, reiniciar automáticamente
+        if (result && skill.isActive) {
+          const currentState = skillsStore.getSkillState(skill.skill)
+          if (currentState.currentProduct) {
+            const cycleDurationMs = currentState.currentProduct.cycleDuration * 1000
+            skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
+          }
+        }
+      }
+    })
+  }, GAME_CONSTANTS.GAME_LOOP_TICK)
 
   // Auto-save periódico
   saveInterval = setInterval(() => {
     gameStore.saveGame()
+    skillsStore.saveToLocalStorage()
+    inventoryStore.saveToLocalStorage()
+    playerStore.saveToLocalStorage()
     console.log('[Game] Auto-save realizado')
-  }, 30000) // Cada 30 segundos
+  }, GAME_CONSTANTS.AUTO_SAVE_INTERVAL)
 
   // Si accedemos directamente a una ruta que no sea /loading, ir a loading
   if (router.currentRoute.value.path !== '/loading') {
@@ -38,8 +77,15 @@ onMounted(() => {
 onUnmounted(() => {
   // Guardar al desmontar la app
   gameStore.saveGame()
+  skillsStore.saveToLocalStorage()
+  inventoryStore.saveToLocalStorage()
+  playerStore.saveToLocalStorage()
+  
   if (saveInterval) {
     clearInterval(saveInterval)
+  }
+  if (gameLoopInterval) {
+    clearInterval(gameLoopInterval)
   }
 })
 </script>

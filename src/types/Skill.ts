@@ -7,12 +7,14 @@ import type { Item } from './Item'
 
 export interface SkillProduct {
   id: string
-  name: string
+  i18nKey: string // clave para i18n (e.g., 'resources.mineral.carbon.name')
+  i18nDescriptionKey: string // clave para descripción i18n (e.g., 'resources.mineral.carbon.description')
   item: Item
   level: number // nivel mínimo para desbloquear
   tier: Tier
   quantity: number // cantidad producida
   xpReward: number
+  cycleDuration: number // duración del ciclo en segundos
   requiredMaterials?: SkillMaterial[] // para crafting
 }
 
@@ -97,22 +99,26 @@ export function createSkillState(skill: Skill): SkillState {
  */
 export function createSkillProduct(
   id: string,
-  name: string,
+  i18nKey: string,
+  i18nDescriptionKey: string,
   item: Item,
   level: number,
   tier: Tier,
   quantity: number,
   xpReward: number,
+  cycleDuration: number,
   requiredMaterials?: SkillMaterial[]
 ): SkillProduct {
   return {
     id,
-    name,
+    i18nKey,
+    i18nDescriptionKey,
     item,
     level,
     tier,
     quantity,
     xpReward,
+    cycleDuration,
     requiredMaterials,
   }
 }

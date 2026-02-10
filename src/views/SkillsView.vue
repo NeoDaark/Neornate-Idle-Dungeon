@@ -1,27 +1,17 @@
 <template>
   <div class="skills-view">
-    <h1>{{ t('ui.menu.skills') }}</h1>
-    <p>{{ t('ui.menu.skills') }} - Próximamente</p>
+    <MiningSkill />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useI18n } from '@/composables/useI18n'
-
-const { t } = useI18n()
+import MiningSkill from '@/components/skills/MiningSkill.vue'
 </script>
 
 <style scoped>
 .skills-view {
   padding: 24px;
-}
-
-h1 {
-  color: var(--color-primary);
-  margin-bottom: 16px;
-}
-
-p {
-  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto;
 }
 </style>

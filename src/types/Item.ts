@@ -7,12 +7,10 @@ import { ItemType } from './Game'
 
 export interface Item {
   id: string
-  name: string
-  description: string
   type: ItemType
   icon: string
   value: number // precio en oro
-  tier: Tier
+  tier?: Tier // opcional - ya está definido en SkillProduct o Equipment
 }
 
 export interface Resource extends Item {
@@ -79,15 +77,12 @@ export interface InventorySlot {
  */
 export function createResource(
   id: string,
-  name: string,
   skill: Skill,
   value: number,
   tier: Tier
 ): Resource {
   return {
     id,
-    name,
-    description: `Recurso obtenido de ${skill}`,
     type: ItemType.RESOURCE,
     skill,
     icon: skill,
@@ -101,7 +96,6 @@ export function createResource(
  */
 export function createMaterial(
   id: string,
-  name: string,
   skill: Skill,
   value: number,
   tier: Tier,
@@ -109,8 +103,6 @@ export function createMaterial(
 ): Material {
   return {
     id,
-    name,
-    description: `Material para crafting`,
     type: ItemType.MATERIAL,
     skill,
     icon: skill,
@@ -125,7 +117,6 @@ export function createMaterial(
  */
 export function createEquipment(
   id: string,
-  name: string,
   equipmentType: WeaponType | ArmorType,
   stats: EquipmentStats,
   level: number,
@@ -135,8 +126,6 @@ export function createEquipment(
 ): Equipment {
   return {
     id,
-    name,
-    description: `${name} (+${quality})`,
     type: ItemType.EQUIPMENT,
     equipmentType,
     stats,
@@ -154,15 +143,12 @@ export function createEquipment(
  */
 export function createConsumable(
   id: string,
-  name: string,
   healAmount: number,
   value: number,
   tier: Tier
 ): Consumable {
   return {
     id,
-    name,
-    description: `Restaura ${healAmount} HP`,
     type: ItemType.CONSUMABLE,
     icon: 'potion',
     value,

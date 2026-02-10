@@ -2,103 +2,42 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { SkillState, SkillProduct, CycleResult } from '@/types/Skill'
 import { Skill, Tier } from '@/types/Game'
+import { SKILL_PRODUCTS_MAP } from '@/data/skillProducts'
 
 const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T7]
+
+/**
+ * Inicializar estado de skill con productos
+ */
+const initializeSkillState = (skill: Skill): SkillState => {
+  const skillProducts = SKILL_PRODUCTS_MAP[skill] || {}
+  const products = Object.values(skillProducts)
+  
+  return {
+    skill,
+    level: 1,
+    experience: 0,
+    totalExperience: 0,
+    tier: Tier.T1,
+    isActive: false,
+    autoComplete: false,
+    lastCycleTime: 0,
+    cycleEndTime: 0,
+    currentProduct: undefined,
+    products,
+  }
+}
 
 export const useSkillsStore = defineStore('skills', () => {
   // Estado: un SkillState por cada oficio
   const skillStates = ref<Record<Skill, SkillState>>({
-    [Skill.MINERIA]: {
-      skill: Skill.MINERIA,
-      level: 1,
-      experience: 0,
-      totalExperience: 0,
-      tier: Tier.T1,
-      isActive: false,
-      autoComplete: false,
-      lastCycleTime: 0,
-      cycleEndTime: 0,
-      currentProduct: undefined,
-      products: [],
-    },
-    [Skill.TALA]: {
-      skill: Skill.TALA,
-      level: 1,
-      experience: 0,
-      totalExperience: 0,
-      tier: Tier.T1,
-      isActive: false,
-      autoComplete: false,
-      lastCycleTime: 0,
-      cycleEndTime: 0,
-      currentProduct: undefined,
-      products: [],
-    },
-    [Skill.FUNDICION]: {
-      skill: Skill.FUNDICION,
-      level: 1,
-      experience: 0,
-      totalExperience: 0,
-      tier: Tier.T1,
-      isActive: false,
-      autoComplete: false,
-      lastCycleTime: 0,
-      cycleEndTime: 0,
-      currentProduct: undefined,
-      products: [],
-    },
-    [Skill.HERRERIA]: {
-      skill: Skill.HERRERIA,
-      level: 1,
-      experience: 0,
-      totalExperience: 0,
-      tier: Tier.T1,
-      isActive: false,
-      autoComplete: false,
-      lastCycleTime: 0,
-      cycleEndTime: 0,
-      currentProduct: undefined,
-      products: [],
-    },
-    [Skill.PESCA]: {
-      skill: Skill.PESCA,
-      level: 1,
-      experience: 0,
-      totalExperience: 0,
-      tier: Tier.T1,
-      isActive: false,
-      autoComplete: false,
-      lastCycleTime: 0,
-      cycleEndTime: 0,
-      currentProduct: undefined,
-      products: [],
-    },
-    [Skill.COCINA]: {
-      skill: Skill.COCINA,
-      level: 1,
-      experience: 0,
-      totalExperience: 0,
-      tier: Tier.T1,
-      isActive: false,
-      autoComplete: false,
-      lastCycleTime: 0,
-      cycleEndTime: 0,
-      currentProduct: undefined,
-      products: [],
-    },
-    [Skill.AVENTURA]: {
-      skill: Skill.AVENTURA,
-      level: 1,
-      experience: 0,
-      totalExperience: 0,
-      tier: Tier.T1,
-      isActive: false,
-      autoComplete: false,
-      lastCycleTime: 0,
-      cycleEndTime: 0,
-      currentProduct: undefined,
-      products: [],
-    },
+    [Skill.MINERIA]: initializeSkillState(Skill.MINERIA),
+    [Skill.TALA]: initializeSkillState(Skill.TALA),
+    [Skill.FUNDICION]: initializeSkillState(Skill.FUNDICION),
+    [Skill.HERRERIA]: initializeSkillState(Skill.HERRERIA),
+    [Skill.PESCA]: initializeSkillState(Skill.PESCA),
+    [Skill.COCINA]: initializeSkillState(Skill.COCINA),
+    [Skill.AVENTURA]: initializeSkillState(Skill.AVENTURA),
   })
 
   /**
@@ -192,12 +131,11 @@ export const useSkillsStore = defineStore('skills', () => {
   const activateSkill = (skill: Skill, product: SkillProduct, cycleDurationMs: number = 3000) => {
     const state = skillStates.value[skill]
 
-    // No permitir cambiar si ya está activo
-    if (state.isActive) return
-
+    const now = Date.now()
     state.isActive = true
     state.currentProduct = product
-    state.cycleEndTime = Date.now() + cycleDurationMs
+    state.lastCycleTime = now
+    state.cycleEndTime = now + cycleDurationMs
   }
 
   /**
@@ -214,10 +152,10 @@ export const useSkillsStore = defineStore('skills', () => {
    * Completar un ciclo de skill
    * Retorna los resultados (XP y item generado)
    */
-  const completeCycle = (skill: Skill): CycleResult | null => {
+  const completeCycle = (skill: Skill, inventoryStore?: any): CycleResult | null => {
     const state = skillStates.value[skill]
 
-    if (!state.currentProduct) {
+    if (!state.currentProduct || state.cycleEndTime === 0) {
       return null
     }
 
@@ -226,7 +164,14 @@ export const useSkillsStore = defineStore('skills', () => {
 
     addExperience(skill, xpGained)
 
-    state.lastCycleTime = Date.now()
+    // Agregar item al inventario si está disponible
+    if (inventoryStore) {
+      inventoryStore.addItem(product.item, product.quantity)
+    }
+
+    // Resetear ciclo - el componente decidirá si iniciar otro
+    state.cycleEndTime = 0
+    // NO actualizar lastCycleTime aquí - solo activateSkill lo debe hacer
 
     return {
       skill,
@@ -247,11 +192,25 @@ export const useSkillsStore = defineStore('skills', () => {
   }
 
   /**
-   * Guardar a localStorage
+   * Guardar a localStorage (sin productos, ya que se cargan desde skillProducts.ts)
    */
   const saveToLocalStorage = () => {
     try {
-      localStorage.setItem('neornate_skills', JSON.stringify(skillStates.value))
+      const toSave = Object.entries(skillStates.value).reduce((acc, [skill, state]) => {
+        acc[skill] = {
+          level: state.level,
+          experience: state.experience,
+          totalExperience: state.totalExperience,
+          tier: state.tier,
+          isActive: state.isActive,
+          autoComplete: state.autoComplete,
+          lastCycleTime: state.lastCycleTime,
+          cycleEndTime: state.cycleEndTime,
+          currentProduct: state.currentProduct,
+        }
+        return acc
+      }, {} as any)
+      localStorage.setItem('neornate_skills', JSON.stringify(toSave))
     } catch (error) {
       console.error('Error guardando skills:', error)
     }
@@ -265,7 +224,28 @@ export const useSkillsStore = defineStore('skills', () => {
       const saved = localStorage.getItem('neornate_skills')
       if (saved) {
         const loaded = JSON.parse(saved)
-        skillStates.value = { ...skillStates.value, ...loaded }
+        
+        // Fusionar con estados existentes preservando productos
+        Object.keys(skillStates.value).forEach(skillKey => {
+          const skill = skillKey as unknown as Skill
+          if (loaded[skillKey]) {
+            // Solo cargar los campos persistibles
+            const loadedData = loaded[skillKey]
+            skillStates.value[skill].level = loadedData.level ?? skillStates.value[skill].level
+            skillStates.value[skill].experience = loadedData.experience ?? skillStates.value[skill].experience
+            skillStates.value[skill].totalExperience = loadedData.totalExperience ?? skillStates.value[skill].totalExperience
+            skillStates.value[skill].tier = loadedData.tier ?? skillStates.value[skill].tier
+            skillStates.value[skill].isActive = loadedData.isActive ?? false
+            skillStates.value[skill].lastCycleTime = loadedData.lastCycleTime ?? 0
+            skillStates.value[skill].cycleEndTime = loadedData.cycleEndTime ?? 0
+            if (loadedData.currentProduct) {
+              // Buscar el producto en la lista cargada
+              skillStates.value[skill].currentProduct = skillStates.value[skill].products.find(
+                p => p.id === loadedData.currentProduct.id
+              )
+            }
+          }
+        })
       }
     } catch (error) {
       console.error('Error cargando skills:', error)

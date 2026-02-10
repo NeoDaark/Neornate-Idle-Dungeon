@@ -1,8 +1,9 @@
 # 📚 Implementación de Primera Skill: Minería
 
-## ✅ Estado Actual
+## ✅ Estado Actual (v1.0.2)
 
-Se ha completado la **primera skill (Minería)** con UI + almacenamiento funcional, incluyendo:
+Se ha completado la **primera skill (Minería)** con UI + almacenamiento funcional. Recientes mejoras incluyen:
+- Conversión de selector de productos a **dropdown compacto** (v1.0.2)
 - Sistema de confirmación para cambio de materiales
 - Integración completa de acciones (action field) en i18n
 - Modal de confirmación con soporte multiidioma
@@ -52,10 +53,13 @@ El sistema está listo para expandirse a otras 6 skills.
 - Indicador de estado (Activo/Inactivo)
 - **NUEVO**: Muestra acción + producto actual (ej: "Extrayendo Carbón")
 
-#### `ProductSelector.vue` - Selector de qué extraer
-- Lista de minerales disponibles (por nivel)
-- Sección separada de bloqueados
-- Información de XP y cantidad
+#### `ProductSelector.vue` - Selector de qué extraer (v1.0.2)
+**ACTUALIZADO en v1.0.2**: Convertido de lista expandida a **dropdown compacto**
+- **Antes**: 14 items de producto visibles en una lista scrolleable
+- **Ahora**: Select dropdown con opciones plegables + panel de información
+- Información de XP y cantidad en panel separado
+- Descripción detallada del producto seleccionado
+- Sección de "Materiales Bloqueados" en acordeón colapsable
 - **NUEVO**: Muestra acción + nombre (ej: "Extraer Carbón", "Cortar Roble")
 - **NUEVO**: Modal de confirmación al cambiar de producto mientras hay farmeo activo
 - **NUEVO**: Soporte para aceptar/cancelar cambio de material
@@ -81,6 +85,7 @@ Agregadas traducciones españolas para:
 - Descripciones detalladas de skills
 - **NUEVO**: Campo `action` en cada skill (Extraer, Cortar, Fundir, etc.)
 - **NUEVO**: Claves i18n para modal de confirmación
+- **v1.0.2**: `ui.m_select_material` para placeholder del dropdown
 
 ---
 
@@ -92,9 +97,11 @@ Vista → Oficios → Minería
 ```
 
 ### 2. **Seleccionar Mineral**
+- Click en el dropdown para ver opciones
 - Elige un mineral desbloqueado (nivel 1+)
-- Los bloqueados muestran nivel requerido
-- Se muestra la acción: "Extraer Carbón", "Extraer Cobre", etc.
+- Los bloqueados se pueden ver en la sección "Materiales Bloqueados" (acordeón)
+- Al seleccionar, se muestra la acción: "Extraer Carbón", "Extraer Cobre", etc.
+- Panel lateral muestra descripción + XP + cantidad
 
 ### 3. **Iniciar Ciclo**
 ```
@@ -105,7 +112,7 @@ Click "⛏️ Iniciar Minería"
 - XP: 10 (Carbón) hasta 400 (Draconita)
 
 ### 4. **Cambiar de Mineral Mientras se Farmea**
-Si hay un farmeo activo y haces click en otro mineral:
+Si hay un farmeo activo y cambias el dropdown a otro mineral:
 ```
 Modal de confirmación:
   "¿Deseas cambiar de material?"
@@ -140,7 +147,7 @@ App.vue (Game Loop 100ms)
   ├─ SkillsView.vue
   │  └─ MiningSkill.vue
   │     ├─ SkillCard.vue (progress bar)
-  │     └─ ProductSelector.vue (lista minerales)
+  │     └─ ProductSelector.vue (dropdown + info panel)
   │
   └─ localStorage (auto-save cada 30s)
 ```
@@ -331,7 +338,37 @@ onMounted(() => {
 
 ---
 
-## 📋 Changelog v1.0.1
+## 📋 Changelog
+
+### v1.0.2 - Dropdown UI para ProductSelector 📦
+
+#### Nuevas Funcionalidades ✨
+- Selector de productos convertido de lista expandida a **dropdown compacto**
+- Panel de información detallada del producto seleccionado
+- Acordeón colapsable para materiales bloqueados
+- Descripción del producto seleccionado visible en panel lateral
+
+#### Mejoras UX 🎨
+- Reducción significativa del espacio vertical utilizado
+- Interfaz más compacta y mobile-friendly
+- Información de material bloqueado organizada en acordeón con icono 👁️
+- Panel lateral muestra descripción completa + XP + cantidad
+
+#### Cambios Técnicos 🔧
+- ProductSelector.vue: Template reemplazado con `<select>` + panel info
+- Nuevos estilos CSS: `.product-select`, `.product-info`, `.locked-details`
+- i18n: Agregada clave `ui.m_select_material` para placeholder dropdown
+- Condición de guarda de tipo mejorada: `currentProduct && currentProduct.level <= playerLevel`
+
+#### Archivos Modificados
+- `src/components/skills/ProductSelector.vue` - Template + estilos
+- `src/locales/es.json` - Agregada clave `ui.m_select_material`
+- `src/locales/en.json` - Agregada clave `ui.m_select_material`
+- `_documents/06-IMPLEMENTACION_MINERIA.md` - Actualizado con v1.0.2
+
+---
+
+### v1.0.1 - Sistema de Confirmación y Acciones Dinámicas
 
 ### Nuevas Funcionalidades ✨
 - Sistema de confirmación modal para cambio de materiales

@@ -20,6 +20,7 @@
     "blocked": "Bloqueado",
     "m_blocked": "Materiales no disponibles",
     "m_available": "Materiales disponibles",
+    "m_select_material": "Selecciona un material",
     "m_confirm": "Cambiar Material",
     "m_change_product": "¿Deseas cambiar de material?",
     "m_change_product_desc": "Se detendrá la recolección actual.",

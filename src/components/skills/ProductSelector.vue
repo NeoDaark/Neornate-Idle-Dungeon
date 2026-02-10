@@ -73,43 +73,61 @@ const closeConfirmation = () => {
   <div class="product-selector">
     <h3>{{ t('ui.m_available') }}</h3>
 
-    <!-- Productos Disponibles -->
-    <div v-if="unlockedProducts.length > 0" class="products-list">
-      <div
-        v-for="product in unlockedProducts"
-        :key="product.id"
-        class="product-item"
-        :class="{ selected: currentProduct?.id === product.id }"
-        @click="selectProduct(product)"
+    <!-- Select Dropdown para Productos Disponibles -->
+    <div v-if="unlockedProducts.length > 0" class="select-wrapper">
+      <select
+        :value="currentProduct?.id || ''"
+        @change="(e) => {
+          const selectedId = (e.target as HTMLSelectElement).value
+          const product = unlockedProducts.find(p => p.id === selectedId)
+          if (product) selectProduct(product)
+        }"
+        class="product-select"
       >
-        <div class="product-icon">{{ product.item.icon }}</div>
-        <div class="product-info">
-          <h4>{{ skillAction }} {{ t(product.i18nKey) }}</h4>
-          <p class="level">{{ t('labels.level') }} {{ product.level }}</p>
-          <p class="reward">{{ product.xpReward }} XP</p>
+        <option value="" disabled>{{ t('ui.m_select_material') }}</option>
+        <option v-for="product in unlockedProducts" :key="product.id" :value="product.id">
+          {{ skillAction }} {{ t(product.i18nKey) }} - {{ t('labels.level') }} {{ product.level }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Info del Producto Seleccionado -->
+    <div v-if="currentProduct && currentProduct.level <= playerLevel" class="product-info">
+      <div class="info-content">
+        <div class="product-header">
+          <div class="icon">{{ currentProduct.item.icon }}</div>
+          <div class="details">
+            <h4>{{ skillAction }} {{ t(currentProduct.i18nKey) }}</h4>
+            <p class="level">{{ t('labels.level') }}: {{ currentProduct.level }}</p>
+            <p class="reward">{{ currentProduct.xpReward }} XP</p>
+            <p class="quantity">x{{ currentProduct.quantity }}</p>
+          </div>
         </div>
-        <div class="product-quantity">
-          <span>x{{ product.quantity }}</span>
+        <div v-if="currentProduct.i18nDescriptionKey" class="description">
+          {{ t(currentProduct.i18nDescriptionKey) }}
         </div>
       </div>
     </div>
 
-    <!-- Productos Bloqueados -->
+    <!-- Productos Bloqueados en Acordeón -->
     <div v-if="lockedProducts.length > 0" class="locked-section">
       <h4>{{ t('ui.m_blocked') }}</h4>
-      <div class="locked-products">
-        <div
-          v-for="product in lockedProducts"
-          :key="product.id"
-          class="product-item locked"
-        >
-          <div class="product-icon">🔒</div>
-        <div class="product-info">
-          <h4>{{ t(product.i18nKey) }}</h4>
-          <p class="level">{{ t('labels.level') }} {{ product.level }}</p>
+      <details class="locked-details">
+        <summary>👁️ Ver {{ lockedProducts.length }} materiales bloqueados</summary>
+        <div class="locked-products">
+          <div
+            v-for="product in lockedProducts"
+            :key="product.id"
+            class="locked-product-item"
+          >
+            <div class="lock-icon">🔒</div>
+            <div class="locked-info">
+              <h5>{{ t(product.i18nKey) }}</h5>
+              <p>{{ t('labels.level') }}: {{ product.level }}</p>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
+      </details>
     </div>
 
     <!-- Confirmación de Cambio de Producto -->
@@ -148,6 +166,183 @@ const closeConfirmation = () => {
   margin: 0 0 16px 0;
   color: var(--color-primary);
   font-size: 18px;
+}
+
+/* Select Dropdown Styles */
+.product-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-darker);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.product-select:hover {
+  border-color: var(--color-primary);
+}
+
+.product-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px rgba(255, 165, 0, 0.3);
+}
+
+.product-select option {
+  background: var(--bg-darker);
+  color: var(--text-primary);
+}
+
+/* Product Info Section */
+.product-info {
+  background: var(--bg-darker);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.icon {
+  font-size: 32px;
+  min-width: 40px;
+  text-align: center;
+  line-height: 1;
+}
+
+.details {
+  flex: 1;
+  min-width: 0;
+}
+
+.details h4 {
+  margin: 0 0 4px 0;
+  color: var(--text-primary);
+  font-size: 16px;
+  word-break: break-word;
+}
+
+.details p {
+  margin: 2px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.details .level {
+  color: var(--text-muted);
+}
+
+.details .reward {
+  color: var(--color-success);
+  font-weight: 500;
+}
+
+.details .quantity {
+  color: var(--color-warning);
+  font-weight: 500;
+}
+
+.description {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 8px;
+  background: var(--bg-card);
+  border-left: 2px solid var(--color-primary);
+  border-radius: 4px;
+}
+
+/* Locked Products Section */
+.locked-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.locked-section h4 {
+  margin: 0 0 8px 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.locked-details {
+  cursor: pointer;
+}
+
+.locked-details summary {
+  user-select: none;
+  padding: 10px;
+  background: var(--bg-darker);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.locked-details summary:hover {
+  border-color: var(--color-primary);
+  background: rgba(255, 165, 0, 0.05);
+}
+
+.locked-details[open] summary {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+}
+
+.locked-products {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-darker);
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 8px;
+}
+
+.locked-product-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  opacity: 0.7;
+}
+
+.lock-icon {
+  font-size: 18px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.locked-info h5 {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.locked-info p {
+  margin: 2px 0 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
 }
 
 .products-list {
@@ -191,12 +386,12 @@ const closeConfirmation = () => {
   text-align: center;
 }
 
-.product-info {
+.product-info-old {
   flex: 1;
   min-width: 0;
 }
 
-.product-info h4 {
+.product-info-old h4 {
   margin: 0;
   color: var(--text-primary);
   font-size: 14px;
@@ -220,24 +415,6 @@ const closeConfirmation = () => {
   text-align: right;
   color: var(--text-secondary);
   font-weight: 500;
-}
-
-.locked-section {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-color);
-}
-
-.locked-section h4 {
-  margin: 0 0 8px 0;
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
-.locked-products {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 /* Modal Styles */

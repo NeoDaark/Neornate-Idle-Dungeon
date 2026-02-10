@@ -10,15 +10,15 @@ import ProductSelector from './ProductSelector.vue'
 const skillsStore = useSkillsStore()
 const { t } = useI18n()
 
-const miningSkillState = computed(() => skillsStore.getSkillState(Skill.MINERIA))
-const miningConfig = computed(() => SKILL_CONFIGS[Skill.MINERIA])
+const loggingSkillState = computed(() => skillsStore.getSkillState(Skill.TALA))
+const loggingConfig = computed(() => SKILL_CONFIGS[Skill.TALA])
 const selectedProduct = ref<SkillProduct | undefined>()
 const cycleProgress = ref(0)
 const showNotification = ref(false)
 const notificationMessage = ref('')
 
 // Sincronizar producto actual si está definido
-watch(() => miningSkillState.value.currentProduct, (newProduct) => {
+watch(() => loggingSkillState.value.currentProduct, (newProduct) => {
   if (newProduct) {
     selectedProduct.value = newProduct
   }
@@ -26,8 +26,8 @@ watch(() => miningSkillState.value.currentProduct, (newProduct) => {
 
 // Detectar cuando se completa un ciclo para mostrar notificación
 watch(() => ({ 
-  experience: miningSkillState.value.experience,
-  cycleEndTime: miningSkillState.value.cycleEndTime
+  experience: loggingSkillState.value.experience,
+  cycleEndTime: loggingSkillState.value.cycleEndTime
 }), (newVal, oldVal) => {
   // Si la experiencia cambió, significa que se completó un ciclo
   if (newVal.experience !== oldVal?.experience && selectedProduct.value) {
@@ -37,7 +37,7 @@ watch(() => ({
 }, { deep: true })
 
 // Watcher separado para detectar cambios en cycleEndTime
-watch(() => miningSkillState.value.cycleEndTime, (newCycleEndTime, oldCycleEndTime) => {
+watch(() => loggingSkillState.value.cycleEndTime, (newCycleEndTime, oldCycleEndTime) => {
   // Si cycleEndTime cambió de 0 a un valor positivo, significa que se inició un nuevo ciclo
   if ((oldCycleEndTime === 0 || oldCycleEndTime === undefined) && newCycleEndTime > 0) {
     // Reiniciar el loop de animación
@@ -48,8 +48,8 @@ watch(() => miningSkillState.value.cycleEndTime, (newCycleEndTime, oldCycleEndTi
 // Calcular progreso del ciclo
 const calculateCycleProgress = () => {
   const now = Date.now()
-  const endTime = miningSkillState.value.cycleEndTime
-  const startTime = miningSkillState.value.lastCycleTime
+  const endTime = loggingSkillState.value.cycleEndTime
+  const startTime = loggingSkillState.value.lastCycleTime
 
   if (endTime === 0 || startTime === 0) return 0
 
@@ -67,20 +67,20 @@ const updateProgress = () => {
   const newProgress = calculateCycleProgress()
   cycleProgress.value = newProgress
 
-  if (miningSkillState.value.isActive) {
+  if (loggingSkillState.value.isActive) {
     requestAnimationFrame(updateProgress)
   }
 }
 
-// Iniciar minería
-const startMining = () => {
+// Iniciar tala
+const startLogging = () => {
   if (!selectedProduct.value) {
-    showMessage('Selecciona un mineral primero')
+    showMessage('Selecciona una madera primero')
     return
   }
 
   // Detener cualquier otro oficio activo
-  const otherSkills = [Skill.TALA, Skill.FUNDICION, Skill.HERRERIA, Skill.PESCA, Skill.COCINA, Skill.AVENTURA]
+  const otherSkills = [Skill.MINERIA, Skill.FUNDICION, Skill.HERRERIA, Skill.PESCA, Skill.COCINA, Skill.AVENTURA]
   for (const skill of otherSkills) {
     const skillState = skillsStore.getSkillState(skill)
     if (skillState.isActive) {
@@ -89,14 +89,14 @@ const startMining = () => {
   }
 
   const cycleDuration = selectedProduct.value.cycleDuration * 1000
-  skillsStore.activateSkill(Skill.MINERIA, selectedProduct.value, cycleDuration)
+  skillsStore.activateSkill(Skill.TALA, selectedProduct.value, cycleDuration)
   cycleProgress.value = 0
   updateProgress()
 }
 
-// Detener minería
-const stopMining = () => {
-  skillsStore.deactivateSkill(Skill.MINERIA)
+// Detener tala
+const stopLogging = () => {
+  skillsStore.deactivateSkill(Skill.TALA)
   cycleProgress.value = 0
 }
 
@@ -114,50 +114,50 @@ const selectProduct = (product: SkillProduct) => {
   selectedProduct.value = product
   
   // Si hay un farmeo activo, detenerlo e iniciar uno nuevo
-  if (miningSkillState.value.isActive) {
-    stopMining()
+  if (loggingSkillState.value.isActive) {
+    stopLogging()
     // Usar setTimeout para asegurar que se detiene antes de iniciar el nuevo
     setTimeout(() => {
-      startMining()
+      startLogging()
     }, 100)
   } else {
     // Establecer como producto actual solo si no está activo
-    skillsStore.getSkillState(Skill.MINERIA).currentProduct = product
+    skillsStore.getSkillState(Skill.TALA).currentProduct = product
   }
 }
 
 onMounted(() => {
   // Si hay un producto actualmente, seleccionarlo
-  if (miningSkillState.value.currentProduct) {
-    selectedProduct.value = miningSkillState.value.currentProduct
-  } else if (miningSkillState.value.products.length > 0) {
-    selectedProduct.value = miningSkillState.value.products[0]
+  if (loggingSkillState.value.currentProduct) {
+    selectedProduct.value = loggingSkillState.value.currentProduct
+  } else if (loggingSkillState.value.products.length > 0) {
+    selectedProduct.value = loggingSkillState.value.products[0]
   }
 
   // Iniciar loop de animación si estaba activo
-  if (miningSkillState.value.isActive) {
+  if (loggingSkillState.value.isActive) {
     updateProgress()
   }
 })
 </script>
 
 <template>
-  <div class="mining-skill">
+  <div class="logging-skill">
     <div class="header">
-      <h2>{{ miningConfig.emoji }} {{ t('skills.mineria.name') }}</h2>
-      <p class="description">{{ t('skills.mineria.description') }}</p>
+      <h2>{{ loggingConfig.emoji }} {{ t('skills.tala.name') }}</h2>
+      <p class="description">{{ t('skills.tala.description') }}</p>
     </div>
 
     <div class="content">
       <!-- Skill Card -->
       <SkillCard
-        :skill-state="miningSkillState"
-        :is-active="miningSkillState.isActive"
+        :skill-state="loggingSkillState"
+        :is-active="loggingSkillState.isActive"
       />
 
       <!-- Control Panel -->
       <div class="control-panel">
-        <div class="cycle-progress" v-if="miningSkillState.isActive">
+        <div class="cycle-progress" v-if="loggingSkillState.isActive">
           <div class="progress-bar">
             <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
           </div>
@@ -166,17 +166,16 @@ onMounted(() => {
 
         <div class="button-group">
           <button
-            v-if="!miningSkillState.isActive"
-            class="btn btn-primary"
-            :disabled="!selectedProduct"
-            @click="startMining"
+            v-if="!loggingSkillState.isActive"
+            class="btn btn-success"
+            @click="startLogging"
           >
-            ⛏️ Iniciar Minería
+            🌲 Iniciar Tala
           </button>
           <button
             v-else
             class="btn btn-danger"
-            @click="stopMining"
+            @click="stopLogging"
           >
             ⏹️ Detener
           </button>
@@ -185,11 +184,11 @@ onMounted(() => {
 
       <!-- Product Selector -->
       <ProductSelector
-        :products="miningSkillState.products"
+        :products="loggingSkillState.products"
         :current-product="selectedProduct"
-        :player-level="miningSkillState.level"
-        :skill="miningSkillState.skill"
-        :is-active="miningSkillState.isActive"
+        :player-level="loggingSkillState.level"
+        :skill="loggingSkillState.skill"
+        :is-active="loggingSkillState.isActive"
         @select="selectProduct"
       />
 
@@ -204,10 +203,10 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.mining-skill {
+.logging-skill {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .header {
@@ -237,112 +236,84 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
 }
 
 .cycle-progress {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
 }
 
 .progress-bar {
-  width: 100%;
-  height: 12px;
+  flex: 1;
+  height: 8px;
   background: var(--bg-darker);
-  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   transition: width 0.1s linear;
 }
 
 .cycle-progress p {
   margin: 0;
-  text-align: center;
   color: var(--text-secondary);
   font-size: 12px;
-  font-weight: 500;
+  min-width: 30px;
+  text-align: right;
 }
 
 .button-group {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
   gap: 8px;
 }
 
 .btn {
+  flex: 1;
   padding: 12px 16px;
-  border: 1px solid var(--border-color);
+  border: none;
   border-radius: 6px;
-  background: var(--bg-darker);
-  color: var(--text-primary);
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
   font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.btn:hover:not(:disabled) {
-  border-color: var(--color-primary);
-  background: rgba(255, 165, 0, 0.1);
+.btn-success {
+  background: var(--color-success);
+  color: var(--bg-dark);
 }
 
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-primary {
-  background: var(--color-primary);
-  color: #000;
-  border-color: var(--color-primary);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: var(--color-secondary);
-  border-color: var(--color-secondary);
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(85, 255, 85, 0.3);
 }
 
 .btn-danger {
   background: var(--color-danger);
-  color: #fff;
-  border-color: var(--color-danger);
+  color: white;
 }
 
 .btn-danger:hover {
-  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 85, 85, 0.3);
 }
 
 .notification {
   position: fixed;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 20px;
   background: var(--color-success);
-  color: #000;
-  padding: 12px 20px;
+  color: var(--bg-dark);
+  padding: 16px 24px;
   border-radius: 6px;
-  font-weight: 500;
-  z-index: 1000;
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(85, 255, 85, 0.3);
+  z-index: 100;
 }
 
 .slide-up-enter-active,
@@ -350,9 +321,13 @@ onMounted(() => {
   transition: all 0.3s ease;
 }
 
-.slide-up-enter-from,
-.slide-up-leave-to {
+.slide-up-enter-from {
+  transform: translateY(100px);
   opacity: 0;
-  transform: translateX(-50%) translateY(20px);
+}
+
+.slide-up-leave-to {
+  transform: translateY(100px);
+  opacity: 0;
 }
 </style>

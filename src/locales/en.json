@@ -20,6 +20,7 @@
     "blocked": "Blocked",
     "m_blocked": "Unavailable materials",
     "m_available": "Available materials",
+    "m_select_material": "Select a material",
     "m_confirm": "Change Material",
     "m_change_product": "Do you want to change material?",
     "m_change_product_desc": "Current farming will be stopped.",

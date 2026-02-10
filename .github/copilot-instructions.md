@@ -43,6 +43,12 @@ src/
 - `vite.config.ts`: Vite configuration with `@` alias for `src/`
 - `index.html`: Entry HTML (mounts Vue app to `#app`)
 
+### **Documentation Files**
+- `_documents/01-SISTEMA_OFICIOS.md`: Game mechanics & skill progression
+- `_documents/02-TIPOS_BASE.md`: Type system overview
+- `_documents/03-SISTEMA_i18n.md`: Multi-language support implementation
+- `_documents/04-SISTEMA_CLASES.md`: Progressive class system with specializations
+
 ---
 
 ## 🎯 Critical Development Patterns
@@ -253,6 +259,13 @@ XP_next_level = 100 + (nivel × 50) + (tier × 300)
 
 Example: Level 20 needs ~1,500 XP to reach level 21.
 
+### **Progressive Class System** (See `_documents/04-SISTEMA_CLASES.md`)
+- **T1-T2**: Single base class per archetype (Guerrero, Ladrón, Mago)
+- **T3-T7**: Multiple specialization branches per base class
+- **Example**: Guerrero → Caballero → {Paladín, Centurión} → {Dragoon, Gladiador}
+- **Architecture**: One player character, multiple progression paths via `PlayerClass = BaseClass | SpecializedClass`
+- **Type Safety**: Discriminated unions + type guards for robust class handling
+
 ---
 
 ## ⚠️ Known Limitations & TODOs
@@ -311,6 +324,68 @@ To get productive quickly:
 4. **Styling**: Always use CSS variables defined in `main.css`
 5. **TypeScript**: Enable strict mode in your IDE; no `any` types
 6. **Mobile First**: Remember this is for iOS/Android - test on small screens
+
+### ⚠️ Important: Do NOT Create Summaries
+
+**DO NOT** create summary files, status reports, or "implementation completed" documents. Instead:
+
+- ✅ **Edit existing documentation** (`_documents/*.md`)
+- ✅ **Update type definitions** directly in code
+- ✅ **Modify code** with the appropriate tools
+- ❌ **Don't create**: `STATUS.md`, `SUMMARY.md`, `IMPLEMENTADO.md`, `CAMBIOS.md`, etc.
+- ❌ **Don't use tools to**: "Create a summary of changes"
+
+**Exception**: Only create documentation files if:
+1. It's part of the `_documents/` directory (system documentation)
+2. User explicitly requests a specific file
+3. It's a configuration file (tsconfig, package.json, etc.)
+
+Focus on **shipping working code**, not writing about it.
+
+---
+
+## 🌍 Multi-Language Support (i18n) - **CRITICAL**
+
+**Every user-facing text must support multiple languages from the start.**
+
+### Quick Rules
+1. **No hardcoded UI strings** - Use `t('key.path')` exclusively
+2. **Structure**: `ui.`, `skills.`, `items.`, `messages.`, `labels.`, `errors.`
+3. **Default language**: Spanish (es)
+4. **Supported**: Spanish → English → (French, Portuguese future)
+
+### Example
+```vue
+<!-- ❌ WRONG -->
+<h1>Bienvenido</h1>
+
+<!-- ✅ RIGHT -->
+<h1>{{ t('ui.welcome') }}</h1>
+```
+
+**Reference**: See `_documents/03-SISTEMA_i18n.md` for full i18n setup and conventions.
+
+---
+
+## 📝 Documentation Standards
+
+### What to Document
+- ✅ **Architectural decisions** (why, not what)
+- ✅ **One system = One document** (`01-SISTEMA_X.md`)
+- ✅ **Actionable content** (instructions, not descriptions)
+- ✅ **Setup guides** (copilot-instructions.md)
+
+### What NOT to Document
+- ❌ **Redundant explanations** (same info in multiple files)
+- ❌ **ASCII art boxes** (│ characters misalign across editors)
+- ❌ **Implementation details** (use JSDoc in code instead)
+- ❌ **Verbose dumps** (keep focused and concise)
+
+### Approved Visuals
+- ✅ Markdown tables
+- ✅ Mermaid diagrams (if added to project)
+- ✅ Tree structures (with `├─`, no `│` borders)
+- ✅ Code examples with comments
 
 ---
 

@@ -14,7 +14,8 @@
       "dungeon": "Dungeon",
       "market": "Market",
       "settings": "Settings",
-      "language": "Language"
+      "language": "Language",
+      "toggle": "Toggle menu"
     }
   },
   "skills": {

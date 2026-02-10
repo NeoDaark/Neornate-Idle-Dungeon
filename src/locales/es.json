@@ -14,7 +14,8 @@
       "dungeon": "Mazmorra",
       "market": "Mercado",
       "settings": "Configuración",
-      "language": "Idioma"
+      "language": "Idioma",
+      "toggle": "Alternar menú"
     }
   },
   "skills": {

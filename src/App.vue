@@ -31,6 +31,16 @@ onMounted(() => {
   inventoryStore.loadFromLocalStorage()
   playerStore.loadFromLocalStorage()
 
+  // Pre-cargar componentes críticos para mejor rendimiento
+  // Esto evita que haya lag cuando el usuario navega a Skills por primera vez
+  Promise.all([
+    import('@/views/SkillsView.vue'),
+    import('@/components/skills/MiningSkill.vue'),
+    import('@/components/skills/LoggingSkill.vue'),
+  ]).catch(() => {
+    // Ignorar errores de pre-carga (no crítico)
+  })
+
   // Game loop - actualiza cada 100ms
   gameLoopInterval = setInterval(() => {
     // Procesar skills activos

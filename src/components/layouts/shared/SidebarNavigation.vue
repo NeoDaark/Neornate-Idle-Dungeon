@@ -242,16 +242,22 @@ defineEmits<{
   border-radius: 6px;
   text-decoration: none;
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   cursor: pointer;
   border: 1px solid transparent;
   background: transparent;
   font: inherit;
+  will-change: background-color, color, transform;
 }
 
 .nav-item:hover {
   color: var(--text-primary);
   background: rgba(255, 165, 0, 0.1);
+}
+
+.nav-item:active {
+  background: rgba(255, 165, 0, 0.2);
+  transform: scale(0.98);
 }
 
 .nav-item.active {
@@ -330,14 +336,20 @@ defineEmits<{
   border-radius: 4px;
   text-decoration: none;
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border: 1px solid transparent;
   font-size: 0.9rem;
+  will-change: background-color, color, transform;
 }
 
 .nav-subitem:hover {
   color: var(--text-primary);
   background: rgba(255, 165, 0, 0.08);
+}
+
+.nav-subitem:active {
+  background: rgba(255, 165, 0, 0.15);
+  transform: scale(0.98);
 }
 
 .nav-subitem.active {

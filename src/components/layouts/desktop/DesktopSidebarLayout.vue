@@ -7,7 +7,9 @@
 
     <!-- Contenido principal -->
     <main class="desktop-content">
-      <RouterView />
+      <Transition name="fade-scale" mode="out-in">
+        <RouterView />
+      </Transition>
     </main>
   </div>
 </template>
@@ -62,5 +64,21 @@ import SidebarNavigation from '../shared/SidebarNavigation.vue'
 .desktop-sidebar::-webkit-scrollbar-thumb:hover,
 .desktop-content::-webkit-scrollbar-thumb:hover {
   background: var(--text-secondary);
+}
+
+/* ===== TRANSITIONS ===== */
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: all 0.1s ease;
+}
+
+.fade-scale-enter-from {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.fade-scale-leave-to {
+  opacity: 0.5;
+  transform: scale(1.02);
 }
 </style>

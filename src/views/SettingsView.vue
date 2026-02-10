@@ -42,7 +42,13 @@ const { t, locale, setLocale } = useI18n()
 <style scoped>
 .settings-view {
   padding: 24px;
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 h1 {
@@ -52,12 +58,15 @@ h1 {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .settings-container {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  flex: 1;
+  overflow-y: auto;
 }
 
 /* ============ SETTINGS SECTION ============ */

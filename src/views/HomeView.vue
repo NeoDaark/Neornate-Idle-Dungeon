@@ -8,25 +8,14 @@
         <p class="status">{{ t('ui.status.working') }}</p>
         <p class="framework">{{ t('ui.framework') }}</p>
       </div>
-      <!-- Selector de idioma -->
-      <div class="language-selector">
-        <button
-          v-for="lang in ['es', 'en']"
-          :key="lang"
-          :class="{ active: locale === lang }"
-          @click="setLocale(lang as Locale)"
-        >
-          {{ lang.toUpperCase() }}
-        </button>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useI18n, type Locale } from '@/composables/useI18n'
+import { useI18n } from '@/composables/useI18n'
 
-const { t, locale, setLocale } = useI18n()
+const { t } = useI18n()
 
 console.log('✓ HomeView cargado')
 </script>
@@ -34,12 +23,12 @@ console.log('✓ HomeView cargado')
 <style scoped>
 .home {
   width: 100%;
-  height: 100vh;
-  background: linear-gradient(135deg, #0e0e0e 0%, #1a1a1a 100%);
+  min-height: 100%;
+  background: linear-gradient(135deg, rgba(14, 14, 14, 0) 0%, rgba(26, 26, 26, 0) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
 .container {
@@ -96,34 +85,5 @@ h1 {
   color: #999;
   font-size: 12px;
   margin-top: 16px;
-}
-
-.language-selector {
-  margin-top: 32px;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-.language-selector button {
-  padding: 8px 16px;
-  background: var(--bg-card);
-  border: 2px solid var(--border-color);
-  color: var(--text-primary);
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.language-selector button:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.language-selector button.active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #000;
 }
 </style>

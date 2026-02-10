@@ -13,7 +13,8 @@
       "inventory": "Inventario",
       "dungeon": "Mazmorra",
       "market": "Mercado",
-      "settings": "Configuración"
+      "settings": "Configuración",
+      "language": "Idioma"
     }
   },
   "skills": {
@@ -46,7 +47,10 @@
     "strength": "Fuerza",
     "intelligence": "Inteligencia",
     "class": "Clase",
-    "tier": "Nivel de Progresión"
+    "tier": "Nivel de Progresión",
+    "language": "Idioma",
+    "spanish": "Español",
+    "english": "Inglés"
   },
   "errors": {
     "notFound": "No encontrado",

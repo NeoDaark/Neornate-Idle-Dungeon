@@ -13,7 +13,8 @@
       "inventory": "Inventory",
       "dungeon": "Dungeon",
       "market": "Market",
-      "settings": "Settings"
+      "settings": "Settings",
+      "language": "Language"
     }
   },
   "skills": {
@@ -46,7 +47,10 @@
     "strength": "Strength",
     "intelligence": "Intelligence",
     "class": "Class",
-    "tier": "Progression Tier"
+    "tier": "Progression Tier",
+    "language": "Language",
+    "spanish": "Spanish",
+    "english": "English"
   },
   "errors": {
     "notFound": "Not found",

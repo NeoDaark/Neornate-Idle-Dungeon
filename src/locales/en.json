@@ -28,7 +28,11 @@
     "m_cancel": "Cancel",
     "unavailable": "Unavailable",
     "search_items": "Search items...",
-    "inventory_empty": "Inventory empty"
+    "inventory_empty": "Inventory empty",
+    "no_requirements": "No requirements",
+    "other_skills": "Other Skills",
+    "stop": "Stop",
+    "missing_materials": "Insufficient materials"
 
   },
   "skills": {
@@ -191,6 +195,64 @@
         "name": "Divine Wood",
         "description": "Wood of the gods. Supreme celestial material."
       }
+    },
+    "ingots": {
+      "carbon": {
+        "name": "Coal Ingot",
+        "description": "Refined coal ingot. Base for basic metalworking."
+      },
+      "cobre": {
+        "name": "Copper Ingot",
+        "description": "Malleable copper ingot. Excellent conductor."
+      },
+      "hierro": {
+        "name": "Iron Ingot",
+        "description": "Resistant iron ingot. Fundamental material for weapons."
+      },
+      "plata": {
+        "name": "Silver Ingot",
+        "description": "Precious silver ingot. Highly valued in jewelry."
+      },
+      "tungsteno": {
+        "name": "Tungsten Ingot",
+        "description": "Ultra-resistant tungsten ingot. For elite weapons."
+      },
+      "oro": {
+        "name": "Gold Ingot",
+        "description": "Precious gold ingot. Symbol of supreme wealth."
+      },
+      "platino": {
+        "name": "Platinum Ingot",
+        "description": "Noble platinum ingot. Supreme kingdom material."
+      },
+      "obsidiana": {
+        "name": "Obsidian Ingot",
+        "description": "Volcanic glass ingot. Sharp and magical."
+      },
+      "cobalto": {
+        "name": "Cobalt Ingot",
+        "description": "Exotic bluish ingot. Toxic but powerful."
+      },
+      "mithril": {
+        "name": "Mithril Ingot",
+        "description": "Mythical shiny ingot. Legend forged."
+      },
+      "oricalco": {
+        "name": "Orichalcum Ingot",
+        "description": "Divine golden ingot. Celestial power condensed."
+      },
+      "adamantita": {
+        "name": "Adamantite Ingot",
+        "description": "Indestructible ingot. The matter of eternity."
+      },
+      "titanio": {
+        "name": "Titanium Ingot",
+        "description": "Titan ingot. Strength of the cosmos."
+      },
+      "draconita": {
+        "name": "Dragonite Ingot",
+        "description": "Dragon ingot. Concentrated draconic power."
+      }
     }
   },
   "messages": {
@@ -230,7 +292,12 @@
     "slot_OFF_HAND": "Off Hand",
     "slot_RING_1": "Ring 1",
     "slot_RING_2": "Ring 2",
-    "slot_ACCESSORY": "Accessory"
+    "slot_ACCESSORY": "Accessory",
+    "requirements": "Requirements",
+    "cycle_info": "Cycle Info",
+    "cycle_duration": "Cycle Duration",
+    "xp_reward": "XP Reward",
+    "quantity": "Quantity"
   },
   "errors": {
     "notFound": "Not found",

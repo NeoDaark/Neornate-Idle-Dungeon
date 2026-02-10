@@ -498,13 +498,270 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
 }
 
 // ============================================================================
+// FUNDICIÓN - Productos (convierte minerales en lingotes)
+// ============================================================================
+
+export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
+  // T1
+  'cobre_ingot': {
+    id: 'cobre_ingot',
+    i18nKey: 'resources.ingots.cobre.name',
+    i18nDescriptionKey: 'resources.ingots.cobre.description',
+    item: {
+      id: 'cobre_ingot',
+      type: ItemType.MATERIAL,
+      icon: '🟠',
+      value: 12,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 1,
+    tier: Tier.T1,
+    quantity: 1,
+    xpReward: 20,
+    cycleDuration: 48,
+    requiredMaterials: [
+      { itemId: 'cobre', quantity: 1 },
+      { itemId: 'carbon', quantity: 1 }
+    ],
+  },
+
+  // T2
+  'hierro_ingot': {
+    id: 'hierro_ingot',
+    i18nKey: 'resources.ingots.hierro.name',
+    i18nDescriptionKey: 'resources.ingots.hierro.description',
+    item: {
+      id: 'hierro_ingot',
+      type: ItemType.MATERIAL,
+      icon: '🔳',
+      value: 28,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 20,
+    tier: Tier.T2,
+    quantity: 1,
+    xpReward: 35,
+    cycleDuration: 46,
+    requiredMaterials: [{ itemId: 'hierro', quantity: 2 }],
+  },
+  'plata_ingot': {
+    id: 'plata_ingot',
+    i18nKey: 'resources.ingots.plata.name',
+    i18nDescriptionKey: 'resources.ingots.plata.description',
+    item: {
+      id: 'plata_ingot',
+      type: ItemType.MATERIAL,
+      icon: '⚪',
+      value: 42,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 25,
+    tier: Tier.T2,
+    quantity: 1,
+    xpReward: 45,
+    cycleDuration: 44,
+    requiredMaterials: [{ itemId: 'plata', quantity: 2 }],
+  },
+
+  // T3
+  'tungsteno_ingot': {
+    id: 'tungsteno_ingot',
+    i18nKey: 'resources.ingots.tungsteno.name',
+    i18nDescriptionKey: 'resources.ingots.tungsteno.description',
+    item: {
+      id: 'tungsteno_ingot',
+      type: ItemType.MATERIAL,
+      icon: '🟦',
+      value: 70,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 40,
+    tier: Tier.T3,
+    quantity: 1,
+    xpReward: 70,
+    cycleDuration: 42,
+    requiredMaterials: [{ itemId: 'tungsteno', quantity: 2 }],
+  },
+  'oro_ingot': {
+    id: 'oro_ingot',
+    i18nKey: 'resources.ingots.oro.name',
+    i18nDescriptionKey: 'resources.ingots.oro.description',
+    item: {
+      id: 'oro_ingot',
+      type: ItemType.MATERIAL,
+      icon: '🟡',
+      value: 100,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 45,
+    tier: Tier.T3,
+    quantity: 1,
+    xpReward: 85,
+    cycleDuration: 40,
+    requiredMaterials: [{ itemId: 'oro', quantity: 1 }],
+  },
+
+  // T4
+  'platino_ingot': {
+    id: 'platino_ingot',
+    i18nKey: 'resources.ingots.platino.name',
+    i18nDescriptionKey: 'resources.ingots.platino.description',
+    item: {
+      id: 'platino_ingot',
+      type: ItemType.MATERIAL,
+      icon: '💫',
+      value: 130,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 60,
+    tier: Tier.T4,
+    quantity: 1,
+    xpReward: 110,
+    cycleDuration: 38,
+    requiredMaterials: [{ itemId: 'platino', quantity: 1 }],
+  },
+  'obsidiana_ingot': {
+    id: 'obsidiana_ingot',
+    i18nKey: 'resources.ingots.obsidiana.name',
+    i18nDescriptionKey: 'resources.ingots.obsidiana.description',
+    item: {
+      id: 'obsidiana_ingot',
+      type: ItemType.MATERIAL,
+      icon: '⬛',
+      value: 150,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 65,
+    tier: Tier.T4,
+    quantity: 1,
+    xpReward: 130,
+    cycleDuration: 36,
+    requiredMaterials: [{ itemId: 'obsidiana', quantity: 1 }],
+  },
+
+  // T5
+  'cobalto_ingot': {
+    id: 'cobalto_ingot',
+    i18nKey: 'resources.ingots.cobalto.name',
+    i18nDescriptionKey: 'resources.ingots.cobalto.description',
+    item: {
+      id: 'cobalto_ingot',
+      type: ItemType.MATERIAL,
+      icon: '🔵',
+      value: 180,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 80,
+    tier: Tier.T5,
+    quantity: 1,
+    xpReward: 155,
+    cycleDuration: 34,
+    requiredMaterials: [{ itemId: 'cobalto', quantity: 1 }],
+  },
+  'mithril_ingot': {
+    id: 'mithril_ingot',
+    i18nKey: 'resources.ingots.mithril.name',
+    i18nDescriptionKey: 'resources.ingots.mithril.description',
+    item: {
+      id: 'mithril_ingot',
+      type: ItemType.MATERIAL,
+      icon: '✨',
+      value: 220,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 90,
+    tier: Tier.T5,
+    quantity: 1,
+    xpReward: 180,
+    cycleDuration: 32,
+    requiredMaterials: [{ itemId: 'mithril', quantity: 1 }],
+  },
+
+  // T6
+  'oricalco_ingot': {
+    id: 'oricalco_ingot',
+    i18nKey: 'resources.ingots.oricalco.name',
+    i18nDescriptionKey: 'resources.ingots.oricalco.description',
+    item: {
+      id: 'oricalco_ingot',
+      type: ItemType.MATERIAL,
+      icon: '👑',
+      value: 260,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 100,
+    tier: Tier.T6,
+    quantity: 1,
+    xpReward: 210,
+    cycleDuration: 30,
+    requiredMaterials: [{ itemId: 'oricalco', quantity: 1 }],
+  },
+  'adamantita_ingot': {
+    id: 'adamantita_ingot',
+    i18nKey: 'resources.ingots.adamantita.name',
+    i18nDescriptionKey: 'resources.ingots.adamantita.description',
+    item: {
+      id: 'adamantita_ingot',
+      type: ItemType.MATERIAL,
+      icon: '💠',
+      value: 310,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 105,
+    tier: Tier.T6,
+    quantity: 1,
+    xpReward: 240,
+    cycleDuration: 28,
+    requiredMaterials: [{ itemId: 'adamantita', quantity: 1 }],
+  },
+
+  // T7
+  'titanio_ingot': {
+    id: 'titanio_ingot',
+    i18nKey: 'resources.ingots.titanio.name',
+    i18nDescriptionKey: 'resources.ingots.titanio.description',
+    item: {
+      id: 'titanio_ingot',
+      type: ItemType.MATERIAL,
+      icon: '⚔️',
+      value: 400,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 120,
+    tier: Tier.T7,
+    quantity: 1,
+    xpReward: 300,
+    cycleDuration: 26,
+    requiredMaterials: [{ itemId: 'titanio', quantity: 1 }],
+  },
+  'draconita_ingot': {
+    id: 'draconita_ingot',
+    i18nKey: 'resources.ingots.draconita.name',
+    i18nDescriptionKey: 'resources.ingots.draconita.description',
+    item: {
+      id: 'draconita_ingot',
+      type: ItemType.MATERIAL,
+      icon: '🐉',
+      value: 550,
+      skill: Skill.FUNDICION,
+    } as any,
+    level: 150,
+    tier: Tier.T7,
+    quantity: 1,
+    xpReward: 380,
+    cycleDuration: 24,
+    requiredMaterials: [{ itemId: 'draconita', quantity: 1 }],
+  },
+}
+
+// ============================================================================
 // Mapeo de Skills → Productos
 // ============================================================================
 
 export const SKILL_PRODUCTS_MAP: Record<Skill, Record<string, SkillProduct>> = {
   [Skill.MINERIA]: MINING_PRODUCTS,
   [Skill.TALA]: LOGGING_PRODUCTS,
-  [Skill.FUNDICION]: {}, // TODO: Implementar fundición
+  [Skill.FUNDICION]: SMELTING_PRODUCTS, // TODO: Implementar fundición
   [Skill.HERRERIA]: {}, // TODO: Implementar herrería
   [Skill.PESCA]: {}, // TODO: Implementar pesca
   [Skill.COCINA]: {}, // TODO: Implementar cocina

@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { Skill } from '@/types/Game'
 import MiningSkill from '@/components/skills/MiningSkill.vue'
 import LoggingSkill from '@/components/skills/LoggingSkill.vue'
+import SmeltingSkill from '@/components/skills/SmeltingSkill.vue'
 
 const route = useRoute()
 
@@ -39,6 +40,7 @@ watch(
     <div class="skill-content">
       <MiningSkill v-if="activeSkill === Skill.MINERIA" />
       <LoggingSkill v-else-if="activeSkill === Skill.TALA" />
+      <SmeltingSkill v-else-if="activeSkill === Skill.FUNDICION" />
     </div>
   </div>
 </template>

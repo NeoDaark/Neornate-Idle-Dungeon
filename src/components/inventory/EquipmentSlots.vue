@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import type { Equipment } from '@/types/Item'
 import { EquipmentSlot } from '@/types/Game'

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
 import type { InventoryStack } from '@/stores/inventoryStore'
-import { ItemType } from '@/types/Game'
 
 interface Props {
   items: InventoryStack[]
@@ -23,8 +22,13 @@ const getItemColor = (value: number) => {
 }
 
 const getItemName = (stack: InventoryStack): string => {
-  const item = stack.item
   const itemId = stack.itemId
+
+  // Si tiene sufijo _ingot, es un lingote
+  if (itemId.includes('_ingot')) {
+    const baseId = itemId.replace('_ingot', '')
+    return t(`resources.ingots.${baseId}.name`)
+  }
 
   // Determinar la ruta de i18n según el tipo
   // Primero intentar con recursos minerales

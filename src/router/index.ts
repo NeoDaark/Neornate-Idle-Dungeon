@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import MainLayout from '@/components/layouts/MainLayout.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -9,39 +8,33 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/',
-    component: MainLayout,
-    children: [
-      {
-        path: '',
-        name: 'home',
-        component: () => import('@/views/HomeView.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'skills',
-        component: () => import('@/views/SkillsView.vue'),
-      },
-      {
-        path: 'inventory',
-        name: 'inventory',
-        component: () => import('@/views/InventoryView.vue'),
-      },
-      {
-        path: 'dungeon',
-        name: 'dungeon',
-        component: () => import('@/views/DungeonView.vue'),
-      },
-      {
-        path: 'market',
-        name: 'market',
-        component: () => import('@/views/MarketView.vue'),
-      },
-      {
-        path: 'settings',
-        name: 'settings',
-        component: () => import('@/views/SettingsView.vue'),
-      },
-    ],
+    name: 'home',
+    component: () => import('@/views/HomeView.vue'),
+  },
+  {
+    path: '/skills',
+    name: 'skills',
+    component: () => import('@/views/SkillsView.vue'),
+  },
+  {
+    path: '/inventory',
+    name: 'inventory',
+    component: () => import('@/views/InventoryView.vue'),
+  },
+  {
+    path: '/dungeon',
+    name: 'dungeon',
+    component: () => import('@/views/DungeonView.vue'),
+  },
+  {
+    path: '/market',
+    name: 'market',
+    component: () => import('@/views/MarketView.vue'),
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import('@/views/SettingsView.vue'),
   },
 ]
 

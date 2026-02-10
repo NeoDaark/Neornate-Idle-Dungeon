@@ -1,10 +1,10 @@
 <template>
-  <RouterView />
+  <ResponsiveLayout />
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
 import { useRouter } from 'vue-router'
+import ResponsiveLayout from '@/components/layouts/ResponsiveLayout.vue'
 import { onMounted, onUnmounted } from 'vue'
 import { useGameStore } from '@/stores'
 import { useSkillsStore } from '@/stores/skillsStore'

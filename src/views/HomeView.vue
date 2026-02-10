@@ -1,18 +1,33 @@
 <template>
   <div class="home">
     <div class="container">
-      <h1>⚔️ Neornate</h1>
-      <p class="subtitle">Idle Dungeon</p>
+      <h1>{{ t('ui.title') }}</h1>
+      <p class="subtitle">{{ t('ui.subtitle') }}</p>
       <div class="info">
-        <p class="version">v1.0.0</p>
-        <p class="status">✓ Funcionando correctamente</p>
-        <p class="framework">Vue 3 + TypeScript + Capacitor</p>
+        <p class="version">{{ t('ui.version') }}</p>
+        <p class="status">{{ t('ui.status.working') }}</p>
+        <p class="framework">{{ t('ui.framework') }}</p>
+      </div>
+      <!-- Selector de idioma -->
+      <div class="language-selector">
+        <button
+          v-for="lang in ['es', 'en']"
+          :key="lang"
+          :class="{ active: locale === lang }"
+          @click="setLocale(lang as Locale)"
+        >
+          {{ lang.toUpperCase() }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n, type Locale } from '@/composables/useI18n'
+
+const { t, locale, setLocale } = useI18n()
+
 console.log('✓ HomeView cargado')
 </script>
 
@@ -81,5 +96,34 @@ h1 {
   color: #999;
   font-size: 12px;
   margin-top: 16px;
+}
+
+.language-selector {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.language-selector button {
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.language-selector button:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.language-selector button.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #000;
 }
 </style>

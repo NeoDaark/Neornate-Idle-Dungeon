@@ -1,0 +1,55 @@
+{
+  "ui": {
+    "title": "⚔️ Neornate",
+    "subtitle": "Idle Dungeon",
+    "version": "v1.0.0",
+    "status": {
+      "working": "✓ Funcionando correctamente"
+    },
+    "framework": "Vue 3 + TypeScript + Capacitor",
+    "menu": {
+      "home": "Inicio",
+      "skills": "Oficios",
+      "inventory": "Inventario",
+      "dungeon": "Mazmorra",
+      "market": "Mercado",
+      "settings": "Configuración"
+    }
+  },
+  "skills": {
+    "mineria": "Minería",
+    "tala": "Tala",
+    "fundicion": "Fundición",
+    "herreria": "Herrería",
+    "pesca": "Pesca",
+    "cocina": "Cocina",
+    "aventura": "Aventura"
+  },
+  "items": {
+    "minerals": "Minerales",
+    "wood": "Madera",
+    "fish": "Pescado",
+    "food": "Comida",
+    "ingots": "Lingotes"
+  },
+  "messages": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "¿Estás seguro?"
+  },
+  "labels": {
+    "level": "Nivel",
+    "experience": "Experiencia",
+    "health": "Vida",
+    "mana": "Maná",
+    "strength": "Fuerza",
+    "intelligence": "Inteligencia",
+    "class": "Clase",
+    "tier": "Nivel de Progresión"
+  },
+  "errors": {
+    "notFound": "No encontrado",
+    "loadFailed": "Error al cargar"
+  }
+}

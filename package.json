@@ -1,31 +1,32 @@
 {
-  "name": "neoland-dungeon-idle",
+  "name": "neornate-idle-dungeon",
   "version": "1.0.0",
-  "description": "Neoland Dungeon Idle - Un juego RPG Idle",
-  "main": "server.js",
   "type": "module",
+  "description": "Neornate - Idle Dungeon: RPG Idle Game para Android e iOS",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
-    "build:android": "capacitor build android",
-    "sync": "capacitor sync",
-    "open:android": "capacitor open android"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "cap-add-android": "capacitor add android",
+    "cap-add-ios": "capacitor add ios",
+    "cap-sync": "capacitor sync",
+    "cap-open-android": "capacitor open android",
+    "cap-open-ios": "capacitor open ios"
   },
-  "keywords": [
-    "game",
-    "idle",
-    "rpg",
-    "android"
-  ],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^5.0.0",
-    "@capacitor/cli": "^5.0.0",
-    "@capacitor/core": "^5.0.0",
-    "@capacitor/ios": "^5.7.8"
+    "@capacitor/cli": "^8.0.2",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "typescript": "^5.3.0",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.2.4"
   }
 }

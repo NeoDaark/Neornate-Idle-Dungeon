@@ -5,11 +5,25 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
+import { useGameStore } from '@/stores'
 
 const router = useRouter()
+const gameStore = useGameStore()
+
+// Auto-save cada 30 segundos
+let saveInterval: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
+  // Inicializar juego (cargar datos guardados)
+  gameStore.initializeGame()
+
+  // Auto-save periódico
+  saveInterval = setInterval(() => {
+    gameStore.saveGame()
+    console.log('[Game] Auto-save realizado')
+  }, 30000) // Cada 30 segundos
+
   // Si accedemos directamente a una ruta que no sea /loading, ir a loading
   if (router.currentRoute.value.path !== '/loading') {
     // Usar sessionStorage para saber si es primera carga
@@ -18,6 +32,14 @@ onMounted(() => {
       sessionStorage.setItem('app-initialized', 'true')
       router.push('/loading')
     }
+  }
+})
+
+onUnmounted(() => {
+  // Guardar al desmontar la app
+  gameStore.saveGame()
+  if (saveInterval) {
+    clearInterval(saveInterval)
   }
 })
 </script>

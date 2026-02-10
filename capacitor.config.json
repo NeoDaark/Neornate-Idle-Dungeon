@@ -1,0 +1,16 @@
+{
+  "appId": "com.neornate.idledungeon",
+  "appName": "Neornate - Idle Dungeon",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "minWebViewEngineVersion": 51
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

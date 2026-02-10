@@ -9,10 +9,7 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "cap-add-android": "capacitor add android",
-    "cap-add-ios": "capacitor add ios",
-    "cap-sync": "capacitor sync",
-    "cap-open-android": "capacitor open android",
-    "cap-open-ios": "capacitor open ios"
+    "cap-sync": "capacitor sync"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",

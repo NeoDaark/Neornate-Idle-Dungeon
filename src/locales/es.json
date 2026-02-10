@@ -26,7 +26,9 @@
     "m_change_product_desc": "Se detendrá la recolección actual.",
     "m_accept": "Aceptar",
     "m_cancel": "Cancelar",
-    "unavailable": "No disponible"
+    "unavailable": "No disponible",
+    "search_items": "Buscar items...",
+    "inventory_empty": "Inventario vacío"
   },
   "skills": {
     "mineria": {
@@ -209,7 +211,25 @@
     "spanish": "Español",
     "english": "Inglés",
     "active": "Activo",
-    "inactive": "Inactivo"
+    "inactive": "Inactivo",
+    "equipment": "Equipo",
+    "items": "Items",
+    "gold": "Oro",
+    "capacity": "Capacidad",
+    "filter_all": "Todos",
+    "filter_resources": "Recursos",
+    "filter_materials": "Materiales",
+    "filter_consumables": "Consumibles",
+    "slot_HEAD": "Cabeza",
+    "slot_CHEST": "Pecho",
+    "slot_HANDS": "Manos",
+    "slot_LEGS": "Piernas",
+    "slot_FEET": "Pies",
+    "slot_MAIN_HAND": "Mano Principal",
+    "slot_OFF_HAND": "Mano Secundaria",
+    "slot_RING_1": "Anillo 1",
+    "slot_RING_2": "Anillo 2",
+    "slot_ACCESSORY": "Accesorio"
   },
   "errors": {
     "notFound": "No encontrado",

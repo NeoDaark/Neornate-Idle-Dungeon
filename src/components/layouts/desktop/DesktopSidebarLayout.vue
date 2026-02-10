@@ -7,9 +7,11 @@
 
     <!-- Contenido principal -->
     <main class="desktop-content">
-      <Transition name="fade-scale" mode="out-in">
-        <RouterView />
-      </Transition>
+      <RouterView v-slot="{ Component }">
+        <Transition name="fade-scale" mode="out-in">
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
     </main>
   </div>
 </template>

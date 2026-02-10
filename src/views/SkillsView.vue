@@ -1,0 +1,62 @@
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { Skill } from '@/types/Game'
+import MiningSkill from '@/components/skills/MiningSkill.vue'
+import LoggingSkill from '@/components/skills/LoggingSkill.vue'
+
+const route = useRoute()
+
+// Mapear string a enum Skill
+const skillMap: Record<string, Skill> = {
+  'mineria': Skill.MINERIA,
+  'tala': Skill.TALA,
+  'fundicion': Skill.FUNDICION,
+  'herreria': Skill.HERRERIA,
+  'pesca': Skill.PESCA,
+  'cocina': Skill.COCINA,
+  'aventura': Skill.AVENTURA,
+}
+
+const getSkillFromQuery = (): Skill => {
+  const query = route.query.skill as string
+  return skillMap[query] || Skill.MINERIA
+}
+
+const activeSkill = ref<Skill>(getSkillFromQuery())
+
+// Actualizar cuando cambia la query
+watch(
+  () => route.query.skill,
+  () => {
+    activeSkill.value = getSkillFromQuery()
+  }
+)
+</script>
+
+<template>
+  <div class="skills-view">
+    <div class="skill-content">
+      <MiningSkill v-if="activeSkill === Skill.MINERIA" />
+      <LoggingSkill v-else-if="activeSkill === Skill.TALA" />
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.skills-view {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.skill-content {
+  flex: 1;
+  overflow-y: auto;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+</style>

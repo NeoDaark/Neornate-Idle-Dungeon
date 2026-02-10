@@ -13,8 +13,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  json: {
+    stringify: false,
+  },
   server: {
-    port: 5173,
+    port: 5174,
     open: false,
   },
 })

@@ -1,30 +1,34 @@
 <template>
   <div class="home">
     <div class="container">
-      <h1>⚔️ Neornate</h1>
-      <p class="subtitle">Idle Dungeon</p>
+      <h1>{{ t('ui.title') }}</h1>
+      <p class="subtitle">{{ t('ui.subtitle') }}</p>
       <div class="info">
-        <p class="version">v1.0.0</p>
-        <p class="status">✓ Funcionando correctamente</p>
-        <p class="framework">Vue 3 + TypeScript + Capacitor</p>
+        <p class="version">{{ t('ui.version') }}</p>
+        <p class="status">{{ t('ui.status.working') }}</p>
+        <p class="framework">{{ t('ui.framework') }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from '@/composables/useI18n'
+
+const { t } = useI18n()
+
 console.log('✓ HomeView cargado')
 </script>
 
 <style scoped>
 .home {
   width: 100%;
-  height: 100vh;
-  background: linear-gradient(135deg, #0e0e0e 0%, #1a1a1a 100%);
+  min-height: 100%;
+  background: linear-gradient(135deg, rgba(14, 14, 14, 0) 0%, rgba(26, 26, 26, 0) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
 .container {

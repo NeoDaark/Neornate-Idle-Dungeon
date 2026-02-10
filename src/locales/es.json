@@ -1,0 +1,218 @@
+{
+  "ui": {
+    "title": "⚔️ Neornate",
+    "subtitle": "Idle Dungeon",
+    "version": "v1.0.0",
+    "status": {
+      "working": "✓ Funcionando correctamente"
+    },
+    "framework": "Vue 3 + TypeScript + Capacitor",
+    "menu": {
+      "home": "Inicio",
+      "skills": "Oficios",
+      "inventory": "Inventario",
+      "dungeon": "Mazmorra",
+      "market": "Mercado",
+      "settings": "Configuración",
+      "language": "Idioma",
+      "toggle": "Alternar menú"
+    },
+    "blocked": "Bloqueado",
+    "m_blocked": "Materiales no disponibles",
+    "m_available": "Materiales disponibles",
+    "m_select_material": "Selecciona un material",
+    "m_confirm": "Cambiar Material",
+    "m_change_product": "¿Deseas cambiar de material?",
+    "m_change_product_desc": "Se detendrá la recolección actual.",
+    "m_accept": "Aceptar",
+    "m_cancel": "Cancelar",
+    "unavailable": "No disponible"
+  },
+  "skills": {
+    "mineria": {
+      "name": "Minería",
+      "action": "Extraer",
+      "description": "Extrae minerales de la tierra"
+    },
+    "tala": {
+      "name": "Tala",
+      "action": "Cortar",
+      "description": "Corta árboles para obtener madera"
+    },
+    "fundicion": {
+      "name": "Fundición",
+      "action": "Fundir", 
+      "description": "Funde minerales en lingotes"
+    },
+    "herreria": {
+      "name": "Herrería",
+      "action": "Forjar",
+      "description": "Forja armas y armaduras"
+    },
+    "pesca": {
+      "name": "Pesca",
+      "action": "Pescar",
+      "description": "Pesca peces en el río"
+    },
+    "cocina": {
+      "name": "Cocina",
+      "action": "Cocinar",
+      "description": "Prepara comidas deliciosas"
+    },
+    "aventura": {
+      "name": "Aventura",
+      "action": "Explorar",
+      "description": "Explora dungeons y combate"
+    }
+  },
+  "resources": {
+    "mineral": {
+      "carbon": {
+        "name": "Carbón",
+        "description": "Mineral básico de color oscuro. Ideal para iniciantes."
+      },
+      "cobre": {
+        "name": "Cobre",
+        "description": "Metal maleable de color rojizo. Fácil de trabajar."
+      },
+      "hierro": {
+        "name": "Hierro",
+        "description": "Metal duradero de color gris. Excelente para herramientas."
+      },
+      "plata": {
+        "name": "Plata",
+        "description": "Metal precioso brillante. Muy valioso en el mercado."
+      },
+      "tungsteno": {
+        "name": "Tungsteno",
+        "description": "Metal resistente de alta dureza. Raro y valioso."
+      },
+      "oro": {
+        "name": "Oro",
+        "description": "Metal precioso amarillo. Sumamente raro y expensive."
+      },
+      "platino": {
+        "name": "Platino",
+        "description": "Metal noble plateado. Extremadamente raro."
+      },
+      "obsidiana": {
+        "name": "Obsidiana",
+        "description": "Cristal volcánico negro. Muy afilado cuando se quiebra."
+      },
+      "cobalto": {
+        "name": "Cobalto",
+        "description": "Metal azulado exótico. Tóxico pero poderoso."
+      },
+      "mithril": {
+        "name": "Mithril",
+        "description": "Metal mitológico brillante. Legendario y casi imposible de encontrar."
+      },
+      "oricalco": {
+        "name": "Oricalco",
+        "description": "Aleación divina dorada. Símbolo de poder supremo."
+      },
+      "adamantita": {
+        "name": "Adamantita",
+        "description": "Metal indestructible. Material de leyenda."
+      },
+      "titanio": {
+        "name": "Titanio",
+        "description": "Metal extremadamente resistente. Forjado por titanes."
+      },
+      "draconita": {
+        "name": "Draconita",
+        "description": "Mineral extraído de dragones. Poder dracónico latente."
+      }
+    },
+    "wood": {
+      "madera-blanda": {
+        "name": "Madera Blanda",
+        "description": "Madera ligera de fácil corte. Perfecta para principiantes."
+      },
+      "madera-comun": {
+        "name": "Madera Común",
+        "description": "Madera versátil de uso general. Recurso estable."
+      },
+      "roble": {
+        "name": "Madera de Roble",
+        "description": "Madera robusta y duradera. Ideal para estructuras."
+      },
+      "nogal": {
+        "name": "Madera de Nogal",
+        "description": "Madera densa oscura. Excelente para acabados finos."
+      },
+      "caoba": {
+        "name": "Madera de Caoba",
+        "description": "Madera roja preciosa. Muy apreciada por artesanos."
+      },
+      "ebano": {
+        "name": "Madera de Ébano",
+        "description": "Madera negra rara. Símbolo de elegancia y poder."
+      },
+      "petreo": {
+        "name": "Madera Pétreo",
+        "description": "Madera fosilizada casi convertida en piedra. Extremadamente dura."
+      },
+      "ancestral": {
+        "name": "Madera Ancestral",
+        "description": "Madera antigua de épocas pasadas. Imbuida de historia."
+      },
+      "cristalina": {
+        "name": "Madera Cristalina",
+        "description": "Madera transparente brillante. Casi translúcida."
+      },
+      "magica": {
+        "name": "Madera Mágica",
+        "description": "Madera encantada con poder arcano. Canaliza la magia."
+      },
+      "sagrada": {
+        "name": "Madera Sagrada",
+        "description": "Madera bendita de templos. Irradia paz y protección."
+      },
+      "primordial": {
+        "name": "Madera Primordial",
+        "description": "Madera de los tiempos primeros. Esencia del bosque antiguo."
+      },
+      "dimensional": {
+        "name": "Madera Dimensional",
+        "description": "Madera de otras dimensiones. Desafía las leyes de la física."
+      },
+      "divina": {
+        "name": "Madera Divina",
+        "description": "Madera de los dioses. Material celestial supremo."
+      }
+    }
+  },
+  "items": {
+    "minerals": "Minerales",
+    "wood": "Madera",
+    "fish": "Pescado",
+    "food": "Comida",
+    "ingots": "Lingotes"
+  },
+  "messages": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "¿Estás seguro?"
+  },
+  "labels": {
+    "level": "Nivel",
+    "experience": "Experiencia",
+    "health": "Vida",
+    "mana": "Maná",
+    "strength": "Fuerza",
+    "intelligence": "Inteligencia",
+    "class": "Clase",
+    "tier": "Nivel de Progresión",
+    "language": "Idioma",
+    "spanish": "Español",
+    "english": "Inglés",
+    "active": "Activo",
+    "inactive": "Inactivo"
+  },
+  "errors": {
+    "notFound": "No encontrado",
+    "loadFailed": "Error al cargar"
+  }
+}

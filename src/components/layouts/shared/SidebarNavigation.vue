@@ -101,10 +101,18 @@
 
     <!-- Footer -->
     <div class="nav-footer">
+      <!-- Botón de cierre (solo móvil) -->
+      <button 
+        class="nav-item close-btn mobile-only"
+        @click="$emit('navigate')"
+        :title="t('ui.menu.close')"
+      >
+        <span class="icon">✕</span>
+      </button>
+      
       <router-link 
         to="/settings" 
         class="nav-item settings-link"
-        :class="{ active: isActive('/settings') }"
         @click="$emit('navigate')"
       >
         <span class="icon">⚙️</span>
@@ -212,12 +220,12 @@ defineEmits<{
 }
 
 .nav-header {
-  padding: 20px 16px;
+  padding: 12px 12px;
   border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-primary);
   margin: 0;
@@ -228,8 +236,8 @@ defineEmits<{
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 8px;
+  gap: 2px;
+  padding: 8px 6px;
   overflow-y: auto;
 }
 
@@ -237,8 +245,8 @@ defineEmits<{
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 12px;
+  gap: 10px;
+  padding: 10px 10px;
   border-radius: 6px;
   text-decoration: none;
   color: var(--text-secondary);
@@ -267,14 +275,14 @@ defineEmits<{
 }
 
 .icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   min-width: 24px;
   text-align: center;
   flex-shrink: 0;
 }
 
 .label {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
@@ -332,13 +340,13 @@ defineEmits<{
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
+  padding: 8px 10px;
   border-radius: 4px;
   text-decoration: none;
   color: var(--text-secondary);
   transition: all 0.15s ease;
   border: 1px solid transparent;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   will-change: background-color, color, transform;
 }
 
@@ -424,13 +432,48 @@ defineEmits<{
 
 /* ===== NAV FOOTER ===== */
 .nav-footer {
-  padding: 12px 8px;
+  padding: 8px 6px;
   border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.close-btn {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+}
+
+.close-btn .icon {
+  font-size: 1rem;
 }
 
 .settings-link {
+  flex: 1;
+  height: 36px;
+  padding: 0 10px !important;
+  display: flex;
+  align-items: center;
   justify-content: center;
   gap: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* Mostrar solo en modo móvil */
+@media (max-width: 719px) {
+  .mobile-only {
+    display: flex;
+  }
 }
 
 /* ===== TRANSITIONS ===== */

@@ -37,6 +37,8 @@ import SidebarNavigation from '../shared/SidebarNavigation.vue'
   border-right: 1px solid var(--border-color);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
+  padding-top: max(0px, env(safe-area-inset-top));
+  padding-left: max(0px, env(safe-area-inset-left));
 }
 
 /* ===== MAIN CONTENT ===== */
@@ -44,6 +46,8 @@ import SidebarNavigation from '../shared/SidebarNavigation.vue'
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: max(0px, env(safe-area-inset-top));
+  padding-right: max(0px, env(safe-area-inset-right));
 }
 
 /* ===== SCROLLBARS ===== */

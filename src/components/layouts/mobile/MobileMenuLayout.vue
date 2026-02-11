@@ -1,17 +1,13 @@
 <template>
   <div class="mobile-layout" :class="{ 'menu-open': menuOpen }">
-    <!-- Header con Toggle -->
-    <header class="mobile-header">
-      <button 
-        class="menu-toggle"
-        @click="menuOpen = !menuOpen"
-        :title="t('ui.menu.toggle')"
-      >
-        {{ menuOpen ? '✕' : '☰' }}
-      </button>
-      <h1 class="header-title">⚔️ Neornate</h1>
-      <div class="header-spacer"></div>
-    </header>
+    <!-- Botón flotante para abrir menú -->
+    <button 
+      class="floating-menu-btn"
+      @click="menuOpen = !menuOpen"
+      :title="t('ui.menu.toggle')"
+    >
+      {{ menuOpen ? '✕' : '☰' }}
+    </button>
 
     <!-- Overlay + Menu fullscreen -->
     <transition name="menu-slide">
@@ -55,51 +51,32 @@ const menuOpen = ref(false)
   position: relative;
 }
 
-/* ===== HEADER ===== */
-.mobile-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-darker) 100%);
-  border-bottom: 1px solid var(--border-color);
-  gap: 12px;
-  height: 56px;
-  flex-shrink: 0;
-}
-
-.menu-toggle {
+/* ===== BOTÓN FLOTANTE ===== */
+.floating-menu-btn {
+  position: fixed;
+  bottom: 8px;
+  left: 6px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--border-color);
-  background: rgba(255, 165, 0, 0.1);
-  color: var(--color-primary);
+  
+  padding: 10px 10px;
   border-radius: 6px;
-  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
   cursor: pointer;
-  transition: all 0.2s ease;
+  background: transparent;
+  font: inherit;
+  will-change: background-color, color, transform;
+  border: 1px solid var(--border-color);
 }
 
-.menu-toggle:hover {
-  background: rgba(255, 165, 0, 0.2);
-  border-color: var(--color-primary);
-}
-
-.header-title {
-  font-size: 1.2rem;
-  font-weight: 700;
+.floating-menu-btn:hover {
   color: var(--text-primary);
-  margin: 0;
-  flex: 1;
-  text-align: center;
-}
-
-.header-spacer {
-  width: 40px;
-  flex-shrink: 0;
+  background: rgba(255, 165, 0, 0.1);
 }
 
 /* ===== MENU OVERLAY ===== */
@@ -118,18 +95,25 @@ const menuOpen = ref(false)
   position: fixed;
   top: 0;
   left: 0;
-  width: 85%;
-  max-width: 280px;
+  width: 100%;
   height: 100%;
   z-index: 999;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
+  padding-top: max(0px, env(safe-area-inset-top));
+  padding-left: max(0px, env(safe-area-inset-left));
+  padding-right: max(0px, env(safe-area-inset-right));
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
+  overflow-y: auto;
 }
 
 /* ===== MAIN CONTENT ===== */
 .mobile-content {
-  flex: 1;
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: max(0px, env(safe-area-inset-top));
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
 }
 
 /* ===== TRANSITIONS ===== */

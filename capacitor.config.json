@@ -6,11 +6,17 @@
     "androidScheme": "https"
   },
   "android": {
-    "minWebViewEngineVersion": 51
+    "minWebViewEngineVersion": 51,
+    "useLegacyBridge": false
   },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0a0a0a",
+      "overlaysWebView": false
     }
   }
 }

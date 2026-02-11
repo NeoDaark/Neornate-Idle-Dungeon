@@ -1,7 +1,7 @@
 <template>
   <nav class="sidebar-navigation">
     <!-- Logo/Header -->
-    <div class="nav-header">
+    <div class="nav-header mobile-only">
       <!-- Botón de cierre (solo móvil) -->
       <button 
         class="menu-btn mobile-only"
@@ -241,9 +241,6 @@ defineEmits<{
     padding-top: 8px;
     padding-right: 12px;
     padding-left: 12px;
-  padding-top: max(8px, calc(8px + env(safe-area-inset-top)));
-  padding-left: max(12px, calc(12px + env(safe-area-inset-left)));
-  padding-right: max(12px, calc(12px + env(safe-area-inset-right)));
   background: var(--bg-darker);
   border-bottom: none;
   gap: 12px;

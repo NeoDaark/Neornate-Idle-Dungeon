@@ -367,6 +367,22 @@ Focus on **shipping working code**, not writing about it.
 
 ---
 
+## 🧪 Testing & Browser Guidelines
+
+### ⚠️ **IMPORTANT: Never use Simple Browser**
+- **DO NOT** use `open_simple_browser` tool
+- User tests with **Firefox** in development
+- Firefox HMR/dev server connection works automatically at `http://localhost:5175`
+- Leave browser testing to the user - they'll refresh manually
+
+### Development Workflow
+1. Make code changes
+2. Verify TypeScript compilation with `get_errors`
+3. **Skip opening browser** - User handles testing in Firefox
+4. Provide clear feedback on what changed
+
+---
+
 ## 📝 Documentation Standards
 
 ### What to Document

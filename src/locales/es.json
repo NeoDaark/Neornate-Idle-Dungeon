@@ -1,6 +1,6 @@
 {
   "ui": {
-    "title": "⚔️ Neornate",
+    "title": "Neornate",
     "subtitle": "Idle Dungeon",
     "version": "v1.0.0",
     "status": {
@@ -26,7 +26,13 @@
     "m_change_product_desc": "Se detendrá la recolección actual.",
     "m_accept": "Aceptar",
     "m_cancel": "Cancelar",
-    "unavailable": "No disponible"
+    "unavailable": "No disponible",
+    "search_items": "Buscar items...",
+    "inventory_empty": "Inventario vacío",
+    "no_requirements": "Sin requisitos",
+    "other_skills": "Otros Oficios",
+    "stop": "Detener",
+    "missing_materials": "Materiales insuficientes"
   },
   "skills": {
     "mineria": {
@@ -181,6 +187,64 @@
         "name": "Madera Divina",
         "description": "Madera de los dioses. Material celestial supremo."
       }
+    },
+    "ingots": {
+      "carbon": {
+        "name": "Lingote de Carbón",
+        "description": "Lingote refinado de carbón. Base para la metalurgia básica."
+      },
+      "cobre": {
+        "name": "Lingote de Cobre",
+        "description": "Lingote maleable de cobre. Excelente conductor."
+      },
+      "hierro": {
+        "name": "Lingote de Hierro",
+        "description": "Lingote resistente de hierro. Material fundamental para armas."
+      },
+      "plata": {
+        "name": "Lingote de Plata",
+        "description": "Lingote precioso de plata. Muy valorado en la joyería."
+      },
+      "tungsteno": {
+        "name": "Lingote de Tungsteno",
+        "description": "Lingote ultra-resistente de tungsteno. Para armas de élite."
+      },
+      "oro": {
+        "name": "Lingote de Oro",
+        "description": "Lingote precioso de oro. Símbolo de riqueza suprema."
+      },
+      "platino": {
+        "name": "Lingote de Platino",
+        "description": "Lingote noble de platino. Material supremo del reino."
+      },
+      "obsidiana": {
+        "name": "Lingote de Obsidiana",
+        "description": "Lingote de cristal volcánico. Cortante y mágico."
+      },
+      "cobalto": {
+        "name": "Lingote de Cobalto",
+        "description": "Lingote exótico azulado. Tóxico pero poderoso."
+      },
+      "mithril": {
+        "name": "Lingote de Mithril",
+        "description": "Lingote mitológico brillante. Leyenda forjada."
+      },
+      "oricalco": {
+        "name": "Lingote de Oricalco",
+        "description": "Lingote divino dorado. Poder celestial condensado."
+      },
+      "adamantita": {
+        "name": "Lingote de Adamantita",
+        "description": "Lingote indestructible. La materia prima de lo eterno."
+      },
+      "titanio": {
+        "name": "Lingote de Titanio",
+        "description": "Lingote de titanes. Fortaleza del cosmos."
+      },
+      "draconita": {
+        "name": "Lingote de Draconita",
+        "description": "Lingote de dragón. Poder dracónico concentrado."
+      }
     }
   },
   "items": {
@@ -209,7 +273,33 @@
     "spanish": "Español",
     "english": "Inglés",
     "active": "Activo",
-    "inactive": "Inactivo"
+    "inactive": "Inactivo",
+    "equipment": "Equipo",
+    "items": "Items",
+    "back": "Atrás",
+    "gold": "Oro",
+    "capacity": "Capacidad",
+    "filter_all": "Todos",
+    "filter_resources": "Recursos",
+    "filter_materials": "Materiales",
+    "filter_consumables": "Consumibles",
+    "slot_HEAD": "Cabeza",
+    "slot_CHEST": "Pecho",
+    "slot_HANDS": "Manos",
+    "slot_LEGS": "Piernas",
+    "slot_FEET": "Pies",
+    "slot_MAIN_HAND": "Mano Principal",
+    "slot_OFF_HAND": "Mano Secundaria",
+    "slot_RING_1": "Anillo 1",
+    "slot_RING_2": "Anillo 2",
+    "slot_ACCESSORY": "Accesorio",
+    "requirements": "Requisitos",
+    "cycle_info": "Información del Ciclo",
+    "cycle_duration": "Duración del Ciclo",
+    "xp_reward": "Recompensa XP",
+    "quantity": "Cantidad",
+    "stored_quantity": "Almacenado",
+    "blocked_materials": "Ver {count} materiales bloqueados"
   },
   "errors": {
     "notFound": "No encontrado",

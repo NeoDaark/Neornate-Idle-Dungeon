@@ -22,13 +22,16 @@ console.log('✓ HomeView cargado')
 
 <style scoped>
 .home {
-  width: 100%;
-  min-height: 100%;
-  background: linear-gradient(135deg, rgba(14, 14, 14, 0) 0%, rgba(26, 26, 26, 0) 100%);
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 0 24px;
   display: flex;
+  flex-direction: column;
+  overflow: visible;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(14, 14, 14, 0) 0%, rgba(26, 26, 26, 0) 100%);
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
 }
 
 .container {

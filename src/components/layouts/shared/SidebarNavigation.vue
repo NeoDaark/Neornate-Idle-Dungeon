@@ -1,8 +1,15 @@
 <template>
   <nav class="sidebar-navigation">
     <!-- Logo/Header -->
-    <div class="nav-header">
-      <h2 class="logo">⚔️ Neornate</h2>
+    <div class="nav-header mobile-only">
+      <!-- Botón de cierre (solo móvil) -->
+      <button 
+        class="menu-btn mobile-only"
+        @click="$emit('navigate')"
+        :title="t('ui.menu.close')"
+      >
+        <FaIcon icon="fa-solid fa-xmark" class="icon" />
+      </button>
     </div>
 
     <!-- Menu Items -->
@@ -14,7 +21,7 @@
         :class="{ active: isActive('/') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🏠</span>
+        <FaIcon icon="fa-solid fa-chess-rook" class="icon" />
         <span class="label">{{ t('ui.menu.home') }}</span>
       </router-link>
 
@@ -22,12 +29,12 @@
       <div class="nav-group">
         <button 
           class="nav-item group-toggle"
-          :class="{ active: skillsExpanded }"
+          :class="{ active: isSkillsGroupActive() }"
           @click="skillsExpanded = !skillsExpanded"
         >
-          <span class="icon">⚒️</span>
+          <FaIcon icon="fa-solid fa-hammer" class="icon" />
           <span class="label">{{ t('ui.menu.skills') }}</span>
-          <span class="expand-icon">{{ skillsExpanded ? '▼' : '▶' }}</span>
+          <FaIcon :icon="skillsExpanded ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-right'" class="expand-icon" />
         </button>
 
         <!-- Subopciones de skills -->
@@ -41,11 +48,11 @@
               :class="{ active: isSkillItemActive(skill.path), 'is-farming': isSkillActive(skill.skill) }"
               @click="$emit('navigate')"
             >
-              <span class="icon">{{ skill.icon }}</span>
+              <FaIcon :icon="skill.icon" class="icon" />
               <div class="subitem-content">
                 <div class="subitem-header">
                   <span class="label">{{ t(skill.label) }}</span>
-                  <span v-if="isSkillActive(skill.skill)" class="farming-badge">⚡<!--{{ t('labels.active') }}--></span>
+                  <FaIcon v-if="isSkillActive(skill.skill)" icon="fa-solid fa-bolt" class="farming-badge" />
                 </div>
                 <div class="skill-info">
                   <span class="level">Lvl {{ getSkillLevel(skill.skill) }}</span>
@@ -69,7 +76,7 @@
         :class="{ active: isActive('/inventory') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🎒</span>
+        <FaIcon icon="fa-solid fa-cube" class="icon" />
         <div class="item-content">
           <span class="label">{{ t('ui.menu.inventory') }}</span>
           <span class="info-text">{{ inventoryUsed }}/{{ inventoryMax }}</span>
@@ -83,7 +90,7 @@
         :class="{ active: isActive('/dungeon') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🗺️</span>
+        <FaIcon icon="fa-solid fa-map" class="icon" />
         <span class="label">{{ t('ui.menu.dungeon') }}</span>
       </router-link>
 
@@ -94,22 +101,28 @@
         :class="{ active: isActive('/market') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🏪</span>
+        <FaIcon icon="fa-solid fa-coins" class="icon" />
         <span class="label">{{ t('ui.menu.market') }}</span>
       </router-link>
     </div>
 
     <!-- Footer -->
     <div class="nav-footer">
+      <!-- Settings Link -->
       <router-link 
         to="/settings" 
         class="nav-item settings-link"
-        :class="{ active: isActive('/settings') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">⚙️</span>
+        <FaIcon icon="fa-solid fa-gear" class="icon" />
         <span class="label">{{ t('ui.menu.settings') }}</span>
       </router-link>
+
+      <!-- App Branding -->
+      <div class="app-branding">
+        <p class="branding-text">{{ t('ui.title') }}</p>
+        <p class="branding-version">{{ t('ui.version') }}</p>
+      </div>
     </div>
   </nav>
 </template>
@@ -148,17 +161,21 @@ interface SkillMenuItem {
 }
 
 const skillMenuItems: SkillMenuItem[] = [
-  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: '⛏️' },
-  { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name', icon: '🌲' },
-  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: '🔥' },
-  { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name', icon: '🔨' },
-  { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name', icon: '🎣' },
-  { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name', icon: '🍳' },
-  { skill: Skill.AVENTURA, path: '/skills?skill=aventura', label: 'skills.aventura.name', icon: '⚔️' },
+  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: 'fa-solid fa-mountain' },
+  { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name', icon: 'fa-solid fa-tree' },
+  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: 'fa-solid fa-fire' },
+  { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name', icon: 'fa-solid fa-hammer' },
+  { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name', icon: 'fa-solid fa-fish' },
+  { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name', icon: 'fa-solid fa-utensils' },
+  { skill: Skill.AVENTURA, path: '/skills?skill=aventura', label: 'skills.aventura.name', icon: 'fa-solid fa-wand-magic-sparkles' },
 ]
 
 const isActive = (path: string) => {
   return route.path === path
+}
+
+const isSkillsGroupActive = () => {
+  return route.path === '/skills'
 }
 
 const isSkillItemActive = (skillPath: string): boolean => {
@@ -207,29 +224,69 @@ defineEmits<{
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-darker) 100%);
-  border-right: 1px solid var(--border-color);
+  background: var(--bg-darker);
+}
+
+@media (min-width: 720px) {
+  .sidebar-navigation {
+    border-right: none;
+  }
 }
 
 .nav-header {
-  padding: 20px 16px;
-  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 12px;
+  padding-top: max(8px, calc(8px + env(safe-area-inset-top)));
+  padding-left: max(12px, calc(12px + env(safe-area-inset-left)));
+  padding-right: max(12px, calc(12px + env(safe-area-inset-right)));
+  border-bottom: none;
+  gap: 12px;
+  flex-shrink: 0;
+  z-index: 100;
+  background: #070505;
+}
+.menu-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.menu-btn:hover {
+  background: rgba(255, 165, 0, 0.1);
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-primary);
   margin: 0;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-icon {
+  font-size: 1.2rem;
 }
 
 .nav-menu {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 8px;
+  gap: 2px;
+  padding: 8px 6px;
   overflow-y: auto;
 }
 
@@ -237,8 +294,8 @@ defineEmits<{
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 12px;
+  gap: 10px;
+  padding: 10px 10px;
   border-radius: 6px;
   text-decoration: none;
   color: var(--text-secondary);
@@ -267,14 +324,19 @@ defineEmits<{
 }
 
 .icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   min-width: 24px;
+  max-width: 24px;
+  height: 24px;
   text-align: center;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .label {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
@@ -332,13 +394,13 @@ defineEmits<{
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
+  padding: 8px 10px;
   border-radius: 4px;
   text-decoration: none;
   color: var(--text-secondary);
   transition: all 0.15s ease;
   border: 1px solid transparent;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   will-change: background-color, color, transform;
 }
 
@@ -424,13 +486,87 @@ defineEmits<{
 
 /* ===== NAV FOOTER ===== */
 .nav-footer {
-  padding: 12px 8px;
+  padding: 8px 6px;
   border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.close-btn {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 165, 0, 0.1);
+}
+
+.close-btn:active {
+  opacity: 0.7;
+}
+
+.close-btn .icon {
+  font-size: 1rem;
 }
 
 .settings-link {
+  flex: 0 0 auto;
+  height: 36px;
+  padding: 0 10px !important;
+  display: flex;
+  align-items: center;
   justify-content: center;
   gap: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* Mostrar solo en modo móvil */
+@media (max-width: 719px) {
+  .mobile-only {
+    display: flex;
+  }
+}
+
+/* ===== APP BRANDING ===== */
+.app-branding {
+  padding: 12px 10px;
+  border-top: 1px solid rgba(255, 165, 0, 0.1);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.branding-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1;
+}
+
+.branding-version {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin: 2px 0 0 0;
+  line-height: 1;
 }
 
 /* ===== TRANSITIONS ===== */

@@ -164,6 +164,27 @@ export const useSkillsStore = defineStore('skills', () => {
 
     addExperience(skill, xpGained)
 
+    // Consumir materiales si los requiere
+    if (inventoryStore && product.requiredMaterials && product.requiredMaterials.length > 0) {
+      // Validar que tenemos todos los materiales
+      for (const material of product.requiredMaterials) {
+        const available = inventoryStore.getItemQuantity(material.itemId)
+        if (available < material.quantity) {
+          console.warn(`[Skill] No hay suficientes materiales para ${product.id}: necesita ${material.quantity} de ${material.itemId}, tiene ${available}`)
+          return null
+        }
+      }
+      
+      // Consumir todos los materiales
+      for (const material of product.requiredMaterials) {
+        const success = inventoryStore.removeItem(material.itemId, material.quantity)
+        if (!success) {
+          console.error(`[Skill] Error al consumir ${material.quantity} de ${material.itemId}`)
+          return null
+        }
+      }
+    }
+
     // Agregar item al inventario si está disponible
     if (inventoryStore) {
       inventoryStore.addItem(product.item, product.quantity)

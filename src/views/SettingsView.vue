@@ -29,6 +29,19 @@
           <p class="placeholder">{{ t('messages.loading') }}...</p>
         </div>
       </div>
+
+      <!-- Development: Clear All Data -->
+      <div v-if="isDevelopment" class="settings-section danger-section">
+        <div class="section-header">
+          <h2><FaIcon icon="fa-solid fa-triangle-exclamation" /> Desarrollo</h2>
+        </div>
+        <div class="section-content">
+          <p class="warning-text">⚠️ Esta sección solo es visible en modo desarrollo</p>
+          <button class="btn-danger" @click="clearAllData">
+            <FaIcon icon="fa-solid fa-trash" /> Eliminar todos los datos
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -37,17 +50,51 @@
 import { useI18n, type Locale } from '@/composables/useI18n'
 
 const { t, locale, setLocale } = useI18n()
+
+// Solo mostrar opciones de desarrollo en desarrollo
+const isDevelopment = import.meta.env.DEV
+
+const clearAllData = () => {
+  // Confirmación antes de eliminar
+  if (!confirm('⚠️ ¿Estás seguro de que deseas eliminar TODOS los datos? Esta acción no se puede deshacer.')) {
+    return
+  }
+
+  // Confirmar segunda vez
+  if (!confirm('Segunda confirmación: ¿Eliminar todos los datos de la cuenta?')) {
+    return
+  }
+
+  try {
+    // Limpiar localStorage
+    localStorage.clear()
+    
+    // Reiniciar stores a estado inicial (esto no persiste, pero limpia la memoria)
+    // Los stores se reiniciarán cuando se recargue la página
+    
+    // Mostrar mensaje de éxito
+    alert('✓ Todos los datos han sido eliminados. La página se recargará.')
+    
+    // Recargar la página para que los stores se reinicien
+    window.location.reload()
+  } catch (error) {
+    console.error('Error al eliminar datos:', error)
+    alert('❌ Hubo un error al eliminar los datos.')
+  }
+}
 </script>
 
 <style scoped>
 .settings-view {
-  padding: 24px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow: hidden;
+  overflow: visible;
   max-width: 800px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
 }
 
@@ -151,6 +198,55 @@ h1 {
   color: var(--text-secondary);
   margin: 0;
   font-size: 14px;
+}
+
+/* ============ DANGER SECTION ============ */
+.danger-section {
+  border: 2px solid var(--color-danger);
+  background: rgba(255, 85, 85, 0.05);
+}
+
+.danger-section .section-header h2 {
+  color: var(--color-danger);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.warning-text {
+  color: var(--color-warning);
+  font-size: 12px;
+  margin: 0 0 12px 0;
+  padding: 8px 12px;
+  background: rgba(255, 170, 85, 0.1);
+  border-radius: 4px;
+}
+
+.btn-danger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--color-danger);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-danger:hover {
+  background: #ff4444;
+  box-shadow: 0 0 12px rgba(255, 85, 85, 0.4);
+  transform: scale(1.02);
+}
+
+.btn-danger:active {
+  transform: scale(0.98);
 }
 
 /* ============ RESPONSIVE ============ */

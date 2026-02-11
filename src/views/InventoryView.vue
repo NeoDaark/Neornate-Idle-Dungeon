@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { usePlayerStore } from '@/stores/playerStore'
-import { ItemType } from '@/types/Game'
+import { ItemType, EquipmentSlot } from '@/types/Game'
 import EquipmentSlots from '@/components/inventory/EquipmentSlots.vue'
 import ItemGrid from '@/components/inventory/ItemGrid.vue'
 
@@ -121,7 +121,7 @@ const capacityPercent = computed(() => {
         <!-- Grid de Items -->
         <ItemGrid
           :items="filteredItems"
-          @unequip-item="(slot) => inventoryStore.unequipItem(slot)"
+          @unequip-item="(slot: string) => inventoryStore.unequipItem(slot as EquipmentSlot)"
         />
 
         <!-- Mensaje si está vacío -->
@@ -135,19 +135,20 @@ const capacityPercent = computed(() => {
 
 <style scoped>
 .inventory-view {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: 0;
+  overflow: visible;
   background: var(--bg-dark);
   gap: 0;
-  overflow: hidden;
 }
 
 /* ===== HEADER ===== */
 .inventory-header {
   padding: 24px;
-  background: linear-gradient(180deg, var(--bg-card) 0%, rgba(26, 26, 26, 0.5) 100%);
+  /*background: linear-gradient(180deg, var(--bg-card) 0%, rgba(26, 26, 26, 0.5) 100%);*/
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
 }

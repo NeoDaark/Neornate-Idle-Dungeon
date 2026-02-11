@@ -41,13 +41,15 @@ const { t, locale, setLocale } = useI18n()
 
 <style scoped>
 .settings-view {
-  padding: 24px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow: hidden;
+  overflow: visible;
   max-width: 800px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
 }
 

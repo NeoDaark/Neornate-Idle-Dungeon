@@ -215,17 +215,22 @@ defineEmits<{
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-darker) 100%);
-  border-right: 1px solid var(--border-color);
+  background: var(--bg-darker);
+}
+
+@media (min-width: 720px) {
+  .sidebar-navigation {
+    border-right: none;
+  }
 }
 
 .nav-header {
-  padding: 12px 12px;
-  border-bottom: 1px solid var(--border-color);
+  padding: 10px 12px;
+  border-bottom: none;
 }
 
 .logo {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-primary);
   margin: 0;
@@ -433,7 +438,7 @@ defineEmits<{
 /* ===== NAV FOOTER ===== */
 .nav-footer {
   padding: 8px 6px;
-  border-top: 1px solid var(--border-color);
+  border-top: none;
   display: flex;
   gap: 6px;
   align-items: stretch;

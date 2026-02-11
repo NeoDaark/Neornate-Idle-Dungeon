@@ -1,13 +1,16 @@
 <template>
   <div class="mobile-layout" :class="{ 'menu-open': menuOpen }">
-    <!-- Botón flotante para abrir menú -->
-    <button 
-      class="floating-menu-btn"
-      @click="menuOpen = !menuOpen"
-      :title="t('ui.menu.toggle')"
-    >
-      {{ menuOpen ? '✕' : '☰' }}
-    </button>
+    <!-- Header superior fijo -->
+    <header class="mobile-header">
+      <button 
+        class="menu-btn"
+        @click="menuOpen = !menuOpen"
+        :title="t('ui.menu.toggle')"
+      >
+        {{ menuOpen ? '✕' : '☰' }}
+      </button>
+      <PlayerInfo />
+    </header>
 
     <!-- Overlay + Menu fullscreen -->
     <transition name="menu-slide">
@@ -36,6 +39,7 @@ import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import { useI18n } from '@/composables/useI18n'
 import SidebarNavigation from '../shared/SidebarNavigation.vue'
+import PlayerInfo from '../shared/PlayerInfo.vue'
 
 const { t } = useI18n()
 const menuOpen = ref(false)
@@ -46,37 +50,64 @@ const menuOpen = ref(false)
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: var(--bg-dark);
   position: relative;
+  overflow: hidden;
 }
 
-/* ===== BOTÓN FLOTANTE ===== */
-.floating-menu-btn {
-  position: fixed;
-  bottom: 8px;
-  left: 6px;
-  width: 36px;
-  height: 36px;
+/* ===== HEADER SUPERIOR ===== */
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 12px;
+  padding-top: max(8px, calc(8px + env(safe-area-inset-top)));
+  padding-left: max(12px, calc(12px + env(safe-area-inset-left)));
+  padding-right: max(12px, calc(12px + env(safe-area-inset-right)));
+  background: var(--bg-darker);
+  border-bottom: none;
+  gap: 12px;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.menu-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  padding: 10px 10px;
-  border-radius: 6px;
-  text-decoration: none;
-  color: var(--text-secondary);
-  transition: all 0.15s ease;
-  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border: none;
   background: transparent;
-  font: inherit;
-  will-change: background-color, color, transform;
-  border: 1px solid var(--border-color);
+  color: var(--color-primary);
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
-.floating-menu-btn:hover {
-  color: var(--text-primary);
+.menu-btn:hover {
   background: rgba(255, 165, 0, 0.1);
+}
+
+.menu-btn:active {
+  opacity: 0.7;
+}
+
+.header-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.header-spacer {
+  width: 40px;
+  flex-shrink: 0;
 }
 
 /* ===== MENU OVERLAY ===== */
@@ -108,12 +139,12 @@ const menuOpen = ref(false)
 
 /* ===== MAIN CONTENT ===== */
 .mobile-content {
+  flex: 1;
   width: 100%;
-  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-top: max(0px, env(safe-area-inset-top));
-  padding-bottom: max(0px, env(safe-area-inset-bottom));
+  padding: 0;
+  margin: 0;
 }
 
 /* ===== TRANSITIONS ===== */

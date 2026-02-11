@@ -13,7 +13,12 @@ const { t } = useI18n()
 
 <style scoped>
 .dungeon-view {
-  padding: 24px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
 }
 
 h1 {

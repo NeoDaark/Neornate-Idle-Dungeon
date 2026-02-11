@@ -238,10 +238,9 @@ defineEmits<{
   align-items: center;
   justify-content: flex-start;
   padding: 8px 12px;
-    padding-top: 8px;
-    padding-right: 12px;
-    padding-left: 12px;
-  background: var(--bg-darker);
+  padding-top: max(8px, calc(8px + env(safe-area-inset-top)));
+  padding-left: max(12px, calc(12px + env(safe-area-inset-left)));
+  padding-right: max(12px, calc(12px + env(safe-area-inset-right)));
   border-bottom: none;
   gap: 12px;
   flex-shrink: 0;

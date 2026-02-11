@@ -166,7 +166,7 @@ const getMaterialName = (itemId: string): string => {
     <div v-if="lockedProducts.length > 0" class="locked-section">
       <h4>{{ t('ui.m_blocked') }}</h4>
       <details class="locked-details">
-        <summary>👁️ Ver {{ lockedProducts.length }} materiales bloqueados</summary>
+        <summary>👁️ {{ t('labels.blocked_materials').replace('{count}', lockedProducts.length.toString()) }}</summary>
         <div class="locked-products">
           <div
             v-for="product in lockedProducts"

@@ -297,7 +297,9 @@
     "cycle_info": "Cycle Info",
     "cycle_duration": "Cycle Duration",
     "xp_reward": "XP Reward",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "stored_quantity": "Stored quantity",
+    "blocked_materials": "View {count} blocked materials"
   },
   "errors": {
     "notFound": "Not found",

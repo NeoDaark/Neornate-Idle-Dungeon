@@ -2,7 +2,7 @@
   <nav class="sidebar-navigation">
     <!-- Logo/Header -->
     <div class="nav-header">
-      <h2 class="logo">⚔️ Neornate</h2>
+      <h2 class="logo"><FaIcon icon="fa-solid fa-dragon" class="logo-icon" /> Neornate</h2>
     </div>
 
     <!-- Menu Items -->
@@ -14,7 +14,7 @@
         :class="{ active: isActive('/') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🏠</span>
+        <FaIcon icon="fa-solid fa-chess-rook" class="icon" />
         <span class="label">{{ t('ui.menu.home') }}</span>
       </router-link>
 
@@ -22,12 +22,12 @@
       <div class="nav-group">
         <button 
           class="nav-item group-toggle"
-          :class="{ active: skillsExpanded }"
+          :class="{ active: isSkillsGroupActive() }"
           @click="skillsExpanded = !skillsExpanded"
         >
-          <span class="icon">⚒️</span>
+          <FaIcon icon="fa-solid fa-hammer" class="icon" />
           <span class="label">{{ t('ui.menu.skills') }}</span>
-          <span class="expand-icon">{{ skillsExpanded ? '▼' : '▶' }}</span>
+          <FaIcon :icon="skillsExpanded ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-right'" class="expand-icon" />
         </button>
 
         <!-- Subopciones de skills -->
@@ -41,11 +41,11 @@
               :class="{ active: isSkillItemActive(skill.path), 'is-farming': isSkillActive(skill.skill) }"
               @click="$emit('navigate')"
             >
-              <span class="icon">{{ skill.icon }}</span>
+              <FaIcon :icon="skill.icon" class="icon" />
               <div class="subitem-content">
                 <div class="subitem-header">
                   <span class="label">{{ t(skill.label) }}</span>
-                  <span v-if="isSkillActive(skill.skill)" class="farming-badge">⚡<!--{{ t('labels.active') }}--></span>
+                  <FaIcon v-if="isSkillActive(skill.skill)" icon="fa-solid fa-bolt" class="farming-badge" />
                 </div>
                 <div class="skill-info">
                   <span class="level">Lvl {{ getSkillLevel(skill.skill) }}</span>
@@ -69,7 +69,7 @@
         :class="{ active: isActive('/inventory') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🎒</span>
+        <FaIcon icon="fa-solid fa-cube" class="icon" />
         <div class="item-content">
           <span class="label">{{ t('ui.menu.inventory') }}</span>
           <span class="info-text">{{ inventoryUsed }}/{{ inventoryMax }}</span>
@@ -83,7 +83,7 @@
         :class="{ active: isActive('/dungeon') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🗺️</span>
+        <FaIcon icon="fa-solid fa-map" class="icon" />
         <span class="label">{{ t('ui.menu.dungeon') }}</span>
       </router-link>
 
@@ -94,7 +94,7 @@
         :class="{ active: isActive('/market') }"
         @click="$emit('navigate')"
       >
-        <span class="icon">🏪</span>
+        <FaIcon icon="fa-solid fa-coins" class="icon" />
         <span class="label">{{ t('ui.menu.market') }}</span>
       </router-link>
     </div>
@@ -107,7 +107,7 @@
         @click="$emit('navigate')"
         :title="t('ui.menu.close')"
       >
-        <span class="icon">✕</span>
+        <FaIcon icon="fa-solid fa-xmark" class="icon" />
       </button>
       
       <router-link 
@@ -115,7 +115,7 @@
         class="nav-item settings-link"
         @click="$emit('navigate')"
       >
-        <span class="icon">⚙️</span>
+        <FaIcon icon="fa-solid fa-gear" class="icon" />
         <span class="label">{{ t('ui.menu.settings') }}</span>
       </router-link>
     </div>
@@ -156,17 +156,21 @@ interface SkillMenuItem {
 }
 
 const skillMenuItems: SkillMenuItem[] = [
-  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: '⛏️' },
-  { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name', icon: '🌲' },
-  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: '🔥' },
-  { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name', icon: '🔨' },
-  { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name', icon: '🎣' },
-  { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name', icon: '🍳' },
-  { skill: Skill.AVENTURA, path: '/skills?skill=aventura', label: 'skills.aventura.name', icon: '⚔️' },
+  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: 'fa-solid fa-mountain' },
+  { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name', icon: 'fa-solid fa-tree' },
+  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: 'fa-solid fa-fire' },
+  { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name', icon: 'fa-solid fa-hammer' },
+  { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name', icon: 'fa-solid fa-fish' },
+  { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name', icon: 'fa-solid fa-utensils' },
+  { skill: Skill.AVENTURA, path: '/skills?skill=aventura', label: 'skills.aventura.name', icon: 'fa-solid fa-wand-magic-sparkles' },
 ]
 
 const isActive = (path: string) => {
   return route.path === path
+}
+
+const isSkillsGroupActive = () => {
+  return route.path === '/skills'
 }
 
 const isSkillItemActive = (skillPath: string): boolean => {
@@ -235,6 +239,13 @@ defineEmits<{
   color: var(--color-primary);
   margin: 0;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-icon {
+  font-size: 1.2rem;
 }
 
 .nav-menu {
@@ -282,8 +293,13 @@ defineEmits<{
 .icon {
   font-size: 1.2rem;
   min-width: 24px;
+  max-width: 24px;
+  height: 24px;
   text-align: center;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .label {

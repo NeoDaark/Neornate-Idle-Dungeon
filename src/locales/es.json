@@ -298,7 +298,7 @@
     "cycle_duration": "Duración del Ciclo",
     "xp_reward": "Recompensa XP",
     "quantity": "Cantidad",
-    "stored_quantity": "Cantidad almacenada",
+    "stored_quantity": "Almacenado",
     "blocked_materials": "Ver {count} materiales bloqueados"
   },
   "errors": {

@@ -299,7 +299,7 @@
     "cycle_duration": "Cycle Duration",
     "xp_reward": "XP Reward",
     "quantity": "Quantity",
-    "stored_quantity": "Stored quantity",
+    "stored_quantity": "Stored",
     "blocked_materials": "View {count} blocked materials"
   },
   "errors": {

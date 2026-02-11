@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from '@/composables/useI18n'
 import { useInventoryStore } from '@/stores/inventoryStore'
-import { usePlayerStore } from '@/stores/playerStore'
 import { ItemType, EquipmentSlot } from '@/types/Game'
-import EquipmentSlots from '@/components/inventory/EquipmentSlots.vue'
 import ItemGrid from '@/components/inventory/ItemGrid.vue'
 
 const { t } = useI18n()
+const router = useRouter()
 const inventoryStore = useInventoryStore()
-const playerStore = usePlayerStore()
 
 // Estado local
 const selectedTab = ref<'all' | 'resources' | 'materials' | 'consumables'>('all')
@@ -54,46 +53,49 @@ const slotsMax = computed(() => 50) // TODO: Basado en stats del jugador
 const capacityPercent = computed(() => {
   return Math.round((slotsUsed.value / slotsMax.value) * 100)
 })
+
+// Abrir equipamiento
+const openEquipment = () => {
+  router.push({ name: 'equipment' })
+}
 </script>
 
 <template>
   <div class="inventory-view">
-    <!-- Header -->
+    <!-- Header Compacto -->
     <div class="inventory-header">
-      <h1>{{ t('ui.menu.inventory') }}</h1>
-      <div class="header-stats">
-        <div class="stat gold-stat">
-          <span class="icon">💰</span>
-          <span class="label">{{ t('labels.gold') }}:</span>
-          <span class="value">{{ goldFormatted }}</span>
-        </div>
-        <div class="stat capacity-stat">
-          <span class="icon">📦</span>
-          <span class="label">{{ t('labels.capacity') }}:</span>
-          <span class="value">{{ slotsUsed }}/{{ slotsMax }}</span>
-          <div class="capacity-bar">
-            <div class="capacity-fill" :style="{ width: capacityPercent + '%' }"></div>
+      <div class="header-info">
+        <h1>{{ t('ui.menu.inventory') }}</h1>
+        <div class="header-stats-group">
+          <button 
+            class="equipment-btn"
+            @click="openEquipment"
+            :title="t('labels.equipment')"
+          >
+            <FaIcon icon="fa-solid fa-shirt" />
+          </button>
+          <div class="header-stats">
+            <div class="stat gold-stat">
+              <span class="icon">💰</span>
+              <span class="value">{{ goldFormatted }}</span>
+            </div>
+            <div class="stat capacity-stat">
+              <span class="icon">📦</span>
+              <span class="value">{{ slotsUsed }}/{{ slotsMax }}</span>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="capacity-bar">
+        <div class="capacity-fill" :style="{ width: capacityPercent + '%' }"></div>
       </div>
     </div>
 
     <!-- Contenido Principal -->
     <div class="inventory-content">
-      <!-- Equipamiento -->
-      <section class="equipment-section">
-        <h2>⚔️ {{ t('labels.equipment') }}</h2>
-        <EquipmentSlots
-          :equipment="inventoryStore.inventory.equipment"
-          :player="playerStore.player"
-        />
-      </section>
-
-      <!-- Inventario de Items -->
+      <!-- Inventario de Items (PRIMERO) -->
       <section class="items-section">
         <div class="items-header">
-          <h2>🎒 {{ t('labels.items') }}</h2>
-
           <!-- Búsqueda -->
           <div class="search-bar">
             <input
@@ -147,65 +149,63 @@ const capacityPercent = computed(() => {
 
 /* ===== HEADER ===== */
 .inventory-header {
-  padding: 24px;
-  /*background: linear-gradient(180deg, var(--bg-card) 0%, rgba(26, 26, 26, 0.5) 100%);*/
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
 }
 
-.inventory-header h1 {
-  margin: 0 0 16px 0;
-  font-size: 28px;
-  color: var(--color-primary);
+.header-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.header-stats-group {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+.inventory-header h1 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
 .header-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .stat {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: rgba(255, 165, 0, 0.05);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255, 165, 0, 0.08);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 4px;
+  font-size: 13px;
 }
 
 .stat .icon {
-  font-size: 20px;
-}
-
-.stat .label {
-  color: var(--text-secondary);
   font-size: 14px;
 }
 
 .stat .value {
   color: var(--color-primary);
   font-weight: 600;
-  margin-left: auto;
 }
-
-.capacity-stat {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
 .capacity-bar {
   width: 100%;
   height: 4px;
-  background: var(--bg-darker);
+  background: rgba(255, 165, 0, 0.1);
   border-radius: 2px;
   overflow: hidden;
-  margin-top: 4px;
 }
 
 .capacity-fill {
@@ -313,6 +313,34 @@ section h2 {
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: #000;
+}
+
+/* ===== EQUIPMENT BUTTON ===== */
+.equipment-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: rgba(255, 165, 0, 0.12);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 4px;
+  color: var(--color-primary);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.equipment-btn:hover {
+  background: rgba(255, 165, 0, 0.2);
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 8px rgba(255, 165, 0, 0.15);
+}
+
+.equipment-btn:active {
+  transform: scale(0.95);
 }
 
 /* ===== EMPTY STATE ===== */

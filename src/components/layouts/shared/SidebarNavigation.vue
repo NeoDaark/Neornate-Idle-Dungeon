@@ -2,7 +2,14 @@
   <nav class="sidebar-navigation">
     <!-- Logo/Header -->
     <div class="nav-header">
-      <h2 class="logo"><FaIcon icon="fa-solid fa-dragon" class="logo-icon" /> Neornate</h2>
+      <!-- Botón de cierre (solo móvil) -->
+      <button 
+        class="menu-btn mobile-only"
+        @click="$emit('navigate')"
+        :title="t('ui.menu.close')"
+      >
+        <FaIcon icon="fa-solid fa-xmark" class="icon" />
+      </button>
     </div>
 
     <!-- Menu Items -->
@@ -101,15 +108,7 @@
 
     <!-- Footer -->
     <div class="nav-footer">
-      <!-- Botón de cierre (solo móvil) -->
-      <button 
-        class="nav-item close-btn mobile-only"
-        @click="$emit('navigate')"
-        :title="t('ui.menu.close')"
-      >
-        <FaIcon icon="fa-solid fa-xmark" class="icon" />
-      </button>
-      
+      <!-- Settings Link -->
       <router-link 
         to="/settings" 
         class="nav-item settings-link"
@@ -118,6 +117,12 @@
         <FaIcon icon="fa-solid fa-gear" class="icon" />
         <span class="label">{{ t('ui.menu.settings') }}</span>
       </router-link>
+
+      <!-- App Branding -->
+      <div class="app-branding">
+        <p class="branding-text">{{ t('ui.title') }}</p>
+        <p class="branding-version">{{ t('ui.version') }}</p>
+      </div>
     </div>
   </nav>
 </template>
@@ -229,8 +234,40 @@ defineEmits<{
 }
 
 .nav-header {
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 12px;
+    padding-top: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+  padding-top: max(8px, calc(8px + env(safe-area-inset-top)));
+  padding-left: max(12px, calc(12px + env(safe-area-inset-left)));
+  padding-right: max(12px, calc(12px + env(safe-area-inset-right)));
+  background: var(--bg-darker);
   border-bottom: none;
+  gap: 12px;
+  flex-shrink: 0;
+  z-index: 100;
+  background: #070505;
+}
+.menu-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.menu-btn:hover {
+  background: rgba(255, 165, 0, 0.1);
 }
 
 .logo {
@@ -454,8 +491,9 @@ defineEmits<{
 /* ===== NAV FOOTER ===== */
 .nav-footer {
   padding: 8px 6px;
-  border-top: none;
+  border-top: 1px solid var(--border-color);
   display: flex;
+  flex-direction: column;
   gap: 6px;
   align-items: stretch;
 }
@@ -468,7 +506,21 @@ defineEmits<{
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border-color);
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 165, 0, 0.1);
+}
+
+.close-btn:active {
+  opacity: 0.7;
 }
 
 .close-btn .icon {
@@ -476,7 +528,7 @@ defineEmits<{
 }
 
 .settings-link {
-  flex: 1;
+  flex: 0 0 auto;
   height: 36px;
   padding: 0 10px !important;
   display: flex;
@@ -495,6 +547,30 @@ defineEmits<{
   .mobile-only {
     display: flex;
   }
+}
+
+/* ===== APP BRANDING ===== */
+.app-branding {
+  padding: 12px 10px;
+  border-top: 1px solid rgba(255, 165, 0, 0.1);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.branding-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1;
+}
+
+.branding-version {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin: 2px 0 0 0;
+  line-height: 1;
 }
 
 /* ===== TRANSITIONS ===== */

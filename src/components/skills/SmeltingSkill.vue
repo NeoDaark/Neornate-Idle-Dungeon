@@ -162,56 +162,57 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="smelting-skill">
-    <div class="header">
+  <div class="skill-view">
+    <!-- Header -->
+    <div class="skill-header">
       <h2>{{ smeltingConfig.emoji }} {{ t('skills.fundicion.name') }}</h2>
-      <p class="description">{{ t('skills.fundicion.description') }}</p>
+      <p class="skill-header-desc">{{ t('skills.fundicion.description') }}</p>
     </div>
 
-    <div class="content">
-      <!-- Skill Card -->
-      <SkillCard
-        :skill-state="smeltingSkillState"
-        :is-active="smeltingSkillState.isActive"
-      />
+    <!-- Skill Card (Stats) -->
+    <SkillCard
+      :skill-state="smeltingSkillState"
+      :is-active="smeltingSkillState.isActive"
+    />
 
-      <!-- Control Panel -->
-      <div class="control-panel">
-        <div class="cycle-progress" v-if="smeltingSkillState.isActive">
-          <div class="progress-bar">
-            <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
-          </div>
-          <p>{{ Math.round(cycleProgress) }}%</p>
+    <!-- Control Panel -->
+    <div class="skill-control-panel">
+      <!-- Progress -->
+      <div v-if="smeltingSkillState.isActive" class="skill-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
         </div>
+        <p class="progress-text">{{ Math.round(cycleProgress) }}%</p>
+      </div>
 
-        <div class="button-group">
-          <button
-            v-if="!smeltingSkillState.isActive"
-            class="btn btn-primary"
-            :disabled="!selectedProduct || !canSmelt"
-            @click="startSmelting"
-          >
-            🔥 {{ t('skills.fundicion.action') }}
-          </button>
-          <button
-            v-else
-            class="btn btn-danger"
-            @click="stopSmelting"
-          >
-            ⏹️ {{ t('ui.stop') }}
-          </button>
-        </div>
+      <!-- Action Buttons -->
+      <div class="skill-buttons">
+        <button
+          v-if="!smeltingSkillState.isActive"
+          class="skill-btn skill-btn-primary"
+          :disabled="!selectedProduct || !canSmelt"
+          @click="startSmelting"
+        >
+          🔥 {{ t('skills.fundicion.action') }}
+        </button>
+        <button
+          v-else
+          class="skill-btn skill-btn-danger"
+          @click="stopSmelting"
+        >
+          ⏹️ {{ t('ui.stop') }}
+        </button>
+      </div>
 
-        <!-- Mostrar requisitos si faltan materiales -->
-        <div v-if="selectedProduct?.requiredMaterials && !canSmelt" class="warning">
-          <p>{{ t('ui.missing_materials') }}:</p>
-          <div class="materials-list">
-            <div v-for="mat in selectedProduct.requiredMaterials" :key="mat.itemId" class="material-item">
-              <span>{{ mat.itemId }}</span>
-              <span class="quantity" :class="{ insufficient: inventoryStore.getItemQuantity(mat.itemId) < mat.quantity }">
-                {{ inventoryStore.getItemQuantity(mat.itemId) }}/{{ mat.quantity }}
-              </span>
-            </div>
+      <!-- Warning: Missing Materials -->
+      <div v-if="selectedProduct?.requiredMaterials && !canSmelt" class="skill-warning">
+        <p class="warning-title">{{ t('ui.missing_materials') }}:</p>
+        <div class="materials-list">
+          <div v-for="mat in selectedProduct.requiredMaterials" :key="mat.itemId" class="material-item">
+            <span class="mat-name">{{ mat.itemId }}</span>
+            <span class="mat-qty" :class="{ insufficient: inventoryStore.getItemQuantity(mat.itemId) < mat.quantity }">
+              {{ inventoryStore.getItemQuantity(mat.itemId) }}/{{ mat.quantity }}
+            </span>
           </div>
         </div>
       </div>
@@ -225,137 +226,31 @@ onMounted(() => {
         :is-active="smeltingSkillState.isActive"
         @select="selectProduct"
       />
-
-      <!-- Notification -->
-      <transition name="slide-up">
-        <div v-if="showNotification" class="notification">
-          {{ notificationMessage }}
-        </div>
-      </transition>
     </div>
+
+    <!-- Notification -->
+    <transition name="skill-notification">
+      <div v-if="showNotification" class="skill-notification">
+        {{ notificationMessage }}
+      </div>
+    </transition>
   </div>
 </template>
 
 <style scoped>
-.smelting-skill {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+@import '@/assets/styles/skills.css';
 
-.header {
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 12px;
-}
-
-.header h2 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 28px;
-}
-
-.description {
-  margin: 8px 0 0 0;
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.control-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-}
-
-.cycle-progress {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 24px;
-  background: var(--bg-darker);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-warning));
-  transition: width 0.1s linear;
-}
-
-.cycle-progress p {
-  margin: 0;
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 12px;
-}
-
-.button-group {
-  display: flex;
-  gap: 8px;
-}
-
-.btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  flex: 1;
-}
-
-.btn-primary {
-  background: var(--color-primary);
-  color: #000;
-}
-
-.btn-primary:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-
-.btn-primary:disabled {
-  background: var(--text-muted);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.btn-danger {
-  background: var(--color-danger);
-  color: white;
-}
-
-.btn-danger:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-
-.warning {
-  padding: 12px;
+/* Warning section for missing materials */
+.skill-warning {
+  padding: 10px;
   background: rgba(255, 85, 85, 0.1);
   border: 1px solid var(--color-danger);
-  border-radius: 6px;
-  font-size: 12px;
+  border-radius: 4px;
+  font-size: 11px;
 }
 
-.warning p {
-  margin: 0 0 8px 0;
+.warning-title {
+  margin: 0 0 6px 0;
   color: var(--color-danger);
   font-weight: 600;
 }
@@ -363,68 +258,32 @@ onMounted(() => {
 .materials-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .material-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 8px;
+  padding: 4px 6px;
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  border-radius: 3px;
   color: var(--text-secondary);
+  font-size: 11px;
 }
 
-.quantity {
+.mat-name {
+  flex: 1;
+}
+
+.mat-qty {
   font-weight: 600;
   color: var(--color-success);
+  min-width: 40px;
+  text-align: right;
 }
 
-.quantity.insufficient {
+.mat-qty.insufficient {
   color: var(--color-danger);
-}
-
-.notification {
-  padding: 12px 16px;
-  background: var(--color-success);
-  color: #000;
-  border-radius: 6px;
-  font-weight: 600;
-  text-align: center;
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-up-enter-from,
-.slide-up-leave-to {
-  transform: translateY(100%);
-  opacity: 0;
-}
-
-@media (max-width: 768px) {
-  .btn {
-    padding: 10px 16px;
-    font-size: 12px;
-  }
-
-  .header h2 {
-    font-size: 24px;
-  }
 }
 </style>

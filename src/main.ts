@@ -8,6 +8,8 @@ import App from './App.vue'
 import router from './router'
 import './assets/styles/main.css'
 
+console.log('[Main] Iniciando aplicación...')
+
 // Agregar todos los iconos sólidos y marcas a la librería
 library.add(fas, fab)
 
@@ -15,6 +17,8 @@ const app = createApp(App)
 
 // Registrar el componente FontAwesomeIcon globalmente
 app.component('FaIcon', FontAwesomeIcon)
+
+console.log('[Main] Pinia y Router configurados')
 
 app.use(createPinia())
 app.use(router)

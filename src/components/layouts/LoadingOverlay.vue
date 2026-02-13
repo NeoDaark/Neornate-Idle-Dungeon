@@ -1,6 +1,16 @@
 <template>
   <div class="loading-overlay">
-    <div class="loading-content">
+    <!-- Estado de error -->
+    <div v-if="hasError" class="error-content">
+      <div class="error-box">
+        <h2>⚠️ Error de Inicialización</h2>
+        <p class="error-message">{{ errorMessage }}</p>
+        <p class="error-hint">Intenta recargar la página (F5)</p>
+      </div>
+    </div>
+
+    <!-- Estado de carga normal -->
+    <div v-else class="loading-content">
       <!-- Logo -->
       <div class="logo-section">
         <h1 class="logo-title">⚔️</h1>
@@ -40,13 +50,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onErrorCaptured } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 
 const { t } = useI18n()
 
 const loadingProgress = ref(0)
 const currentMessage = ref('')
+const hasError = ref(false)
+const errorMessage = ref('')
+
+// Capturar errores
+onErrorCaptured((error) => {
+  console.error('[LoadingOverlay] Error capturado:', error)
+  hasError.value = true
+  errorMessage.value = error?.message || 'Error desconocido'
+  return false // Prevenir propagación
+})
 
 const loadingMessages = [
   'ui.messages.loading',
@@ -99,6 +119,45 @@ onMounted(() => {
   text-align: center;
   max-width: 500px;
   width: 100%;
+}
+
+.error-content {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.error-box {
+  background: rgba(255, 85, 85, 0.1);
+  border: 2px solid #ff5555;
+  border-radius: 12px;
+  padding: 2rem;
+  color: var(--text-primary);
+}
+
+.error-box h2 {
+  margin: 0 0 1rem 0;
+  color: #ff5555;
+  font-size: 1.5rem;
+}
+
+.error-message {
+  margin: 1rem 0;
+  color: var(--text-secondary);
+  font-family: monospace;
+  font-size: 0.9rem;
+  word-break: break-word;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.8rem;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.error-hint {
+  margin: 1rem 0 0 0;
+  color: var(--color-warning);
+  font-size: 0.95rem;
 }
 
 /* ============ LOGO SECTION ============ */

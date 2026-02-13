@@ -275,6 +275,7 @@ export const useSkillsStore = defineStore('skills', () => {
       const saved = localStorage.getItem('neornate_skills')
       if (saved) {
         const loaded = JSON.parse(saved)
+        const now = Date.now()
         
         // Fusionar con estados existentes preservando productos
         Object.keys(skillStates.value).forEach(skillKey => {
@@ -288,7 +289,27 @@ export const useSkillsStore = defineStore('skills', () => {
             skillStates.value[skill].tier = loadedData.tier ?? skillStates.value[skill].tier
             skillStates.value[skill].isActive = loadedData.isActive ?? false
             skillStates.value[skill].lastCycleTime = loadedData.lastCycleTime ?? 0
-            skillStates.value[skill].cycleEndTime = loadedData.cycleEndTime ?? 0
+            
+            // IMPORTANTE: cycleEndTime se debe validar
+            // Si está en el futuro, es válido. Si está en el pasado pero el skill está activo,
+            // se debe mantener para que calculateOfflineProgress lo procese.
+            // Si está en el pasado Y el skill NO está activo, resetea.
+            const savedCycleEndTime = loadedData.cycleEndTime ?? 0
+            const isSkillActive = loadedData.isActive ?? false
+            
+            if (savedCycleEndTime > 0 && savedCycleEndTime > now) {
+              // El ciclo aún no ha completado (cycleEndTime está en el futuro)
+              skillStates.value[skill].cycleEndTime = savedCycleEndTime
+            } else if (savedCycleEndTime > 0 && isSkillActive) {
+              // El ciclo está en el pasado PERO el skill está activo
+              // Mantener cycleEndTime para que calculateOfflineProgress lo procese
+              skillStates.value[skill].cycleEndTime = savedCycleEndTime
+              console.log(`[Skills] Skill ${skill}: cycleEndTime mantenido para procesamiento offline (${savedCycleEndTime})`)
+            } else {
+              // El ciclo está en el pasado Y el skill NO está activo, o no hay ciclo
+              skillStates.value[skill].cycleEndTime = 0
+            }
+            
             if (loadedData.currentProduct) {
               // Buscar el producto en la lista cargada
               skillStates.value[skill].currentProduct = skillStates.value[skill].products.find(

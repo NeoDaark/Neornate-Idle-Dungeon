@@ -26,11 +26,57 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        background: linear-gradient(135deg, #0e0e0e 0%, #1a1a1a 100%);
+      }
+      
+      /* Fallback si Vue no se monta */
+      .fallback {
+        text-align: center;
+        color: #fff;
+        padding: 2rem;
+      }
+      
+      .fallback h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      
+      .fallback p {
+        margin: 0.5rem 0;
+        font-size: 0.9rem;
+        color: #aaa;
       }
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Fallback si Vue no se monta en 5 segundos -->
+      <div class="fallback" style="display: none;" id="fallback">
+        <h1>⚔️</h1>
+        <h2>Neornate - Idle Dungeon</h2>
+        <p>Cargando...</p>
+        <p style="font-size: 0.8rem; margin-top: 1rem;">Si el problema persiste, intenta limpiar la caché:</p>
+        <p style="font-size: 0.75rem; color: #666;">1. Recarga la página (F5 o Ctrl+R)</p>
+        <p style="font-size: 0.75rem; color: #666;">2. Limpia caché del navegador</p>
+      </div>
+    </div>
+    
+    <script>
+      // Mostrar fallback si Vue no carga en 5 segundos
+      setTimeout(() => {
+        const app = document.getElementById('app')
+        if (!app || app.innerHTML.trim() === '<div class="fallback" style="display: none;" id="fallback">') {
+          const fallback = document.getElementById('fallback')
+          if (fallback) {
+            fallback.style.display = 'block'
+            console.error('[Fallback] Vue no se montó en 5 segundos')
+          }
+        }
+      }, 5000)
+      
+      console.log('[Init] Iniciando aplicación...')
+    </script>
+    
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

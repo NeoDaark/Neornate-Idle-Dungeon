@@ -5,8 +5,9 @@
   "description": "Neornate - Idle Dungeon: RPG Idle Game para Android e iOS",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run post-build",
     "build:capacitor": "cross-env BUILD_TARGET=capacitor vite build",
+    "post-build": "copy .nojekyll dist\\.nojekyll & copy 404.html dist\\404.html & echo Archivos de configuracion copiados a dist",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "cap-add-android": "capacitor add android",

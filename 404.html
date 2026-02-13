@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neornate - Idle Dungeon</title>
+    <script>
+        // Solución para GitHub Pages SPA routing
+        // Cuando una ruta no existe, GitHub devuelve este archivo 404.html
+        // Este script guarda la ruta original y redirige a index.html
+        
+        // Obtener la ruta actual (sin el dominio)
+        const currentPath = window.location.pathname
+        
+        // Guardar la ruta original en sessionStorage
+        if (!sessionStorage.getItem('redirect')) {
+            sessionStorage.setItem('redirect', currentPath)
+            
+            // Redirigir a la página principal
+            // GitHub Pages servirá el index.html desde la raíz
+            window.location.replace(window.location.pathname.split('/').slice(0, -1).join('/') + '/index.html')
+        } else {
+            // Si ya hay un redirect guardado, limpiar para evitar bucles infinitos
+            sessionStorage.removeItem('redirect')
+        }
+    </script>
+</head>
+<body>
+    <p>Redirigiendo a la aplicación...</p>
+</body>
+</html>

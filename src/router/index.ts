@@ -41,11 +41,33 @@ const routes: RouteRecordRaw[] = [
     name: 'settings',
     component: () => import('@/views/SettingsView.vue'),
   },
+  // Catchall para rutas no encontradas - redirige a home
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    redirect: '/',
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+})
+
+// Restaurar ruta si fue redirigida por 404.html (GitHub Pages)
+router.beforeEach((to, _from, next) => {
+  const redirectPath = sessionStorage.getItem('redirect')
+  if (redirectPath && to.path === '/') {
+    sessionStorage.removeItem('redirect')
+    // Parsear la ruta original (remover el base URL)
+    const baseUrl = import.meta.env.BASE_URL
+    const routePath = redirectPath.replace(baseUrl, '').split('?')[0]
+    if (routePath && routePath !== '/') {
+      next(routePath)
+      return
+    }
+  }
+  next()
 })
 
 export default router

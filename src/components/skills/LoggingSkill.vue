@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useSkillsStore } from '@/stores/skillsStore'
+import { useToolsStore } from '@/stores/toolsStore'
 import { useI18n } from '@/composables/useI18n'
 import { Skill, SKILL_CONFIGS } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
@@ -8,6 +9,7 @@ import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
 
 const skillsStore = useSkillsStore()
+const toolsStore = useToolsStore()
 const { t } = useI18n()
 
 const loggingSkillState = computed(() => skillsStore.getSkillState(Skill.TALA))
@@ -32,7 +34,15 @@ watch(() => ({
   // Si la experiencia cambió, significa que se completó un ciclo
   if (newVal.experience !== oldVal?.experience && selectedProduct.value) {
     const productName = t(selectedProduct.value.i18nKey)
-    showMessage(`+${selectedProduct.value.xpReward} XP | +${selectedProduct.value.quantity}x ${productName}`)
+    const toolBonus = toolsStore.calculateToolBonus(Skill.TALA)
+    
+    // Calcular valores finales con bonuses
+    const finalXP = Math.floor(selectedProduct.value.xpReward * (1 + toolBonus.xpBonus))
+    const finalQuantity = selectedProduct.value.quantity + toolBonus.quantityBonus
+    
+    // Mostrar notificación con valores finales
+    const bonusText = (toolBonus.xpBonus > 0 || toolBonus.quantityBonus > 0) ? ' ⚡' : ''
+    showMessage(`+${finalXP} XP | +${finalQuantity}x ${productName}${bonusText}`)
   }
 }, { deep: true })
 

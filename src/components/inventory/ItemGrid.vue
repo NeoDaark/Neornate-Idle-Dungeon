@@ -7,8 +7,9 @@ interface Props {
 }
 
 defineProps<Props>()
-defineEmits<{
+const emit = defineEmits<{
   'unequip-item': [slot: string]
+  'item-action': [stack: InventoryStack]
 }>()
 
 const { t } = useI18n()
@@ -52,116 +53,136 @@ const getItemName = (stack: InventoryStack): string => {
   // Fallback
   return itemId
 }
+
+const handleItemAction = (stack: InventoryStack) => {
+  emit('item-action', stack)
+}
 </script>
 
 <template>
-  <div class="item-grid">
+  <div class="item-list">
     <div
       v-for="stack in items"
       :key="stack.itemId"
-      class="item-card"
+      class="item-row"
       :class="`rarity-${getItemColor(stack.item.value)}`"
     >
-      <div class="card-icon">{{ stack.item.icon }}</div>
+      <div class="item-icon">{{ stack.item.icon }}</div>
 
-      <div class="card-content">
+      <div class="item-info">
         <p class="item-name">{{ getItemName(stack) }}</p>
+        <p class="item-quantity">x{{ stack.quantity }}</p>
       </div>
 
-      <div class="quantity-badge">
-        <span>x{{ stack.quantity }}</span>
-      </div>
+      <button
+        class="item-actions-btn"
+        @click="handleItemAction(stack)"
+        :title="t('inventory.actions.title')"
+      >
+        ⋮
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.item-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   width: 100%;
 }
 
-.item-card {
+.item-row {
   background: var(--bg-darker);
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
   transition: all 0.2s;
-  text-align: center;
-  position: relative;
-  height: max-content;
 }
 
-.item-card:hover {
-  transform: translateY(-4px);
+.item-row:hover {
   border-color: var(--color-primary);
   background: rgba(255, 165, 0, 0.05);
 }
 
-.item-card.rarity-common {
+.item-row.rarity-common {
   border-color: var(--border-color);
 }
 
-.item-card.rarity-uncommon {
+.item-row.rarity-uncommon {
   border-color: var(--color-success);
 }
 
-.item-card.rarity-rare {
+.item-row.rarity-rare {
   border-color: #4169e1;
 }
 
-.item-card.rarity-epic {
+.item-row.rarity-epic {
   border-color: #9932cc;
 }
 
-.item-card.rarity-legendary {
+.item-row.rarity-legendary {
   border-color: var(--color-primary);
   background: rgba(255, 165, 0, 0.08);
 }
 
-.card-icon {
-  font-size: 32px;
+.item-icon {
+  font-size: 20px;
   flex-shrink: 0;
 }
 
-.card-content {
+.item-info {
+  flex: 1;
   min-width: 0;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .item-name {
   margin: 0;
-  font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
-  word-break: break-word;
-  line-height: 1.2;
-  max-height: 2.4em;
+  font-size: 13px;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
-.quantity-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: var(--color-primary);
-  color: #000;
-  padding: 2px 6px;
-  border-radius: 4px;
+.item-quantity {
+  margin: 0;
   font-size: 11px;
-  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.item-actions-btn {
   flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 8px 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-actions-btn:hover {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-primary);
+}
+
+.item-actions-btn:active {
+  transform: scale(0.95);
 }
 </style>

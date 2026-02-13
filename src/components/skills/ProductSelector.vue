@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import { useInventoryStore } from '@/stores/inventoryStore'
+import { useToolsStore } from '@/stores/toolsStore'
 import type { SkillProduct } from '@/types/Skill'
 import type { Skill } from '@/types/Game'
 import { SKILL_CONFIGS } from '@/types/Game'
@@ -21,6 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n()
 const inventoryStore = useInventoryStore()
+const toolsStore = useToolsStore()
 
 const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
@@ -35,6 +37,28 @@ const unlockedProducts = computed((): SkillProduct[] => {
 
 const lockedProducts = computed((): SkillProduct[] => {
   return props.products.filter(p => p.level > props.playerLevel)
+})
+
+const toolBonus = computed(() => {
+  return toolsStore.calculateToolBonus(props.skill)
+})
+
+const finalXP = computed(() => {
+  if (!props.currentProduct) return 0
+  const baseXP = props.currentProduct.xpReward
+  return Math.floor(baseXP * (1 + toolBonus.value.xpBonus))
+})
+
+const finalCycleDuration = computed(() => {
+  if (!props.currentProduct) return 0
+  const baseDuration = props.currentProduct.cycleDuration * 1000
+  const speedReduction = toolBonus.value.speedBonus * 1000
+  return Math.max(500, baseDuration - speedReduction)
+})
+
+const finalQuantity = computed(() => {
+  if (!props.currentProduct) return 0
+  return props.currentProduct.quantity + toolBonus.value.quantityBonus
 })
 
 const selectProduct = (product: SkillProduct) => {
@@ -130,9 +154,12 @@ const getMaterialName = (itemId: string): string => {
           <div class="icon">{{ currentProduct.item.icon }}</div>
           <div class="details">
             <h4>{{ skillAction }} {{ t(currentProduct.i18nKey) }}</h4>
-            <p class="level">{{ t('labels.level') }}: {{ currentProduct.level }}</p>
-            <p class="reward">{{ currentProduct.xpReward }} XP</p>
-            <p class="quantity">x{{ currentProduct.quantity }}</p>
+            <div class="stats-row">
+              <span class="stat">{{ t('labels.level') }}: {{ currentProduct.level }}</span>
+              <span class="stat">{{ finalXP }} XP <span v-if="toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>
+              <span class="stat">x{{ finalQuantity }} <span v-if="toolBonus.quantityBonus > 0" class="bonus">+{{ toolBonus.quantityBonus }}</span></span>
+              <span class="stat">⏱️ {{ (finalCycleDuration / 1000).toFixed(1) }}s <span v-if="toolBonus.speedBonus < 0" class="bonus">{{ Math.round(toolBonus.speedBonus) }}s</span></span>
+            </div>
           </div>
         </div>
         <div v-if="currentProduct.i18nDescriptionKey" class="description">
@@ -290,24 +317,44 @@ const getMaterialName = (itemId: string): string => {
   word-break: break-word;
 }
 
-.details p {
-  margin: 2px 0 0 0;
-  color: var(--text-secondary);
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
   font-size: 12px;
 }
 
-.details .level {
-  color: var(--text-muted);
+.stat {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.details .reward {
+.stat:nth-child(2) {
   color: var(--color-success);
   font-weight: 500;
 }
 
-.details .quantity {
+.stat:nth-child(3) {
   color: var(--color-warning);
   font-weight: 500;
+}
+
+.stat:nth-child(4) {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.details .bonus {
+  display: inline-block;
+  padding: 1px 4px;
+  background: rgba(85, 255, 85, 0.2);
+  color: var(--color-success);
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
 }
 
 .description {

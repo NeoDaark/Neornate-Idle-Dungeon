@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useSkillsStore } from '@/stores/skillsStore'
+import { useToolsStore } from '@/stores/toolsStore'
 import { useI18n } from '@/composables/useI18n'
 import { Skill, SKILL_CONFIGS } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
@@ -8,6 +9,7 @@ import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
 
 const skillsStore = useSkillsStore()
+const toolsStore = useToolsStore()
 const { t } = useI18n()
 
 const miningSkillState = computed(() => skillsStore.getSkillState(Skill.MINERIA))
@@ -32,7 +34,15 @@ watch(() => ({
   // Si la experiencia cambió, significa que se completó un ciclo
   if (newVal.experience !== oldVal?.experience && selectedProduct.value) {
     const productName = t(selectedProduct.value.i18nKey)
-    showMessage(`+${selectedProduct.value.xpReward} XP | +${selectedProduct.value.quantity}x ${productName}`)
+    const toolBonus = toolsStore.calculateToolBonus(Skill.MINERIA)
+    
+    // Calcular valores finales con bonuses
+    const finalXP = Math.floor(selectedProduct.value.xpReward * (1 + toolBonus.xpBonus))
+    const finalQuantity = selectedProduct.value.quantity + toolBonus.quantityBonus
+    
+    // Mostrar notificación con valores finales
+    const bonusText = (toolBonus.xpBonus > 0 || toolBonus.quantityBonus > 0) ? ' ⚡' : ''
+    showMessage(`+${finalXP} XP | +${finalQuantity}x ${productName}${bonusText}`)
   }
 }, { deep: true })
 
@@ -142,45 +152,46 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mining-skill">
-    <div class="header">
+  <div class="skill-view">
+    <!-- Header -->
+    <div class="skill-header">
       <h2>{{ miningConfig.emoji }} {{ t('skills.mineria.name') }}</h2>
-      <p class="description">{{ t('skills.mineria.description') }}</p>
+      <p class="skill-header-desc">{{ t('skills.mineria.description') }}</p>
     </div>
 
-    <div class="content">
-      <!-- Skill Card -->
-      <SkillCard
-        :skill-state="miningSkillState"
-        :is-active="miningSkillState.isActive"
-      />
+    <!-- Skill Card (Stats) -->
+    <SkillCard
+      :skill-state="miningSkillState"
+      :is-active="miningSkillState.isActive"
+    />
 
-      <!-- Control Panel -->
-      <div class="control-panel">
-        <div class="cycle-progress" v-if="miningSkillState.isActive">
-          <div class="progress-bar">
-            <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
-          </div>
-          <p>{{ Math.round(cycleProgress) }}%</p>
+    <!-- Control Panel -->
+    <div class="skill-control-panel">
+      <!-- Progress -->
+      <div v-if="miningSkillState.isActive" class="skill-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
         </div>
+        <p class="progress-text">{{ Math.round(cycleProgress) }}%</p>
+      </div>
 
-        <div class="button-group">
-          <button
-            v-if="!miningSkillState.isActive"
-            class="btn btn-primary"
-            :disabled="!selectedProduct"
-            @click="startMining"
-          >
-            ⛏️ Iniciar Minería
-          </button>
-          <button
-            v-else
-            class="btn btn-danger"
-            @click="stopMining"
-          >
-            ⏹️ Detener
-          </button>
-        </div>
+      <!-- Action Buttons -->
+      <div class="skill-buttons">
+        <button
+          v-if="!miningSkillState.isActive"
+          class="skill-btn skill-btn-primary"
+          :disabled="!selectedProduct"
+          @click="startMining"
+        >
+          ⛏️ {{ t('ui.start') }}
+        </button>
+        <button
+          v-else
+          class="skill-btn skill-btn-danger"
+          @click="stopMining"
+        >
+          ⏹️ {{ t('ui.stop') }}
+        </button>
       </div>
 
       <!-- Product Selector -->
@@ -192,14 +203,14 @@ onMounted(() => {
         :is-active="miningSkillState.isActive"
         @select="selectProduct"
       />
-
-      <!-- Notification -->
-      <transition name="slide-up">
-        <div v-if="showNotification" class="notification">
-          {{ notificationMessage }}
-        </div>
-      </transition>
     </div>
+
+    <!-- Notification -->
+    <transition name="skill-notification">
+      <div v-if="showNotification" class="skill-notification">
+        {{ notificationMessage }}
+      </div>
+    </transition>
   </div>
 </template>
 

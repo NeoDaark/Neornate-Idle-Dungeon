@@ -165,6 +165,13 @@ export const useInventoryStore = defineStore('inventory', () => {
   }
 
   /**
+   * Alias para saveToLocalStorage
+   */
+  const saveToStorage = () => {
+    saveToLocalStorage()
+  }
+
+  /**
    * Cargar desde localStorage
    */
   const loadFromLocalStorage = () => {
@@ -197,6 +204,7 @@ export const useInventoryStore = defineStore('inventory', () => {
     addGold,
     spendGold,
     clear,
+    saveToStorage,
     saveToLocalStorage,
     loadFromLocalStorage,
   }

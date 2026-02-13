@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import type { SkillState, SkillProduct, CycleResult } from '@/types/Skill'
 import { Skill, Tier } from '@/types/Game'
 import { SKILL_PRODUCTS_MAP } from '@/data/skillProducts'
+import { useToolsStore } from '@/stores/toolsStore'
 
 const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T7]
 
@@ -131,11 +132,21 @@ export const useSkillsStore = defineStore('skills', () => {
   const activateSkill = (skill: Skill, product: SkillProduct, cycleDurationMs: number = 3000) => {
     const state = skillStates.value[skill]
 
+    // Aplicar speedBonus de herramienta (restar segundos de duración)
+    const toolsStore = useToolsStore()
+    const toolBonus = toolsStore.calculateToolBonus(skill)
+    let finalDurationMs = cycleDurationMs
+    
+    if (toolBonus.speedBonus !== 0) {
+      // speedBonus es en segundos (negativo = más rápido)
+      finalDurationMs = Math.max(500, cycleDurationMs - (toolBonus.speedBonus * 1000))
+    }
+
     const now = Date.now()
     state.isActive = true
     state.currentProduct = product
     state.lastCycleTime = now
-    state.cycleEndTime = now + cycleDurationMs
+    state.cycleEndTime = now + finalDurationMs
   }
 
   /**
@@ -160,7 +171,16 @@ export const useSkillsStore = defineStore('skills', () => {
     }
 
     const product = state.currentProduct
-    const xpGained = product.xpReward
+    
+    // Obtener bonus de herramienta equipada para este skill (ANTES de calcular XP)
+    const toolsStore = useToolsStore()
+    const toolBonus = toolsStore.calculateToolBonus(skill)
+    
+    // Calcular XP con bonus de herramienta
+    let xpGained = product.xpReward
+    if (toolBonus.xpBonus > 0) {
+      xpGained = Math.floor(product.xpReward * (1 + toolBonus.xpBonus))
+    }
 
     addExperience(skill, xpGained)
 
@@ -185,9 +205,19 @@ export const useSkillsStore = defineStore('skills', () => {
       }
     }
 
+    // Calcular cantidad con bonus de herramienta
+    let finalQuantity = product.quantity
+    
+    // Aplicar bonus de cantidad (aditivo)
+    if (toolBonus.quantityBonus > 0) {
+      finalQuantity = product.quantity + Math.floor(toolBonus.quantityBonus)
+    }
+
     // Agregar item al inventario si está disponible
     if (inventoryStore) {
-      inventoryStore.addItem(product.item, product.quantity)
+      inventoryStore.addItem(product.item, finalQuantity)
+      // TODO: Implementar rarityBonus (aumentar rarity de items generados)
+      // TODO: Implementar discountBonus (descuentos en mercado)
     }
 
     // Resetear ciclo - el componente decidirá si iniciar otro
@@ -198,7 +228,7 @@ export const useSkillsStore = defineStore('skills', () => {
       skill,
       xpGained,
       product: product.item,
-      quantity: product.quantity,
+      quantity: finalQuantity,
       materialsConsumed: product.requiredMaterials || [],
       leveledUp: false, // TODO: detectar si hubo level-up
     }

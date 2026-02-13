@@ -183,7 +183,7 @@ onMounted(() => {
           :disabled="!selectedProduct"
           @click="startMining"
         >
-          ⛏️ {{ t('ui.start') }}
+          ⛏️ {{ t('skills.mineria.action') }}
         </button>
         <button
           v-else

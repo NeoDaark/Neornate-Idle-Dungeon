@@ -183,7 +183,7 @@ onMounted(() => {
           :disabled="!selectedProduct"
           @click="startLogging"
         >
-          🌲 {{ t('ui.start') }}
+          🌲 {{ t('skills.tala.action') }}
         </button>
         <button
           v-else

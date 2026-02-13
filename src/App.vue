@@ -21,6 +21,11 @@ import { usePlayerStore } from '@/stores/playerStore'
 import { useToolsStore } from '@/stores/toolsStore'
 import { GAME_CONSTANTS } from '@/types/Game'
 
+// Logs de inicio
+console.log('🚀 [App] Archivo App.vue cargado')
+console.log(`📱 BASE_URL: ${import.meta.env.BASE_URL}`)
+console.log(`📱 MODE: ${import.meta.env.MODE}`)
+
 const gameStore = useGameStore()
 const skillsStore = useSkillsStore()
 const inventoryStore = useInventoryStore()

@@ -35,7 +35,8 @@
     "missing_materials": "Insufficient materials",
     "price": "Price",
     "buy": "Buy",
-    "locked": "Locked"
+    "locked": "Locked",
+    "continue": "Continue"
   },
   "inventory": {
     "quantity": "Quantity",
@@ -412,5 +413,10 @@
       "success": "Resources sold!",
       "noResources": "You have no resources to sell"
     }
+  },
+  "notifications": {
+    "offlineHarvest": "Farming while you were away",
+    "farmedFor": "You farmed for"
   }
 }
+

@@ -163,7 +163,7 @@ export const useSkillsStore = defineStore('skills', () => {
    * Completar un ciclo de skill
    * Retorna los resultados (XP y item generado)
    */
-  const completeCycle = (skill: Skill, inventoryStore?: any): CycleResult | null => {
+  const completeCycle = (skill: Skill, inventoryStore?: any, resetCycleEndTime: boolean = true): CycleResult | null => {
     const state = skillStates.value[skill]
 
     if (!state.currentProduct || state.cycleEndTime === 0) {
@@ -220,8 +220,10 @@ export const useSkillsStore = defineStore('skills', () => {
       // TODO: Implementar discountBonus (descuentos en mercado)
     }
 
-    // Resetear ciclo - el componente decidirá si iniciar otro
-    state.cycleEndTime = 0
+    // Resetear ciclo solo si se especifica (para no resetear en farmeo offline)
+    if (resetCycleEndTime) {
+      state.cycleEndTime = 0
+    }
     // NO actualizar lastCycleTime aquí - solo activateSkill lo debe hacer
 
     return {

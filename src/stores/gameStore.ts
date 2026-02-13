@@ -210,13 +210,18 @@ export const useGameStore = defineStore('game', () => {
 
         // Procesar cada ciclo completado
         for (let i = 0; i < cyclesCompleted; i++) {
-          const result = skillsStore.completeCycle(skillState.skill, inventoryStore)
+          console.log(`[Offline] Procesando ciclo ${i + 1}/${cyclesCompleted} para ${skillState.skill}`)
+          const result = skillsStore.completeCycle(skillState.skill, inventoryStore, false)
           if (result) {
             totalQuantity += result.quantity
             totalXP += result.xpGained
-            console.log(`[Offline] +${result.quantity} ${result.product.id}, +${result.xpGained} XP`)
+            console.log(`[Offline] ✓ Ciclo ${i + 1}: +${result.quantity} ${result.product.id}, +${result.xpGained} XP (total: ${totalQuantity}, ${totalXP})`)
+          } else {
+            console.error(`[Offline] ✗ Ciclo ${i + 1} devolvió null`)
           }
         }
+
+        console.log(`[Offline] ${skillState.skill} finalizó: totalQuantity=${totalQuantity}, totalXP=${totalXP}`)
 
         // Guardar en resumen
         harvests.push({

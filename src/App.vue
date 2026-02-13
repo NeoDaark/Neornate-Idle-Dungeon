@@ -35,22 +35,44 @@ let saveInterval: ReturnType<typeof setInterval> | null = null
 let gameLoopInterval: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
-  // Inicializar juego (cargar datos guardados)
-  gameStore.initializeGame()
+  console.log('[App] Iniciando...')
   
-  // Cargar datos persistidos
-  skillsStore.loadFromLocalStorage()
-  inventoryStore.loadFromLocalStorage()
-  playerStore.loadFromLocalStorage()
-  toolsStore.loadFromStorage()
+  try {
+    // Inicializar juego (cargar datos guardados)
+    gameStore.initializeGame()
+    console.log('[App] Game store inicializado')
+    
+    // Cargar datos persistidos
+    skillsStore.loadFromLocalStorage()
+    inventoryStore.loadFromLocalStorage()
+    playerStore.loadFromLocalStorage()
+    toolsStore.loadFromStorage()
+    console.log('[App] Datos cargados desde localStorage')
 
-  // Simular tiempo de carga (3 segundos)
-  setTimeout(() => {
-    // Procesar farmeo offline después de que "carga" termina
-    gameStore.calculateOfflineProgress()
-    // Mostrar layout
+    // Simular tiempo de carga (3 segundos)
+    setTimeout(() => {
+      try {
+        console.log('[App] Procesando farmeo offline...')
+        // Procesar farmeo offline después de que "carga" termina
+        gameStore.calculateOfflineProgress()
+        console.log('[App] Offline procesado, ocultando loading...')
+        // Mostrar layout
+        isLoading.value = false
+        console.log('[App] Layout visible')
+        
+        // Iniciar game loop DESPUÉS de procesar offline
+        startGameLoop()
+      } catch (error) {
+        console.error('[App] Error en setTimeout:', error)
+        isLoading.value = false
+        // Aún así iniciar game loop aunque haya error
+        startGameLoop()
+      }
+    }, 3000)
+  } catch (error) {
+    console.error('[App] Error en onMounted:', error)
     isLoading.value = false
-  }, 3000)
+  }
 
   // Pre-cargar componentes críticos para mejor rendimiento
   // Esto evita que haya lag cuando el usuario navega a Skills por primera vez
@@ -62,38 +84,43 @@ onMounted(() => {
     // Ignorar errores de pre-carga (no crítico)
   })
 
-  // Game loop - actualiza cada 100ms
-  gameLoopInterval = setInterval(() => {
-    // Procesar skills activos
-    const activeSkills = skillsStore.activeSkills
-    
-    activeSkills.forEach(skill => {
-      const now = Date.now()
-      // Si el ciclo se completó
-      if (skill.cycleEndTime > 0 && now >= skill.cycleEndTime) {
-        const result = skillsStore.completeCycle(skill.skill, inventoryStore)
-        
-        // Si se completó correctamente y el skill sigue activo, reiniciar automáticamente
-        if (result && skill.isActive) {
-          const currentState = skillsStore.getSkillState(skill.skill)
-          if (currentState.currentProduct) {
-            const cycleDurationMs = currentState.currentProduct.cycleDuration * 1000
-            skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
+  // Función para iniciar el game loop (se llama DESPUÉS de calcular offline)
+  const startGameLoop = () => {
+    // Game loop - actualiza cada 100ms
+    gameLoopInterval = setInterval(() => {
+      // Procesar skills activos
+      const activeSkills = skillsStore.activeSkills
+      
+      activeSkills.forEach(skill => {
+        const now = Date.now()
+        // Si el ciclo se completó
+        if (skill.cycleEndTime > 0 && now >= skill.cycleEndTime) {
+          const result = skillsStore.completeCycle(skill.skill, inventoryStore)
+          
+          // Si se completó correctamente y el skill sigue activo, reiniciar automáticamente
+          if (result && skill.isActive) {
+            const currentState = skillsStore.getSkillState(skill.skill)
+            if (currentState.currentProduct) {
+              const cycleDurationMs = currentState.currentProduct.cycleDuration * 1000
+              skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
+            }
           }
         }
-      }
-    })
-  }, GAME_CONSTANTS.GAME_LOOP_TICK)
+      })
+    }, GAME_CONSTANTS.GAME_LOOP_TICK)
 
-  // Auto-save periódico
-  saveInterval = setInterval(() => {
-    gameStore.saveGame()
-    skillsStore.saveToLocalStorage()
-    inventoryStore.saveToLocalStorage()
-    playerStore.saveToLocalStorage()
-    toolsStore.saveToStorage()
-    console.log('[Game] Auto-save realizado')
-  }, GAME_CONSTANTS.AUTO_SAVE_INTERVAL)
+    // Auto-save periódico
+    saveInterval = setInterval(() => {
+      gameStore.saveGame()
+      skillsStore.saveToLocalStorage()
+      inventoryStore.saveToLocalStorage()
+      playerStore.saveToLocalStorage()
+      toolsStore.saveToStorage()
+      console.log('[Game] Auto-save realizado')
+    }, GAME_CONSTANTS.AUTO_SAVE_INTERVAL)
+
+    console.log('[App] Game loop iniciado')
+  }
 })
 
 onUnmounted(() => {

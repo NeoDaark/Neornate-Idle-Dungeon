@@ -30,9 +30,9 @@
                   <span>{{ t(`skills.${harvest.skill.toLowerCase()}.name`) }}</span>
                 </div>
                 <div class="harvest-stats">
-                  <span class="cycles">{{ harvest.cyclesCompleted }}x</span>
-                  <span class="quantity">+{{ harvest.totalQuantity }}</span>
-                  <span class="xp">+{{ harvest.totalXP }} XP</span>
+                  <span class="cycles">{{ harvest.cyclesCompleted }}×</span>
+                  <span class="quantity">{{ harvest.totalQuantity }}</span>
+                  <span class="xp">{{ harvest.totalXP }} XP</span>
                 </div>
               </div>
             </div>
@@ -246,7 +246,7 @@ const getSkillIcon = (skill: string): string => {
 
 .harvest-stats {
   display: flex;
-  gap: 0.8rem;
+  gap: 0.6rem;
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -255,28 +255,34 @@ const getSkillIcon = (skill: string): string => {
 .cycles {
   background: rgba(85, 255, 85, 0.15);
   color: var(--color-success);
-  padding: 0.3rem 0.6rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid rgba(85, 255, 85, 0.3);
 }
 
 .quantity {
   background: rgba(255, 165, 0, 0.15);
   color: var(--color-primary);
-  padding: 0.3rem 0.6rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 165, 0, 0.3);
 }
 
 .xp {
   background: rgba(100, 150, 255, 0.15);
   color: #6496ff;
-  padding: 0.3rem 0.6rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid rgba(100, 150, 255, 0.3);
 }
 
 .action-btn {

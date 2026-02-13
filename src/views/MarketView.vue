@@ -1,12 +1,15 @@
 <template>
   <div class="market-view">
     <h1>{{ t('ui.menu.market') }}</h1>
-    <p>{{ t('ui.menu.market') }} - Próximamente</p>
+
+    <!-- Sección de Herramientas -->
+    <ToolMarketSection />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
+import ToolMarketSection from '@/components/tools/ToolMarketSection.vue'
 
 const { t } = useI18n()
 </script>
@@ -24,9 +27,5 @@ const { t } = useI18n()
 h1 {
   color: var(--color-primary);
   margin-bottom: 16px;
-}
-
-p {
-  color: var(--text-secondary);
 }
 </style>

@@ -3,16 +3,22 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from '@/composables/useI18n'
 import { useInventoryStore } from '@/stores/inventoryStore'
+import { usePlayerStore } from '@/stores/playerStore'
 import { ItemType, EquipmentSlot } from '@/types/Game'
+import type { InventoryStack } from '@/stores/inventoryStore'
 import ItemGrid from '@/components/inventory/ItemGrid.vue'
+import ItemActionsModal from '@/components/inventory/ItemActionsModal.vue'
 
 const { t } = useI18n()
 const router = useRouter()
 const inventoryStore = useInventoryStore()
+const playerStore = usePlayerStore()
 
 // Estado local
 const selectedTab = ref<'all' | 'resources' | 'materials' | 'consumables'>('all')
 const searchQuery = ref('')
+const isModalOpen = ref(false)
+const selectedItemStack = ref<InventoryStack | null>(null)
 
 // Computed: Items filtrados
 const filteredItems = computed(() => {
@@ -42,7 +48,7 @@ const filteredItems = computed(() => {
 
 // Oro formateado
 const goldFormatted = computed(() => {
-  return inventoryStore.inventory.gold.toLocaleString()
+  return playerStore.player.gold.toLocaleString()
 })
 
 // Total de slots
@@ -58,10 +64,43 @@ const capacityPercent = computed(() => {
 const openEquipment = () => {
   router.push({ name: 'equipment' })
 }
+
+// Manejar click en item
+const handleItemAction = (stack: InventoryStack) => {
+  selectedItemStack.value = stack
+  isModalOpen.value = true
+}
+
+// Cerrar modal
+const handleModalClose = () => {
+  isModalOpen.value = false
+  selectedItemStack.value = null
+}
+
+// Cuando se vende
+const handleItemSold = (gold: number) => {
+  console.log(`Vendido por ${gold} oro`)
+  // El oro ya se agregó en el modal
+}
+
+// Cuando se descarta
+const handleItemDiscarded = (quantity: number) => {
+  console.log(`Descartado ${quantity} items`)
+  // El item ya se removió del inventario en el modal
+}
 </script>
 
 <template>
   <div class="inventory-view">
+    <!-- Modal de acciones de item -->
+    <ItemActionsModal
+      :is-open="isModalOpen"
+      :item-stack="selectedItemStack"
+      @close="handleModalClose"
+      @sold="handleItemSold"
+      @discarded="handleItemDiscarded"
+    />
+
     <!-- Header Compacto -->
     <div class="inventory-header">
       <div class="header-info">
@@ -124,6 +163,7 @@ const openEquipment = () => {
         <ItemGrid
           :items="filteredItems"
           @unequip-item="(slot: string) => inventoryStore.unequipItem(slot as EquipmentSlot)"
+          @item-action="handleItemAction"
         />
 
         <!-- Mensaje si está vacío -->

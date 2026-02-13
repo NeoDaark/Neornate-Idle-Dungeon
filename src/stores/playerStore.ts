@@ -130,14 +130,46 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   /**
+   * Agregar oro
+   */
+  const addGold = (amount: number) => {
+    player.value.gold += amount
+  }
+
+  /**
+   * Remover oro (validar antes de usar)
+   */
+  const removeGold = (amount: number): boolean => {
+    if (player.value.gold >= amount) {
+      player.value.gold -= amount
+      return true
+    }
+    return false
+  }
+
+  /**
+   * Establecer oro directamente
+   */
+  const setGold = (amount: number) => {
+    player.value.gold = Math.max(0, amount)
+  }
+
+  /**
    * Guardar estado en localStorage
    */
-  const saveToLocalStorage = () => {
+  const saveToStorage = () => {
     try {
       localStorage.setItem('neornate_player', JSON.stringify(player.value))
     } catch (error) {
       console.error('Error guardando jugador a localStorage:', error)
     }
+  }
+
+  /**
+   * Guardar estado en localStorage (alias)
+   */
+  const saveToLocalStorage = () => {
+    saveToStorage()
   }
 
   /**
@@ -172,6 +204,10 @@ export const usePlayerStore = defineStore('player', () => {
     levelUp,
     setClass,
     updateLastActive,
+    addGold,
+    removeGold,
+    setGold,
+    saveToStorage,
     saveToLocalStorage,
     loadFromLocalStorage,
   }

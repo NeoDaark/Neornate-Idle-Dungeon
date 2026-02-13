@@ -454,7 +454,7 @@ export function createPlayer(
     experience: 0,
     currentTier: 'T1' as Tier,
     stats: createDefaultStats(),
-    gold: 0,
+    gold: 1000, // Oro inicial para primeras compras
     createdAt: Date.now(),
     lastActive: Date.now(),
   }

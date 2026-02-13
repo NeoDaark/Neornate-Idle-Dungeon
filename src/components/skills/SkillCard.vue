@@ -81,58 +81,60 @@ const xpProgress = computed((): number => {
 .skill-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 6px;
+  padding: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .skill-card:hover {
   border-color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.15);
 }
 
 .skill-card.active {
-  background: rgba(255, 165, 0, 0.1);
+  background: rgba(255, 165, 0, 0.08);
   border-color: var(--color-primary);
 }
 
 .skill-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .emoji {
-  font-size: 32px;
-  min-width: 40px;
+  font-size: 28px;
+  min-width: 32px;
+  text-align: center;
 }
 
 .info h3 {
   margin: 0;
   color: var(--text-primary);
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .level {
-  margin: 4px 0 0 0;
+  margin: 2px 0 0 0;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .progress-section {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .progress-bar {
   width: 100%;
-  height: 8px;
+  height: 6px;
   background: var(--bg-darker);
-  border-radius: 4px;
+  border-radius: 3px;
   overflow: hidden;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .progress-fill {
@@ -143,22 +145,22 @@ const xpProgress = computed((): number => {
 
 .xp-text {
   margin: 0;
-  color: var(--text-secondary);
-  font-size: 12px;
+  color: var(--text-muted);
+  font-size: 10px;
 }
 
 .status {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 3px 6px;
   background: var(--bg-darker);
   color: var(--text-muted);
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: 3px;
+  font-size: 11px;
   font-weight: 500;
 }
 
 .status.active {
-  background: rgba(85, 255, 85, 0.2);
+  background: rgba(85, 255, 85, 0.15);
   color: var(--color-success);
 }
 </style>

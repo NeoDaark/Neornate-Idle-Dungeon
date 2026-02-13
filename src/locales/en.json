@@ -32,9 +32,46 @@
     "no_requirements": "No requirements",
     "other_skills": "Other Skills",
     "stop": "Stop",
-    "missing_materials": "Insufficient materials"
-
+    "missing_materials": "Insufficient materials",
+    "price": "Price",
+    "buy": "Buy",
+    "locked": "Locked"
   },
+  "inventory": {
+    "quantity": "Quantity",
+    "type": {
+      "label": "Type",
+      "resource": "Resource",
+      "material": "Material",
+      "equipment": "Equipment",
+      "consumable": "Consumable"
+    },
+    "rarity": {
+      "label": "Rarity",
+      "common": "Common",
+      "uncommon": "Uncommon",
+      "rare": "Rare",
+      "epic": "Epic",
+      "legendary": "Legendary"
+    },
+    "actions": {
+      "title": "Item Options",
+      "info": "Information",
+      "sell": "Sell",
+      "discard": "Discard",
+      "sellDesc": "Sell this resource for gold",
+      "quantity": "Quantity to sell",
+      "unitPrice": "Unit price",
+      "total": "Total",
+      "sellConfirm": "Confirm sale",
+      "quantityDiscard": "Quantity to discard",
+      "discardWarning": "This will permanently delete the items",
+      "discardMessage": "Are you sure you want to discard",
+      "discardBtn": "Confirm discard",
+      "cantSell": "This item cannot be sold"
+    }
+  },
+
   "skills": {
     "mineria": {
       "name": "Mining",
@@ -77,7 +114,48 @@
     "wood": "Wood",
     "fish": "Fish",
     "food": "Food",
-    "ingots": "Ingots"
+    "ingots": "Ingots",
+    "carbon": "Coal",
+    "cobre": "Copper",
+    "hierro": "Iron",
+    "plata": "Silver",
+    "tungsteno": "Tungsten",
+    "oro": "Gold",
+    "platino": "Platinum",
+    "obsidiana": "Obsidian",
+    "cobalto": "Cobalt",
+    "mithril": "Mithril",
+    "oricalco": "Orichalcum",
+    "adamantita": "Adamantite",
+    "titanio": "Titanium",
+    "draconita": "Dragonite",
+    "madera-blanda": "Softwood",
+    "madera-comun": "Common Wood",
+    "roble": "Oak Wood",
+    "nogal": "Walnut Wood",
+    "caoba": "Mahogany Wood",
+    "ebano": "Ebony Wood",
+    "petreo": "Petrified Wood",
+    "ancestral": "Ancestral Wood",
+    "divino": "Divine Wood",
+    "pez": "Fish",
+    "trucha": "Trout",
+    "salmon": "Salmon",
+    "atun": "Tuna",
+    "carbon_ingot": "Coal Ingot",
+    "cobre_ingot": "Copper Ingot",
+    "hierro_ingot": "Iron Ingot",
+    "plata_ingot": "Silver Ingot",
+    "tungsteno_ingot": "Tungsten Ingot",
+    "oro_ingot": "Gold Ingot",
+    "platino_ingot": "Platinum Ingot",
+    "obsidiana_ingot": "Obsidian Ingot",
+    "cobalto_ingot": "Cobalt Ingot",
+    "mithril_ingot": "Mithril Ingot",
+    "oricalco_ingot": "Orichalcum Ingot",
+    "adamantita_ingot": "Adamantite Ingot",
+    "titanio_ingot": "Titanium Ingot",
+    "draconita_ingot": "Dragonite Ingot"
   },
   "resources": {
     "mineral": {
@@ -280,6 +358,7 @@
     "back": "Back",
     "gold": "Gold",
     "capacity": "Capacity",
+    "value": "Value",
     "filter_all": "All",
     "filter_resources": "Resources",
     "filter_materials": "Materials",
@@ -304,6 +383,34 @@
   },
   "errors": {
     "notFound": "Not found",
-    "loadFailed": "Load failed"
+    "loadFailed": "Load failed",
+    "notEnoughGold": "You don't have enough gold"
+  },
+  "tools": {
+    "title": "Tools & Equipment",
+    "equipped": "Equipped",
+    "notEquipped": "Not equipped",
+    "noAvailable": "No tools available for this skill",
+    "requireLevel": "Requires Level",
+    "currentLevel": "Current Level",
+    "boughtSuccess": "Tool purchased successfully!",
+    "tier1": "Tier 1",
+    "tier2": "Tier 2",
+    "tier3": "Tier 3",
+    "tier4": "Tier 4",
+    "tier5": "Tier 5",
+    "tier6": "Tier 6",
+    "tier7": "Tier 7"
+  },
+  "market": {
+    "sell": {
+      "title": "Sell Resources",
+      "inventory": "Inventory",
+      "pricePerUnit": "Price per unit",
+      "total": "Total",
+      "sell": "Sell",
+      "success": "Resources sold!",
+      "noResources": "You have no resources to sell"
+    }
   }
 }

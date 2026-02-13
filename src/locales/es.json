@@ -32,7 +32,44 @@
     "no_requirements": "Sin requisitos",
     "other_skills": "Otros Oficios",
     "stop": "Detener",
-    "missing_materials": "Materiales insuficientes"
+    "missing_materials": "Materiales insuficientes",
+    "price": "Precio",
+    "buy": "Comprar",
+    "locked": "Bloqueado"
+  },
+  "inventory": {
+    "quantity": "Cantidad",
+    "type": {
+      "label": "Tipo",
+      "resource": "Recurso",
+      "material": "Material",
+      "equipment": "Equipo",
+      "consumable": "Consumible"
+    },
+    "rarity": {
+      "label": "Rareza",
+      "common": "Común",
+      "uncommon": "Infrecuente",
+      "rare": "Raro",
+      "epic": "Épico",
+      "legendary": "Legendario"
+    },
+    "actions": {
+      "title": "Opciones del item",
+      "info": "Información",
+      "sell": "Vender",
+      "discard": "Tirar",
+      "sellDesc": "Vende este recurso por oro",
+      "quantity": "Cantidad a vender",
+      "unitPrice": "Precio unitario",
+      "total": "Total",
+      "sellConfirm": "Confirmar venta",
+      "quantityDiscard": "Cantidad a tirar",
+      "discardWarning": "Esto eliminará permanentemente los items",
+      "discardMessage": "¿Estás seguro de que deseas tirar",
+      "discardBtn": "Confirmar descarte",
+      "cantSell": "Este item no se puede vender"
+    }
   },
   "skills": {
     "mineria": {
@@ -252,7 +289,48 @@
     "wood": "Madera",
     "fish": "Pescado",
     "food": "Comida",
-    "ingots": "Lingotes"
+    "ingots": "Lingotes",
+    "carbon": "Carbón",
+    "cobre": "Cobre",
+    "hierro": "Hierro",
+    "plata": "Plata",
+    "tungsteno": "Tungsteno",
+    "oro": "Oro",
+    "platino": "Platino",
+    "obsidiana": "Obsidiana",
+    "cobalto": "Cobalto",
+    "mithril": "Mithril",
+    "oricalco": "Oricalco",
+    "adamantita": "Adamantita",
+    "titanio": "Titanio",
+    "draconita": "Draconita",
+    "madera-blanda": "Madera Blanda",
+    "madera-comun": "Madera Común",
+    "roble": "Madera de Roble",
+    "nogal": "Madera de Nogal",
+    "caoba": "Madera de Caoba",
+    "ebano": "Madera de Ébano",
+    "petreo": "Madera Pétreo",
+    "ancestral": "Madera Ancestral",
+    "divino": "Madera Divina",
+    "pez": "Pez",
+    "trucha": "Trucha",
+    "salmon": "Salmón",
+    "atun": "Atún",
+    "carbon_ingot": "Lingote de Carbón",
+    "cobre_ingot": "Lingote de Cobre",
+    "hierro_ingot": "Lingote de Hierro",
+    "plata_ingot": "Lingote de Plata",
+    "tungsteno_ingot": "Lingote de Tungsteno",
+    "oro_ingot": "Lingote de Oro",
+    "platino_ingot": "Lingote de Platino",
+    "obsidiana_ingot": "Lingote de Obsidiana",
+    "cobalto_ingot": "Lingote de Cobalto",
+    "mithril_ingot": "Lingote de Mithril",
+    "oricalco_ingot": "Lingote de Oricalco",
+    "adamantita_ingot": "Lingote de Adamantita",
+    "titanio_ingot": "Lingote de Titanio",
+    "draconita_ingot": "Lingote de Draconita"
   },
   "messages": {
     "loading": "Cargando...",
@@ -279,6 +357,7 @@
     "back": "Atrás",
     "gold": "Oro",
     "capacity": "Capacidad",
+    "value": "Valor",
     "filter_all": "Todos",
     "filter_resources": "Recursos",
     "filter_materials": "Materiales",
@@ -303,6 +382,34 @@
   },
   "errors": {
     "notFound": "No encontrado",
-    "loadFailed": "Error al cargar"
+    "loadFailed": "Error al cargar",
+    "notEnoughGold": "No tienes suficiente oro"
+  },
+  "tools": {
+    "title": "Herramientas de Oficios",
+    "equipped": "Equipada",
+    "notEquipped": "Sin equipar",
+    "noAvailable": "No hay herramientas disponibles para este oficio",
+    "requireLevel": "Requiere Nivel",
+    "currentLevel": "Nivel Actual",
+    "boughtSuccess": "¡Herramienta comprada exitosamente!",
+    "tier1": "Tier 1",
+    "tier2": "Tier 2",
+    "tier3": "Tier 3",
+    "tier4": "Tier 4",
+    "tier5": "Tier 5",
+    "tier6": "Tier 6",
+    "tier7": "Tier 7"
+  },
+    "market": {
+    "sell": {
+      "title": "Vender Recursos",
+      "inventory": "Inventario",
+      "pricePerUnit": "Precio por unidad",
+      "total": "Total",
+      "sell": "Vender",
+      "success": "¡Recursos vendidos!",
+      "noResources": "No tienes recursos para vender"
+    }
   }
 }

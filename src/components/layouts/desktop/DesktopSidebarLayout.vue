@@ -94,10 +94,10 @@ const expProgress = computed(() => {
   display: grid;
   grid-template-columns: 238px 1fr;
   align-items: center;
-  padding: 12px 16px;
-  padding-top: max(12px, calc(12px + env(safe-area-inset-top)));
-  padding-left: max(16px, calc(16px + env(safe-area-inset-left)));
-  padding-right: max(16px, calc(16px + env(safe-area-inset-right)));
+  padding: 8px 12px;
+  padding-top: max(8px, calc(8px + env(safe-area-inset-top)));
+  padding-left: max(12px, calc(12px + env(safe-area-inset-left)));
+  padding-right: max(12px, calc(12px + env(safe-area-inset-right)));
   background: var(--bg-darker);
   border-bottom: 1px solid var(--border-color);
   gap: 0;

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import { useInventoryStore } from '@/stores/inventoryStore'
+import { useToolsStore } from '@/stores/toolsStore'
 import type { SkillProduct } from '@/types/Skill'
 import type { Skill } from '@/types/Game'
 import { SKILL_CONFIGS } from '@/types/Game'
@@ -21,6 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n()
 const inventoryStore = useInventoryStore()
+const toolsStore = useToolsStore()
 
 const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
@@ -35,6 +37,28 @@ const unlockedProducts = computed((): SkillProduct[] => {
 
 const lockedProducts = computed((): SkillProduct[] => {
   return props.products.filter(p => p.level > props.playerLevel)
+})
+
+const toolBonus = computed(() => {
+  return toolsStore.calculateToolBonus(props.skill)
+})
+
+const finalXP = computed(() => {
+  if (!props.currentProduct) return 0
+  const baseXP = props.currentProduct.xpReward
+  return Math.floor(baseXP * (1 + toolBonus.value.xpBonus))
+})
+
+const finalCycleDuration = computed(() => {
+  if (!props.currentProduct) return 0
+  const baseDuration = props.currentProduct.cycleDuration * 1000
+  const speedReduction = toolBonus.value.speedBonus * 1000
+  return Math.max(500, baseDuration - speedReduction)
+})
+
+const finalQuantity = computed(() => {
+  if (!props.currentProduct) return 0
+  return props.currentProduct.quantity + toolBonus.value.quantityBonus
 })
 
 const selectProduct = (product: SkillProduct) => {
@@ -130,9 +154,12 @@ const getMaterialName = (itemId: string): string => {
           <div class="icon">{{ currentProduct.item.icon }}</div>
           <div class="details">
             <h4>{{ skillAction }} {{ t(currentProduct.i18nKey) }}</h4>
-            <p class="level">{{ t('labels.level') }}: {{ currentProduct.level }}</p>
-            <p class="reward">{{ currentProduct.xpReward }} XP</p>
-            <p class="quantity">x{{ currentProduct.quantity }}</p>
+            <div class="stats-row">
+              <span class="stat">{{ t('labels.level') }}: {{ currentProduct.level }}</span>
+              <span class="stat">{{ finalXP }} XP <span v-if="toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>
+              <span class="stat">x{{ finalQuantity }} <span v-if="toolBonus.quantityBonus > 0" class="bonus">+{{ toolBonus.quantityBonus }}</span></span>
+              <span class="stat">⏱️ {{ (finalCycleDuration / 1000).toFixed(1) }}s <span v-if="toolBonus.speedBonus < 0" class="bonus">{{ Math.round(toolBonus.speedBonus) }}s</span></span>
+            </div>
           </div>
         </div>
         <div v-if="currentProduct.i18nDescriptionKey" class="description">
@@ -211,28 +238,31 @@ const getMaterialName = (itemId: string): string => {
 .product-selector {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 6px;
+  padding: 10px;
 }
 
 .product-selector h3 {
-  margin: 0 0 16px 0;
+  margin: 0 0 8px 0;
   color: var(--color-primary);
-  font-size: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Select Dropdown Styles */
 .product-select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: var(--bg-darker);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 4px;
+  font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .product-select:hover {
@@ -242,7 +272,7 @@ const getMaterialName = (itemId: string): string => {
 .product-select:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 8px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 0 6px rgba(255, 165, 0, 0.2);
 }
 
 .product-select option {
@@ -255,25 +285,25 @@ const getMaterialName = (itemId: string): string => {
   background: var(--bg-darker);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 12px;
-  margin-bottom: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .info-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .product-header {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: flex-start;
 }
 
 .icon {
-  font-size: 32px;
-  min-width: 40px;
+  font-size: 24px;
+  min-width: 28px;
   text-align: center;
   line-height: 1;
 }
@@ -284,85 +314,107 @@ const getMaterialName = (itemId: string): string => {
 }
 
 .details h4 {
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
   color: var(--text-primary);
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: 600;
   word-break: break-word;
 }
 
-.details p {
-  margin: 2px 0 0 0;
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 11px;
+}
+
+.stat {
   color: var(--text-secondary);
-  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
-.details .level {
-  color: var(--text-muted);
-}
-
-.details .reward {
+.stat:nth-child(2) {
   color: var(--color-success);
   font-weight: 500;
 }
 
-.details .quantity {
+.stat:nth-child(3) {
   color: var(--color-warning);
   font-weight: 500;
 }
 
+.stat:nth-child(4) {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.details .bonus {
+  display: inline-block;
+  padding: 1px 3px;
+  background: rgba(85, 255, 85, 0.2);
+  color: var(--color-success);
+  border-radius: 2px;
+  font-size: 9px;
+  font-weight: 600;
+}
+
 .description {
   color: var(--text-secondary);
-  font-size: 12px;
-  line-height: 1.4;
-  padding: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  padding: 6px;
   background: var(--bg-card);
   border-left: 2px solid var(--color-primary);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 /* Materiales Disponibles */
 .materials-available {
-  padding-top: 12px;
+  padding-top: 8px;
   border-top: 1px solid var(--border-color);
 }
 
 .materials-available h5 {
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   color: var(--text-primary);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
+  text-transform: uppercase;
 }
 
 .materials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 6px;
 }
 
 .material-item {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 8px;
+  border-radius: 3px;
+  padding: 6px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .material-name {
   color: var(--text-primary);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   word-break: break-word;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .material-quantity {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  font-size: 13px;
+  gap: 3px;
+  font-size: 11px;
   font-weight: 600;
 }
 
@@ -385,15 +437,17 @@ const getMaterialName = (itemId: string): string => {
 
 /* Locked Products Section */
 .locked-section {
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid var(--border-color);
 }
 
 .locked-section h4 {
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .locked-details {
@@ -402,12 +456,12 @@ const getMaterialName = (itemId: string): string => {
 
 .locked-details summary {
   user-select: none;
-  padding: 10px;
+  padding: 8px;
   background: var(--bg-darker);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: 11px;
   transition: all 0.2s ease;
 }
 
@@ -429,53 +483,54 @@ const getMaterialName = (itemId: string): string => {
   background: var(--bg-darker);
   border: 1px solid var(--border-color);
   border-top: none;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  padding: 8px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: 6px;
 }
 
 .locked-product-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px;
-  border-radius: 4px;
+  gap: 10px;
+  padding: 6px;
+  border-radius: 3px;
   opacity: 0.7;
 }
 
 .lock-icon {
-  font-size: 18px;
-  min-width: 24px;
+  font-size: 16px;
+  min-width: 20px;
   text-align: center;
 }
 
 .locked-info h5 {
   margin: 0;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .locked-info p {
-  margin: 2px 0 0 0;
+  margin: 1px 0 0 0;
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .products-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
 .product-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
+  gap: 10px;
+  padding: 8px;
   background: var(--bg-darker);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -486,9 +541,9 @@ const getMaterialName = (itemId: string): string => {
 }
 
 .product-item.selected {
-  background: rgba(255, 165, 0, 0.15);
+  background: rgba(255, 165, 0, 0.12);
   border-color: var(--color-primary);
-  box-shadow: 0 0 8px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 0 6px rgba(255, 165, 0, 0.2);
 }
 
 .product-item.locked {
@@ -497,8 +552,8 @@ const getMaterialName = (itemId: string): string => {
 }
 
 .product-icon {
-  font-size: 24px;
-  min-width: 32px;
+  font-size: 20px;
+  min-width: 26px;
   text-align: center;
 }
 
@@ -510,20 +565,21 @@ const getMaterialName = (itemId: string): string => {
 .product-info-old h4 {
   margin: 0;
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 600;
   word-break: break-word;
 }
 
 .level {
-  margin: 2px 0 0 0;
+  margin: 1px 0 0 0;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .reward {
-  margin: 2px 0 0 0;
+  margin: 1px 0 0 0;
   color: var(--color-success);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
 }
 
@@ -531,6 +587,7 @@ const getMaterialName = (itemId: string): string => {
   text-align: right;
   color: var(--text-secondary);
   font-weight: 500;
+  font-size: 11px;
 }
 
 /* Modal Styles */
@@ -560,9 +617,9 @@ const getMaterialName = (itemId: string): string => {
 .modal-content {
   background: var(--bg-card);
   border: 2px solid var(--color-primary);
-  border-radius: 12px;
-  padding: 24px;
-  max-width: 400px;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 380px;
   width: 90%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   animation: slideUp 0.3s ease;
@@ -583,13 +640,14 @@ const getMaterialName = (itemId: string): string => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .modal-header h3 {
   margin: 0;
   color: var(--color-primary);
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .close-btn {
@@ -597,7 +655,7 @@ const getMaterialName = (itemId: string): string => {
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -610,34 +668,34 @@ const getMaterialName = (itemId: string): string => {
 }
 
 .modal-body {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .modal-body p {
   margin: 0;
   color: var(--text-primary);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .modal-body p.description {
-  margin-top: 8px;
+  margin-top: 6px;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .modal-footer {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   justify-content: flex-end;
 }
 
 .btn {
-  padding: 10px 16px;
+  padding: 8px 12px;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   transition: all 0.2s ease;
 }
@@ -662,6 +720,6 @@ const getMaterialName = (itemId: string): string => {
 .btn-accept:hover {
   background: var(--color-secondary);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.2);
 }
 </style>

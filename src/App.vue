@@ -10,6 +10,7 @@ import { useGameStore } from '@/stores'
 import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { usePlayerStore } from '@/stores/playerStore'
+import { useToolsStore } from '@/stores/toolsStore'
 import { GAME_CONSTANTS } from '@/types/Game'
 
 const router = useRouter()
@@ -17,6 +18,7 @@ const gameStore = useGameStore()
 const skillsStore = useSkillsStore()
 const inventoryStore = useInventoryStore()
 const playerStore = usePlayerStore()
+const toolsStore = useToolsStore()
 
 // Timers
 let saveInterval: ReturnType<typeof setInterval> | null = null
@@ -30,6 +32,7 @@ onMounted(() => {
   skillsStore.loadFromLocalStorage()
   inventoryStore.loadFromLocalStorage()
   playerStore.loadFromLocalStorage()
+  toolsStore.loadFromStorage()
 
   // Pre-cargar componentes críticos para mejor rendimiento
   // Esto evita que haya lag cuando el usuario navega a Skills por primera vez
@@ -70,6 +73,7 @@ onMounted(() => {
     skillsStore.saveToLocalStorage()
     inventoryStore.saveToLocalStorage()
     playerStore.saveToLocalStorage()
+    toolsStore.saveToStorage()
     console.log('[Game] Auto-save realizado')
   }, GAME_CONSTANTS.AUTO_SAVE_INTERVAL)
 
@@ -90,6 +94,7 @@ onUnmounted(() => {
   skillsStore.saveToLocalStorage()
   inventoryStore.saveToLocalStorage()
   playerStore.saveToLocalStorage()
+  toolsStore.saveToStorage()
   
   if (saveInterval) {
     clearInterval(saveInterval)

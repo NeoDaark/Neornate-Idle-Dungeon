@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useSkillsStore } from '@/stores/skillsStore'
+import { useToolsStore } from '@/stores/toolsStore'
 import { useI18n } from '@/composables/useI18n'
 import { Skill, SKILL_CONFIGS } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
@@ -8,6 +9,7 @@ import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
 
 const skillsStore = useSkillsStore()
+const toolsStore = useToolsStore()
 const { t } = useI18n()
 
 const miningSkillState = computed(() => skillsStore.getSkillState(Skill.MINERIA))
@@ -32,7 +34,15 @@ watch(() => ({
   // Si la experiencia cambió, significa que se completó un ciclo
   if (newVal.experience !== oldVal?.experience && selectedProduct.value) {
     const productName = t(selectedProduct.value.i18nKey)
-    showMessage(`+${selectedProduct.value.xpReward} XP | +${selectedProduct.value.quantity}x ${productName}`)
+    const toolBonus = toolsStore.calculateToolBonus(Skill.MINERIA)
+    
+    // Calcular valores finales con bonuses
+    const finalXP = Math.floor(selectedProduct.value.xpReward * (1 + toolBonus.xpBonus))
+    const finalQuantity = selectedProduct.value.quantity + toolBonus.quantityBonus
+    
+    // Mostrar notificación con valores finales
+    const bonusText = (toolBonus.xpBonus > 0 || toolBonus.quantityBonus > 0) ? ' ⚡' : ''
+    showMessage(`+${finalXP} XP | +${finalQuantity}x ${productName}${bonusText}`)
   }
 }, { deep: true })
 
@@ -142,45 +152,46 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mining-skill">
-    <div class="header">
+  <div class="skill-view">
+    <!-- Header -->
+    <div class="skill-header">
       <h2>{{ miningConfig.emoji }} {{ t('skills.mineria.name') }}</h2>
-      <p class="description">{{ t('skills.mineria.description') }}</p>
+      <p class="skill-header-desc">{{ t('skills.mineria.description') }}</p>
     </div>
 
-    <div class="content">
-      <!-- Skill Card -->
-      <SkillCard
-        :skill-state="miningSkillState"
-        :is-active="miningSkillState.isActive"
-      />
+    <!-- Skill Card (Stats) -->
+    <SkillCard
+      :skill-state="miningSkillState"
+      :is-active="miningSkillState.isActive"
+    />
 
-      <!-- Control Panel -->
-      <div class="control-panel">
-        <div class="cycle-progress" v-if="miningSkillState.isActive">
-          <div class="progress-bar">
-            <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
-          </div>
-          <p>{{ Math.round(cycleProgress) }}%</p>
+    <!-- Control Panel -->
+    <div class="skill-control-panel">
+      <!-- Progress -->
+      <div v-if="miningSkillState.isActive" class="skill-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
         </div>
+        <p class="progress-text">{{ Math.round(cycleProgress) }}%</p>
+      </div>
 
-        <div class="button-group">
-          <button
-            v-if="!miningSkillState.isActive"
-            class="btn btn-primary"
-            :disabled="!selectedProduct"
-            @click="startMining"
-          >
-            ⛏️ Iniciar Minería
-          </button>
-          <button
-            v-else
-            class="btn btn-danger"
-            @click="stopMining"
-          >
-            ⏹️ Detener
-          </button>
-        </div>
+      <!-- Action Buttons -->
+      <div class="skill-buttons">
+        <button
+          v-if="!miningSkillState.isActive"
+          class="skill-btn skill-btn-primary"
+          :disabled="!selectedProduct"
+          @click="startMining"
+        >
+          ⛏️ {{ t('skills.mineria.action') }}
+        </button>
+        <button
+          v-else
+          class="skill-btn skill-btn-danger"
+          @click="stopMining"
+        >
+          ⏹️ {{ t('ui.stop') }}
+        </button>
       </div>
 
       <!-- Product Selector -->
@@ -192,167 +203,17 @@ onMounted(() => {
         :is-active="miningSkillState.isActive"
         @select="selectProduct"
       />
-
-      <!-- Notification -->
-      <transition name="slide-up">
-        <div v-if="showNotification" class="notification">
-          {{ notificationMessage }}
-        </div>
-      </transition>
     </div>
+
+    <!-- Notification -->
+    <transition name="skill-notification">
+      <div v-if="showNotification" class="skill-notification">
+        {{ notificationMessage }}
+      </div>
+    </transition>
   </div>
 </template>
 
 <style scoped>
-.mining-skill {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.header {
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 12px;
-}
-
-.header h2 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 28px;
-}
-
-.description {
-  margin: 8px 0 0 0;
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.control-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-}
-
-.cycle-progress {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 12px;
-  background: var(--bg-darker);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
-  transition: width 0.1s linear;
-}
-
-.cycle-progress p {
-  margin: 0;
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.button-group {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-}
-
-.btn {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  background: var(--bg-darker);
-  color: var(--text-primary);
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  font-size: 14px;
-}
-
-.btn:hover:not(:disabled) {
-  border-color: var(--color-primary);
-  background: rgba(255, 165, 0, 0.1);
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-primary {
-  background: var(--color-primary);
-  color: #000;
-  border-color: var(--color-primary);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: var(--color-secondary);
-  border-color: var(--color-secondary);
-}
-
-.btn-danger {
-  background: var(--color-danger);
-  color: #fff;
-  border-color: var(--color-danger);
-}
-
-.btn-danger:hover {
-  opacity: 0.8;
-}
-
-.notification {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-success);
-  color: #000;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  z-index: 1000;
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-up-enter-from,
-.slide-up-leave-to {
-  opacity: 0;
-  transform: translateX(-50%) translateY(20px);
-}
+@import '@/assets/styles/skills.css';
 </style>

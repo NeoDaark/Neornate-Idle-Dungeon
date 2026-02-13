@@ -9,20 +9,24 @@
       >
         <FaIcon :icon="menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'" />
       </button>
-      <div class="header-section">
-        <div class="header-player-info">
-          <span class="level-label">Lvl</span>
-          <span class="level-value">{{ playerLevel }}</span>
-          <span class="player-name">{{ playerName }}</span>
+      <div class="header-content">
+          <!-- Fila 1: Nivel + Nombre -->
+          <div class="header-row-1">
+            <span class="level-label">Lvl</span>
+            <span class="level-value">{{ playerLevel }}</span>
+            <span class="player-name">{{ playerName }}</span>
+          </div>
+          <!-- Fila 2: Nombre de clase -->
+          <div class="header-row-class">
+            <span class="class-name">{{ playerClassName }}</span>
+          </div>
+          <!-- Fila 3: Barra de XP -->
+          <div class="header-row-2">
+            <div class="exp-bar">
+              <div class="exp-fill" :style="{ width: expProgress + '%' }"></div>
+            </div>
+          </div>
         </div>
-        <div class="header-class-info">
-          <span class="class-name">{{ playerClassName }}</span>
-        </div>
-        <div class="exp-bar">
-          <div class="exp-fill" :style="{ width: expProgress + '%' }"></div>
-        </div>
-      </div>
-      <PlayerInfo />
     </header>
 
     <!-- Overlay + Menu fullscreen -->
@@ -53,7 +57,6 @@ import { RouterView } from 'vue-router'
 import { useI18n } from '@/composables/useI18n'
 import { usePlayerStore } from '@/stores/playerStore'
 import SidebarNavigation from '../shared/SidebarNavigation.vue'
-import PlayerInfo from '../shared/PlayerInfo.vue'
 
 const { t } = useI18n()
 const playerStore = usePlayerStore()
@@ -106,40 +109,66 @@ const expProgress = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: none;
-  background: transparent;
+  background: rgba(255, 165, 0, 0.15);
   color: var(--color-primary);
   border-radius: 4px;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.15s ease;
   flex-shrink: 0;
+  padding: 0;
 }
 
 .menu-btn:hover {
-  background: rgba(255, 165, 0, 0.1);
+  background: rgba(255, 165, 0, 0.25);
 }
 
 .menu-btn:active {
   opacity: 0.7;
 }
 
-.header-player-info {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.75rem;
-  flex-shrink: 0;
-}
-
-.header-section {
+.header-content {
   display: flex;
   flex-direction: column;
   gap: 2px;
   flex: 1;
-  min-width: 0;
+  justify-content: center;
+}
+
+/* Fila 1: Nivel + Nombre */
+.header-row-1 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+/* Fila 2: Nombre de clase */
+.header-row-class {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.class-name {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* Fila 3: Barra de XP */
+.header-row-2 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
 }
 
 .level-label {
@@ -150,31 +179,19 @@ const expProgress = computed(() => {
 .level-value {
   color: var(--color-primary);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   min-width: 16px;
 }
 
 .player-name {
   color: var(--text-primary);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 500;
   flex-shrink: 0;
 }
 
-.header-class-info {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.65rem;
-}
-
-.class-name {
-  color: var(--text-muted);
-  font-size: 0.65rem;
-  flex-shrink: 0;
-}
-
 .exp-bar {
+  flex: 1;
   height: 2px;
   background: rgba(255, 85, 85, 0.2);
   border-radius: 1px;
@@ -187,18 +204,11 @@ const expProgress = computed(() => {
   transition: width 0.3s ease;
 }
 
-.header-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
-  flex: 1;
-  text-align: center;
-}
-
-.header-spacer {
-  width: 40px;
+.exp-text {
+  color: var(--text-muted);
+  font-size: 0.65rem;
   flex-shrink: 0;
+  min-width: 24px;
 }
 
 /* ===== MENU OVERLAY ===== */

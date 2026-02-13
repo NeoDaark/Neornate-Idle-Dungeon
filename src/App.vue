@@ -1,11 +1,19 @@
 <template>
-  <ResponsiveLayout />
+  <!-- Loading overlay en primera carga -->
+  <LoadingOverlay v-if="isLoading" />
+  
+  <!-- Layout principal (oculto mientras se carga) -->
+  <ResponsiveLayout v-if="!isLoading" />
+  
+  <!-- Notificación de farmeo offline -->
+  <OfflineHarvestNotification />
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import ResponsiveLayout from '@/components/layouts/ResponsiveLayout.vue'
-import { onMounted, onUnmounted } from 'vue'
+import LoadingOverlay from '@/components/layouts/LoadingOverlay.vue'
+import OfflineHarvestNotification from '@/components/notifications/OfflineHarvestNotification.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useGameStore } from '@/stores'
 import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
@@ -13,12 +21,14 @@ import { usePlayerStore } from '@/stores/playerStore'
 import { useToolsStore } from '@/stores/toolsStore'
 import { GAME_CONSTANTS } from '@/types/Game'
 
-const router = useRouter()
 const gameStore = useGameStore()
 const skillsStore = useSkillsStore()
 const inventoryStore = useInventoryStore()
 const playerStore = usePlayerStore()
 const toolsStore = useToolsStore()
+
+// Estado de loading
+const isLoading = ref(true)
 
 // Timers
 let saveInterval: ReturnType<typeof setInterval> | null = null
@@ -33,6 +43,14 @@ onMounted(() => {
   inventoryStore.loadFromLocalStorage()
   playerStore.loadFromLocalStorage()
   toolsStore.loadFromStorage()
+
+  // Simular tiempo de carga (3 segundos)
+  setTimeout(() => {
+    // Procesar farmeo offline después de que "carga" termina
+    gameStore.calculateOfflineProgress()
+    // Mostrar layout
+    isLoading.value = false
+  }, 3000)
 
   // Pre-cargar componentes críticos para mejor rendimiento
   // Esto evita que haya lag cuando el usuario navega a Skills por primera vez
@@ -76,16 +94,6 @@ onMounted(() => {
     toolsStore.saveToStorage()
     console.log('[Game] Auto-save realizado')
   }, GAME_CONSTANTS.AUTO_SAVE_INTERVAL)
-
-  // Si accedemos directamente a una ruta que no sea /loading, ir a loading
-  if (router.currentRoute.value.path !== '/loading') {
-    // Usar sessionStorage para saber si es primera carga
-    const isFirstLoad = !sessionStorage.getItem('app-initialized')
-    if (isFirstLoad) {
-      sessionStorage.setItem('app-initialized', 'true')
-      router.push('/loading')
-    }
-  }
 })
 
 onUnmounted(() => {

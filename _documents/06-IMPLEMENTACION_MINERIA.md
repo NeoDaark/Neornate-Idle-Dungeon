@@ -1,6 +1,6 @@
 # 📚 Implementación de Primera Skill: Minería
 
-## ✅ Estado Actual (v1.0.2)
+## ✅ Estado Actual (v1.0.3)
 
 Se ha completado la **primera skill (Minería)** con UI + almacenamiento funcional. Recientes mejoras incluyen:
 - Conversión de selector de productos a **dropdown compacto** (v1.0.2)
@@ -8,6 +8,7 @@ Se ha completado la **primera skill (Minería)** con UI + almacenamiento funcion
 - Integración completa de acciones (action field) en i18n
 - Modal de confirmación con soporte multiidioma
 - Ciclos de farmeo cancelables y reiniciables
+- **✨ NUEVO (v1.0.3)**: Sistema de **farmeo offline** completamente implementado
 
 El sistema está listo para expandirse a otras 6 skills.
 

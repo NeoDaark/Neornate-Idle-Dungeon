@@ -39,9 +39,9 @@ Write-Host ""
 # Paso 2: Compilar proyecto web (Vite)
 # ============================================
 Write-Host "Step 2️⃣  Compilando proyecto web con Vite..." -ForegroundColor Yellow
-npm run build
+npm run build:capacitor
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error en npm run build" -ForegroundColor Red
+    Write-Host "❌ Error en npm run build:capacitor" -ForegroundColor Red
     exit 1
 }
 Write-Host "✅ Build web completado" -ForegroundColor Green

@@ -97,7 +97,7 @@ const skillProgress = computed(() => {
   gap: 10px;
   background: rgba(85, 255, 85, 0.12);
   border-radius: 3px;
-  padding: 4px 8px 2px 8px;
+  padding: 2px 4px 1px 4px;
   flex: 1;
   position: relative;
   overflow: visible;

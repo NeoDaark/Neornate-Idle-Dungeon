@@ -360,5 +360,52 @@ Si el usuario hubiera dejado múltiples skills activos (manualmente), todos se p
 
 ---
 
-**Última actualización**: 13 de febrero de 2026  
-**Versión**: 1.0.1 (Con notificación visual)
+## 🐛 Bugs Corregidos
+
+### Bug: Ciclos infinitos sin materiales (v1.0.2)
+
+**Problema:**
+- Cuando un jugador estaba farmando fundición offline sin suficiente material
+- Al volver online, el sistema completaba el último ciclo correctamente
+- **PERO** luego continuaba intentando procesar más ciclos "fantasma" cada 100ms
+- Resultado: ciclos con duración < 1 segundo (paralizaba la app)
+
+**Causa Raíz:**
+En `src/App.vue` game loop:
+```typescript
+// ❌ ANTES (Bug)
+const result = skillsStore.completeCycle(skill.skill, inventoryStore)
+if (result && skill.isActive) {
+  // reiniciar ciclo
+}
+// Si result es null, el skill seguía con cycleEndTime en el pasado
+// → Al siguiente tick (100ms), intentaba de nuevo
+// → Loop infinito
+```
+
+**Solución (v1.0.2):**
+```typescript
+// ✅ DESPUÉS (Corregido)
+const result = skillsStore.completeCycle(skill.skill, inventoryStore)
+
+if (result && skill.isActive) {
+  // Reiniciar ciclo si hay materiales
+  const currentState = skillsStore.getSkillState(skill.skill)
+  if (currentState.currentProduct) {
+    const cycleDurationMs = currentState.currentProduct.cycleDuration * 1000
+    skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
+  }
+} else if (!result && skill.isActive) {
+  // ← NUEVA LÍNEA: Si no hay materiales, detener automáticamente
+  console.warn(`[Game] Skill ${skill.skill} detenido: materiales insuficientes`)
+  skillsStore.deactivateSkill(skill.skill)
+}
+```
+
+**Cambios realizados:**
+- `src/App.vue` (línea ~90-110): Agregado bloque `else if (!result && skill.isActive)`
+
+---
+
+**Última actualización**: 14 de febrero de 2026  
+**Versión**: 1.0.2 (Bug fix: ciclos infinitos sin materiales)

@@ -109,6 +109,10 @@ onMounted(() => {
               const cycleDurationMs = currentState.currentProduct.cycleDuration * 1000
               skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
             }
+          } else if (!result && skill.isActive) {
+            // Si completeCycle retorna null (materiales insuficientes), detener el skill
+            console.warn(`[Game] Skill ${skill.skill} detenido: materiales insuficientes`)
+            skillsStore.deactivateSkill(skill.skill)
           }
         }
       })

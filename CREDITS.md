@@ -26,14 +26,6 @@ src/assets/sprites/
   - Ubicación en proyecto: `src/assets/sprites/kyrises_rpg_icons/`
   - Uso: Iconos de items, materiales, equipos y objetos del juego
 
-#### Sprite Sheets de Ores
-- **FREE 16-Bit Ores Sprite Sheet**
-  - Autor: VerySmallSquares
-  - Licencia: Permiso implícito (autor indica "free and for use however you like")
-  - URL: https://verysmallsquares.itch.io/free-16-bit-ores-sprite-sheet
-  - Ubicación en proyecto: `src/assets/sprites/free_16bit_ores/`
-  - Uso: Ores y tiles para minado, efectos visuales y materiales en el juego
-
 #### Asset Pack Oryx Design Lab
 - **Oryx Design Lab Sprite Assets**
   - Autor: Oryx Design Lab
@@ -73,7 +65,6 @@ src/assets/sprites/
 | Original | Puedes modificar | Puedes distribuir | Necesita crédito |
 |----------|------------------|-------------------|------------------|
 | Kyrise (CC BY 4.0) | ✅ Sí | ✅ Sí | ✅ Sí (Kyrise) |
-| VerySmallSquares | ✅ Sí | ❌ No | ℹ️ Apreciado |
 | PixelLate | ✅ Sí | ❌ No | ℹ️ Apreciado |
 | Oryx Design Lab | ✅ Sí | ❌ No | ✅ Sí (Oryx) |
 

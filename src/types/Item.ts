@@ -8,7 +8,8 @@ import { ItemType } from './Game'
 export interface Item {
   id: string
   type: ItemType
-  icon: string
+  icon: string // emoji o ruta de imagen
+  iconType?: 'emoji' | 'image' // tipo de icono (por defecto emoji para compatibilidad)
   value: number // precio en oro
   tier?: Tier // opcional - ya está definido en SkillProduct o Equipment
 }

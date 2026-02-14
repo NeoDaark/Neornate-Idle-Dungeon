@@ -26,5 +26,12 @@ export default defineConfig({
   server: {
     port: 5174,
     open: false,
+    middlewareMode: false,
+  },
+  hmr: {
+    protocol: 'ws',
+    host: 'localhost',
+    port: 5174,
+    timeout: 60000,
   },
 })

@@ -124,7 +124,7 @@ export const useGameStore = defineStore('game', () => {
     const lastActiveStr = localStorage.getItem('neornate_lastActiveTime')
     if (!lastActiveStr) {
       // Primera vez que abre el juego
-      console.log('[Offline] Primera vez abriendo (sin lastActiveTime guardado)')
+      // console.log('[Offline] Primera vez abriendo (sin lastActiveTime guardado)')
       return
     }
 
@@ -132,21 +132,21 @@ export const useGameStore = defineStore('game', () => {
     const now = Date.now()
     let offlineMs = now - lastActiveTime
 
-    console.log(`[Offline] lastActiveTime=${lastActiveTime}, now=${now}, offlineMs=${offlineMs}ms`)
+    // console.log(`[Offline] lastActiveTime=${lastActiveTime}, now=${now}, offlineMs=${offlineMs}ms`)
 
     // Limitar tiempo offline máximo a 2 horas
     if (offlineMs > MAX_OFFLINE_TIME_MS) {
-      console.log(`[Offline] Tiempo offline ${offlineMs}ms > máximo ${MAX_OFFLINE_TIME_MS}ms. Limitado a 2 horas.`)
+      // console.log(`[Offline] Tiempo offline ${offlineMs}ms > máximo ${MAX_OFFLINE_TIME_MS}ms. Limitado a 2 horas.`)
       offlineMs = MAX_OFFLINE_TIME_MS
     }
 
     // Umbral mínimo: 5 segundos de offline para procesar farmeo
     if (offlineMs < 5000) {
-      console.log(`[Offline] Offline insuficiente (${offlineMs}ms < 5000ms). Ignorando.`)
+      // console.log(`[Offline] Offline insuficiente (${offlineMs}ms < 5000ms). Ignorando.`)
       return
     }
 
-    console.log(`[Offline] Procesando ${offlineMs}ms de farmeo offline`)
+    // console.log(`[Offline] Procesando ${offlineMs}ms de farmeo offline`)
 
     // Preparar resumen para la notificación
     const harvests: Array<{
@@ -158,12 +158,12 @@ export const useGameStore = defineStore('game', () => {
 
     // Procesar cada skill activo que estaba corriendo
     Object.values(skillsStore.skillStates).forEach((skillState) => {
-      console.log(`[Offline] Checking ${skillState.skill}: isActive=${skillState.isActive}, currentProduct=${skillState.currentProduct?.id ?? 'null'}, cycleEndTime=${skillState.cycleEndTime}`)
+      // console.log(`[Offline] Checking ${skillState.skill}: isActive=${skillState.isActive}, currentProduct=${skillState.currentProduct?.id ?? 'null'}, cycleEndTime=${skillState.cycleEndTime}`)
       
       const hasProduct = skillState.currentProduct !== undefined && skillState.currentProduct !== null
       
       if (!hasProduct) {
-        console.log(`[Offline] ✗ ${skillState.skill}: Sin producto, saltando`)
+        // console.log(`[Offline] ✗ ${skillState.skill}: Sin producto, saltando`)
         return
       }
 
@@ -174,7 +174,7 @@ export const useGameStore = defineStore('game', () => {
       
       if (!hasCycleTime) {
         // Skill detenido esperando materiales - intentar procesar 1 ciclo
-        console.log(`[Offline] ${skillState.skill}: Sin cycleEndTime (esperando materiales), intentando 1 ciclo`)
+        // console.log(`[Offline] ${skillState.skill}: Sin cycleEndTime (esperando materiales), intentando 1 ciclo`)
         
         // TypeScript guard
         if (!skillState.currentProduct) {
@@ -195,7 +195,7 @@ export const useGameStore = defineStore('game', () => {
         const result = skillsStore.completeCycle(skillState.skill, inventoryStore, false)
         
         if (result) {
-          console.log(`[Offline] ✓ ${skillState.skill}: Ciclo completado (estaba esperando materiales)`)
+          // console.log(`[Offline] ✓ ${skillState.skill}: Ciclo completado (estaba esperando materiales)`)
           harvests.push({
             skill: skillState.skill,
             cyclesCompleted: 1,
@@ -205,7 +205,7 @@ export const useGameStore = defineStore('game', () => {
           // Establecer cycleEndTime para siguiente ciclo
           skillState.cycleEndTime = now + cycleDuration
         } else {
-          console.log(`[Offline] ✗ ${skillState.skill}: Aún no hay materiales disponibles`)
+          // console.log(`[Offline] ✗ ${skillState.skill}: Aún no hay materiales disponibles`)
         }
         return
       }
@@ -231,7 +231,7 @@ export const useGameStore = defineStore('game', () => {
 
       let cyclesCompleted = 0
 
-      console.log(`[Offline] ${skillState.skill}: cycleEndTime=${skillState.cycleEndTime}, lastActiveTime=${lastActiveTime}, timeUntilCycleCompletes=${timeUntilCycleCompletes}ms, offlineMs=${offlineMs}ms, cycleDuration=${cycleDuration}ms`)
+      //console.log(`[Offline] ${skillState.skill}: cycleEndTime=${skillState.cycleEndTime}, lastActiveTime=${lastActiveTime}, timeUntilCycleCompletes=${timeUntilCycleCompletes}ms, offlineMs=${offlineMs}ms, cycleDuration=${cycleDuration}ms`)
 
       if (timeUntilCycleCompletes >= 0 && offlineMs >= timeUntilCycleCompletes) {
         // El ciclo EN PROGRESO se completó durante la desconexión
@@ -242,19 +242,19 @@ export const useGameStore = defineStore('game', () => {
         const additionalCycles = Math.floor(timeAfterFirstComplete / cycleDuration)
         cyclesCompleted += additionalCycles
         
-        console.log(`[Offline] → Ciclo en progreso completó + ${additionalCycles} adicionales = ${cyclesCompleted} total`)
+        //console.log(`[Offline] → Ciclo en progreso completó + ${additionalCycles} adicionales = ${cyclesCompleted} total`)
       } else if (timeUntilCycleCompletes < 0) {
         // El ciclo ya estaba completado cuando se cerró (cycleEndTime < lastActiveTime)
         // Todos los ciclos serán nuevos
         cyclesCompleted = Math.floor(offlineMs / cycleDuration)
         
-        console.log(`[Offline] → Ciclo ya estaba completado, nuevos ciclos = ${cyclesCompleted}`)
+        //console.log(`[Offline] → Ciclo ya estaba completado, nuevos ciclos = ${cyclesCompleted}`)
       } else {
-        console.log(`[Offline] → Ciclo en progreso pero offline insuficiente (faltaban ${timeUntilCycleCompletes}ms)`)
+        //console.log(`[Offline] → Ciclo en progreso pero offline insuficiente (faltaban ${timeUntilCycleCompletes}ms)`)
       }
 
       if (cyclesCompleted > 0) {
-        console.log(`[Offline] Skill ${skillState.skill}: Calculados ${cyclesCompleted} ciclos teóricos`)
+        //console.log(`[Offline] Skill ${skillState.skill}: Calculados ${cyclesCompleted} ciclos teóricos`)
         
         // Acumular estadísticas
         let totalQuantity = 0
@@ -274,13 +274,13 @@ export const useGameStore = defineStore('game', () => {
             }
           }
 
-          console.log(`[Offline] Procesando ciclo ${i + 1}/${cyclesCompleted} para ${skillState.skill}`)
+          //console.log(`[Offline] Procesando ciclo ${i + 1}/${cyclesCompleted} para ${skillState.skill}`)
           const result = skillsStore.completeCycle(skillState.skill, inventoryStore, false)
           if (result) {
             totalQuantity += result.quantity
             totalXP += result.xpGained
             actualCyclesCompleted++
-            console.log(`[Offline] ✓ Ciclo ${i + 1}: +${result.quantity} ${result.product.id}, +${result.xpGained} XP (total: ${totalQuantity}, ${totalXP})`)
+            //console.log(`[Offline] ✓ Ciclo ${i + 1}: +${result.quantity} ${result.product.id}, +${result.xpGained} XP (total: ${totalQuantity}, ${totalXP})`)
           } else {
             // Error inesperado en completeCycle
             console.error(`[Offline] ✗ Ciclo ${i + 1} falló inesperadamente. Deteniendo.`)
@@ -288,7 +288,7 @@ export const useGameStore = defineStore('game', () => {
           }
         }
 
-        console.log(`[Offline] ${skillState.skill} finalizó: ${actualCyclesCompleted} ciclos completados, totalQuantity=${totalQuantity}, totalXP=${totalXP}`)
+        //console.log(`[Offline] ${skillState.skill} finalizó: ${actualCyclesCompleted} ciclos completados, totalQuantity=${totalQuantity}, totalXP=${totalXP}`)
 
         // Guardar en resumen solo si se completó al menos un ciclo
         if (actualCyclesCompleted > 0) {
@@ -307,30 +307,30 @@ export const useGameStore = defineStore('game', () => {
           
           // El nuevo cycleEndTime comienza ahora y durará (cycleDuration - timeAlreadyElapsed)
           skillState.cycleEndTime = now + Math.max(0, cycleDuration - timeIntoCycleAfterComplete)
-          console.log(`[Offline] ${skillState.skill}: ${actualCyclesCompleted} ciclos completados. Nuevo cycleEndTime=${skillState.cycleEndTime}`)
+          //console.log(`[Offline] ${skillState.skill}: ${actualCyclesCompleted} ciclos completados. Nuevo cycleEndTime=${skillState.cycleEndTime}`)
         } else {
           // No se completó ningún ciclo pero se calcularon - actualizar cycleEndTime de otra forma
           skillState.cycleEndTime = Math.max(0, skillState.cycleEndTime - offlineMs)
-          console.log(`[Offline] ${skillState.skill}: Sin ciclos completados. Nuevo cycleEndTime=${skillState.cycleEndTime}`)
+          //console.log(`[Offline] ${skillState.skill}: Sin ciclos completados. Nuevo cycleEndTime=${skillState.cycleEndTime}`)
         }
       } else {
         // No se calculó ningún ciclo teórico - actualizar cycleEndTime restando tiempo offline
         skillState.cycleEndTime = Math.max(0, skillState.cycleEndTime - offlineMs)
-        console.log(`[Offline] ${skillState.skill}: Sin ciclos teóricos. Nuevo cycleEndTime=${skillState.cycleEndTime}`)
+        //console.log(`[Offline] ${skillState.skill}: Sin ciclos teóricos. Nuevo cycleEndTime=${skillState.cycleEndTime}`)
       }
     })
 
     // Guardar resumen si hay farmeo
     if (harvests.length > 0) {
-      console.log(`[Offline] Guardando resumen de ${harvests.length} skill(s) con farmeo`)
+      //console.log(`[Offline] Guardando resumen de ${harvests.length} skill(s) con farmeo`)
       offlineHarvestSummary.value = {
         totalOfflineMs: offlineMs,
         skillHarvests: harvests,
       }
-      console.log(`[Offline] offlineHarvestSummary asignado:`, offlineHarvestSummary.value)
-    } else {
-      console.log(`[Offline] No hay harvests para guardar (harvests.length = 0)`)
-    }
+      //console.log(`[Offline] offlineHarvestSummary asignado:`, offlineHarvestSummary.value)
+    } /*else { // este else no es necesario porque el resumen solo se asigna si hay harvests, pero lo dejo comentado por claridad
+      //console.log(`[Offline] No hay harvests para guardar (harvests.length = 0)`)
+    }*/ 
 
     // Guardar de nuevo para actualizar el estado con farmeo procesado
     saveGame()

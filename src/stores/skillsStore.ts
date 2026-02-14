@@ -304,7 +304,7 @@ export const useSkillsStore = defineStore('skills', () => {
               // Preservar cycleEndTime tal como se guardó
               // Esto permite que calculateOfflineProgress calcule correctamente
               skillStates.value[skill].cycleEndTime = savedCycleEndTime
-              console.log(`[Skills] Skill ${skill}: cycleEndTime restaurado de localStorage (${savedCycleEndTime})`)
+              // console.log(`[Skills] Skill ${skill}: cycleEndTime restaurado de localStorage (${savedCycleEndTime})`)
             } else {
               // No hay cycleEndTime guardado
               skillStates.value[skill].cycleEndTime = 0

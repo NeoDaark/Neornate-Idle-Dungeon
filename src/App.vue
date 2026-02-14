@@ -7,12 +7,16 @@
   
   <!-- Notificación de farmeo offline -->
   <OfflineHarvestNotification />
+
+  <!-- Dev Console (solo en desarrollo) -->
+  <DevConsole />
 </template>
 
 <script setup lang="ts">
 import ResponsiveLayout from '@/components/layouts/ResponsiveLayout.vue'
 import LoadingOverlay from '@/components/layouts/LoadingOverlay.vue'
 import OfflineHarvestNotification from '@/components/notifications/OfflineHarvestNotification.vue'
+import DevConsole from '@/components/dev/DevConsole.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useGameStore } from '@/stores'
 import { useSkillsStore } from '@/stores/skillsStore'

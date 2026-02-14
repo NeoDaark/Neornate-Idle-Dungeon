@@ -115,8 +115,9 @@ onMounted(() => {
             }
           } else if (!result && skill.isActive) {
             // Si completeCycle retorna null (materiales insuficientes), detener el skill
+            // PERO preservar cycleEndTime para que calculateOfflineProgress pueda procesarlo
             console.warn(`[Game] Skill ${skill.skill} detenido: materiales insuficientes`)
-            skillsStore.deactivateSkill(skill.skill)
+            skillsStore.deactivateSkill(skill.skill, true) // true = preservar cycleEndTime
           }
         }
       })

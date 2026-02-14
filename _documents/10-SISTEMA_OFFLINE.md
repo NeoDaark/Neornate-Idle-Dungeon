@@ -405,7 +405,73 @@ if (result && skill.isActive) {
 **Cambios realizados:**
 - `src/App.vue` (línea ~90-110): Agregado bloque `else if (!result && skill.isActive)`
 
+### Bug: Farmeo offline incompleto (v1.0.3)
+
+**Problema:**
+- Cuando dejabas offline un skill de crafting (ej. fundición) con material para 2 ciclos
+- Al volver, se completaban 0 ciclos (en lugar de 1-2)
+- No aparecía notificación de farmeo offline
+
+**Causa Raíz:**
+En `src/stores/gameStore.ts` `calculateOfflineProgress()`:
+```typescript
+// ❌ ANTES (Bug)
+for (let i = 0; i < cyclesCompleted; i++) {
+  const result = skillsStore.completeCycle(skill.skill, inventoryStore, false)
+  if (result) {
+    totalQuantity += result.quantity
+    totalXP += result.xpGained
+  } else {
+    console.error(`Ciclo ${i + 1} devolvió null`) // ← Solo log, continúa loop
+    // El contador cyclesCompleted no se actualizaba
+  }
+}
+```
+
+El problema: cuando el primer ciclo se completaba pero el segundo fallaba (sin materiales), el código continuaba intentando procesar ciclos que no podían completarse, sin actualizar correctamente los contadores.
+
+**Solución (v1.0.3):**
+1. Agregado contador `actualCyclesCompleted` que rastrea ciclos que SÍ se completaron
+2. Cuando `completeCycle()` retorna `null`, se detiene el loop y se actualiza `cyclesCompleted`
+3. Solo se guarda en el resumen si `actualCyclesCompleted > 0`
+4. Validación final: después de procesar offline, se verifican materiales restantes
+   - Si no hay suficientes, se desactiva el skill automáticamente
+   - Garantiza que la notificación sea acertada
+
+```typescript
+// ✅ DESPUÉS (Corregido)
+let actualCyclesCompleted = 0
+for (let i = 0; i < cyclesCompleted; i++) {
+  const result = skillsStore.completeCycle(skill.skill, inventoryStore, false)
+  if (result) {
+    actualCyclesCompleted++
+    totalQuantity += result.quantity
+    totalXP += result.xpGained
+  } else {
+    // ← Detener si no hay materiales
+    cyclesCompleted = actualCyclesCompleted // Actualizar contador
+    break
+  }
+}
+
+// ← NUEVA VALIDACIÓN: Verificar materiales después de offline
+Object.values(skillsStore.skillStates).forEach((skillState) => {
+  if (skillState.isActive && skillState.currentProduct?.requiredMaterials) {
+    const canStillCraft = skillState.currentProduct.requiredMaterials.every((mat) => {
+      return inventoryStore.getItemQuantity(mat.itemId) >= mat.quantity
+    })
+    if (!canStillCraft) {
+      skillsStore.deactivateSkill(skillState.skill)
+    }
+  }
+})
+```
+
+**Cambios realizados:**
+- `src/stores/gameStore.ts` (línea ~210-265): Mejorado procesamiento de ciclos offline
+- `src/stores/gameStore.ts` (línea ~265-280): Agregada validación de materiales post-offline
+
 ---
 
 **Última actualización**: 14 de febrero de 2026  
-**Versión**: 1.0.2 (Bug fix: ciclos infinitos sin materiales)
+**Versión**: 1.0.3 (Bug fix: farmeo offline incompleto)

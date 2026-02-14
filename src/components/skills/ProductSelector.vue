@@ -151,7 +151,15 @@ const getMaterialName = (itemId: string): string => {
     <div v-if="currentProduct && currentProduct.level <= playerLevel" class="product-info">
       <div class="info-content">
         <div class="product-header">
-          <div class="icon">{{ currentProduct.item.icon }}</div>
+          <div class="icon">
+            <img
+              v-if="currentProduct.item.iconType === 'image'"
+              :src="currentProduct.item.icon"
+              :alt="t(currentProduct.i18nKey)"
+              class="product-image"
+            />
+            <span v-else>{{ currentProduct.item.icon }}</span>
+          </div>
           <div class="details">
             <h4>{{ skillAction }} {{ t(currentProduct.i18nKey) }}</h4>
             <div class="stats-row">
@@ -226,7 +234,13 @@ const getMaterialName = (itemId: string): string => {
             {{ t('ui.m_cancel') }}
           </button>
           <button class="btn btn-accept" @click="confirmSwitch">
-            {{ skillAction }} {{ pendingProduct?.item.icon }}
+            <span v-if="pendingProduct?.item.iconType === 'image'">
+              <img :src="pendingProduct.item.icon" :alt="t(pendingProduct.i18nKey)" class="modal-icon" />
+              {{ skillAction }}
+            </span>
+            <span v-else>
+              {{ skillAction }} {{ pendingProduct?.item.icon }}
+            </span>
           </button>
         </div>
       </div>
@@ -303,9 +317,32 @@ const getMaterialName = (itemId: string): string => {
 
 .icon {
   font-size: 24px;
-  min-width: 28px;
+  min-width: 48px;
+  max-width: 48px;
+  height: 48px;
   text-align: center;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.modal-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
 }
 
 .details {

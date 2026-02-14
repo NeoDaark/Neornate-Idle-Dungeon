@@ -5,7 +5,15 @@
         <!-- Header -->
         <div class="modal-header">
           <div class="item-display">
-            <span class="item-icon">{{ itemIcon }}</span>
+            <div class="item-icon">
+              <img
+                v-if="itemStack?.item.iconType === 'image'"
+                :src="itemStack.item.icon"
+                :alt="itemName"
+                class="modal-item-image"
+              />
+              <span v-else>{{ itemIcon }}</span>
+            </div>
             <div class="item-header-info">
               <h3 class="item-name">{{ itemName }}</h3>
               <p class="item-quantity">{{ t('inventory.quantity') }}: {{ itemQuantity }}</p>
@@ -402,6 +410,19 @@ const resetState = () => {
 .item-icon {
   font-size: 32px;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.modal-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
 .item-header-info {

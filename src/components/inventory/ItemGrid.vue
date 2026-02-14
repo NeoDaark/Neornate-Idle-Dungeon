@@ -67,7 +67,15 @@ const handleItemAction = (stack: InventoryStack) => {
       class="item-row"
       :class="`rarity-${getItemColor(stack.item.value)}`"
     >
-      <div class="item-icon">{{ stack.item.icon }}</div>
+      <div class="item-icon">
+        <img
+          v-if="stack.item.iconType === 'image'"
+          :src="stack.item.icon"
+          :alt="getItemName(stack)"
+          class="item-image"
+        />
+        <span v-else>{{ stack.item.icon }}</span>
+      </div>
 
       <div class="item-info">
         <p class="item-name">{{ getItemName(stack) }}</p>
@@ -134,6 +142,18 @@ const handleItemAction = (stack: InventoryStack) => {
 .item-icon {
   font-size: 20px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
 .item-info {

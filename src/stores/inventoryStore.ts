@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Item, Equipment } from '@/types/Item'
 import { EquipmentSlot } from '@/types/Game'
+import { SKILL_PRODUCTS_MAP } from '@/data/skillProducts'
+import { Skill } from '@/types/Game'
 
 export interface InventoryStack {
   itemId: string
@@ -179,6 +181,54 @@ export const useInventoryStore = defineStore('inventory', () => {
       const saved = localStorage.getItem('neornate_inventory')
       if (saved) {
         const loaded = JSON.parse(saved)
+        
+        // Migración (solo una vez): corregir items con emojis que deberían tener imágenes
+        const migrationDone = localStorage.getItem('neornate_inventory_migrated_v1')
+        if (!migrationDone && loaded.items) {
+          loaded.items = loaded.items.map((stack: any) => {
+            const itemId = stack.item.id
+            const iconValue = stack.item.icon || ''
+            
+            // Buscar el item en skillProducts para obtener la definición correcta
+            let correctItem = stack.item
+            
+            // Buscar en MINING_PRODUCTS
+            const miningProduct = SKILL_PRODUCTS_MAP[Skill.MINERIA]?.[itemId]
+            if (miningProduct) {
+              correctItem = miningProduct.item
+              return {
+                ...stack,
+                item: correctItem
+              }
+            }
+            
+            // Buscar en LOGGING_PRODUCTS
+            const loggingProduct = SKILL_PRODUCTS_MAP[Skill.TALA]?.[itemId]
+            if (loggingProduct) {
+              correctItem = loggingProduct.item
+              return {
+                ...stack,
+                item: correctItem
+              }
+            }
+            
+            // Para otros items, reconstruir iconType basado en el icon
+            const isImageUrl = typeof iconValue === 'string' && 
+              (iconValue.includes('/') || iconValue.includes('.png') || iconValue.includes('__VITE'))
+            
+            return {
+              ...stack,
+              item: {
+                ...stack.item,
+                iconType: stack.item.iconType || (isImageUrl ? 'image' : 'emoji')
+              }
+            }
+          })
+          
+          // Marcar que la migración se completó
+          localStorage.setItem('neornate_inventory_migrated_v1', 'true')
+        }
+        
         inventory.value = { ...inventory.value, ...loaded }
       }
     } catch (error) {

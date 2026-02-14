@@ -34,4 +34,25 @@ export default defineConfig({
     port: 5174,
     timeout: 60000,
   },
+  build: {
+    chunkSizeWarningLimit: 1000, // Aumentar límite a 1MB
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Separar librerías grandes en chunks independientes
+          'vendor': [
+            'vue',
+            'vue-router',
+            'pinia',
+          ],
+          'fontawesome': [
+            '@fortawesome/vue-fontawesome',
+            '@fortawesome/fontawesome-svg-core',
+            '@fortawesome/free-solid-svg-icons',
+            '@fortawesome/free-brands-svg-icons',
+          ],
+        },
+      },
+    },
+  },
 })

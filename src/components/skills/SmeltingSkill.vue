@@ -204,19 +204,6 @@ onMounted(() => {
         </button>
       </div>
 
-      <!-- Warning: Missing Materials -->
-      <div v-if="selectedProduct?.requiredMaterials && !canSmelt" class="skill-warning">
-        <p class="warning-title">{{ t('ui.missing_materials') }}:</p>
-        <div class="materials-list">
-          <div v-for="mat in selectedProduct.requiredMaterials" :key="mat.itemId" class="material-item">
-            <span class="mat-name">{{ mat.itemId }}</span>
-            <span class="mat-qty" :class="{ insufficient: inventoryStore.getItemQuantity(mat.itemId) < mat.quantity }">
-              {{ inventoryStore.getItemQuantity(mat.itemId) }}/{{ mat.quantity }}
-            </span>
-          </div>
-        </div>
-      </div>
-
       <!-- Product Selector -->
       <ProductSelector
         :products="smeltingSkillState.products"

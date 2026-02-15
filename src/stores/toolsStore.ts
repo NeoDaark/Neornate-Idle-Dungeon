@@ -120,6 +120,52 @@ export const useToolsStore = defineStore('tools', () => {
   }
 
   /**
+   * Marcar herramienta como comprada (agregar a inventario)
+   * Útil para rastrear todas las herramientas adquiridas
+   */
+  const markToolAsBought = (toolId: string): void => {
+    const tool = TOOLS_MAP[toolId]
+    if (!tool) return
+
+    // Verificar si ya está en inventario o equipada
+    const alreadyOwned = inventoryTools.value.some(t => t.id === toolId) ||
+      Object.values(equippedTools.value).some(t => t?.toolId === toolId)
+    
+    if (!alreadyOwned) {
+      inventoryTools.value.push(tool)
+    }
+  }
+
+  /**
+   * Marcar herramienta como comprada y equiparla
+   * Esta es la función principal cuando el jugador COMPRA una herramienta
+   */
+  const markToolAsPurchased = (toolId: string, skillId: Skill): void => {
+    const tool = TOOLS_MAP[toolId]
+    if (!tool) return
+
+    const currentEquipped = equippedTools.value[skillId]
+
+    // Si ya hay equipada, desquiparla y agregar al inventario
+    if (currentEquipped) {
+      markToolAsBought(currentEquipped.toolId)
+    }
+
+    // Equipar la nueva herramienta
+    equippedTools.value[skillId] = {
+      toolId: tool.id,
+      skillId: tool.skillId,
+      tier: tool.tier,
+      equippedAt: Date.now(),
+      effects: [...tool.effects],
+    }
+
+    // ✅ IMPORTANTE: Marcar como comprada en inventario TAMBIÉN
+    // Aunque esté equipada, debe estar en inventoryTools para que no se muestre de nuevo
+    markToolAsBought(toolId)
+  }
+
+  /**
    * Equipar herramienta (solo si es mejor que la actual)
    */
   const equipTool = (toolId: string, skillId: Skill): boolean => {
@@ -131,13 +177,13 @@ export const useToolsStore = defineStore('tools', () => {
     // Si ya hay equipada y la nueva es peor, no equipar
     if (currentEquipped && tool.tier < currentEquipped.tier) {
       // Agregar al inventario de extras
-      inventoryTools.value.push(tool)
+      markToolAsBought(toolId)
       return false
     }
 
     // Desquipar anterior si existe
     if (currentEquipped) {
-      inventoryTools.value.push(TOOLS_MAP[currentEquipped.toolId])
+      markToolAsBought(currentEquipped.toolId)
     }
 
     // Equipar nueva
@@ -148,6 +194,9 @@ export const useToolsStore = defineStore('tools', () => {
       equippedAt: Date.now(),
       effects: [...tool.effects],
     }
+
+    // Marcar como comprada también
+    markToolAsBought(toolId)
 
     return true
   }
@@ -206,6 +255,39 @@ export const useToolsStore = defineStore('tools', () => {
   }
 
   /**
+   * Validar integridad de herramientas compradas
+   * Si T3 está comprada pero T1/T2 no, marcar T1/T2 como compradas
+   */
+  const validatePurchaseIntegrity = (): void => {
+    const ownedToolIds = new Set([
+      ...inventoryTools.value.map(t => t.id),
+      ...Object.values(equippedTools.value).map(t => t?.toolId).filter(Boolean)
+    ])
+
+    // Para cada skill, verificar consistencia de tiers
+    Object.values(TOOLS_BY_SKILL).forEach((toolsInSkill) => {
+      // Obtener tiers comprados
+      const boughtTiers = toolsInSkill
+        .filter(t => ownedToolIds.has(t.id))
+        .map(t => t.tier)
+
+      if (boughtTiers.length === 0) return
+
+      const maxTierBought = Math.max(...boughtTiers)
+      const minTierRequired = Math.min(...boughtTiers)
+
+      // Si hay gaps (ej: T1 y T3 compradas pero no T2), llenar los gaps
+      for (let tier = minTierRequired; tier <= maxTierBought; tier++) {
+        const toolAtTier = toolsInSkill.find(t => t.tier === tier)
+        if (toolAtTier && !ownedToolIds.has(toolAtTier.id)) {
+          console.log(`[ToolStore] Detectada inconsistencia: T${tier} no comprada pero T${maxTierBought} sí. Corrigiendo...`)
+          markToolAsBought(toolAtTier.id)
+        }
+      }
+    })
+  }
+
+  /**
    * Cargar estado desde localStorage
    */
   const loadFromStorage = () => {
@@ -226,6 +308,9 @@ export const useToolsStore = defineStore('tools', () => {
         console.error('Error loading tool inventory from storage:', e)
       }
     }
+
+    // Validar integridad después de cargar
+    validatePurchaseIntegrity()
   }
 
   /**
@@ -246,12 +331,15 @@ export const useToolsStore = defineStore('tools', () => {
     toolsBySkill,
 
     // Métodos
+    markToolAsBought,
+    markToolAsPurchased,
     equipTool,
     buyTool,
     calculateToolBonus,
     getEquippedTool,
     isToolAvailable,
     getNextTool,
+    validatePurchaseIntegrity,
     loadFromStorage,
     saveToStorage,
   }

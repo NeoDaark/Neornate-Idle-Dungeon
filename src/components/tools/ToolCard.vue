@@ -29,7 +29,7 @@
           @click="handleBuy"
           :disabled="!isAvailable || isEquipped || !hasEnoughGold"
         >
-          <span v-if="isAvailable && !isEquipped">{{ t('ui.buy') }}</span>
+          <span v-if="isAvailable && !isEquipped">+</span>
           <span v-else-if="isEquipped">✓</span>
           <span v-else>🔒</span>
         </button>
@@ -231,6 +231,7 @@ const handleBuy = () => {
   transition: all 0.2s ease;
   font-size: 13px;
   min-width: 50px;
+  max-width: 100px;
   text-align: center;
 }
 

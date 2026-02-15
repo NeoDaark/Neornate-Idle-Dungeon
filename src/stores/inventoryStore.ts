@@ -182,14 +182,10 @@ export const useInventoryStore = defineStore('inventory', () => {
       if (saved) {
         const loaded = JSON.parse(saved)
         
-        // Migración (solo una vez): corregir items con emojis que deberían tener imágenes
-        const migrationDone = localStorage.getItem('neornate_inventory_migrated_v1')
-        if (!migrationDone && loaded.items) {
+        // Siempre actualizar iconos desde skillProducts
+        if (loaded.items) {
           loaded.items = loaded.items.map((stack: any) => {
             const itemId = stack.item.id
-            const iconValue = stack.item.icon || ''
-            
-            // Buscar el item en skillProducts para obtener la definición correcta
             let correctItem = stack.item
             
             // Buscar en MINING_PRODUCTS
@@ -212,7 +208,18 @@ export const useInventoryStore = defineStore('inventory', () => {
               }
             }
             
+            // Buscar en SMELTING_PRODUCTS
+            const smeltingProduct = SKILL_PRODUCTS_MAP[Skill.FUNDICION]?.[itemId]
+            if (smeltingProduct) {
+              correctItem = smeltingProduct.item
+              return {
+                ...stack,
+                item: correctItem
+              }
+            }
+            
             // Para otros items, reconstruir iconType basado en el icon
+            const iconValue = stack.item.icon || ''
             const isImageUrl = typeof iconValue === 'string' && 
               (iconValue.includes('/') || iconValue.includes('.png') || iconValue.includes('__VITE'))
             
@@ -224,9 +231,6 @@ export const useInventoryStore = defineStore('inventory', () => {
               }
             }
           })
-          
-          // Marcar que la migración se completó
-          localStorage.setItem('neornate_inventory_migrated_v1', 'true')
         }
         
         inventory.value = { ...inventory.value, ...loaded }

@@ -128,8 +128,20 @@ export const useSkillsStore = defineStore('skills', () => {
 
   /**
    * Activar un skill (iniciar ciclo)
+   * IMPORTANTE: Solo 1 skill puede estar activo a la vez
+   * Por eso desactivamos todos los demás automáticamente
    */
   const activateSkill = (skill: Skill, product: SkillProduct, cycleDurationMs: number = 3000) => {
+    // Desactivar todos los otros skills (solo puede haber 1 activo)
+    Object.entries(skillStates.value).forEach(([otherSkill, state]) => {
+      if ((otherSkill as unknown as Skill) !== skill && state.isActive) {
+        state.isActive = false
+        state.currentProduct = undefined
+        state.cycleEndTime = 0
+        // console.log(`[Skills] Desactivando ${otherSkill} para activar ${skill}`)
+      }
+    })
+
     const state = skillStates.value[skill]
 
     // Aplicar speedBonus de herramienta (restar segundos de duración)

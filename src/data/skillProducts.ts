@@ -25,6 +25,21 @@ import oreAdamantite from '@/assets/sprites/custom/ores/ore_adamantite.png'
 import oreTitanium from '@/assets/sprites/custom/ores/ore_titanium.png'
 import oreDragonite from '@/assets/sprites/custom/ores/ore_dragonite.png'
 
+// Importar imágenes de ingots para que Vite las procese correctamente
+import ingotCopper from '@/assets/sprites/custom/ingots/ingot_copper.png'
+import ingotIron from '@/assets/sprites/custom/ingots/ingot_iron.png'
+import ingotSilver from '@/assets/sprites/custom/ingots/ingot_silver.png'
+import ingotTungsten from '@/assets/sprites/custom/ingots/ingot_tungsten.png'
+import ingotGold from '@/assets/sprites/custom/ingots/ingot_gold.png'
+import ingotPlatinum from '@/assets/sprites/custom/ingots/ingot_platinum.png'
+import ingotObsidian from '@/assets/sprites/custom/ingots/ingot_obsidian.png'
+import ingotCobalt from '@/assets/sprites/custom/ingots/ingot_cobalt.png'
+import ingotMythril from '@/assets/sprites/custom/ingots/ingot_mythril.png'
+import ingotOrichalcum from '@/assets/sprites/custom/ingots/ingot_orichalcum.png'
+import ingotAdamantite from '@/assets/sprites/custom/ingots/ingot_adamantite.png'
+import ingotTitanium from '@/assets/sprites/custom/ingots/ingot_titanium.png'
+import ingotDragonite from '@/assets/sprites/custom/ingots/ingot_dragonite.png'
+
 // ============================================================================
 // MINERÍA - Productos
 // ============================================================================
@@ -540,7 +555,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'cobre_ingot',
       type: ItemType.MATERIAL,
-      icon: '🟠',
+      icon: ingotCopper,
+      iconType: 'image' as const,
       value: 12,
       skill: Skill.FUNDICION,
     } as any,
@@ -563,7 +579,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'hierro_ingot',
       type: ItemType.MATERIAL,
-      icon: '🔳',
+      icon: ingotIron,
+      iconType: 'image' as const,
       value: 28,
       skill: Skill.FUNDICION,
     } as any,
@@ -584,7 +601,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'plata_ingot',
       type: ItemType.MATERIAL,
-      icon: '⚪',
+      icon: ingotSilver,
+      iconType: 'image' as const,
       value: 42,
       skill: Skill.FUNDICION,
     } as any,
@@ -607,7 +625,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'tungsteno_ingot',
       type: ItemType.MATERIAL,
-      icon: '🟦',
+      icon: ingotTungsten,
+      iconType: 'image' as const,
       value: 70,
       skill: Skill.FUNDICION,
     } as any,
@@ -628,7 +647,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'oro_ingot',
       type: ItemType.MATERIAL,
-      icon: '🟡',
+      icon: ingotGold,
+      iconType: 'image' as const,
       value: 100,
       skill: Skill.FUNDICION,
     } as any,
@@ -651,7 +671,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'platino_ingot',
       type: ItemType.MATERIAL,
-      icon: '💫',
+      icon: ingotPlatinum,
+      iconType: 'image' as const,
       value: 130,
       skill: Skill.FUNDICION,
     } as any,
@@ -672,7 +693,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'obsidiana_ingot',
       type: ItemType.MATERIAL,
-      icon: '⬛',
+      icon: ingotObsidian,
+      iconType: 'image' as const,
       value: 150,
       skill: Skill.FUNDICION,
     } as any,
@@ -695,7 +717,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'cobalto_ingot',
       type: ItemType.MATERIAL,
-      icon: '🔵',
+      icon: ingotCobalt,
+      iconType: 'image' as const,
       value: 180,
       skill: Skill.FUNDICION,
     } as any,
@@ -716,7 +739,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'mithril_ingot',
       type: ItemType.MATERIAL,
-      icon: '✨',
+      icon: ingotMythril,
+      iconType: 'image' as const,
       value: 220,
       skill: Skill.FUNDICION,
     } as any,
@@ -739,7 +763,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'oricalco_ingot',
       type: ItemType.MATERIAL,
-      icon: '👑',
+      icon: ingotOrichalcum,
+      iconType: 'image' as const,
       value: 260,
       skill: Skill.FUNDICION,
     } as any,
@@ -760,7 +785,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'adamantita_ingot',
       type: ItemType.MATERIAL,
-      icon: '💠',
+      icon: ingotAdamantite,
+      iconType: 'image' as const,
       value: 310,
       skill: Skill.FUNDICION,
     } as any,
@@ -783,7 +809,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'titanio_ingot',
       type: ItemType.MATERIAL,
-      icon: '⚔️',
+      icon: ingotTitanium,
+      iconType: 'image' as const,
       value: 400,
       skill: Skill.FUNDICION,
     } as any,
@@ -804,7 +831,8 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'draconita_ingot',
       type: ItemType.MATERIAL,
-      icon: '🐉',
+      icon: ingotDragonite,
+      iconType: 'image' as const,
       value: 550,
       skill: Skill.FUNDICION,
     } as any,

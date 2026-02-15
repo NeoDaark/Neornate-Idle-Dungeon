@@ -28,15 +28,22 @@ export const useToolsStore = defineStore('tools', () => {
 
   /**
    * Computed: Herramientas disponibles para comprar
-   * (Según nivel del jugador en ese oficio)
+   * (Según nivel del jugador en ese oficio, y que NO haya sido comprada)
    */
   const availableTools = computed(() => {
     const skillsStore = useSkillsStore()
     const available: Tool[] = []
+    
+    // IDs de tools ya compradas
+    const ownedToolIds = new Set([
+      ...inventoryTools.value.map(t => t.id),
+      ...Object.values(equippedTools.value).map(t => t?.toolId).filter(Boolean)
+    ])
 
     ALL_TOOLS.forEach((tool) => {
       const skillState = skillsStore.skillStates[tool.skillId]
-      if (skillState && skillState.level >= tool.requiredLevel) {
+      // Solo mostrar si: tiene nivel suficiente Y no la ha comprado
+      if (skillState && skillState.level >= tool.requiredLevel && !ownedToolIds.has(tool.id)) {
         available.push(tool)
       }
     })

@@ -12,21 +12,35 @@ Este documento describe cómo se organizan, importan y se utilizan los sprites e
 src/assets/
 ├─ sprites/
 │  └─ custom/
-│     └─ ores/                    # Iconos de minerales de la skill Minería
-│        ├─ ore_adamantite.png    # 64x64 - Adamantita (T6)
-│        ├─ ore_coal.png          # 64x64 - Carbón (T1)
-│        ├─ ore_cobalt.png        # 64x64 - Cobalto (T5)
-│        ├─ ore_copper.png        # 64x64 - Cobre (T1)
-│        ├─ ore_dragonite.png     # 64x64 - Draconita (T7)
-│        ├─ ore_gold.png          # 64x64 - Oro (T3)
-│        ├─ ore_iron.png          # 64x64 - Hierro (T2)
-│        ├─ ore_mythril.png       # 64x64 - Mithril (T5)
-│        ├─ ore_obsidian.png      # 64x64 - Obsidiana (T4)
-│        ├─ ore_orichalcum.png    # 64x64 - Oricalco (T6)
-│        ├─ ore_platinum.png      # 64x64 - Platino (T4)
-│        ├─ ore_silver.png        # 64x64 - Plata (T2)
-│        ├─ ore_titanium.png      # 64x64 - Titanio (T7)
-│        └─ ore_tungsten.png      # 64x64 - Tungsteno (T3)
+│     ├─ ores/                    # Iconos de minerales de la skill Minería
+│     │  ├─ ore_adamantite.png    # 64x64 - Adamantita (T6)
+│     │  ├─ ore_coal.png          # 64x64 - Carbón (T1)
+│     │  ├─ ore_cobalt.png        # 64x64 - Cobalto (T5)
+│     │  ├─ ore_copper.png        # 64x64 - Cobre (T1)
+│     │  ├─ ore_dragonite.png     # 64x64 - Draconita (T7)
+│     │  ├─ ore_gold.png          # 64x64 - Oro (T3)
+│     │  ├─ ore_iron.png          # 64x64 - Hierro (T2)
+│     │  ├─ ore_mythril.png       # 64x64 - Mithril (T5)
+│     │  ├─ ore_obsidian.png      # 64x64 - Obsidiana (T4)
+│     │  ├─ ore_orichalcum.png    # 64x64 - Oricalco (T6)
+│     │  ├─ ore_platinum.png      # 64x64 - Platino (T4)
+│     │  ├─ ore_silver.png        # 64x64 - Plata (T2)
+│     │  ├─ ore_titanium.png      # 64x64 - Titanio (T7)
+│     │  └─ ore_tungsten.png      # 64x64 - Tungsteno (T3)
+│     └─ ingots/                  # Iconos de lingotes de la skill Fundición
+│        ├─ ingot_adamantite.png  # 64x64 - Lingote Adamantita (T6)
+│        ├─ ingot_cobalt.png      # 64x64 - Lingote Cobalto (T5)
+│        ├─ ingot_copper.png      # 64x64 - Lingote Cobre (T1)
+│        ├─ ingot_dragonite.png   # 64x64 - Lingote Draconita (T7)
+│        ├─ ingot_gold.png        # 64x64 - Lingote Oro (T3)
+│        ├─ ingot_iron.png        # 64x64 - Lingote Hierro (T2)
+│        ├─ ingot_mythril.png     # 64x64 - Lingote Mithril (T5)
+│        ├─ ingot_obsidian.png    # 64x64 - Lingote Obsidiana (T4)
+│        ├─ ingot_orichalcum.png  # 64x64 - Lingote Oricalco (T6)
+│        ├─ ingot_platinum.png    # 64x64 - Lingote Platino (T4)
+│        ├─ ingot_silver.png      # 64x64 - Lingote Plata (T2)
+│        ├─ ingot_titanium.png    # 64x64 - Lingote Titanio (T7)
+│        └─ ingot_tungsten.png    # 64x64 - Lingote Tungsteno (T3)
 └─ styles/
    └─ main.css                    # CSS global
 ```
@@ -252,7 +266,45 @@ npm run type-check
 
 ---
 
-## 📌 Notas Importantes
+## � Estado Actual de Sprites
+
+### ✅ Completados
+
+- **14 Ores de Minería**: Todos con iconos 64x64
+  - Carbón, Cobre, Hierro, Plata, Tungsteno, Oro, Platino, Obsidiana, Cobalto, Mithril, Oricalco, Adamantita, Titanio, Draconita
+  - Archivos: `src/assets/sprites/custom/ores/`
+
+- **14 Lingotes de Fundición**: Todos con iconos 64x64
+  - Cobre, Hierro, Plata, Tungsteno, Oro, Platino, Obsidiana, Cobalto, Mithril, Oricalco, Adamantita, Titanio, Draconita
+  - Archivos: `src/assets/sprites/custom/ingots/`
+  - Datos: `src/data/skillProducts.ts` - SMELTING_PRODUCTS
+
+### 🔲 Por Implementar
+
+- Maderas de Tala (LOGGING_PRODUCTS)
+- Productos de Pesca (PESCA_PRODUCTS)
+- Productos de Cocina (COCINA_PRODUCTS)
+- Herramientas (Tools)
+- Equipos (Equipment)
+
+---
+
+## 📝 Checklist para Nuevas Imágenes
+
+Cuando agregues nuevos sprites:
+
+- [ ] Guardar imagen en carpeta correspondiente: `src/assets/sprites/custom/<skill>/`
+- [ ] Nombre consistente: `<tipo>_<nombre>.png` (ej: `ore_coal.png`, `ingot_copper.png`)
+- [ ] Tamaño: 64x64 px PNG 32-bit
+- [ ] Importar en `src/data/skillProducts.ts`: `import itemImage from '@/assets/sprites/custom/<skill>/<archivo>.png'`
+- [ ] Usar en producto: `icon: itemImage, iconType: 'image' as const`
+- [ ] Ejecutar: `npm run type-check` (sin errores)
+- [ ] Verificar en navegador (inventario, selector, modal)
+- [ ] Actualizar este documento
+
+---
+
+## �📌 Notas Importantes
 
 1. **Siempre importar imágenes**: No usar URLs de string como `'/assets/ores/...'` porque Vite no las procesará
 2. **Especificar iconType**: Para que los componentes sepan cómo renderizar
@@ -271,6 +323,6 @@ npm run type-check
 
 ---
 
-**Última Actualización**: 14 de febrero de 2026  
-**Versión**: 1.0  
-**Estado**: ✅ Implementado - Todos los ores con imágenes 64x64
+**Última Actualización**: 15 de febrero de 2026  
+**Versión**: 1.1  
+**Estado**: ✅ Implementado - Todos los ores e ingots con imágenes 64x64

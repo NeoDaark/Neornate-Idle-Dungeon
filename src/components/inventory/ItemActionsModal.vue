@@ -143,7 +143,6 @@ import { ref, computed } from 'vue'
 import type { InventoryStack } from '@/stores/inventoryStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { usePlayerStore } from '@/stores/playerStore'
-import { RESOURCE_PRICES_MAP, getResourcePrice } from '@/data/marketData'
 import { useI18n } from '@/composables/useI18n'
 
 interface Props {
@@ -232,17 +231,19 @@ const itemDescription = computed(() => {
 
 const canSell = computed(() => {
   if (!itemStack.value) return false
-  const resourcePrice = RESOURCE_PRICES_MAP[itemStack.value.itemId]
-  return !!resourcePrice
+  // Todos los items con value > 0 pueden venderse
+  return (itemStack.value.item.value || 0) > 0
 })
 
 const itemPrice = computed(() => {
   if (!itemStack.value) return 0
-  return getResourcePrice(itemStack.value.itemId, 1)
+  // El precio es el valor del item (80% como precio de venta)
+  return Math.ceil((itemStack.value.item.value || 0) * 0.8)
 })
 
 const totalSellPrice = computed(() => {
-  return getResourcePrice(itemStack.value?.itemId || '', sellQuantity.value)
+  if (!itemStack.value) return 0
+  return itemPrice.value * sellQuantity.value
 })
 
 const getTabLabel = (tab: string): string => {
@@ -319,7 +320,7 @@ const handleSell = () => {
     return
   }
 
-  const totalGold = getResourcePrice(itemStack.value.itemId, sellQuantity.value)
+  const totalGold = itemPrice.value * sellQuantity.value
 
   // Remover del inventario
   inventoryStore.removeItem(itemStack.value.itemId, sellQuantity.value)

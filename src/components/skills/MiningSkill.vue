@@ -98,15 +98,24 @@ const startMining = () => {
     }
   }
 
-  const cycleDuration = selectedProduct.value.cycleDuration * 1000
-  skillsStore.activateSkill(Skill.MINERIA, selectedProduct.value, cycleDuration)
+  // Verificar si hay un ciclo pendiente
+  const miningState = skillsStore.getSkillState(Skill.MINERIA)
+  if (miningState.cycleEndTime === 0) {
+    // No hay ciclo pendiente, crear uno nuevo
+    const cycleDuration = selectedProduct.value.cycleDuration * 1000
+    skillsStore.activateSkill(Skill.MINERIA, selectedProduct.value, cycleDuration)
+  } else {
+    // Hay ciclo pendiente, solo reactivar
+    miningState.isActive = true
+  }
+  
   cycleProgress.value = 0
   updateProgress()
 }
 
 // Detener minería
 const stopMining = () => {
-  skillsStore.deactivateSkill(Skill.MINERIA)
+  skillsStore.deactivateSkill(Skill.MINERIA, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }
 

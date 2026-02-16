@@ -113,15 +113,24 @@ const startSmelting = () => {
     }
   }
 
-  const cycleDuration = selectedProduct.value.cycleDuration * 1000
-  skillsStore.activateSkill(Skill.FUNDICION, selectedProduct.value, cycleDuration)
+  // Verificar si hay un ciclo pendiente
+  const fundicionState = skillsStore.getSkillState(Skill.FUNDICION)
+  if (fundicionState.cycleEndTime === 0) {
+    // No hay ciclo pendiente, crear uno nuevo
+    const cycleDuration = selectedProduct.value.cycleDuration * 1000
+    skillsStore.activateSkill(Skill.FUNDICION, selectedProduct.value, cycleDuration)
+  } else {
+    // Hay ciclo pendiente, solo reactivar
+    fundicionState.isActive = true
+  }
+  
   cycleProgress.value = 0
   updateProgress()
 }
 
 // Detener fundición
 const stopSmelting = () => {
-  skillsStore.deactivateSkill(Skill.FUNDICION)
+  skillsStore.deactivateSkill(Skill.FUNDICION, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }
 

@@ -161,10 +161,10 @@ interface SkillMenuItem {
 }
 
 const skillMenuItems: SkillMenuItem[] = [
-  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: 'fa-solid fa-mountain' },
   { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name', icon: 'fa-solid fa-tree' },
-  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: 'fa-solid fa-fire' },
   { skill: Skill.QUEMADO, path: '/skills?skill=quemado', label: 'skills.quemado.name', icon: 'fa-solid fa-fire-flame-curved' },
+  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: 'fa-solid fa-mountain' },
+  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: 'fa-solid fa-fire' },
   { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name', icon: 'fa-solid fa-hammer' },
   { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name', icon: 'fa-solid fa-fish' },
   { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name', icon: 'fa-solid fa-utensils' },

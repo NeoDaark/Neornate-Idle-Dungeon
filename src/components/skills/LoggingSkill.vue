@@ -98,15 +98,24 @@ const startLogging = () => {
     }
   }
 
-  const cycleDuration = selectedProduct.value.cycleDuration * 1000
-  skillsStore.activateSkill(Skill.TALA, selectedProduct.value, cycleDuration)
+  // Verificar si hay un ciclo pendiente
+  const talaState = skillsStore.getSkillState(Skill.TALA)
+  if (talaState.cycleEndTime === 0) {
+    // No hay ciclo pendiente, crear uno nuevo
+    const cycleDuration = selectedProduct.value.cycleDuration * 1000
+    skillsStore.activateSkill(Skill.TALA, selectedProduct.value, cycleDuration)
+  } else {
+    // Hay ciclo pendiente, solo reactivar
+    talaState.isActive = true
+  }
+  
   cycleProgress.value = 0
   updateProgress()
 }
 
 // Detener tala
 const stopLogging = () => {
-  skillsStore.deactivateSkill(Skill.TALA)
+  skillsStore.deactivateSkill(Skill.TALA, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }
 

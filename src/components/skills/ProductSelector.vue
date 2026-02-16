@@ -6,6 +6,7 @@ import { useToolsStore } from '@/stores/toolsStore'
 import type { SkillProduct } from '@/types/Skill'
 import type { Skill } from '@/types/Game'
 import { SKILL_CONFIGS } from '@/types/Game'
+import { WOODBURNING_DROP_TABLE } from '@/data/skillProducts'
 
 interface Props {
   products: SkillProduct[]
@@ -13,11 +14,13 @@ interface Props {
   playerLevel: number
   skill: Skill
   isActive?: boolean
+  isWoodburning?: boolean
   onSelect?: (product: SkillProduct) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isActive: false,
+  isWoodburning: false,
 })
 
 const { t } = useI18n()
@@ -47,11 +50,16 @@ const toolBonus = computed(() => {
 const finalXP = computed(() => {
   if (!props.currentProduct) return 0
   const baseXP = props.currentProduct.xpReward
-  return Math.floor(baseXP * (1 + toolBonus.value.xpBonus))
+  // En Quemado no hay bonuses de herramientas
+  return props.isWoodburning ? baseXP : Math.floor(baseXP * (1 + toolBonus.value.xpBonus))
 })
 
 const finalCycleDuration = computed(() => {
   if (!props.currentProduct) return 0
+  // En Quemado usamos burningTime en lugar de cycleDuration
+  if (props.isWoodburning) {
+    return (props.currentProduct.burningTime || 30) * 1000
+  }
   const baseDuration = props.currentProduct.cycleDuration * 1000
   const speedReduction = toolBonus.value.speedBonus * 1000
   return Math.max(500, baseDuration - speedReduction)
@@ -59,6 +67,10 @@ const finalCycleDuration = computed(() => {
 
 const finalQuantity = computed(() => {
   if (!props.currentProduct) return 0
+  // En Quemado siempre gastas 1 tronco, no hay bonuses
+  if (props.isWoodburning) {
+    return 1
+  }
   return props.currentProduct.quantity + toolBonus.value.quantityBonus
 })
 
@@ -179,9 +191,10 @@ const getMaterialName = (itemId: string): string => {
             <h4>{{ skillAction }} {{ t(currentProduct.i18nKey) }}</h4>
             <div class="stats-row">
               <span class="stat">{{ t('labels.level') }}: {{ currentProduct.level }}</span>
-              <span class="stat">{{ finalXP }} XP <span v-if="toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>
-              <span class="stat">x{{ finalQuantity }} <span v-if="toolBonus.quantityBonus > 0" class="bonus">+{{ toolBonus.quantityBonus }}</span></span>
-              <span class="stat">⏱️ {{ (finalCycleDuration / 1000).toFixed(1) }}s <span v-if="toolBonus.speedBonus < 0" class="bonus">{{ Math.round(toolBonus.speedBonus) }}s</span></span>
+              <span class="stat">{{ finalXP }} XP <span v-if="!isWoodburning && toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>
+              <span v-if="isWoodburning" class="stat">x1 (gasta 1 tronco)</span>
+              <span v-else class="stat">x{{ finalQuantity }} <span v-if="toolBonus.quantityBonus > 0" class="bonus">+{{ toolBonus.quantityBonus }}</span></span>
+              <span class="stat">⏱️ {{ (finalCycleDuration / 1000).toFixed(1) }}s <span v-if="!isWoodburning && toolBonus.speedBonus < 0" class="bonus">{{ Math.round(toolBonus.speedBonus) }}s</span></span>
             </div>
           </div>
         </div>
@@ -207,6 +220,38 @@ const getMaterialName = (itemId: string): string => {
                 <span class="need">{{ material.quantity }}</span>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drops de Quemado -->
+    <div v-if="isWoodburning && currentProduct" class="drops-info">
+      <div class="drops-header">
+        <h5>{{ t('labels.possible_drops') }}</h5>
+      </div>
+      <div class="drops-grid">
+        <div class="drop-item">
+          <div class="drop-icon">⚫</div>
+          <div class="drop-details">
+            <div class="drop-name">{{ t('items.carbon') }}</div>
+            <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.carbon.chance * 100).toFixed(0) }}%</div>
+            <div class="drop-quantity">{{ t('labels.you_have') }}: x{{ inventoryStore.getItemQuantity('carbon') }}</div>
+          </div>
+        </div>
+        <div class="drop-item">
+          <div class="drop-icon">🩶</div>
+          <div class="drop-details">
+            <div class="drop-name">{{ t('items.ceniza') }}</div>
+            <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.ceniza.chance * 100).toFixed(0) }}%</div>
+            <div class="drop-quantity">{{ t('labels.you_have') }}: x{{ inventoryStore.getItemQuantity('ceniza') }}</div>
+          </div>
+        </div>
+        <div class="drop-item no-drop">
+          <div class="drop-icon">❌</div>
+          <div class="drop-details">
+            <div class="drop-name">{{ t('ui.nothing') || 'Nada' }}</div>
+            <div class="drop-percentage">40%</div>
           </div>
         </div>
       </div>
@@ -880,5 +925,100 @@ const getMaterialName = (itemId: string): string => {
   background: var(--color-secondary);
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(255, 165, 0, 0.2);
+}
+
+/* Drops Section */
+.drops-info {
+  background: var(--bg-darker);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.drops-header {
+  margin-bottom: 6px;
+}
+
+.drops-header h5 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.drops-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.drop-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 5px;
+  background: rgba(255, 165, 0, 0.08);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.drop-item:hover {
+  background: rgba(255, 165, 0, 0.15);
+  border-color: var(--color-primary);
+}
+
+.drop-item.no-drop {
+  background: rgba(100, 100, 100, 0.08);
+  border-color: rgba(100, 100, 100, 0.2);
+}
+
+.drop-item.no-drop:hover {
+  background: rgba(100, 100, 100, 0.15);
+  border-color: var(--text-muted);
+}
+
+.drop-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.drop-details {
+  text-align: center;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+.drop-name {
+  color: var(--text-primary);
+  font-size: 10px;
+  font-weight: 600;
+  word-break: break-word;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.drop-percentage {
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.drop-quantity {
+  color: var(--text-secondary);
+  font-size: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drop-item.no-drop .drop-percentage {
+  color: var(--text-muted);
 }
 </style>

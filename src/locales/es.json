@@ -402,7 +402,9 @@
     "xp_reward": "Recompensa XP",
     "quantity": "Cantidad",
     "stored_quantity": "Almacenado",
-    "blocked_materials": "Ver {count} materiales bloqueados"
+    "blocked_materials": "Ver {count} materiales bloqueados",
+    "possible_drops": "Puede otorgar",
+    "you_have": "Tienes"
   },
   "errors": {
     "notFound": "No encontrado",

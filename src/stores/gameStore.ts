@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { Skill } from '@/types/Game'
 import { usePlayerStore } from './playerStore'
 import { useInventoryStore } from './inventoryStore'
 import { useSkillsStore } from './skillsStore'
@@ -183,11 +184,19 @@ export const useGameStore = defineStore('game', () => {
         }
 
         // Obtener duración del ciclo
-        const baseCycleDuration = skillState.currentProduct.cycleDuration * 1000 // ms
+        // Para Quemado usa burningTime, para otros usa cycleDuration
+        let baseCycleDuration: number
+        if (skillState.skill === Skill.QUEMADO && skillState.currentProduct?.burningTime) {
+          baseCycleDuration = skillState.currentProduct.burningTime * 1000 // ms
+        } else {
+          baseCycleDuration = skillState.currentProduct.cycleDuration * 1000 // ms
+        }
+        
         const toolBonus = toolsStore.calculateToolBonus(skillState.skill)
         let cycleDuration = baseCycleDuration
         
-        if (toolBonus.speedBonus !== 0) {
+        // En Quemado no hay bonus de velocidad de herramientas
+        if (skillState.skill !== Skill.QUEMADO && toolBonus.speedBonus !== 0) {
           cycleDuration = Math.max(500, baseCycleDuration - (toolBonus.speedBonus * 1000))
         }
 
@@ -196,6 +205,7 @@ export const useGameStore = defineStore('game', () => {
         
         if (result) {
           // console.log(`[Offline] ✓ ${skillState.skill}: Ciclo completado (estaba esperando materiales)`)
+          
           harvests.push({
             skill: skillState.skill,
             cyclesCompleted: 1,
@@ -217,11 +227,19 @@ export const useGameStore = defineStore('game', () => {
       }
 
       // Obtener duración del ciclo CON bonuses de herramienta aplicados
-      const baseCycleDuration = skillState.currentProduct.cycleDuration * 1000 // ms
+      // Para Quemado usa burningTime, para otros usa cycleDuration
+      let baseCycleDuration: number
+      if (skillState.skill === Skill.QUEMADO && skillState.currentProduct?.burningTime) {
+        baseCycleDuration = skillState.currentProduct.burningTime * 1000 // ms
+      } else {
+        baseCycleDuration = skillState.currentProduct.cycleDuration * 1000 // ms
+      }
+      
       const toolBonus = toolsStore.calculateToolBonus(skillState.skill)
       let cycleDuration = baseCycleDuration
       
-      if (toolBonus.speedBonus !== 0) {
+      // En Quemado no hay bonus de velocidad de herramientas
+      if (skillState.skill !== Skill.QUEMADO && toolBonus.speedBonus !== 0) {
         // speedBonus es en segundos (negativo = más rápido)
         cycleDuration = Math.max(500, baseCycleDuration - (toolBonus.speedBonus * 1000))
       }
@@ -280,6 +298,7 @@ export const useGameStore = defineStore('game', () => {
             totalQuantity += result.quantity
             totalXP += result.xpGained
             actualCyclesCompleted++
+            
             //console.log(`[Offline] ✓ Ciclo ${i + 1}: +${result.quantity} ${result.product.id}, +${result.xpGained} XP (total: ${totalQuantity}, ${totalXP})`)
           } else {
             // Error inesperado en completeCycle

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { SkillState, SkillProduct, CycleResult } from '@/types/Skill'
 import { Skill, Tier } from '@/types/Game'
-import { SKILL_PRODUCTS_MAP } from '@/data/skillProducts'
+import { SKILL_PRODUCTS_MAP, WOODBURNING_DROP_TABLE } from '@/data/skillProducts'
 import { useToolsStore } from '@/stores/toolsStore'
 
 const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T7]
@@ -231,10 +231,27 @@ export const useSkillsStore = defineStore('skills', () => {
     }
 
     // Agregar item al inventario si está disponible
-    if (inventoryStore) {
+    // NOTA: Quemado (Woodburning) no añade items aquí - lo maneja en el componente
+    if (inventoryStore && skill !== Skill.QUEMADO) {
       inventoryStore.addItem(product.item, finalQuantity)
       // TODO: Implementar rarityBonus (aumentar rarity de items generados)
       // TODO: Implementar discountBonus (descuentos en mercado)
+    }
+
+    // Aplicar drops para Quemado
+    if (inventoryStore && skill === Skill.QUEMADO) {
+      const roll = Math.random()
+      const carbonChance = WOODBURNING_DROP_TABLE.carbon.chance
+      const ashChance = WOODBURNING_DROP_TABLE.ceniza.chance
+      
+      if (roll < carbonChance) {
+        // Carbón (40%)
+        inventoryStore.addItem(WOODBURNING_DROP_TABLE.carbon.item, WOODBURNING_DROP_TABLE.carbon.quantity)
+      } else if (roll < carbonChance + ashChance) {
+        // Ceniza (20%)
+        inventoryStore.addItem(WOODBURNING_DROP_TABLE.ceniza.item, WOODBURNING_DROP_TABLE.ceniza.quantity)
+      }
+      // 40% probabilidad de no obtener nada
     }
 
     // Resetear ciclo solo si se especifica (para no resetear en farmeo offline)

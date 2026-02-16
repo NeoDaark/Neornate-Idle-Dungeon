@@ -403,7 +403,9 @@
     "xp_reward": "XP Reward",
     "quantity": "Quantity",
     "stored_quantity": "Stored",
-    "blocked_materials": "View {count} blocked materials"
+    "blocked_materials": "View {count} blocked materials",
+    "possible_drops": "Possible Drops",
+    "you_have": "You have"
   },
   "errors": {
     "notFound": "Not found",

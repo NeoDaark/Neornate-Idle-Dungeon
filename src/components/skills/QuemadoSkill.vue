@@ -4,7 +4,7 @@ import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { useI18n } from '@/composables/useI18n'
 import { Skill, SKILL_CONFIGS } from '@/types/Game'
-import { LOGGING_PRODUCTS, WOODBURNING_DROP_TABLE } from '@/data/skillProducts'
+import { LOGGING_PRODUCTS } from '@/data/skillProducts'
 import type { SkillProduct } from '@/types/Skill'
 import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
@@ -19,7 +19,7 @@ const selectedProduct = ref<SkillProduct | undefined>()
 const cycleProgress = ref(0)
 const showNotification = ref(false)
 const notificationMessage = ref('')
-const lastDropResult = ref<string>('')
+const lastProcessedExperience = ref(0)
 
 // Todos los troncos (incluyendo bloqueados)
 const allLogs = computed(() => {
@@ -45,13 +45,17 @@ watch(() => quemadoSkillState.value.currentProduct, (newProduct) => {
 })
 
 // Detectar cuando se completa un ciclo para mostrar notificación
-watch(() => quemadoSkillState.value.experience, () => {
-  if (selectedProduct.value) {
-    const xpGained = selectedProduct.value.xpReward
+watch(() => quemadoSkillState.value.totalExperience, (newTotalExp) => {
+  // Solo procesar si la experiencia total cambió (un nuevo ciclo completado)
+  if (newTotalExp > lastProcessedExperience.value && quemadoSkillState.value.currentProduct) {
+    lastProcessedExperience.value = newTotalExp
     
-    // Mostrar notificación con XP y drop result
-    const dropText = lastDropResult.value ? ` | ${lastDropResult.value}` : ''
-    showMessage(`+${xpGained} XP${dropText}`)
+    // Procesar el ciclo completado
+    processCycleCompletion()
+    
+    // Mostrar notificación con XP
+    const xpGained = quemadoSkillState.value.currentProduct.xpReward
+    showMessage(`+${xpGained} XP`)
   }
 })
 
@@ -111,18 +115,25 @@ const startBurning = () => {
     }
   }
 
-  // Usar burningTime del tronco como duración de ciclo
-  const burningTime = selectedProduct.value.burningTime || 30
-  const cycleDuration = burningTime * 1000
+  // Verificar si hay un ciclo pendiente
+  const quemadoState = skillsStore.getSkillState(Skill.QUEMADO)
+  if (quemadoState.cycleEndTime === 0) {
+    // No hay ciclo pendiente, crear uno nuevo
+    const burningTime = selectedProduct.value.burningTime || 30
+    const cycleDuration = burningTime * 1000
+    skillsStore.activateSkill(Skill.QUEMADO, selectedProduct.value, cycleDuration)
+  } else {
+    // Hay ciclo pendiente, solo reactivar
+    quemadoState.isActive = true
+  }
   
-  skillsStore.activateSkill(Skill.QUEMADO, selectedProduct.value, cycleDuration)
   cycleProgress.value = 0
   updateProgress()
 }
 
 // Detener quemado
 const stopBurning = () => {
-  skillsStore.deactivateSkill(Skill.QUEMADO)
+  skillsStore.deactivateSkill(Skill.QUEMADO, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }
 
@@ -151,34 +162,26 @@ const selectProduct = (product: SkillProduct) => {
   }
 }
 
-// Procesar ciclo completado con drops
+// Procesar ciclo completado (gastar tronco)
 const processCycleCompletion = () => {
   // Se llama cuando se detecta que se completó un ciclo
-  if (!selectedProduct.value) return
-  
-  // Aplicar tabla de probabilidades
-  const roll = Math.random() * 100
-  const carbonChance = WOODBURNING_DROP_TABLE.carbon.chance * 100
-  const ashChance = WOODBURNING_DROP_TABLE.ceniza.chance * 100
-  
-  if (roll < carbonChance) {
-    // 40% - Carbón
-    inventoryStore.addItem(WOODBURNING_DROP_TABLE.carbon.item, WOODBURNING_DROP_TABLE.carbon.quantity)
-    lastDropResult.value = `+1x ${t('items.carbon')}`
-  } else if (roll < carbonChance + ashChance) {
-    // 20% - Ceniza
-    inventoryStore.addItem(WOODBURNING_DROP_TABLE.ceniza.item, WOODBURNING_DROP_TABLE.ceniza.quantity)
-    lastDropResult.value = `+1x ${t('items.ceniza')}`
-  } else {
-    // 40% - Nada
-    lastDropResult.value = t('ui.nothing') || 'Nada'
+  const currentProduct = quemadoSkillState.value.currentProduct
+  if (!currentProduct) {
+    console.warn('[Quemado] processCycleCompletion: currentProduct es undefined')
+    return
   }
+  
+  // Gastar 1 tronco del inventario (solo cuando se completa el ciclo)
+  const success = inventoryStore.removeItem(currentProduct.item.id, 1)
+  if (!success) {
+    // Si no hay tronco, detener el quemado
+    console.warn(`[Quemado] No se pudo restar tronco ${currentProduct.item.id}`)
+    showMessage(`Se acabó ${t(currentProduct.i18nKey)}`)
+    skillsStore.deactivateSkill(Skill.QUEMADO, true) // true = preservar cycleEndTime
+    return
+  }
+  console.log(`[Quemado] Tronco restado exitosamente: ${currentProduct.item.id}`)
 }
-
-// Completar ciclo cuando se detecte
-watch(() => quemadoSkillState.value.experience, () => {
-  processCycleCompletion()
-})
 
 onMounted(() => {
   // Si hay un producto actualmente, seleccionarlo
@@ -239,37 +242,16 @@ onMounted(() => {
         </button>
       </div>
 
-      <!-- Product Selector -->
+      <!-- Product Selector (Condicionado para Quemado) -->
       <ProductSelector
         :products="allLogs"
         :current-product="selectedProduct"
         :player-level="quemadoSkillState.level"
         :skill="quemadoSkillState.skill"
         :is-active="quemadoSkillState.isActive"
+        :is-woodburning="true"
         @select="selectProduct"
       />
-    </div>
-
-    <!-- Drop Information -->
-    <div class="drop-info-panel">
-      <h3>{{ t('ui.drops') }}</h3>
-      <div class="drops-list">
-        <div class="drop-item">
-          <span class="drop-emoji">🟤</span>
-          <span class="drop-name">{{ t('items.carbon') }}</span>
-          <span class="drop-chance">40%</span>
-        </div>
-        <div class="drop-item">
-          <span class="drop-emoji">🌫️</span>
-          <span class="drop-name">{{ t('items.ceniza') }}</span>
-          <span class="drop-chance">20%</span>
-        </div>
-        <div class="drop-item">
-          <span class="drop-emoji">❌</span>
-          <span class="drop-name">{{ t('ui.nothing') }}</span>
-          <span class="drop-chance">40%</span>
-        </div>
-      </div>
     </div>
 
     <!-- Notification -->

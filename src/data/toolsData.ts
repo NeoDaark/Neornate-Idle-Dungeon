@@ -8,14 +8,14 @@ import type { Tool } from '@/types/Tool'
 /**
  * Fórmula de precio:
  * Precio = BasePrecio × (1 + TierMultiplier) × DificultadModificador
- * BasePrecio = 500 oro
- * TierMultiplier = (Tier - 1) × 1.5
- * DificultadModificador = 1.2 (complejo) o 1.0 (simple)
+ * BasePrecio = 15000 oro (importante: herramientas son objetivo a LARGO plazo)
+ * TierMultiplier = (Tier - 1) × 5 (crecimiento muy fuerte)
+ * DificultadModificador = 2.0 (complejo) o 1.0 (simple)
  */
 
-const calculatePrice = (tier: number, difficulty: 1.0 | 1.2 = 1.0): number => {
-  const basePrice = 500
-  const tierMultiplier = (tier - 1) * 1.5
+const calculatePrice = (tier: number, difficulty: 1.0 | 2.0 = 1.0): number => {
+  const basePrice = 15000
+  const tierMultiplier = (tier - 1) * 5
   return Math.round(basePrice * (1 + tierMultiplier) * difficulty)
 }
 
@@ -261,7 +261,7 @@ export const SMELTING_TOOLS: Tool[] = [
     baseMaterial: 'stone',
     description: 'Un horno de piedra básico',
     icon: '🔥',
-    price: calculatePrice(1, 1.2),
+    price: calculatePrice(1, 2.0),
     requiredLevel: 10,
     effects: [
       { type: 'speed', value: -1, description: '-1s al ciclo' },
@@ -277,7 +277,7 @@ export const SMELTING_TOOLS: Tool[] = [
     baseMaterial: 'copper',
     description: 'Un horno de cobre eficiente',
     icon: '🔥',
-    price: calculatePrice(2, 1.2),
+    price: calculatePrice(2, 2.0),
     requiredLevel: 20,
     effects: [
       { type: 'speed', value: -2, description: '-2s al ciclo' },
@@ -293,7 +293,7 @@ export const SMELTING_TOOLS: Tool[] = [
     baseMaterial: 'iron',
     description: 'Un horno de hierro de calidad',
     icon: '🔥',
-    price: calculatePrice(3, 1.2),
+    price: calculatePrice(3, 2.0),
     requiredLevel: 40,
     effects: [
       { type: 'speed', value: -3, description: '-3s al ciclo' },
@@ -309,7 +309,7 @@ export const SMELTING_TOOLS: Tool[] = [
     baseMaterial: 'steel',
     description: 'Un horno de acero de maestría',
     icon: '🔥',
-    price: calculatePrice(4, 1.2),
+    price: calculatePrice(4, 2.0),
     requiredLevel: 60,
     effects: [
       { type: 'speed', value: -4, description: '-4s al ciclo' },
@@ -325,7 +325,7 @@ export const SMELTING_TOOLS: Tool[] = [
     baseMaterial: 'mithril',
     description: 'Un legendario horno de mithril',
     icon: '🔥',
-    price: calculatePrice(5, 1.2),
+    price: calculatePrice(5, 2.0),
     requiredLevel: 80,
     effects: [
       { type: 'speed', value: -4, description: '-4s al ciclo' },
@@ -341,7 +341,7 @@ export const SMELTING_TOOLS: Tool[] = [
     baseMaterial: 'orichalcum',
     description: 'Un horno mágico de Orichalco',
     icon: '🔥',
-    price: calculatePrice(6, 1.2),
+    price: calculatePrice(6, 2.0),
     requiredLevel: 100,
     effects: [
       { type: 'speed', value: -4, description: '-4s al ciclo' },
@@ -357,7 +357,7 @@ export const SMELTING_TOOLS: Tool[] = [
     baseMaterial: 'divine',
     description: 'El horno supremo del poder infinito',
     icon: '🔥',
-    price: calculatePrice(7, 1.2),
+    price: calculatePrice(7, 2.0),
     requiredLevel: 120,
     effects: [
       { type: 'speed', value: -4, description: '-4s al ciclo' },

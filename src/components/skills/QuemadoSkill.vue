@@ -50,12 +50,17 @@ watch(() => quemadoSkillState.value.totalExperience, (newTotalExp) => {
   if (newTotalExp > lastProcessedExperience.value && quemadoSkillState.value.currentProduct) {
     lastProcessedExperience.value = newTotalExp
     
-    // Procesar el ciclo completado
-    processCycleCompletion()
-    
     // Mostrar notificación con XP
     const xpGained = quemadoSkillState.value.currentProduct.xpReward
     showMessage(`+${xpGained} XP`)
+  }
+})
+
+// Detectar si se detuvo por falta de troncos
+watch(() => quemadoSkillState.value.isActive, (isNowActive, wasActive) => {
+  if (!isNowActive && wasActive && quemadoSkillState.value.currentProduct) {
+    // Cambió de activo a inactivo - mostrar mensaje de falta de material
+    showMessage(`Se acabó ${t(quemadoSkillState.value.currentProduct.i18nKey)}`)
   }
 })
 
@@ -117,13 +122,18 @@ const startBurning = () => {
 
   // Verificar si hay un ciclo pendiente
   const quemadoState = skillsStore.getSkillState(Skill.QUEMADO)
+  
   if (quemadoState.cycleEndTime === 0) {
     // No hay ciclo pendiente, crear uno nuevo
     const burningTime = selectedProduct.value.burningTime || 30
     const cycleDuration = burningTime * 1000
     skillsStore.activateSkill(Skill.QUEMADO, selectedProduct.value, cycleDuration)
   } else {
-    // Hay ciclo pendiente, solo reactivar
+    // Hay ciclo pendiente, pero puede que currentProduct se haya perdido en localStorage
+    // Si es así, restaurarlo con el producto seleccionado actualmente
+    if (!quemadoState.currentProduct) {
+      quemadoState.currentProduct = selectedProduct.value
+    }
     quemadoState.isActive = true
   }
   
@@ -162,26 +172,6 @@ const selectProduct = (product: SkillProduct) => {
   }
 }
 
-// Procesar ciclo completado (gastar tronco)
-const processCycleCompletion = () => {
-  // Se llama cuando se detecta que se completó un ciclo
-  const currentProduct = quemadoSkillState.value.currentProduct
-  if (!currentProduct) {
-    console.warn('[Quemado] processCycleCompletion: currentProduct es undefined')
-    return
-  }
-  
-  // Gastar 1 tronco del inventario (solo cuando se completa el ciclo)
-  const success = inventoryStore.removeItem(currentProduct.item.id, 1)
-  if (!success) {
-    // Si no hay tronco, detener el quemado
-    console.warn(`[Quemado] No se pudo restar tronco ${currentProduct.item.id}`)
-    showMessage(`Se acabó ${t(currentProduct.i18nKey)}`)
-    skillsStore.deactivateSkill(Skill.QUEMADO, true) // true = preservar cycleEndTime
-    return
-  }
-  console.log(`[Quemado] Tronco restado exitosamente: ${currentProduct.item.id}`)
-}
 
 onMounted(() => {
   // Si hay un producto actualmente, seleccionarlo

@@ -105,7 +105,12 @@ const startMining = () => {
     const cycleDuration = selectedProduct.value.cycleDuration * 1000
     skillsStore.activateSkill(Skill.MINERIA, selectedProduct.value, cycleDuration)
   } else {
-    // Hay ciclo pendiente, solo reactivar
+    // Hay ciclo pendiente, pero puede que currentProduct se haya perdido
+    // Si es así, restaurarlo con el producto seleccionado actualmente
+    if (!miningState.currentProduct) {
+      miningState.currentProduct = selectedProduct.value
+    }
+    // Reactivar
     miningState.isActive = true
   }
   

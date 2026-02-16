@@ -23,7 +23,7 @@ import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { usePlayerStore } from '@/stores/playerStore'
 import { useToolsStore } from '@/stores/toolsStore'
-import { GAME_CONSTANTS } from '@/types/Game'
+import { GAME_CONSTANTS, Skill } from '@/types/Game'
 
 // Logs de inicio
 //console.log('🚀 [App] Archivo App.vue cargado')
@@ -110,13 +110,16 @@ onMounted(() => {
           if (result && skill.isActive) {
             const currentState = skillsStore.getSkillState(skill.skill)
             if (currentState.currentProduct) {
-              const cycleDurationMs = currentState.currentProduct.cycleDuration * 1000
+              // Para Quemado usa burningTime, para otros usa cycleDuration
+              const duration = skill.skill === Skill.QUEMADO 
+                ? (currentState.currentProduct.burningTime || 30)
+                : currentState.currentProduct.cycleDuration
+              const cycleDurationMs = duration * 1000
               skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
             }
           } else if (!result && skill.isActive) {
             // Si completeCycle retorna null (materiales insuficientes), detener el skill
             // PERO preservar cycleEndTime para que calculateOfflineProgress pueda procesarlo
-            console.warn(`[Game] Skill ${skill.skill} detenido: materiales insuficientes`)
             skillsStore.deactivateSkill(skill.skill, true) // true = preservar cycleEndTime
           }
         }

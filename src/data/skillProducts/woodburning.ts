@@ -8,9 +8,10 @@
  * - 40% Nada
  */
 
-import { ItemType } from '@/types/Game'
+import { ItemType, Skill } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
 import type { Resource } from '@/types/Item'
+import oreCoal from '@/assets/sprites/custom/ores/ore_coal.png'
 
 /**
  * Recursos que se pueden obtener del quemado
@@ -19,14 +20,17 @@ export const WOODBURNING_DROPS: Record<string, Resource> = {
   'carbon': {
     id: 'carbon',
     type: ItemType.RESOURCE,
-    icon: '🟤',
-    value: 0.5
+    icon: oreCoal,
+    iconType: 'image' as const,
+    value: 0.5,
+    skill: Skill.QUEMADO,
   } as Resource,
   'ceniza': {
     id: 'ceniza',
     type: ItemType.RESOURCE,
     icon: '🌫️',
-    value: 0.25
+    value: 0.25,
+    skill: Skill.QUEMADO,
   } as Resource,
 }
 

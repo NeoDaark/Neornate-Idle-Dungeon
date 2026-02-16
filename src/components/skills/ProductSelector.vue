@@ -27,6 +27,11 @@ const { t } = useI18n()
 const inventoryStore = useInventoryStore()
 const toolsStore = useToolsStore()
 
+const isImageIcon = (icon: string): boolean => {
+  // Si contiene una barra inclinada o un punto seguido de extensión, es una imagen
+  return icon.includes('/') || /\.\w+$/.test(icon)
+}
+
 const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
 const isDropdownOpen = ref(false)
@@ -232,7 +237,15 @@ const getMaterialName = (itemId: string): string => {
       </div>
       <div class="drops-grid">
         <div class="drop-item">
-          <div class="drop-icon">⚫</div>
+          <div class="drop-icon">
+            <img
+              v-if="isImageIcon(WOODBURNING_DROP_TABLE.carbon.item.icon)"
+              :src="WOODBURNING_DROP_TABLE.carbon.item.icon"
+              :alt="t('items.carbon')"
+              class="drop-image"
+            />
+            <span v-else>{{ WOODBURNING_DROP_TABLE.carbon.item.icon }}</span>
+          </div>
           <div class="drop-details">
             <div class="drop-name">{{ t('items.carbon') }}</div>
             <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.carbon.chance * 100).toFixed(0) }}%</div>
@@ -240,7 +253,15 @@ const getMaterialName = (itemId: string): string => {
           </div>
         </div>
         <div class="drop-item">
-          <div class="drop-icon">🩶</div>
+          <div class="drop-icon">
+            <img
+              v-if="isImageIcon(WOODBURNING_DROP_TABLE.ceniza.item.icon)"
+              :src="WOODBURNING_DROP_TABLE.ceniza.item.icon"
+              :alt="t('items.ceniza')"
+              class="drop-image"
+            />
+            <span v-else>{{ WOODBURNING_DROP_TABLE.ceniza.item.icon }}</span>
+          </div>
           <div class="drop-details">
             <div class="drop-name">{{ t('items.ceniza') }}</div>
             <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.ceniza.chance * 100).toFixed(0) }}%</div>
@@ -985,6 +1006,17 @@ const getMaterialName = (itemId: string): string => {
 .drop-icon {
   font-size: 18px;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.drop-image {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
 .drop-details {

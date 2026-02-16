@@ -14,6 +14,11 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
+const isImageIcon = (icon: string): boolean => {
+  // Si contiene una barra inclinada o un punto seguido de extensión, es una imagen
+  return icon.includes('/') || /\.\w+$/.test(icon)
+}
+
 const getItemColor = (value: number) => {
   if (value >= 500) return 'legendary'
   if (value >= 250) return 'epic'
@@ -69,7 +74,7 @@ const handleItemAction = (stack: InventoryStack) => {
     >
       <div class="item-icon">
         <img
-          v-if="stack.item.iconType === 'image'"
+          v-if="isImageIcon(stack.item.icon)"
           :src="stack.item.icon"
           :alt="getItemName(stack)"
           class="item-image"

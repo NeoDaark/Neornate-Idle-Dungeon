@@ -170,7 +170,13 @@ export const useSkillsStore = defineStore('skills', () => {
   const deactivateSkill = (skill: Skill, preserveCycleTime: boolean = false) => {
     const state = skillStates.value[skill]
     state.isActive = false
-    state.currentProduct = undefined
+    
+    // Solo limpiar currentProduct si NO preservamos cycleTime
+    // Si preservamos cycleTime, necesitamos mantener currentProduct para cuando haya materiales
+    if (!preserveCycleTime) {
+      state.currentProduct = undefined
+    }
+    
     if (!preserveCycleTime) {
       state.cycleEndTime = 0
     }
@@ -184,6 +190,12 @@ export const useSkillsStore = defineStore('skills', () => {
     const state = skillStates.value[skill]
 
     if (!state.currentProduct || state.cycleEndTime === 0) {
+      return null
+    }
+
+    // ⚠️ IMPORTANTE: inventoryStore es obligatorio para procesar ciclos
+    if (!inventoryStore) {
+      console.error(`[Skill] completeCycle(${skill}): inventoryStore is UNDEFINED! No se puede procesar ciclo.`)
       return null
     }
 
@@ -238,8 +250,22 @@ export const useSkillsStore = defineStore('skills', () => {
       // TODO: Implementar discountBonus (descuentos en mercado)
     }
 
-    // Aplicar drops para Quemado
-    if (inventoryStore && skill === Skill.QUEMADO) {
+    // Procesar Quemado: consumir tronco y generar drops
+    if (skill === Skill.QUEMADO) {
+      // Consumir 1 tronco (obligatorio)
+      const currentProduct = state.currentProduct
+      if (!currentProduct) {
+        console.error(`[Skill] QUEMADO: currentProduct is undefined`)
+        return null
+      }
+      
+      const success = inventoryStore.removeItem(currentProduct.item.id, 1)
+      if (!success) {
+        console.warn(`[Skill] No hay suficientes troncos para quemar: necesita ${currentProduct.item.id}`)
+        return null
+      }
+
+      // Generar drops por probabilidad
       const roll = Math.random()
       const carbonChance = WOODBURNING_DROP_TABLE.carbon.chance
       const ashChance = WOODBURNING_DROP_TABLE.ceniza.chance
@@ -293,7 +319,7 @@ export const useSkillsStore = defineStore('skills', () => {
           autoComplete: state.autoComplete,
           lastCycleTime: state.lastCycleTime,
           cycleEndTime: state.cycleEndTime,
-          currentProduct: state.currentProduct,
+          currentProductId: state.currentProduct?.id || undefined, // ← Guardar solo el ID
         }
         return acc
       }, {} as any)
@@ -340,11 +366,23 @@ export const useSkillsStore = defineStore('skills', () => {
               skillStates.value[skill].cycleEndTime = 0
             }
             
-            if (loadedData.currentProduct) {
-              // Buscar el producto en la lista cargada
+            if (loadedData.currentProductId) {
+              // Buscar el producto en la lista cargada usando el ID guardado
               skillStates.value[skill].currentProduct = skillStates.value[skill].products.find(
-                p => p.id === loadedData.currentProduct.id
+                p => p.id === loadedData.currentProductId
               )
+              if (!skillStates.value[skill].currentProduct) {
+                console.warn(`[Skills] No se encontró producto con ID ${loadedData.currentProductId} para ${skill}`)
+                // Fallback: Si hay cycleEndTime pero no encontramos el producto, usar el primero disponible
+                if (savedCycleEndTime > 0 && skillStates.value[skill].products.length > 0) {
+                  console.warn(`[Skills] Usando fallback: primer producto disponible para ${skill}`)
+                  skillStates.value[skill].currentProduct = skillStates.value[skill].products[0]
+                }
+              }
+            } else if (savedCycleEndTime > 0 && skillStates.value[skill].products.length > 0) {
+              // Si hay cycleEndTime pero no hay currentProductId guardado, usar el primer producto
+              console.warn(`[Skills] No hay currentProductId pero hay cycleEndTime para ${skill}, usando fallback`)
+              skillStates.value[skill].currentProduct = skillStates.value[skill].products[0]
             }
           }
         })

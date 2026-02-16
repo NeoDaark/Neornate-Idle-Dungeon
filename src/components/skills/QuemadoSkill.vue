@@ -21,11 +21,15 @@ const showNotification = ref(false)
 const notificationMessage = ref('')
 const lastDropResult = ref<string>('')
 
+// Todos los troncos (incluyendo bloqueados)
+const allLogs = computed(() => {
+  return Object.values(LOGGING_PRODUCTS)
+    .sort((a, b) => a.level - b.level)
+})
+
 // Troncos disponibles (filtrados por nivel del jugador)
 const availableLogs = computed(() => {
-  return Object.values(LOGGING_PRODUCTS)
-    .filter(product => product.level <= quemadoSkillState.value.level)
-    .sort((a, b) => a.level - b.level)
+  return allLogs.value.filter(product => product.level <= quemadoSkillState.value.level)
 })
 
 // Verificar que hay troncos en el inventario
@@ -237,7 +241,7 @@ onMounted(() => {
 
       <!-- Product Selector -->
       <ProductSelector
-        :products="availableLogs"
+        :products="allLogs"
         :current-product="selectedProduct"
         :player-level="quemadoSkillState.level"
         :skill="quemadoSkillState.skill"

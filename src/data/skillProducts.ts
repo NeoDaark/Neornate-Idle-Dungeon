@@ -55,7 +55,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreCoal,
       iconType: 'image' as const,
-      value: 5
+      value: 0.5
     } as Resource,
     level: 1,
     tier: Tier.T1,
@@ -72,7 +72,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreCopper,
       iconType: 'image' as const,
-      value: 8
+      value: 0.5
     } as Resource,
     level: 5,
     tier: Tier.T1,
@@ -91,7 +91,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreIron,
       iconType: 'image' as const,
-      value: 20
+      value: 0.5
     } as Resource,
     level: 20,
     tier: Tier.T2,
@@ -108,7 +108,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreSilver,
       iconType: 'image' as const,
-      value: 30
+      value: 1
     } as Resource,
     level: 25,
     tier: Tier.T2,
@@ -127,7 +127,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreTungsten,
       iconType: 'image' as const,
-      value: 50
+      value: 1.5
     } as Resource,
     level: 40,
     tier: Tier.T3,
@@ -144,7 +144,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreGold,
       iconType: 'image' as const,
-      value: 75
+      value: 2.5
     } as Resource,
     level: 45,
     tier: Tier.T3,
@@ -163,7 +163,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: orePlatinum,
       iconType: 'image' as const,
-      value: 120
+      value: 4
     } as Resource,
     level: 60,
     tier: Tier.T4,
@@ -180,7 +180,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreObsidian,
       iconType: 'image' as const,
-      value: 150
+      value: 5
     } as Resource,
     level: 65,
     tier: Tier.T4,
@@ -199,7 +199,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreCobalt,
       iconType: 'image' as const,
-      value: 200
+      value: 6.5
     } as Resource,
     level: 80,
     tier: Tier.T5,
@@ -216,7 +216,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreMythril,
       iconType: 'image' as const,
-      value: 250
+      value: 8
     } as Resource,
     level: 85,
     tier: Tier.T5,
@@ -235,7 +235,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreOrichalcum,
       iconType: 'image' as const,
-      value: 350
+      value: 11
     } as Resource,
     level: 100,
     tier: Tier.T6,
@@ -252,7 +252,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreAdamantite,
       iconType: 'image' as const,
-      value: 400
+      value: 13
     } as Resource,
     level: 105,
     tier: Tier.T6,
@@ -271,7 +271,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreTitanium,
       iconType: 'image' as const,
-      value: 600
+      value: 19
     } as Resource,
     level: 120,
     tier: Tier.T7,
@@ -288,7 +288,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.RESOURCE,
       icon: oreDragonite,
       iconType: 'image' as const,
-      value: 800
+      value: 25
     } as Resource,
     level: 150,
     tier: Tier.T7,
@@ -312,7 +312,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'madera-blanda',
       type: ItemType.RESOURCE,
       icon: '🟤',
-      value: 6
+      value: 0.5
     } as Resource,
     level: 1,
     tier: Tier.T1,
@@ -328,7 +328,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'madera-comun',
       type: ItemType.RESOURCE,
       icon: '🪵',
-      value: 10
+      value: 0.5
     } as Resource,
     level: 5,
     tier: Tier.T1,
@@ -346,7 +346,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'roble',
       type: ItemType.RESOURCE,
       icon: '🌳',
-      value: 25
+      value: 0.5
     } as Resource,
     level: 20,
     tier: Tier.T2,
@@ -362,7 +362,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'nogal',
       type: ItemType.RESOURCE,
       icon: '🌲',
-      value: 35
+      value: 1
     } as Resource,
     level: 25,
     tier: Tier.T2,
@@ -380,7 +380,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'caoba',
       type: ItemType.RESOURCE,
       icon: '🎨',
-      value: 55
+      value: 1.5
     } as Resource,
     level: 40,
     tier: Tier.T3,
@@ -396,7 +396,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'ebano',
       type: ItemType.RESOURCE,
       icon: '⬛',
-      value: 85
+      value: 2.5
     } as Resource,
     level: 45,
     tier: Tier.T3,
@@ -414,7 +414,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'petreo',
       type: ItemType.RESOURCE,
       icon: '🪨',
-      value: 140
+      value: 4.5
     } as Resource,
     level: 60,
     tier: Tier.T4,
@@ -430,7 +430,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'ancestral',
       type: ItemType.RESOURCE,
       icon: '👴',
-      value: 170
+      value: 5.5
     } as Resource,
     level: 65,
     tier: Tier.T4,
@@ -448,7 +448,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'cristalina',
       type: ItemType.RESOURCE,
       icon: '💎',
-      value: 220
+      value: 7
     } as Resource,
     level: 80,
     tier: Tier.T5,
@@ -464,7 +464,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'magica',
       type: ItemType.RESOURCE,
       icon: '✨',
-      value: 280
+      value: 9
     } as Resource,
     level: 85,
     tier: Tier.T5,
@@ -482,7 +482,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'sagrada',
       type: ItemType.RESOURCE,
       icon: '☪️',
-      value: 380
+      value: 12
     } as Resource,
     level: 100,
     tier: Tier.T6,
@@ -498,7 +498,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'primordial',
       type: ItemType.RESOURCE,
       icon: '🌌',
-      value: 450
+      value: 14
     } as Resource,
     level: 105,
     tier: Tier.T6,
@@ -516,7 +516,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'dimensional',
       type: ItemType.RESOURCE,
       icon: '🌀',
-      value: 650
+      value: 20
     } as Resource,
     level: 120,
     tier: Tier.T7,
@@ -532,7 +532,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
       id: 'divina',
       type: ItemType.RESOURCE,
       icon: '👑',
-      value: 900
+      value: 25
     } as Resource,
     level: 150,
     tier: Tier.T7,
@@ -557,7 +557,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotCopper,
       iconType: 'image' as const,
-      value: 12,
+      value: 0.5,
       skill: Skill.FUNDICION,
     } as any,
     level: 1,
@@ -581,7 +581,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotIron,
       iconType: 'image' as const,
-      value: 28,
+      value: 1.5,
       skill: Skill.FUNDICION,
     } as any,
     level: 20,
@@ -603,7 +603,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotSilver,
       iconType: 'image' as const,
-      value: 42,
+      value: 2.5,
       skill: Skill.FUNDICION,
     } as any,
     level: 25,
@@ -627,7 +627,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotTungsten,
       iconType: 'image' as const,
-      value: 70,
+      value: 3.5,
       skill: Skill.FUNDICION,
     } as any,
     level: 40,
@@ -649,7 +649,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotGold,
       iconType: 'image' as const,
-      value: 100,
+      value: 5,
       skill: Skill.FUNDICION,
     } as any,
     level: 45,
@@ -673,7 +673,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotPlatinum,
       iconType: 'image' as const,
-      value: 130,
+      value: 8,
       skill: Skill.FUNDICION,
     } as any,
     level: 60,
@@ -695,7 +695,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotObsidian,
       iconType: 'image' as const,
-      value: 150,
+      value: 10,
       skill: Skill.FUNDICION,
     } as any,
     level: 65,
@@ -719,7 +719,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotCobalt,
       iconType: 'image' as const,
-      value: 180,
+      value: 13,
       skill: Skill.FUNDICION,
     } as any,
     level: 80,
@@ -741,7 +741,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotMythril,
       iconType: 'image' as const,
-      value: 220,
+      value: 16,
       skill: Skill.FUNDICION,
     } as any,
     level: 90,
@@ -765,7 +765,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotOrichalcum,
       iconType: 'image' as const,
-      value: 260,
+      value: 22,
       skill: Skill.FUNDICION,
     } as any,
     level: 100,
@@ -787,7 +787,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotAdamantite,
       iconType: 'image' as const,
-      value: 310,
+      value: 26,
       skill: Skill.FUNDICION,
     } as any,
     level: 105,
@@ -811,7 +811,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotTitanium,
       iconType: 'image' as const,
-      value: 400,
+      value: 30,
       skill: Skill.FUNDICION,
     } as any,
     level: 120,
@@ -833,7 +833,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotDragonite,
       iconType: 'image' as const,
-      value: 550,
+      value: 32,
       skill: Skill.FUNDICION,
     } as any,
     level: 150,

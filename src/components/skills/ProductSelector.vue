@@ -26,6 +26,7 @@ const toolsStore = useToolsStore()
 
 const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
+const isDropdownOpen = ref(false)
 
 const skillAction = computed((): string => {
   return t(`skills.${SKILL_CONFIGS[props.skill].name}.action`)
@@ -131,20 +132,34 @@ const getMaterialName = (itemId: string): string => {
 
     <!-- Select Dropdown para Productos Disponibles -->
     <div v-if="unlockedProducts.length > 0" class="select-wrapper">
-      <select
-        :value="currentProduct?.id || ''"
-        @change="(e) => {
-          const selectedId = (e.target as HTMLSelectElement).value
-          const product = unlockedProducts.find(p => p.id === selectedId)
-          if (product) selectProduct(product)
-        }"
-        class="product-select"
-      >
-        <option value="" disabled>{{ t('ui.m_select_material') }}</option>
-        <option v-for="product in unlockedProducts" :key="product.id" :value="product.id">
-          {{ skillAction }} {{ t(product.i18nKey) }} - {{ t('labels.level') }} {{ product.level }}
-        </option>
-      </select>
+      <!-- Dropdown trigger button -->
+      <div class="select-trigger" @click="isDropdownOpen = !isDropdownOpen">
+        <span class="trigger-text">
+          <span v-if="currentProduct">
+            {{ skillAction }} {{ t(currentProduct.i18nKey) }} - Lvl {{ currentProduct.level }}
+          </span>
+          <span v-else>{{ t('ui.m_select_material') }}</span>
+        </span>
+        <span class="trigger-quantity" v-if="currentProduct">x{{ inventoryStore.getItemQuantity(currentProduct.item.id) }}</span>
+        <span class="trigger-arrow" :class="{ open: isDropdownOpen }">▼</span>
+      </div>
+
+      <!-- Dropdown menu -->
+      <div v-if="isDropdownOpen" class="select-options">
+        <div class="select-option disabled">
+          {{ t('ui.m_select_material') }}
+        </div>
+        <div
+          v-for="product in unlockedProducts"
+          :key="product.id"
+          class="select-option"
+          :class="{ selected: currentProduct?.id === product.id }"
+          @click="selectProduct(product); isDropdownOpen = false"
+        >
+          <span class="option-text">{{ skillAction }} {{ t(product.i18nKey) }} - Lvl {{ product.level }}</span>
+          <span class="option-quantity">x{{ inventoryStore.getItemQuantity(product.item.id) }}</span>
+        </div>
+      </div>
     </div>
 
     <!-- Info del Producto Seleccionado -->
@@ -265,9 +280,17 @@ const getMaterialName = (itemId: string): string => {
   letter-spacing: 0.5px;
 }
 
-/* Select Dropdown Styles */
-.product-select {
-  width: 100%;
+/* Select Wrapper & Dropdown Styles */
+.select-wrapper {
+  position: relative;
+  margin-bottom: 10px;
+  z-index: 100;
+}
+
+.select-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 8px 10px;
   background: var(--bg-darker);
   color: var(--text-primary);
@@ -276,13 +299,112 @@ const getMaterialName = (itemId: string): string => {
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-bottom: 10px;
 }
 
-.product-select:hover {
+.select-trigger:hover {
   border-color: var(--color-primary);
+  background: rgba(255, 165, 0, 0.05);
 }
 
+.trigger-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trigger-quantity {
+  color: var(--color-primary);
+  font-weight: bold;
+  min-width: 50px;
+  text-align: right;
+}
+
+.trigger-arrow {
+  color: var(--text-secondary);
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.trigger-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Options Menu */
+.select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 10000;
+  max-height: 300px;
+  overflow-y: auto;
+  animation: slideDown 0.2s ease;
+  padding-bottom: 5px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.select-option:last-child {
+  border-bottom: none;
+}
+
+.select-option:hover:not(.disabled) {
+  background: rgba(255, 165, 0, 0.1);
+}
+
+.select-option.selected {
+  background: rgba(85, 255, 85, 0.1);
+  border-left: 3px solid var(--color-success);
+  padding-left: 7px;
+}
+
+.select-option.disabled {
+  color: var(--text-muted);
+  cursor: default;
+  pointer-events: none;
+}
+
+.option-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.option-quantity {
+  color: var(--color-primary);
+  font-weight: bold;
+  min-width: 50px;
+  text-align: right;
+  font-size: 12px;
+}
 .product-select:focus {
   outline: none;
   border-color: var(--color-primary);

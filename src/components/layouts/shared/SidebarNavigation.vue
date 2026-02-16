@@ -142,11 +142,11 @@ const inventoryStore = useInventoryStore()
 
 const skillsExpanded = ref(false)
 
-// Expandir automáticamente cuando estamos en /skills
+// Expandir automáticamente cuando estamos en /skills o /woodburning
 watch(
   () => route.path,
   (newPath) => {
-    if (newPath === '/skills') {
+    if (newPath === '/skills' || newPath === '/woodburning') {
       skillsExpanded.value = true
     }
   },
@@ -164,6 +164,7 @@ const skillMenuItems: SkillMenuItem[] = [
   { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: 'fa-solid fa-mountain' },
   { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name', icon: 'fa-solid fa-tree' },
   { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: 'fa-solid fa-fire' },
+  { skill: Skill.QUEMADO, path: '/skills?skill=quemado', label: 'skills.quemado.name', icon: 'fa-solid fa-fire-flame-curved' },
   { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name', icon: 'fa-solid fa-hammer' },
   { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name', icon: 'fa-solid fa-fish' },
   { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name', icon: 'fa-solid fa-utensils' },
@@ -178,7 +179,8 @@ const isSkillsGroupActive = () => {
   return route.path === '/skills'
 }
 
-const isSkillItemActive = (skillPath: string): boolean => {
+const isSkillItemActive = (skillPath: string): boolean => {  
+  // Para rutas con query parameters como /skills?skill=mineria
   if (route.path !== '/skills') return false
   
   // Extraer el parámetro skill de la URL actual

@@ -23,6 +23,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 2,
     xpReward: 12,
     cycleDuration: 45,
+    burningTime: 30,
   },
   'madera-comun': {
     id: 'madera-comun',
@@ -39,6 +40,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 2,
     xpReward: 18,
     cycleDuration: 43,
+    burningTime: 28,
   },
 
   // T2
@@ -57,6 +59,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 35,
     cycleDuration: 41,
+    burningTime: 35,
   },
   'nogal': {
     id: 'nogal',
@@ -73,6 +76,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 45,
     cycleDuration: 39,
+    burningTime: 40,
   },
 
   // T3
@@ -91,6 +95,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 65,
     cycleDuration: 37,
+    burningTime: 50,
   },
   'ebano': {
     id: 'ebano',
@@ -107,6 +112,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 80,
     cycleDuration: 35,
+    burningTime: 60,
   },
 
   // T4
@@ -125,6 +131,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 110,
     cycleDuration: 33,
+    burningTime: 75,
   },
   'ancestral': {
     id: 'ancestral',
@@ -141,6 +148,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 130,
     cycleDuration: 31,
+    burningTime: 85,
   },
 
   // T5
@@ -159,6 +167,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 160,
     cycleDuration: 29,
+    burningTime: 100,
   },
   'magica': {
     id: 'magica',
@@ -175,6 +184,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 190,
     cycleDuration: 27,
+    burningTime: 120,
   },
 
   // T6
@@ -193,6 +203,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 240,
     cycleDuration: 25,
+    burningTime: 150,
   },
   'primordial': {
     id: 'primordial',
@@ -209,6 +220,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 280,
     cycleDuration: 23,
+    burningTime: 180,
   },
 
   // T7
@@ -227,6 +239,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 380,
     cycleDuration: 21,
+    burningTime: 240,
   },
   'divina': {
     id: 'divina',
@@ -243,5 +256,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 450,
     cycleDuration: 19,
+    burningTime: 300,
   },
 }

@@ -36,7 +36,11 @@
     "price": "Precio",
     "buy": "Comprar",
     "locked": "Bloqueado",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "drops": "Drops",
+    "nothing": "Nada",
+    "selectLog": "Selecciona un tronco",
+    "burningTime": "Tiempo de quemado"
   },
   "inventory": {
     "quantity": "Cantidad",
@@ -91,6 +95,11 @@
       "name": "Fundición",
       "action": "Fundir", 
       "description": "Funde minerales en lingotes"
+    },
+    "quemado": {
+      "name": "Quemado",
+      "action": "Quemar",
+      "description": "Quema troncos para obtener carbón"
     },
     "herreria": {
       "name": "Herrería",
@@ -287,6 +296,12 @@
         "name": "Lingote de Draconita",
         "description": "Lingote de dragón. Poder dracónico concentrado."
       }
+    },
+    "ash": {
+      "ceniza": {
+        "name": "Ceniza",
+        "description": "Polvo gris resultante de la quema de madera. Subproducto del quemado."
+      }
     }
   },
   "items": {
@@ -295,6 +310,7 @@
     "fish": "Pescado",
     "food": "Comida",
     "ingots": "Lingotes",
+    "ash": "Ceniza",
     "carbon": "Carbón",
     "cobre": "Cobre",
     "hierro": "Hierro",
@@ -310,6 +326,7 @@
     "titanio": "Titanio",
     "draconita": "Draconita",
     "madera-blanda": "Madera Blanda",
+    "ceniza": "Ceniza",
     "madera-comun": "Madera Común",
     "roble": "Madera de Roble",
     "nogal": "Madera de Nogal",

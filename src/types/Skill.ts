@@ -15,6 +15,7 @@ export interface SkillProduct {
   quantity: number // cantidad producida
   xpReward: number
   cycleDuration: number // duración del ciclo en segundos
+  burningTime?: number // para troncos: tiempo de quemado en segundos (tala)
   requiredMaterials?: SkillMaterial[] // para crafting
 }
 

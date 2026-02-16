@@ -5,6 +5,7 @@ import { Skill } from '@/types/Game'
 import MiningSkill from '@/components/skills/MiningSkill.vue'
 import LoggingSkill from '@/components/skills/LoggingSkill.vue'
 import SmeltingSkill from '@/components/skills/SmeltingSkill.vue'
+import QuemadoSkill from '@/components/skills/QuemadoSkill.vue'
 
 const route = useRoute()
 
@@ -17,6 +18,7 @@ const skillMap: Record<string, Skill> = {
   'pesca': Skill.PESCA,
   'cocina': Skill.COCINA,
   'aventura': Skill.AVENTURA,
+  'quemado': Skill.QUEMADO,
 }
 
 const getSkillFromQuery = (): Skill => {
@@ -41,6 +43,7 @@ watch(
       <MiningSkill v-if="activeSkill === Skill.MINERIA" />
       <LoggingSkill v-else-if="activeSkill === Skill.TALA" />
       <SmeltingSkill v-else-if="activeSkill === Skill.FUNDICION" />
+      <QuemadoSkill v-else-if="activeSkill === Skill.QUEMADO" />
     </div>
   </div>
 </template>
@@ -57,7 +60,7 @@ watch(
 
 .skill-content {
   flex: 1;
-  overflow: hidden;
+  overflow: visible;
   max-width: 800px;
   margin: 0 auto;
   width: 100%;

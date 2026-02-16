@@ -36,7 +36,11 @@
     "price": "Price",
     "buy": "Buy",
     "locked": "Locked",
-    "continue": "Continue"
+    "continue": "Continue",
+    "drops": "Drops",
+    "nothing": "Nothing",
+    "selectLog": "Select a log",
+    "burningTime": "Burning time"
   },
   "inventory": {
     "quantity": "Quantity",
@@ -93,6 +97,11 @@
       "action": "Smelt",
       "description": "Smelt minerals into ingots"
     },
+    "quemado": {
+      "name": "Woodburning",
+      "action": "Burn",
+      "description": "Burn logs to obtain coal"
+    },
     "herreria": {
       "name": "Smithing",
       "action": "Forge",
@@ -120,6 +129,7 @@
     "fish": "Fish",
     "food": "Food",
     "ingots": "Ingots",
+    "ash": "Ash",
     "carbon": "Coal",
     "cobre": "Copper",
     "hierro": "Iron",
@@ -135,6 +145,7 @@
     "titanio": "Titanium",
     "draconita": "Dragonite",
     "madera-blanda": "Softwood",
+    "ceniza": "Ash",
     "madera-comun": "Common Wood",
     "roble": "Oak Wood",
     "nogal": "Walnut Wood",
@@ -335,6 +346,12 @@
       "draconita": {
         "name": "Dragonite Ingot",
         "description": "Dragon ingot. Concentrated draconic power."
+      }
+    },
+    "ash": {
+      "ceniza": {
+        "name": "Ash",
+        "description": "Gray powder resulting from burning wood. Byproduct of woodburning."
       }
     }
   },

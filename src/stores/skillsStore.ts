@@ -35,6 +35,7 @@ export const useSkillsStore = defineStore('skills', () => {
     [Skill.MINERIA]: initializeSkillState(Skill.MINERIA),
     [Skill.TALA]: initializeSkillState(Skill.TALA),
     [Skill.FUNDICION]: initializeSkillState(Skill.FUNDICION),
+    [Skill.QUEMADO]: initializeSkillState(Skill.QUEMADO),
     [Skill.HERRERIA]: initializeSkillState(Skill.HERRERIA),
     [Skill.PESCA]: initializeSkillState(Skill.PESCA),
     [Skill.COCINA]: initializeSkillState(Skill.COCINA),

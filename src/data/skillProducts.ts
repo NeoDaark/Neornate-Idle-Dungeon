@@ -9,6 +9,7 @@ import { Skill } from '@/types/Game'
 import { MINING_PRODUCTS } from './skillProducts/mining'
 import { LOGGING_PRODUCTS } from './skillProducts/logging'
 import { SMELTING_PRODUCTS } from './skillProducts/smelting'
+import { WOODBURNING_PRODUCTS, WOODBURNING_DROP_TABLE } from './skillProducts/woodburning'
 
 /**
  * Mapeo de Skills → Productos
@@ -20,6 +21,7 @@ export const SKILL_PRODUCTS_MAP: Record<string, Record<string, any>> = {
   [Skill.MINERIA]: MINING_PRODUCTS,
   [Skill.TALA]: LOGGING_PRODUCTS,
   [Skill.FUNDICION]: SMELTING_PRODUCTS,
+  [Skill.QUEMADO]: WOODBURNING_PRODUCTS,
   [Skill.HERRERIA]: {}, // TODO: Implementar herrería
   [Skill.PESCA]: {}, // TODO: Implementar pesca
   [Skill.COCINA]: {}, // TODO: Implementar cocina
@@ -27,4 +29,4 @@ export const SKILL_PRODUCTS_MAP: Record<string, Record<string, any>> = {
 }
 
 // Re-exportar para compatibilidad con código existente
-export { MINING_PRODUCTS, LOGGING_PRODUCTS, SMELTING_PRODUCTS }
+export { MINING_PRODUCTS, LOGGING_PRODUCTS, SMELTING_PRODUCTS, WOODBURNING_PRODUCTS, WOODBURNING_DROP_TABLE }

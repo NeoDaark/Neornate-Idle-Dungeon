@@ -7,7 +7,6 @@ import type { SkillProduct } from '@/types/Skill'
 import type { Resource } from '@/types/Item'
 
 // Importar imágenes de ores
-import oreCoal from '@/assets/sprites/custom/ores/ore_coal.png'
 import oreCopper from '@/assets/sprites/custom/ores/ore_copper.png'
 import oreIron from '@/assets/sprites/custom/ores/ore_iron.png'
 import oreSilver from '@/assets/sprites/custom/ores/ore_silver.png'
@@ -24,23 +23,6 @@ import oreDragonite from '@/assets/sprites/custom/ores/ore_dragonite.png'
 
 export const MINING_PRODUCTS: Record<string, SkillProduct> = {
   // T1
-  'carbon': {
-    id: 'carbon',
-    i18nKey: 'resources.mineral.carbon.name',
-    i18nDescriptionKey: 'resources.mineral.carbon.description',
-    item: {
-      id: 'carbon',
-      type: ItemType.RESOURCE,
-      icon: oreCoal,
-      iconType: 'image' as const,
-      value: 0.5
-    } as Resource,
-    level: 1,
-    tier: Tier.T1,
-    quantity: 2,
-    xpReward: 10,
-    cycleDuration: 40, // 40 segundos
-  },
   'cobre': {
     id: 'cobre',
     i18nKey: 'resources.mineral.cobre.name',

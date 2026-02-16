@@ -16,6 +16,7 @@ export enum Skill {
   MINERIA = 'mineria',
   TALA = 'tala',
   FUNDICION = 'fundicion',
+  QUEMADO = 'quemado',
   HERRERIA = 'herreria',
   PESCA = 'pesca',
   COCINA = 'cocina',
@@ -133,6 +134,15 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     description: 'Funde minerales en lingotes',
     type: 'crafting',
     baseCycleDuration: 50,
+  },
+  [Skill.QUEMADO]: {
+    name: 'quemado',
+    displayName: 'Quemado',
+    emoji: '🔥',
+    icon: 'burn',
+    description: 'Quema troncos para obtener carbón',
+    type: 'crafting',
+    baseCycleDuration: 0, // Dinámico según tronco
   },
   [Skill.HERRERIA]: {
     name: 'herreria',

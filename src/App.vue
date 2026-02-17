@@ -23,7 +23,7 @@ import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { usePlayerStore } from '@/stores/playerStore'
 import { useToolsStore } from '@/stores/toolsStore'
-import { GAME_CONSTANTS, Skill } from '@/types/Game'
+import { GAME_CONSTANTS, SKILL_CONFIGS } from '@/types/Game'
 
 // Logs de inicio
 //console.log('🚀 [App] Archivo App.vue cargado')
@@ -44,7 +44,6 @@ let saveInterval: ReturnType<typeof setInterval> | null = null
 let gameLoopInterval: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
-  //console.log('[App] Iniciando...')
   
   try {
     // Inicializar juego (cargar datos guardados)
@@ -61,13 +60,10 @@ onMounted(() => {
     // Simular tiempo de carga (3 segundos)
     setTimeout(() => {
       try {
-        //console.log('[App] Procesando farmeo offline...')
         // Procesar farmeo offline después de que "carga" termina
         gameStore.calculateOfflineProgress()
-        //console.log('[App] Offline procesado, ocultando loading...')
         // Mostrar layout
         isLoading.value = false
-        //console.log('[App] Layout visible')
         
         // Iniciar game loop DESPUÉS de procesar offline
         startGameLoop()
@@ -110,10 +106,9 @@ onMounted(() => {
           if (result && skill.isActive) {
             const currentState = skillsStore.getSkillState(skill.skill)
             if (currentState.currentProduct) {
-              // Para Quemado usa burningTime, para otros usa cycleDuration
-              const duration = skill.skill === Skill.QUEMADO 
-                ? (currentState.currentProduct.burningTime || 30)
-                : currentState.currentProduct.cycleDuration
+              // usamos el tiempo de ciclo de la skill gguardado en SKILL_CONFIGS
+              const duration = SKILL_CONFIGS[skill.skill].baseCycleDuration
+
               const cycleDurationMs = duration * 1000
               skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
             }

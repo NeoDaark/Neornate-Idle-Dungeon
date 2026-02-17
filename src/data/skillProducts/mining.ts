@@ -37,8 +37,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 5,
     tier: Tier.T1,
     quantity: 2,
-    xpReward: 15,
-    cycleDuration: 38,
+    xpReward: 15
   },
 
   // T2
@@ -57,7 +56,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 30,
-    cycleDuration: 36,
   },
   'plata': {
     id: 'plata',
@@ -74,7 +72,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 40,
-    cycleDuration: 34,
   },
 
   // T3
@@ -93,7 +90,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 60,
-    cycleDuration: 32,
   },
   'oro': {
     id: 'oro',
@@ -110,7 +106,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 75,
-    cycleDuration: 30,
   },
 
   // T4
@@ -129,7 +124,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 100,
-    cycleDuration: 28,
   },
   'obsidiana': {
     id: 'obsidiana',
@@ -146,7 +140,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 120,
-    cycleDuration: 26,
   },
 
   // T5
@@ -165,7 +158,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 150,
-    cycleDuration: 24,
   },
   'mithril': {
     id: 'mithril',
@@ -182,7 +174,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 180,
-    cycleDuration: 22,
   },
 
   // T6
@@ -201,7 +192,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 220,
-    cycleDuration: 20,
   },
   'adamantita': {
     id: 'adamantita',
@@ -218,7 +208,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 260,
-    cycleDuration: 18,
   },
 
   // T7
@@ -237,7 +226,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 350,
-    cycleDuration: 16,
   },
   'draconita': {
     id: 'draconita',
@@ -254,6 +242,5 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 400,
-    cycleDuration: 14,
   },
 }

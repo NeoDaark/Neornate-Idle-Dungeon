@@ -40,7 +40,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T1,
     quantity: 1,
     xpReward: 20,
-    cycleDuration: 48,
     requiredMaterials: [
       { itemId: 'cobre', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -64,7 +63,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 35,
-    cycleDuration: 46,
     requiredMaterials: [
       { itemId: 'hierro', quantity: 2 },
       { itemId: 'carbon', quantity: 1 }
@@ -86,7 +84,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 45,
-    cycleDuration: 44,
     requiredMaterials: [
       { itemId: 'plata', quantity: 2 },
       { itemId: 'carbon', quantity: 1 }
@@ -110,7 +107,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 70,
-    cycleDuration: 42,
     requiredMaterials: [
       { itemId: 'tungsteno', quantity: 2 },
       { itemId: 'carbon', quantity: 1 }
@@ -132,7 +128,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 85,
-    cycleDuration: 40,
     requiredMaterials: [
       { itemId: 'oro', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -156,7 +151,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 110,
-    cycleDuration: 38,
     requiredMaterials: [
       { itemId: 'platino', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -178,7 +172,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 130,
-    cycleDuration: 36,
     requiredMaterials: [
       { itemId: 'obsidiana', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -202,7 +195,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 155,
-    cycleDuration: 34,
     requiredMaterials: [
       { itemId: 'cobalto', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -224,7 +216,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 180,
-    cycleDuration: 32,
     requiredMaterials: [
       { itemId: 'mithril', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -248,7 +239,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 210,
-    cycleDuration: 30,
     requiredMaterials: [
       { itemId: 'oricalco', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -270,7 +260,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 240,
-    cycleDuration: 28,
     requiredMaterials: [
       { itemId: 'adamantita', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -294,7 +283,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 300,
-    cycleDuration: 26,
     requiredMaterials: [
       { itemId: 'titanio', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }
@@ -316,7 +304,6 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 380,
-    cycleDuration: 24,
     requiredMaterials: [
       { itemId: 'draconita', quantity: 1 },
       { itemId: 'carbon', quantity: 1 }

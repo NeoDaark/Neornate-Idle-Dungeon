@@ -14,7 +14,6 @@ export interface SkillProduct {
   tier: Tier
   quantity: number // cantidad producida
   xpReward: number
-  cycleDuration: number // duración del ciclo en segundos
   burningTime?: number // para troncos: tiempo de quemado en segundos (tala)
   treeId?: string // para maderas: referencia al árbol que se tala (e.g., 'pino')
   requiredMaterials?: SkillMaterial[] // para crafting
@@ -108,7 +107,6 @@ export function createSkillProduct(
   tier: Tier,
   quantity: number,
   xpReward: number,
-  cycleDuration: number,
   requiredMaterials?: SkillMaterial[]
 ): SkillProduct {
   return {
@@ -120,7 +118,6 @@ export function createSkillProduct(
     tier,
     quantity,
     xpReward,
-    cycleDuration,
     requiredMaterials,
   }
 }

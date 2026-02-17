@@ -230,8 +230,7 @@ const product = {
     { itemId: 'agua_limpia', quantity: 1 }
   ],
   xpReward: 50,
-  quantity: 1,
-  cycleDuration: 5 // segundos
+  quantity: 1
 }
 ```
 

@@ -117,7 +117,7 @@ const startSmelting = () => {
   const fundicionState = skillsStore.getSkillState(Skill.FUNDICION)
   if (fundicionState.cycleEndTime === 0) {
     // No hay ciclo pendiente, crear uno nuevo
-    const cycleDuration = selectedProduct.value.cycleDuration * 1000
+    const cycleDuration = SKILL_CONFIGS[Skill.FUNDICION].baseCycleDuration * 1000
     skillsStore.activateSkill(Skill.FUNDICION, selectedProduct.value, cycleDuration)
   } else {
     // Hay ciclo pendiente, pero puede que currentProduct se haya perdido

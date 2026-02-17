@@ -66,8 +66,8 @@ Simple pixel art wood log, brown color, flat design, no depth, no shadows, minim
 
 **Árbol:**
 ```
-Pixel art birch tree, isometric perspective, white 
-bark with black markings, light green foliage, slender trunk, 
+Pixel art birch tree, isometric perspective, white bark with black markings, 
+soft rounded light green foliage, thin slender trunk, smooth organic shapes, 
 game asset, grey background, forest tree sprite
 ```
 

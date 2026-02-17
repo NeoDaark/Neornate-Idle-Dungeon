@@ -1,78 +1,3 @@
-/**
- * logging.ts - Productos de la habilidad Tala (Woodcutting)
- * 
- * Estructura:
- * - TREES: Definición de árboles que el jugador tala
- * - LOGGING_PRODU  'madera-abeto': {
-    id: 'made  'madera-nogal': {
-    id: 'madera-nogal',
-    i18nKey: 'resources.woo  'madera-teca': {
-    id: 'madera-teca',
-    i18nKe  'madera-maldita': {
-    id: 'madera-maldita',
-    i18nKey: 'resources.wood.madera-maldita.name',
-    i18nDescriptionKey: 'resources.wood.madera-maldita.description',
-    item: {
-      id: 'madera-maldita',
-      type: ItemType.RESOURCE,
-      icon: '💀',
-      value: 7
-    } as Resource,
-    level: 80,
-    tier: Tier.T5,
-    quantity: 1,
-    xpReward: 160,
-    cycleDuration: 29,
-    burningTime: 100,
-    treeId: 'maldito',
-  },d.madera-teca.name',
-    i18nDescriptionKey: 'resources.wood.madera-teca.description',
-    item: {
-      id: 'madera-teca',
-      type: ItemType.RESOURCE,
-      icon: '🪵',
-      value: 4.5
-    } as Resource,
-    level: 60,
-    tier: Tier.T4,
-    quantity: 1,
-    xpReward: 110,
-    cycleDuration: 33,
-    burningTime: 75,
-    treeId: 'teca',
-  },me',
-    i18nDescriptionKey: 'resources.wood.madera-nogal.description',
-    item: {
-      id: 'madera-nogal',
-      type: ItemType.RESOURCE,
-      icon: '🌳',
-      value: 1
-    } as Resource,
-    level: 25,
-    tier: Tier.T2,
-    quantity: 1,
-    xpReward: 45,
-    cycleDuration: 39,
-    burningTime: 40,
-    treeId: 'nogal',
-  },18nKey: 'resources.wood.madera-abeto.name',
-    i18nDescriptionKey: 'resources.wood.madera-abeto.description',
-    item: {
-      id: 'madera-abeto',
-      type: ItemType.RESOURCE,
-      icon: '🌲',
-      value: 0.75
-    } as Resource,
-    level: 20,
-    tier: Tier.T2,
-    quantity: 1,
-    xpReward: 35,
-    cycleDuration: 41,
-    burningTime: 35,
-    treeId: 'abeto',
-  },aderas) que se obtienen al talar
- */
-
 import { Tier, ItemType } from '@/types/Game'
 import type { Tree } from '@/types/Tree'
 import type { SkillProduct } from '@/types/Skill'
@@ -202,7 +127,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T1,
     quantity: 2,
     xpReward: 12,
-    cycleDuration: 45,
     burningTime: 30,
     treeId: 'pino',
   },
@@ -220,7 +144,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T1,
     quantity: 2,
     xpReward: 18,
-    cycleDuration: 43,
     burningTime: 28,
     treeId: 'abedul',
   },
@@ -240,7 +163,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 35,
-    cycleDuration: 41,
     burningTime: 35,
   },
   'madera-nogal': {
@@ -257,7 +179,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 45,
-    cycleDuration: 39,
     burningTime: 40,
   },
 
@@ -276,7 +197,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 65,
-    cycleDuration: 37,
     burningTime: 50,
     treeId: 'caoba',
   },
@@ -294,7 +214,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 80,
-    cycleDuration: 35,
     burningTime: 60,
     treeId: 'ebano',
   },
@@ -314,7 +233,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 110,
-    cycleDuration: 33,
     burningTime: 75,
   },
   'madera-cedro': {
@@ -331,8 +249,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 130,
-    cycleDuration: 31,
-    burningTime: 85,
     treeId: 'cedro',
   },
 
@@ -351,7 +267,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 160,
-    cycleDuration: 29,
     burningTime: 100,
   },
   'madera-mistica': {
@@ -368,7 +283,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 190,
-    cycleDuration: 27,
     burningTime: 120,
     treeId: 'mistico',
   },
@@ -388,7 +302,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 240,
-    cycleDuration: 25,
     burningTime: 150,
     treeId: 'sagrado',
   },
@@ -406,7 +319,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 280,
-    cycleDuration: 23,
     burningTime: 180,
     treeId: 'primordial',
   },
@@ -426,7 +338,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 380,
-    cycleDuration: 21,
     burningTime: 240,
     treeId: 'dimensional',
   },
@@ -444,7 +355,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 450,
-    cycleDuration: 19,
     burningTime: 300,
     treeId: 'dragonico',
   },

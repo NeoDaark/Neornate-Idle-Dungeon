@@ -93,7 +93,7 @@ export interface GameConstants {
 export const GAME_CONSTANTS: GameConstants = {
   MAX_LEVEL: 200,
   PRESTIGE_LEVEL: 120,
-  AUTO_SAVE_INTERVAL: 30000, // 30 segundos
+  AUTO_SAVE_INTERVAL: 5000, // 5 segundos
   GAME_LOOP_TICK: 100, // 100ms
 }
 
@@ -115,7 +115,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'pickaxe',
     description: 'Extrae minerales de la tierra',
     type: 'extraction',
-    baseCycleDuration: 40,
+    baseCycleDuration: 5,
   },
   [Skill.TALA]: {
     name: 'tala',
@@ -124,7 +124,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'tree',
     description: 'Corta árboles para obtener madera',
     type: 'extraction',
-    baseCycleDuration: 45,
+    baseCycleDuration: 5,
   },
   [Skill.FUNDICION]: {
     name: 'fundicion',
@@ -133,7 +133,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'furnace',
     description: 'Funde minerales en lingotes',
     type: 'crafting',
-    baseCycleDuration: 50,
+    baseCycleDuration: 5,
   },
   [Skill.QUEMADO]: {
     name: 'quemado',
@@ -142,7 +142,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'burn',
     description: 'Quema troncos para obtener carbón',
     type: 'crafting',
-    baseCycleDuration: 0, // Dinámico según tronco
+    baseCycleDuration: 5,
   },
   [Skill.HERRERIA]: {
     name: 'herreria',
@@ -151,7 +151,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'hammer',
     description: 'Forja armas y armaduras',
     type: 'crafting',
-    baseCycleDuration: 55,
+    baseCycleDuration: 5,
   },
   [Skill.PESCA]: {
     name: 'pesca',
@@ -160,7 +160,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'fishing',
     description: 'Pesca peces en el río',
     type: 'extraction',
-    baseCycleDuration: 35,
+    baseCycleDuration: 5,
   },
   [Skill.COCINA]: {
     name: 'cocina',
@@ -169,7 +169,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'cooking',
     description: 'Prepara comidas deliciosas',
     type: 'crafting',
-    baseCycleDuration: 30,
+    baseCycleDuration: 5,
   },
   [Skill.AVENTURA]: {
     name: 'aventura',
@@ -178,7 +178,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     icon: 'adventure',
     description: 'Explora dungeons y combate',
     type: 'combat',
-    baseCycleDuration: 60,
+    baseCycleDuration: 5,
   },
 }
 

@@ -70,12 +70,8 @@ const finalXP = computed(() => {
 })
 
 const finalCycleDuration = computed(() => {
-  if (!props.currentProduct) return 0
-  // En Quemado usamos burningTime en lugar de cycleDuration
-  if (props.isWoodburning) {
-    return (props.currentProduct.burningTime || 30) * 1000
-  }
-  const baseDuration = props.currentProduct.cycleDuration * 1000
+  if (!props.currentProduct) return 0 // Si no hay producto actual, no hay duración de ciclo
+  const baseDuration = SKILL_CONFIGS[props.skill].baseCycleDuration * 1000
   const speedReduction = toolBonus.value.speedBonus * 1000
   return Math.max(500, baseDuration - speedReduction)
 })
@@ -209,7 +205,7 @@ const getMaterialName = (itemId: string): string => {
               <span class="stat">{{ finalXP }} XP <span v-if="!isWoodburning && toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>
               <span v-if="isWoodburning" class="stat">x1 (gasta 1 tronco)</span>
               <span v-else class="stat">x{{ finalQuantity }} <span v-if="toolBonus.quantityBonus > 0" class="bonus">+{{ toolBonus.quantityBonus }}</span></span>
-              <span class="stat">⏱️ {{ (finalCycleDuration / 1000).toFixed(1) }}s <span v-if="!isWoodburning && toolBonus.speedBonus < 0" class="bonus">{{ Math.round(toolBonus.speedBonus) }}s</span></span>
+              <span class="stat">⏱️ {{ (finalCycleDuration / 1000).toFixed(1) }}s <span v-if="toolBonus.speedBonus < 0" class="bonus">{{ Math.round(toolBonus.speedBonus) }}s</span></span>
             </div>
           </div>
         </div>

@@ -108,7 +108,7 @@ const startLogging = () => {
   const talaState = skillsStore.getSkillState(Skill.TALA)
   if (talaState.cycleEndTime === 0) {
     // No hay ciclo pendiente, crear uno nuevo
-    const cycleDuration = selectedProduct.value.cycleDuration * 1000
+    const cycleDuration = SKILL_CONFIGS[Skill.TALA].baseCycleDuration * 1000
     skillsStore.activateSkill(Skill.TALA, selectedProduct.value, cycleDuration)
   } else {
     // Hay ciclo pendiente, pero puede que currentProduct se haya perdido

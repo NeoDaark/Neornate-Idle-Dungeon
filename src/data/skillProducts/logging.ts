@@ -1,19 +1,199 @@
 /**
  * logging.ts - Productos de la habilidad Tala (Woodcutting)
+ * 
+ * Estructura:
+ * - TREES: Definición de árboles que el jugador tala
+ * - LOGGING_PRODU  'madera-abeto': {
+    id: 'made  'madera-nogal': {
+    id: 'madera-nogal',
+    i18nKey: 'resources.woo  'madera-teca': {
+    id: 'madera-teca',
+    i18nKe  'madera-maldita': {
+    id: 'madera-maldita',
+    i18nKey: 'resources.wood.madera-maldita.name',
+    i18nDescriptionKey: 'resources.wood.madera-maldita.description',
+    item: {
+      id: 'madera-maldita',
+      type: ItemType.RESOURCE,
+      icon: '💀',
+      value: 7
+    } as Resource,
+    level: 80,
+    tier: Tier.T5,
+    quantity: 1,
+    xpReward: 160,
+    cycleDuration: 29,
+    burningTime: 100,
+    treeId: 'maldito',
+  },d.madera-teca.name',
+    i18nDescriptionKey: 'resources.wood.madera-teca.description',
+    item: {
+      id: 'madera-teca',
+      type: ItemType.RESOURCE,
+      icon: '🪵',
+      value: 4.5
+    } as Resource,
+    level: 60,
+    tier: Tier.T4,
+    quantity: 1,
+    xpReward: 110,
+    cycleDuration: 33,
+    burningTime: 75,
+    treeId: 'teca',
+  },me',
+    i18nDescriptionKey: 'resources.wood.madera-nogal.description',
+    item: {
+      id: 'madera-nogal',
+      type: ItemType.RESOURCE,
+      icon: '🌳',
+      value: 1
+    } as Resource,
+    level: 25,
+    tier: Tier.T2,
+    quantity: 1,
+    xpReward: 45,
+    cycleDuration: 39,
+    burningTime: 40,
+    treeId: 'nogal',
+  },18nKey: 'resources.wood.madera-abeto.name',
+    i18nDescriptionKey: 'resources.wood.madera-abeto.description',
+    item: {
+      id: 'madera-abeto',
+      type: ItemType.RESOURCE,
+      icon: '🌲',
+      value: 0.75
+    } as Resource,
+    level: 20,
+    tier: Tier.T2,
+    quantity: 1,
+    xpReward: 35,
+    cycleDuration: 41,
+    burningTime: 35,
+    treeId: 'abeto',
+  },aderas) que se obtienen al talar
  */
 
 import { Tier, ItemType } from '@/types/Game'
+import type { Tree } from '@/types/Tree'
 import type { SkillProduct } from '@/types/Skill'
 import type { Resource } from '@/types/Item'
 
+/**
+ * TREES - Árboles disponibles para talar
+ * Estos definen qué puede talar el jugador
+ */
+export const TREES: Record<string, Tree> = {
+  // T1
+  'pino': {
+    id: 'pino',
+    i18nKey: 'trees.pino.name',
+    level: 1,
+    tier: Tier.T1,
+  },
+  'abedul': {
+    id: 'abedul',
+    i18nKey: 'trees.abedul.name',
+    level: 5,
+    tier: Tier.T1,
+  },
+
+  // T2
+  'abeto': {
+    id: 'abeto',
+    i18nKey: 'trees.abeto.name',
+    level: 20,
+    tier: Tier.T2,
+  },
+  'nogal': {
+    id: 'nogal',
+    i18nKey: 'trees.nogal.name',
+    level: 25,
+    tier: Tier.T2,
+  },
+
+  // T3
+  'caoba': {
+    id: 'caoba',
+    i18nKey: 'trees.caoba.name',
+    level: 40,
+    tier: Tier.T3,
+  },
+  'ebano': {
+    id: 'ebano',
+    i18nKey: 'trees.ebano.name',
+    level: 45,
+    tier: Tier.T3,
+  },
+
+  // T4
+  'teca': {
+    id: 'teca',
+    i18nKey: 'trees.teca.name',
+    level: 60,
+    tier: Tier.T4,
+  },
+  'cedro': {
+    id: 'cedro',
+    i18nKey: 'trees.cedro.name',
+    level: 65,
+    tier: Tier.T4,
+  },
+
+  // T5
+  'maldito': {
+    id: 'maldito',
+    i18nKey: 'trees.maldito.name',
+    level: 80,
+    tier: Tier.T5,
+  },
+  'mistico': {
+    id: 'mistico',
+    i18nKey: 'trees.mistico.name',
+    level: 85,
+    tier: Tier.T5,
+  },
+
+  // T6
+  'sagrado': {
+    id: 'sagrado',
+    i18nKey: 'trees.sagrado.name',
+    level: 100,
+    tier: Tier.T6,
+  },
+  'primordial': {
+    id: 'primordial',
+    i18nKey: 'trees.primordial.name',
+    level: 105,
+    tier: Tier.T6,
+  },
+
+  // T7
+  'dimensional': {
+    id: 'dimensional',
+    i18nKey: 'trees.dimensional.name',
+    level: 120,
+    tier: Tier.T7,
+  },
+  'dragonico': {
+    id: 'dragonico',
+    i18nKey: 'trees.dragonico.name',
+    level: 150,
+    tier: Tier.T7,
+  },
+}
+
+/**
+ * LOGGING_PRODUCTS - Maderas obtenidas al talar árboles
+ * Estos son los productos/recursos que se generan
+ */
 export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
   // T1
-  'madera-blanda': {
-    id: 'madera-blanda',
-    i18nKey: 'resources.wood.madera-blanda.name',
-    i18nDescriptionKey: 'resources.wood.madera-blanda.description',
+  'madera-pino': {
+    id: 'madera-pino',
+    i18nKey: 'resources.wood.madera-pino.name',
+    i18nDescriptionKey: 'resources.wood.madera-pino.description',
     item: {
-      id: 'madera-blanda',
+      id: 'madera-pino',
       type: ItemType.RESOURCE,
       icon: '🟤',
       value: 0.5
@@ -24,13 +204,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 12,
     cycleDuration: 45,
     burningTime: 30,
+    treeId: 'pino',
   },
-  'madera-comun': {
-    id: 'madera-comun',
-    i18nKey: 'resources.wood.madera-comun.name',
-    i18nDescriptionKey: 'resources.wood.madera-comun.description',
+  'madera-abedul': {
+    id: 'madera-abedul',
+    i18nKey: 'resources.wood.madera-abedul.name',
+    i18nDescriptionKey: 'resources.wood.madera-abedul.description',
     item: {
-      id: 'madera-comun',
+      id: 'madera-abedul',
       type: ItemType.RESOURCE,
       icon: '🪵',
       value: 0.5
@@ -41,18 +222,19 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 18,
     cycleDuration: 43,
     burningTime: 28,
+    treeId: 'abedul',
   },
 
   // T2
-  'roble': {
-    id: 'roble',
-    i18nKey: 'resources.wood.roble.name',
-    i18nDescriptionKey: 'resources.wood.roble.description',
+  'madera-abeto': {
+    id: 'madera-abeto',
+    i18nKey: 'resources.wood.madera-abeto.name',
+    i18nDescriptionKey: 'resources.wood.madera-abeto.description',
     item: {
-      id: 'roble',
+      id: 'madera-abeto',
       type: ItemType.RESOURCE,
-      icon: '🌳',
-      value: 0.5
+      icon: '�',
+      value: 0.75
     } as Resource,
     level: 20,
     tier: Tier.T2,
@@ -61,14 +243,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     cycleDuration: 41,
     burningTime: 35,
   },
-  'nogal': {
-    id: 'nogal',
-    i18nKey: 'resources.wood.nogal.name',
-    i18nDescriptionKey: 'resources.wood.nogal.description',
+  'madera-nogal': {
+    id: 'madera-nogal',
+    i18nKey: 'resources.wood.madera-nogal.name',
+    i18nDescriptionKey: 'resources.wood.madera-nogal.description',
     item: {
-      id: 'nogal',
+      id: 'madera-nogal',
       type: ItemType.RESOURCE,
-      icon: '🌲',
+      icon: '�',
       value: 1
     } as Resource,
     level: 25,
@@ -80,12 +262,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
   },
 
   // T3
-  'caoba': {
-    id: 'caoba',
-    i18nKey: 'resources.wood.caoba.name',
-    i18nDescriptionKey: 'resources.wood.caoba.description',
+  'madera-caoba': {
+    id: 'madera-caoba',
+    i18nKey: 'resources.wood.madera-caoba.name',
+    i18nDescriptionKey: 'resources.wood.madera-caoba.description',
     item: {
-      id: 'caoba',
+      id: 'madera-caoba',
       type: ItemType.RESOURCE,
       icon: '🎨',
       value: 1.5
@@ -96,13 +278,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 65,
     cycleDuration: 37,
     burningTime: 50,
+    treeId: 'caoba',
   },
-  'ebano': {
-    id: 'ebano',
-    i18nKey: 'resources.wood.ebano.name',
-    i18nDescriptionKey: 'resources.wood.ebano.description',
+  'madera-ebano': {
+    id: 'madera-ebano',
+    i18nKey: 'resources.wood.madera-ebano.name',
+    i18nDescriptionKey: 'resources.wood.madera-ebano.description',
     item: {
-      id: 'ebano',
+      id: 'madera-ebano',
       type: ItemType.RESOURCE,
       icon: '⬛',
       value: 2.5
@@ -113,17 +296,18 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 80,
     cycleDuration: 35,
     burningTime: 60,
+    treeId: 'ebano',
   },
 
   // T4
-  'petreo': {
-    id: 'petreo',
-    i18nKey: 'resources.wood.petreo.name',
-    i18nDescriptionKey: 'resources.wood.petreo.description',
+  'madera-teca': {
+    id: 'madera-teca',
+    i18nKey: 'resources.wood.madera-teca.name',
+    i18nDescriptionKey: 'resources.wood.madera-teca.description',
     item: {
-      id: 'petreo',
+      id: 'madera-teca',
       type: ItemType.RESOURCE,
-      icon: '🪨',
+      icon: '�',
       value: 4.5
     } as Resource,
     level: 60,
@@ -133,14 +317,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     cycleDuration: 33,
     burningTime: 75,
   },
-  'ancestral': {
-    id: 'ancestral',
-    i18nKey: 'resources.wood.ancestral.name',
-    i18nDescriptionKey: 'resources.wood.ancestral.description',
+  'madera-cedro': {
+    id: 'madera-cedro',
+    i18nKey: 'resources.wood.madera-cedro.name',
+    i18nDescriptionKey: 'resources.wood.madera-cedro.description',
     item: {
-      id: 'ancestral',
+      id: 'madera-cedro',
       type: ItemType.RESOURCE,
-      icon: '👴',
+      icon: '🌲',
       value: 5.5
     } as Resource,
     level: 65,
@@ -149,17 +333,18 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 130,
     cycleDuration: 31,
     burningTime: 85,
+    treeId: 'cedro',
   },
 
   // T5
-  'cristalina': {
-    id: 'cristalina',
-    i18nKey: 'resources.wood.cristalina.name',
-    i18nDescriptionKey: 'resources.wood.cristalina.description',
+  'madera-maldita': {
+    id: 'madera-maldita',
+    i18nKey: 'resources.wood.madera-maldita.name',
+    i18nDescriptionKey: 'resources.wood.madera-maldita.description',
     item: {
-      id: 'cristalina',
+      id: 'madera-maldita',
       type: ItemType.RESOURCE,
-      icon: '💎',
+      icon: '�',
       value: 7
     } as Resource,
     level: 80,
@@ -169,12 +354,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     cycleDuration: 29,
     burningTime: 100,
   },
-  'magica': {
-    id: 'magica',
-    i18nKey: 'resources.wood.magica.name',
-    i18nDescriptionKey: 'resources.wood.magica.description',
+  'madera-mistica': {
+    id: 'madera-mistica',
+    i18nKey: 'resources.wood.madera-mistica.name',
+    i18nDescriptionKey: 'resources.wood.madera-mistica.description',
     item: {
-      id: 'magica',
+      id: 'madera-mistica',
       type: ItemType.RESOURCE,
       icon: '✨',
       value: 9
@@ -185,15 +370,16 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 190,
     cycleDuration: 27,
     burningTime: 120,
+    treeId: 'mistico',
   },
 
   // T6
-  'sagrada': {
-    id: 'sagrada',
-    i18nKey: 'resources.wood.sagrada.name',
-    i18nDescriptionKey: 'resources.wood.sagrada.description',
+  'madera-sagrada': {
+    id: 'madera-sagrada',
+    i18nKey: 'resources.wood.madera-sagrada.name',
+    i18nDescriptionKey: 'resources.wood.madera-sagrada.description',
     item: {
-      id: 'sagrada',
+      id: 'madera-sagrada',
       type: ItemType.RESOURCE,
       icon: '☪️',
       value: 12
@@ -204,13 +390,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 240,
     cycleDuration: 25,
     burningTime: 150,
+    treeId: 'sagrado',
   },
-  'primordial': {
-    id: 'primordial',
-    i18nKey: 'resources.wood.primordial.name',
-    i18nDescriptionKey: 'resources.wood.primordial.description',
+  'madera-primordial': {
+    id: 'madera-primordial',
+    i18nKey: 'resources.wood.madera-primordial.name',
+    i18nDescriptionKey: 'resources.wood.madera-primordial.description',
     item: {
-      id: 'primordial',
+      id: 'madera-primordial',
       type: ItemType.RESOURCE,
       icon: '🌌',
       value: 14
@@ -221,15 +408,16 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 280,
     cycleDuration: 23,
     burningTime: 180,
+    treeId: 'primordial',
   },
 
   // T7
-  'dimensional': {
-    id: 'dimensional',
-    i18nKey: 'resources.wood.dimensional.name',
-    i18nDescriptionKey: 'resources.wood.dimensional.description',
+  'madera-dimensional': {
+    id: 'madera-dimensional',
+    i18nKey: 'resources.wood.madera-dimensional.name',
+    i18nDescriptionKey: 'resources.wood.madera-dimensional.description',
     item: {
-      id: 'dimensional',
+      id: 'madera-dimensional',
       type: ItemType.RESOURCE,
       icon: '🌀',
       value: 20
@@ -240,15 +428,16 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 380,
     cycleDuration: 21,
     burningTime: 240,
+    treeId: 'dimensional',
   },
-  'divina': {
-    id: 'divina',
-    i18nKey: 'resources.wood.divina.name',
-    i18nDescriptionKey: 'resources.wood.divina.description',
+  'madera-dragonica': {
+    id: 'madera-dragonica',
+    i18nKey: 'resources.wood.madera-dragonica.name',
+    i18nDescriptionKey: 'resources.wood.madera-dragonica.description',
     item: {
-      id: 'divina',
+      id: 'madera-dragonica',
       type: ItemType.RESOURCE,
-      icon: '👑',
+      icon: '🐉',
       value: 25
     } as Resource,
     level: 150,
@@ -257,5 +446,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     xpReward: 450,
     cycleDuration: 19,
     burningTime: 300,
+    treeId: 'dragonico',
   },
 }

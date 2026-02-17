@@ -182,61 +182,75 @@
       }
     },
     "wood": {
-      "madera-blanda": {
-        "name": "Madera Blanda",
-        "description": "Madera ligera de fácil corte. Perfecta para principiantes."
+      "madera-pino": {
+        "name": "Madera de Pino",
+        "tree-name": "Pino",
+        "description": "Madera ligera de coníferas. Fácil de trabajar, perfecta para principiantes."
       },
-      "madera-comun": {
-        "name": "Madera Común",
-        "description": "Madera versátil de uso general. Recurso estable."
+      "madera-abedul": {
+        "name": "Madera de Abedul",
+        "tree-name": "Abedul",
+        "description": "Madera clara y flexible. Excelente relación resistencia-peso."
       },
-      "roble": {
-        "name": "Madera de Roble",
-        "description": "Madera robusta y duradera. Ideal para estructuras."
+      "madera-abeto": {
+        "name": "Madera de Abeto",
+        "tree-name": "Abeto",
+        "description": "Madera de conífera de grano fino. Versátil y confiable."
       },
-      "nogal": {
+      "madera-nogal": {
         "name": "Madera de Nogal",
-        "description": "Madera densa oscura. Excelente para acabados finos."
+        "tree-name": "Nogal",
+        "description": "Madera densa de color oscuro. Excelente para acabados refinados."
       },
-      "caoba": {
+      "madera-caoba": {
         "name": "Madera de Caoba",
-        "description": "Madera roja preciosa. Muy apreciada por artesanos."
+        "tree-name": "Caoba",
+        "description": "Madera roja preciosa. Muy apreciada por su belleza."
       },
-      "ebano": {
+      "madera-ebano": {
         "name": "Madera de Ébano",
-        "description": "Madera negra rara. Símbolo de elegancia y poder."
+        "tree-name": "Ébano",
+        "description": "Madera negra rara y dura. Símbolo de elegancia suprema."
       },
-      "petreo": {
-        "name": "Madera Pétreo",
-        "description": "Madera fosilizada casi convertida en piedra. Extremadamente dura."
+      "madera-teca": {
+        "name": "Madera de Teca",
+        "tree-name": "Teca",
+        "description": "Madera tropical duradera. Resiste perfectamente el tiempo."
       },
-      "ancestral": {
-        "name": "Madera Ancestral",
-        "description": "Madera antigua de épocas pasadas. Imbuida de historia."
+      "madera-cedro": {
+        "name": "Madera de Cedro",
+        "tree-name": "Cedro",
+        "description": "Madera aromática noble. Fragancia incomparable."
       },
-      "cristalina": {
-        "name": "Madera Cristalina",
-        "description": "Madera transparente brillante. Casi translúcida."
+      "madera-maldita": {
+        "name": "Madera Maldita",
+        "tree-name": "Árbol Maldito",
+        "description": "Madera imbuida de maldiciones antiguas. Poder oscuro latente."
       },
-      "magica": {
-        "name": "Madera Mágica",
-        "description": "Madera encantada con poder arcano. Canaliza la magia."
+      "madera-mistica": {
+        "name": "Madera Mística",
+        "tree-name": "Árbol Místico",
+        "description": "Madera envuelta en misterio arcano. Canaliza energía oculta."
       },
-      "sagrada": {
+      "madera-sagrada": {
         "name": "Madera Sagrada",
-        "description": "Madera bendita de templos. Irradia paz y protección."
+        "tree-name": "Árbol Sagrado",
+        "description": "Madera bendita de templos ancestrales. Irradia protección divina."
       },
-      "primordial": {
+      "madera-primordial": {
         "name": "Madera Primordial",
-        "description": "Madera de los tiempos primeros. Esencia del bosque antiguo."
+        "tree-name": "Árbol Primordial",
+        "description": "Madera de los tiempos primeros. Esencia pura del bosque antiguo."
       },
-      "dimensional": {
+      "madera-dimensional": {
         "name": "Madera Dimensional",
-        "description": "Madera de otras dimensiones. Desafía las leyes de la física."
+        "tree-name": "Árbol Dimensional",
+        "description": "Madera extraída de otras dimensiones. Desafía la lógica física."
       },
-      "divina": {
-        "name": "Madera Divina",
-        "description": "Madera de los dioses. Material celestial supremo."
+      "madera-dragonica": {
+        "name": "Madera de Hueso de Dragón",
+        "tree-name": "Árbol de Hueso de Dragón",
+        "description": "Madera extraída de antiguos árboles de dragón. Material legendario y épico."
       }
     },
     "ingots": {
@@ -325,16 +339,21 @@
     "adamantita": "Adamantita",
     "titanio": "Titanio",
     "draconita": "Draconita",
-    "madera-blanda": "Madera Blanda",
+    "madera-pino": "Madera de Pino",
+    "madera-abedul": "Madera de Abedul",
+    "madera-abeto": "Madera de Abeto",
+    "madera-nogal": "Madera de Nogal",
+    "madera-caoba": "Madera de Caoba",
+    "madera-ebano": "Madera de Ébano",
+    "madera-teca": "Madera de Teca",
+    "madera-cedro": "Madera de Cedro",
+    "madera-maldita": "Madera Maldita",
+    "madera-mistica": "Madera Mística",
+    "madera-sagrada": "Madera Sagrada",
+    "madera-primordial": "Madera Primordial",
+    "madera-dimensional": "Madera Dimensional",
+    "madera-meteorica": "Madera Meteórica",
     "ceniza": "Ceniza",
-    "madera-comun": "Madera Común",
-    "roble": "Madera de Roble",
-    "nogal": "Madera de Nogal",
-    "caoba": "Madera de Caoba",
-    "ebano": "Madera de Ébano",
-    "petreo": "Madera Pétreo",
-    "ancestral": "Madera Ancestral",
-    "divino": "Madera Divina",
     "pez": "Pez",
     "trucha": "Trucha",
     "salmon": "Salmón",

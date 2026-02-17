@@ -19,6 +19,12 @@ const cycleProgress = ref(0)
 const showNotification = ref(false)
 const notificationMessage = ref('')
 
+// Obtener nombre del árbol actual
+const currentTreeName = computed(() => {
+  if (!selectedProduct.value) return ''
+  return t(`resources.wood.${selectedProduct.value.id}.tree-name`)
+})
+
 // Sincronizar producto actual si está definido
 watch(() => loggingSkillState.value.currentProduct, (newProduct) => {
   if (newProduct) {
@@ -197,7 +203,7 @@ onMounted(() => {
           :disabled="!selectedProduct"
           @click="startLogging"
         >
-          🌲 {{ t('skills.tala.action') }}
+          🌲 {{ t('skills.tala.action') }} {{ currentTreeName }}
         </button>
         <button
           v-else

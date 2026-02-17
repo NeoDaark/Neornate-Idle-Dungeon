@@ -144,16 +144,21 @@
     "adamantita": "Adamantite",
     "titanio": "Titanium",
     "draconita": "Dragonite",
-    "madera-blanda": "Softwood",
+    "madera-pino": "Pine Wood",
+    "madera-abedul": "Birch Wood",
+    "madera-abeto": "Fir Wood",
+    "madera-nogal": "Walnut Wood",
+    "madera-caoba": "Mahogany Wood",
+    "madera-ebano": "Ebony Wood",
+    "madera-teca": "Teak Wood",
+    "madera-cedro": "Cedar Wood",
+    "madera-maldita": "Cursed Wood",
+    "madera-mistica": "Mystical Wood",
+    "madera-sagrada": "Sacred Wood",
+    "madera-primordial": "Primordial Wood",
+    "madera-dimensional": "Dimensional Wood",
+    "madera-meteorica": "Meteoric Wood",
     "ceniza": "Ash",
-    "madera-comun": "Common Wood",
-    "roble": "Oak Wood",
-    "nogal": "Walnut Wood",
-    "caoba": "Mahogany Wood",
-    "ebano": "Ebony Wood",
-    "petreo": "Petrified Wood",
-    "ancestral": "Ancestral Wood",
-    "divino": "Divine Wood",
     "pez": "Fish",
     "trucha": "Trout",
     "salmon": "Salmon",
@@ -233,61 +238,75 @@
       }
     },
     "wood": {
-      "madera-blanda": {
-        "name": "Soft Wood",
-        "description": "Light wood easy to cut. Perfect for beginners."
+      "madera-pino": {
+        "name": "Pine Wood",
+        "tree-name": "Pine",
+        "description": "Light wood from conifers. Easy to work, perfect for beginners."
       },
-      "madera-comun": {
-        "name": "Common Wood",
-        "description": "Versatile general-purpose wood. Stable resource."
+      "madera-abedul": {
+        "name": "Birch Wood",
+        "tree-name": "Birch",
+        "description": "Bright and flexible wood. Excellent strength-to-weight ratio."
       },
-      "roble": {
-        "name": "Oak Wood",
-        "description": "Robust and durable wood. Ideal for structures."
+      "madera-abeto": {
+        "name": "Fir Wood",
+        "tree-name": "Fir",
+        "description": "Fine-grained conifer wood. Versatile and reliable."
       },
-      "nogal": {
+      "madera-nogal": {
         "name": "Walnut Wood",
-        "description": "Dense dark wood. Excellent for fine finishes."
+        "tree-name": "Walnut",
+        "description": "Dense dark-colored wood. Excellent for refined finishes."
       },
-      "caoba": {
+      "madera-caoba": {
         "name": "Mahogany Wood",
-        "description": "Precious reddish wood. Highly appreciated by craftsmen."
+        "tree-name": "Mahogany",
+        "description": "Precious reddish wood. Highly appreciated for its beauty."
       },
-      "ebano": {
+      "madera-ebano": {
         "name": "Ebony Wood",
-        "description": "Rare black wood. Symbol of elegance and power."
+        "tree-name": "Ebony",
+        "description": "Rare and hard black wood. Symbol of supreme elegance."
       },
-      "petreo": {
-        "name": "Petrified Wood",
-        "description": "Fossilized wood almost turned to stone. Extremely hard."
+      "madera-teca": {
+        "name": "Teak Wood",
+        "tree-name": "Teak",
+        "description": "Durable tropical wood. Resists the ravages of time perfectly."
       },
-      "ancestral": {
-        "name": "Ancestral Wood",
-        "description": "Ancient wood from past ages. Imbued with history."
+      "madera-cedro": {
+        "name": "Cedar Wood",
+        "tree-name": "Cedar",
+        "description": "Noble aromatic wood. Incomparable fragrance."
       },
-      "cristalina": {
-        "name": "Crystalline Wood",
-        "description": "Transparent shiny wood. Almost translucent."
+      "madera-maldita": {
+        "name": "Cursed Wood",
+        "tree-name": "Cursed Tree",
+        "description": "Wood imbued with ancient curses. Latent dark power."
       },
-      "magica": {
-        "name": "Magical Wood",
-        "description": "Enchanted wood with arcane power. Channels magic."
+      "madera-mistica": {
+        "name": "Mystical Wood",
+        "tree-name": "Mystical Tree",
+        "description": "Wood wrapped in arcane mystery. Channels occult energy."
       },
-      "sagrada": {
+      "madera-sagrada": {
         "name": "Sacred Wood",
-        "description": "Blessed wood from temples. Radiates peace and protection."
+        "tree-name": "Sacred Tree",
+        "description": "Blessed wood from ancestral temples. Radiates divine protection."
       },
-      "primordial": {
+      "madera-primordial": {
         "name": "Primordial Wood",
-        "description": "Wood from the first times. Essence of the ancient forest."
+        "tree-name": "Primordial Tree",
+        "description": "Wood from the first times. Pure essence of the ancient forest."
       },
-      "dimensional": {
+      "madera-dimensional": {
         "name": "Dimensional Wood",
-        "description": "Wood from other dimensions. Defies the laws of physics."
+        "tree-name": "Dimensional Tree",
+        "description": "Wood extracted from other dimensions. Defies physical logic."
       },
-      "divina": {
-        "name": "Divine Wood",
-        "description": "Wood of the gods. Supreme celestial material."
+      "madera-dragonica": {
+        "name": "Dragon Bone Wood",
+        "tree-name": "Dragon Bone Tree",
+        "description": "Wood extracted from ancient dragon trees. Legendary and epic material."
       }
     },
     "ingots": {

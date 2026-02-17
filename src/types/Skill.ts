@@ -16,6 +16,7 @@ export interface SkillProduct {
   xpReward: number
   cycleDuration: number // duración del ciclo en segundos
   burningTime?: number // para troncos: tiempo de quemado en segundos (tala)
+  treeId?: string // para maderas: referencia al árbol que se tala (e.g., 'pino')
   requiredMaterials?: SkillMaterial[] // para crafting
 }
 

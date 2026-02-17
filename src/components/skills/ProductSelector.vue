@@ -40,6 +40,16 @@ const skillAction = computed((): string => {
   return t(`skills.${SKILL_CONFIGS[props.skill].name}.action`)
 })
 
+// Obtener nombre del producto - para Tala usa tree-name, para otros usa i18nKey
+const getProductDisplayName = (product: SkillProduct): string => {
+  // Si es Tala y el producto tiene treeId, usar tree-name
+  if (props.skill === 'tala' && product.id.startsWith('madera-')) {
+    return t(`resources.wood.${product.id}.tree-name`)
+  }
+  // Para otros skills, usar el nombre del producto
+  return t(product.i18nKey)
+}
+
 const unlockedProducts = computed((): SkillProduct[] => {
   return props.products.filter(p => p.level <= props.playerLevel)
 })
@@ -145,7 +155,7 @@ const getMaterialName = (itemId: string): string => {
 
 <template>
   <div class="product-selector">
-    <h3>{{ t('ui.m_available') }}</h3>
+    <!--<h3>{{ t('ui.m_available') }}</h3>-->
 
     <!-- Select Dropdown para Productos Disponibles -->
     <div v-if="unlockedProducts.length > 0" class="select-wrapper">
@@ -153,7 +163,7 @@ const getMaterialName = (itemId: string): string => {
       <div class="select-trigger" @click="isDropdownOpen = !isDropdownOpen">
         <span class="trigger-text">
           <span v-if="currentProduct">
-            {{ skillAction }} {{ t(currentProduct.i18nKey) }} - Lvl {{ currentProduct.level }}
+            {{ skillAction }} {{ getProductDisplayName(currentProduct) }} - Lvl {{ currentProduct.level }}
           </span>
           <span v-else>{{ t('ui.m_select_material') }}</span>
         </span>
@@ -173,7 +183,7 @@ const getMaterialName = (itemId: string): string => {
           :class="{ selected: currentProduct?.id === product.id }"
           @click="selectProduct(product); isDropdownOpen = false"
         >
-          <span class="option-text">{{ skillAction }} {{ t(product.i18nKey) }} - Lvl {{ product.level }}</span>
+          <span class="option-text">{{ skillAction }} {{ getProductDisplayName(product) }} - Lvl {{ product.level }}</span>
           <span class="option-quantity">x{{ inventoryStore.getItemQuantity(product.item.id) }}</span>
         </div>
       </div>
@@ -193,7 +203,7 @@ const getMaterialName = (itemId: string): string => {
             <span v-else>{{ currentProduct.item.icon }}</span>
           </div>
           <div class="details">
-            <h4>{{ skillAction }} {{ t(currentProduct.i18nKey) }}</h4>
+            <h4>{{ skillAction }} {{ getProductDisplayName(currentProduct) }}</h4>
             <div class="stats-row">
               <span class="stat">{{ t('labels.level') }}: {{ currentProduct.level }}</span>
               <span class="stat">{{ finalXP }} XP <span v-if="!isWoodburning && toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>

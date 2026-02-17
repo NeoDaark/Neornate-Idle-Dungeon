@@ -6,9 +6,16 @@ Estos prompts están optimizados para:
 - **Herramienta**: Google Gemini
 - **Estilo**: Pixel art isométrico o top-down
 - **Tamaño Árbol**: 64x64 pixels
-- **Tamaño Madera**: 32x32 pixels
+- **Tamaño Madera**: 64x64 pixels
 - **Formato**: PNG con transparencia
-- **Tema**: Árboles y recursos de madera para juego RPG Idle
+- **Tema**: Árboles y recursos de madera para ju### **Para Maderas (64x64)**
+1. **CRÍTICO**: Menciona siempre "flat design"
+2. Especifica "no depth" para evitar perspectiva
+3. Menciona "no shadows" explícitamente
+4. Incluye "minimal details" para simplicidad
+5. Usa "solid colors only" para evitar gradientes
+6. NO menciones: texturas, cilindros, anillos, realismo, 3D
+7. Mantén el prompt lo más simple posibleG Idle
 
 ---
 
@@ -21,15 +28,17 @@ Cada árbol tiene **2 iconos diferentes**:
 - Para mostrar en el mapa o interfaz de recolección
 - Estilo isométrico o top-down según preferencia
 
-### 2️⃣ **Icono de la Madera** (32x32)
-- **Estructura fija**: 3 troncos apilados
+### 2️⃣ **Icono de la Madera** (64x64)
+- **Estructura fija**: 1 tronco único (CRÍTICO)
   ```
-  [ o]
-  [oo]
+  [ o ]   <- Un único tronco cilíndrico, centrado y prominente
   ```
-- Troncos cilíndricos o hexagonales
-- Coloración según tipo de madera
-- Usados como items de inventario
+- **Forma del tronco**: Cilíndrico horizontal (como log de madera)
+- **Perspectiva**: Frontal/ligeramente isométrica (se ve el corte circular)
+- **Coloración**: Varía según tipo de madera (pino marrón claro, ébano negro, etc.)
+- **Textura**: Anillos de crecimiento visible en el corte del tronco
+- **Tamaño**: Ocupa buena parte del sprite 64x64 (prominente y claro)
+- **Usados como**: Items de inventario en el UI del juego
 
 ---
 
@@ -41,16 +50,14 @@ Cada árbol tiene **2 iconos diferentes**:
 
 **Árbol:**
 ```
-Pixel art pine tree, 64x64 sprite, isometric top-down view, 
+Pixel art pine tree, isometric top-down view, 
 coniferous evergreen tree with thick triangular green foliage, 
-brown trunk, RPG game asset, transparent background, forest tree
+brown trunk, RPG game asset, grey background, forest tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 brown pine logs stacked in 
-pyramid shape (1 on top, 2 below), wooden texture, game inventory 
-item, transparent background, RPG resource
+Simple pixel art wood log, brown color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -59,16 +66,14 @@ item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art birch tree, 64x64 sprite, isometric perspective, white 
+Pixel art birch tree, isometric perspective, white 
 bark with black markings, light green foliage, slender trunk, 
-game asset, transparent background, forest tree sprite
+game asset, grey background, forest tree sprite
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 light tan birch logs stacked 
-in pyramid (1 on top, 2 below), pale wood texture with markings, 
-game inventory item, transparent background, RPG resource
+Simple pixel art wood log, light tan color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -79,16 +84,14 @@ game inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art spruce fir tree, 64x64 sprite, isometric view, evergreen 
+Pixel art spruce fir tree, isometric view, evergreen 
 coniferous tree, dense dark green foliage in triangular shape, brown 
-trunk, game asset, transparent background, RPG forest tree
+trunk, game asset, grey background, RPG forest tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 dark green-tinged fir logs 
-stacked pyramid shape (1 on top, 2 below), dark wood texture, game 
-inventory item, transparent background, RPG resource
+Simple pixel art wood log, dark green color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -97,16 +100,14 @@ inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art walnut tree, 64x64 sprite, isometric perspective, broad 
+Pixel art walnut tree, isometric perspective, broad 
 rounded foliage crown, thick sturdy trunk, darker brown wood appearance, 
-game asset, transparent background, RPG hardwood tree
+game asset, grey background, RPG hardwood tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 dark brown walnut logs stacked 
-in pyramid (1 on top, 2 below), rich wood grain texture, game inventory 
-item, transparent background, RPG resource
+Simple pixel art wood log, dark brown color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -117,16 +118,14 @@ item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art mahogany tree, 64x64 sprite, isometric view, large broad 
+Pixel art mahogany tree, isometric view, large broad 
 crown with reddish-brown foliage, thick massive trunk, tropical 
-appearance, game asset, transparent background, RPG exotic tree
+appearance, game asset, grey background, RPG exotic tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 reddish-brown mahogany logs 
-stacked pyramid shape (1 on top, 2 below), luxurious wood grain, 
-game inventory item, transparent background, RPG resource
+Simple pixel art wood log, reddish-brown color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -135,16 +134,14 @@ game inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art ebony tree, 64x64 sprite, isometric perspective, dark 
+Pixel art ebony tree, isometric perspective, dark 
 foliage, black-hued appearance, thick ancient trunk, mystical 
-aura, game asset, transparent background, RPG dark tree
+aura, game asset, grey background, RPG dark tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 jet black ebony logs stacked 
-in pyramid (1 on top, 2 below), glossy dark texture, game inventory 
-item, transparent background, RPG resource
+Simple pixel art wood log, jet black color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -155,16 +152,14 @@ item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art teak tree, 64x64 sprite, isometric view, golden-brown 
+Pixel art teak tree, isometric view, golden-brown 
 foliage, strong sturdy trunk, durable appearance, tropical hardwood 
-look, game asset, transparent background, RPG premium tree
+look, game asset, grey background, RPG premium tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 golden-brown teak logs stacked 
-pyramid shape (1 on top, 2 below), premium wood texture with shine, 
-game inventory item, transparent background, RPG resource
+Simple pixel art wood log, golden-brown color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -173,16 +168,14 @@ game inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art cedar tree, 64x64 sprite, isometric perspective, aromatic 
+Pixel art cedar tree, isometric perspective, aromatic 
 appearance, feathery foliage, reddish-brown bark, elegant crown, 
-game asset, transparent background, RPG aromatic tree
+game asset, grey background, RPG aromatic tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 reddish cedar logs stacked in 
-pyramid (1 on top, 2 below), aromatic wood grain with red tones, 
-game inventory item, transparent background, RPG resource
+Simple pixel art wood log, reddish color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -193,16 +186,14 @@ game inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art cursed twisted tree, 64x64 sprite, isometric view, dark 
+Pixel art cursed twisted tree, isometric view, dark 
 purple-black foliage, gnarled twisted trunk, eerie sinister appearance, 
-magical curse aura, game asset, transparent background, RPG dark magic tree
+magical curse aura, game asset, grey background, RPG dark magic tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 dark purple-black cursed logs 
-stacked pyramid shape (1 on top, 2 below), sinister wood texture with 
-purple glow, game inventory item, transparent background, RPG resource
+Simple pixel art wood log, dark purple color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -211,18 +202,15 @@ purple glow, game inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art mystic enchanted tree, 64x64 sprite, isometric perspective, 
+Pixel art mystic enchanted tree, isometric perspective, 
 shimmering ethereal foliage with magical glow, mystical appearance, 
-luminous purple-blue tones, game asset, transparent background, 
+luminous purple-blue tones, game asset, grey background, 
 RPG magical tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 mystic glowing logs stacked in 
-pyramid (1 on top, 2 below), shimmering magical texture with ethereal 
-glow, sparkle effects, game inventory item, transparent background, 
-RPG resource
+Simple pixel art wood log, purple-blue color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -233,16 +221,14 @@ RPG resource
 
 **Árbol:**
 ```
-Pixel art sacred blessed tree, 64x64 sprite, isometric view, divine 
+Pixel art sacred blessed tree, isometric view, divine 
 golden-white foliage, holy radiant appearance, luminous aura, celestial 
-beauty, game asset, transparent background, RPG divine tree
+beauty, game asset, grey background, RPG divine tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 sacred golden-white logs stacked 
-pyramid shape (1 on top, 2 below), divine wood texture with holy glow, 
-radiant appearance, game inventory item, transparent background, RPG resource
+Simple pixel art wood log, golden-white color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -251,16 +237,14 @@ radiant appearance, game inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art primordial ancient tree, 64x64 sprite, isometric perspective, 
+Pixel art primordial ancient tree, isometric perspective, 
 cosmic purple-blue foliage, ancient mystical appearance, stellar glow, 
-universe-like appearance, game asset, transparent background, RPG cosmic tree
+universe-like appearance, game asset, grey background, RPG cosmic tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 primordial cosmic logs stacked in 
-pyramid (1 on top, 2 below), cosmic texture with purple-blue nebula effect, 
-ancient appearance, game inventory item, transparent background, RPG resource
+Simple pixel art wood log, cosmic purple-blue color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -271,16 +255,14 @@ ancient appearance, game inventory item, transparent background, RPG resource
 
 **Árbol:**
 ```
-Pixel art dimensional rift tree, 64x64 sprite, isometric view, reality-warping 
+Pixel art dimensional rift tree, isometric view, reality-warping 
 appearance, shifting purple-blue-white colors, portal-like foliage, dimensional 
-tear effect, game asset, transparent background, RPG reality tree
+tear effect, game asset, grey background, RPG reality tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 dimensional reality logs stacked pyramid 
-shape (1 on top, 2 below), reality-warping texture with swirling colors, 
-dimensional portal effect, game inventory item, transparent background, RPG resource
+Simple pixel art wood log, swirling multicolor, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -289,18 +271,14 @@ dimensional portal effect, game inventory item, transparent background, RPG reso
 
 **Árbol:**
 ```
-Pixel art dragon tree, 64x64 sprite, isometric perspective, blood-red 
+Pixel art dragon tree, isometric perspective, blood-red 
 crimson foliage with dark accents, draconic fearsome appearance, fiery 
-aura, scaled texture, ultimate legendary tree, game asset, transparent 
-background, RPG dragon tree
+aura, scaled texture, ultimate legendary tree, game asset, grey background, RPG dragon tree
 ```
 
 **Madera:**
 ```
-Pixel art wood icon, 32x32 sprite, 3 dragonic blood-red logs stacked in 
-pyramid (1 on top, 2 below), dragon scale texture with fire effect, 
-legendary appearance with glow, game inventory item, transparent background, 
-RPG resource
+Simple pixel art wood log, blood-red color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -319,7 +297,7 @@ RPG resource
 ### Paso 3: Descargar y Procesar
 1. Descarga la imagen generada como PNG
 2. Abre en un editor (Krita, Photoshop, etc.)
-3. **Importante**: Asegúrate del tamaño (64x64 para árboles, 32x32 para maderas)
+3. **Importante**: Asegúrate del tamaño (64x64 para árboles, 64x64 para maderas)
 4. Si es necesario, redimensiona manteniendo la calidad pixel art
 5. Guarda con el nombre apropiado
 
@@ -339,7 +317,7 @@ Ejemplos:
 - tree_dragonite_custom_v1.png
 ```
 
-### **Maderas** (32x32)
+### **Maderas** (64x64)
 ```
 wood_{nombre_en_ingles}_custom_{version}.png
 
@@ -380,26 +358,25 @@ src/assets/sprites/custom/
 4. Describe la forma característica (coniforme, redondeada, etc.)
 5. Importante: "transparent background"
 
-### **Para Maderas (32x32)**
-1. **CRÍTICO**: Menciona siempre "3 logs stacked in pyramid"
-2. Especifica "1 on top, 2 below" para claridad
-3. Describe el color y textura específica
-4. Usa "game inventory item" para que sea claramente un icono
-5. Mantén "32x32 sprite" como tamaño fijo
+### **Para Maderas (64x64)**
+1. **CRÍTICO**: Menciona siempre "single log" o "single trunk"
+2. Especifica que sea "centered"
+3. Describe el color específico del tronco
+4. Incluye "cylindrical wooden texture"
+5. Mantén el prompt simple y directo
 
 ### **Prompts Alternativos Rápidos**
 Si Gemini falla con los prompts, intenta estos genéricos:
 
 **Árbol genérico:**
 ```
-"Simple pixel art {COLOR} tree, 64x64 sprite, isometric RPG game 
-asset, transparent background"
+"Simple pixel art {COLOR} tree, isometric RPG game 
+asset, grey background"
 ```
 
 **Madera genérica:**
 ```
-"{COLOR} wooden logs stacked in pyramid (1 top, 2 bottom), 32x32 
-pixel art, game inventory icon, transparent background"
+Simple pixel art wood log, {COLOR} color, flat design, no depth, no shadows, minimal details, solid colors only, grey background
 ```
 
 ---
@@ -412,7 +389,7 @@ Una vez tengas los sprites generados:
 ```
 src/assets/sprites/custom/
 ├── trees/          # 64x64 sprites de árboles
-└── woods/          # 32x32 sprites de maderas
+└── woods/          # 64x64 sprites de maderas
 ```
 
 ### 2. Referencia en componentes
@@ -449,4 +426,4 @@ Usa siempre el patrón indicado para que sean fáciles de localizar.
 **Creado**: 17 de febrero de 2026  
 **Versión**: 1.0  
 **Herramienta recomendada**: Google Gemini  
-**Tamaños**: Árboles 64x64px | Maderas 32x32px
+**Tamaños**: Árboles 64x64px | Maderas 64x64px

@@ -133,17 +133,21 @@ export const useSkillsStore = defineStore('skills', () => {
    * Por eso desactivamos todos los demás automáticamente
    */
   const activateSkill = (skill: Skill, product: SkillProduct, cycleDurationMs: number = 3000) => {
+    const state = skillStates.value[skill]
+    
+    // IMPORTANTE: Resetear cycleEndTime a 0 PRIMERO
+    // Esto limpia cualquier ciclo anterior incompleto
+    state.cycleEndTime = 0
+
     // Desactivar todos los otros skills (solo puede haber 1 activo)
-    Object.entries(skillStates.value).forEach(([otherSkill, state]) => {
-      if ((otherSkill as unknown as Skill) !== skill && state.isActive) {
-        state.isActive = false
-        state.currentProduct = undefined
-        state.cycleEndTime = 0
+    Object.entries(skillStates.value).forEach(([otherSkill, otherState]) => {
+      if ((otherSkill as unknown as Skill) !== skill && otherState.isActive) {
+        otherState.isActive = false
+        otherState.currentProduct = undefined
+        otherState.cycleEndTime = 0
         // console.log(`[Skills] Desactivando ${otherSkill} para activar ${skill}`)
       }
     })
-
-    const state = skillStates.value[skill]
 
     // Aplicar speedBonus de herramienta (restar segundos de duración)
     const toolsStore = useToolsStore()
@@ -234,6 +238,23 @@ export const useSkillsStore = defineStore('skills', () => {
       }
     }
 
+    // Procesar Quemado PRIMERO: validar que hay tronco ANTES de hacer cambios
+    // Esto evita consumir tronco si algo falla después
+    if (skill === Skill.QUEMADO) {
+      const currentProduct = state.currentProduct
+      if (!currentProduct) {
+        console.error(`[Skill] QUEMADO: currentProduct is undefined`)
+        return null
+      }
+      
+      // VALIDACIÓN: Verificar que hay tronco disponible
+      const troncoDisponible = inventoryStore.getItemQuantity(currentProduct.item.id)
+      if (troncoDisponible < 1) {
+        console.warn(`[Skill] No hay suficientes troncos para quemar: necesita 1 de ${currentProduct.item.id}`)
+        return null
+      }
+    }
+
     // Calcular cantidad con bonus de herramienta
     let finalQuantity = product.quantity
     
@@ -243,25 +264,26 @@ export const useSkillsStore = defineStore('skills', () => {
     }
 
     // Agregar item al inventario si está disponible
-    // NOTA: Quemado (Woodburning) no añade items aquí - lo maneja en el componente
+    // NOTA: Quemado (Woodburning) no añade items aquí - lo maneja abajo
     if (inventoryStore && skill !== Skill.QUEMADO) {
       inventoryStore.addItem(product.item, finalQuantity)
       // TODO: Implementar rarityBonus (aumentar rarity de items generados)
       // TODO: Implementar discountBonus (descuentos en mercado)
     }
 
-    // Procesar Quemado: consumir tronco y generar drops
+    // Procesar Quemado: consumir tronco AL FINAL del ciclo y generar drops
+    // Se consume DESPUÉS de validar materiales y calcular drops
     if (skill === Skill.QUEMADO) {
-      // Consumir 1 tronco (obligatorio)
       const currentProduct = state.currentProduct
       if (!currentProduct) {
         console.error(`[Skill] QUEMADO: currentProduct is undefined`)
         return null
       }
       
+      // CONSUMIR el tronco (ya fue validado arriba)
       const success = inventoryStore.removeItem(currentProduct.item.id, 1)
       if (!success) {
-        console.warn(`[Skill] No hay suficientes troncos para quemar: necesita ${currentProduct.item.id}`)
+        console.error(`[Skill] Error inesperado: no se pudo consumir tronco para quemar`)
         return null
       }
 

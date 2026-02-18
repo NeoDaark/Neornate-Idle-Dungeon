@@ -150,9 +150,13 @@ export const useGameStore = defineStore('game', () => {
     }> = []
 
     // ⚠️ PRE-VALIDACIÓN: Verificar cuántos skills tienen farmeo activo guardado
-    // (producto + cycleEndTime válido)
+    // (DEBE estar isActive=true + producto + cycleEndTime válido)
     const activeSkillsOffline = Object.values(skillsStore.skillStates).filter(
-      (state) => state.currentProduct !== undefined && state.currentProduct !== null && state.cycleEndTime > 0
+      (state) => 
+        state.isActive === true &&
+        state.currentProduct !== undefined && 
+        state.currentProduct !== null && 
+        state.cycleEndTime > 0
     )
 
     // Si hay múltiples skills con estado de farmeo, limpiar todos EXCEPTO el primero

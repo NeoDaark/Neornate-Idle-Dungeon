@@ -173,6 +173,11 @@ export const useSkillsStore = defineStore('skills', () => {
     state.currentProduct = product
     state.lastCycleTime = now
     state.cycleEndTime = now + finalDurationMs
+
+    // 🔴 IMPORTANTE: Guardar lastActiveTime INMEDIATAMENTE cuando activas un skill
+    // Esto asegura que si haces F5 antes del auto-save, el sistema offline
+    // sigue detectando que estabas farmando
+    localStorage.setItem('neornate_lastActiveTime', now.toString())
   }
 
   /**

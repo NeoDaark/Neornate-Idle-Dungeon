@@ -46,6 +46,7 @@ export interface SkillState {
   cycleEndTime: number // timestamp cuando termina el ciclo actual
   currentProduct?: SkillProduct
   products: SkillProduct[] // todos los productos disponibles para este skill
+  woodburningDropDistribution?: number // para Quemado: 0-100, % destinado a carbón (el resto va a ceniza)
 }
 
 export interface CycleResult {

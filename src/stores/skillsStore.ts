@@ -8,6 +8,17 @@ import { useToolsStore } from '@/stores/toolsStore'
 const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T7]
 
 /**
+ * Garantizar que un número tenga máximo 1 decimal
+ * Evita errores de punto flotante
+ */
+const ensureDecimal = (value: number): number => {
+  // Redondear a 1 decimal
+  const rounded = Math.round(value * 10) / 10
+  // Asegurar que es un número válido
+  return Number(rounded.toFixed(1))
+}
+
+/**
  * Inicializar estado de skill con productos
  */
 const initializeSkillState = (skill: Skill): SkillState => {
@@ -114,12 +125,13 @@ export const useSkillsStore = defineStore('skills', () => {
       return
     }
 
-    state.experience += xpAmount
-    state.totalExperience += xpAmount
+    // Sumar XP y asegurar precisión con decimales
+    state.experience = ensureDecimal(state.experience + xpAmount)
+    state.totalExperience = ensureDecimal(state.totalExperience + xpAmount)
 
     // Manejar level-ups automáticos hasta nivel 200
     while (state.experience >= getNextLevelXP(skill) && state.level < 200 && canLevelUp(state.level)) {
-      state.experience -= getNextLevelXP(skill)
+      state.experience = ensureDecimal(state.experience - getNextLevelXP(skill))
       levelUp(skill)
     }
 
@@ -238,7 +250,11 @@ export const useSkillsStore = defineStore('skills', () => {
     // Calcular XP con bonus de herramienta
     let xpGained = product.xpReward
     if (toolBonus.xpBonus > 0) {
-      xpGained = Math.floor(product.xpReward * (1 + toolBonus.xpBonus))
+      const calculated = product.xpReward * (1 + toolBonus.xpBonus)
+      xpGained = ensureDecimal(calculated)
+    } else {
+      // Asegurar que incluso sin bonus, es un número válido
+      xpGained = ensureDecimal(xpGained)
     }
 
     addExperience(skill, xpGained)
@@ -316,19 +332,49 @@ export const useSkillsStore = defineStore('skills', () => {
       // Log para verificar consumo (descomenta para debugging)
       // console.log(`[Skill] QUEMADO: Tronco consumido (${currentProduct.item.id}), inventario restante: ${inventoryStore.getItemQuantity(currentProduct.item.id)}`)
 
+      // CALCULAR PROBABILIDADES CON DROP MODIFIER
+      // Base: 40% carbón, 20% ceniza, 40% nada
+      // dropModifier suma al porcentaje total disponible (quitado de "nada")
+      // La distribución del modifier se controla con dropDistribution slider (0-100)
+      
+      let carbonChance = WOODBURNING_DROP_TABLE.carbon.chance
+      let ashChance = WOODBURNING_DROP_TABLE.ceniza.chance
+      let nothingChance = WOODBURNING_DROP_TABLE.nothing.chance
+      
+      // Aplicar dropModifier (convertir de porcentaje a decimal)
+      if (toolBonus.dropModifier > 0) {
+        const modifierDecimal = toolBonus.dropModifier / 100
+        
+        // Obtener la distribución preferida del usuario (0-100, % para carbón)
+        const dropDistribution = state.woodburningDropDistribution ?? 50
+        const carbonPercentage = dropDistribution / 100
+        const ashPercentage = 1 - carbonPercentage
+        
+        // Distribuir el modifier según la preferencia
+        const carbonBoost = modifierDecimal * carbonPercentage
+        const ashBoost = modifierDecimal * ashPercentage
+        
+        carbonChance += carbonBoost
+        ashChance += ashBoost
+        nothingChance -= modifierDecimal
+        
+        // Asegurar que las probabilidades no se salgan del rango [0, 1]
+        carbonChance = Math.min(1, Math.max(0, carbonChance))
+        ashChance = Math.min(1, Math.max(0, ashChance))
+        nothingChance = Math.max(0, 1 - carbonChance - ashChance)
+      }
+      
       // Generar drops por probabilidad
       const roll = Math.random()
-      const carbonChance = WOODBURNING_DROP_TABLE.carbon.chance
-      const ashChance = WOODBURNING_DROP_TABLE.ceniza.chance
       
       if (roll < carbonChance) {
-        // Carbón (40%)
+        // Carbón
         inventoryStore.addItem(WOODBURNING_DROP_TABLE.carbon.item, WOODBURNING_DROP_TABLE.carbon.quantity)
       } else if (roll < carbonChance + ashChance) {
-        // Ceniza (20%)
+        // Ceniza
         inventoryStore.addItem(WOODBURNING_DROP_TABLE.ceniza.item, WOODBURNING_DROP_TABLE.ceniza.quantity)
       }
-      // 40% probabilidad de no obtener nada
+      // El resto es "nada" (nothingChance) - no se agrega nada al inventario
     }
 
     // Resetear ciclo solo si se especifica (para no resetear en farmeo offline)
@@ -356,6 +402,14 @@ export const useSkillsStore = defineStore('skills', () => {
   }
 
   /**
+   * Actualizar la distribución de drops para Quemado (0-100)
+   */
+  const updateWoodburningDropDistribution = (percentage: number) => {
+    const state = skillStates.value[Skill.QUEMADO]
+    state.woodburningDropDistribution = Math.max(0, Math.min(100, percentage))
+  }
+
+  /**
    * Guardar a localStorage (sin productos, ya que se cargan desde skillProducts.ts)
    */
   const saveToLocalStorage = () => {
@@ -371,6 +425,7 @@ export const useSkillsStore = defineStore('skills', () => {
           lastCycleTime: state.lastCycleTime,
           cycleEndTime: state.cycleEndTime,
           currentProductId: state.currentProduct?.id || undefined, // ← Guardar solo el ID
+          woodburningDropDistribution: state.woodburningDropDistribution || 50, // ← Guardar distribución de drops
         }
         return acc
       }, {} as any)
@@ -401,6 +456,11 @@ export const useSkillsStore = defineStore('skills', () => {
             skillStates.value[skill].tier = loadedData.tier ?? skillStates.value[skill].tier
             skillStates.value[skill].isActive = loadedData.isActive ?? false
             skillStates.value[skill].lastCycleTime = loadedData.lastCycleTime ?? 0
+            
+            // Restaurar distribución de drops para Quemado
+            if (skill === Skill.QUEMADO) {
+              skillStates.value[skill].woodburningDropDistribution = loadedData.woodburningDropDistribution ?? 50
+            }
             
             // IMPORTANTE: Siempre preservar cycleEndTime si existe
             // El procesamiento offline usará este valor para calcular ciclos completados
@@ -478,6 +538,7 @@ export const useSkillsStore = defineStore('skills', () => {
     deactivateSkill,
     completeCycle,
     toggleAutoComplete,
+    updateWoodburningDropDistribution,
     saveToLocalStorage,
     loadFromLocalStorage,
     reset,

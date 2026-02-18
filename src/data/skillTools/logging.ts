@@ -25,7 +25,7 @@ export const WOODCUTTING_TOOLS: Tool[] = [
     effects: [
       { type: 'speed', value: 0.50, description: 'effects.speed' },
       { type: 'quantity', value: 1, description: 'effects.quantity' },
-      { type: 'xp', value: 10, description: 'effects.xp' },
+      { type: 'xp', value: 0.1, description: 'effects.xp' },
     ],
   },
   {
@@ -41,7 +41,7 @@ export const WOODCUTTING_TOOLS: Tool[] = [
     effects: [
       { type: 'speed', value: 0.75, description: 'effects.speed' },
       { type: 'quantity', value: 1, description: 'effects.quantity' },
-      { type: 'xp', value: 15, description: 'effects.xp' },
+      { type: 'xp', value: 0.15, description: 'effects.xp' },
     ],
   },
   {
@@ -57,7 +57,7 @@ export const WOODCUTTING_TOOLS: Tool[] = [
     effects: [
       { type: 'speed', value: 1.00, description: 'effects.speed' },
       { type: 'quantity', value: 2, description: 'effects.quantity' },
-      { type: 'xp', value: 20, description: 'effects.xp' },
+      { type: 'xp', value: 0.20, description: 'effects.xp' },
     ],
   },
   {
@@ -73,7 +73,7 @@ export const WOODCUTTING_TOOLS: Tool[] = [
     effects: [
       { type: 'speed', value: 1.25, description: 'effects.speed' },
       { type: 'quantity', value: 2, description: 'effects.quantity' },
-      { type: 'xp', value: 25, description: 'effects.xp' },
+      { type: 'xp', value: 0.25, description: 'effects.xp' },
     ],
   },
   {
@@ -89,7 +89,7 @@ export const WOODCUTTING_TOOLS: Tool[] = [
     effects: [
       { type: 'speed', value: 1.50, description: 'effects.speed' },
       { type: 'quantity', value: 3, description: 'effects.quantity' },
-      { type: 'xp', value: 30, description: 'effects.xp' },
+      { type: 'xp', value: 0.30, description: 'effects.xp' },
     ],
   },
   {
@@ -105,7 +105,7 @@ export const WOODCUTTING_TOOLS: Tool[] = [
     effects: [
       { type: 'speed', value: 1.75, description: 'effects.speed' },
       { type: 'quantity', value: 3, description: 'effects.quantity' },
-      { type: 'xp', value: 35, description: 'effects.xp' },
+      { type: 'xp', value: 0.35, description: 'effects.xp' },
     ],
   },
   {
@@ -121,7 +121,7 @@ export const WOODCUTTING_TOOLS: Tool[] = [
     effects: [
       { type: 'speed', value: 2.00, description: 'effects.speed' },
       { type: 'quantity', value: 4, description: 'effects.quantity' },
-      { type: 'xp', value: 40, description: 'effects.xp' },
+      { type: 'xp', value: 0.40, description: 'effects.xp' },
     ],
   },
 ]

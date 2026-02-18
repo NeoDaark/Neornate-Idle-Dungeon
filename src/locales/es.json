@@ -39,7 +39,12 @@
     "continue": "Continuar",
     "drops": "Drops",
     "nothing": "Nada",
-    "selectLog": "Selecciona un tronco"
+    "selectLog": "Selecciona un tronco",
+    "woodburning": {
+      "dropDistribution": "Distribución de Drops",
+      "carbonPercentage": "{percent}% Carbón",
+      "ashPercentage": "{percent}% Ceniza"
+    }
   },
   "inventory": {
     "quantity": "Cantidad",

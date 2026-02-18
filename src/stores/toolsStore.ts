@@ -86,7 +86,7 @@ export const useToolsStore = defineStore('tools', () => {
   const calculateToolBonus = (skillId: Skill): ToolBonus => {
     const equipped = equippedTools.value[skillId]
     if (!equipped) {
-      return { speedBonus: 0, quantityBonus: 0, xpBonus: 0, rarityBonus: 0, discountBonus: 0 }
+      return { speedBonus: 0, quantityBonus: 0, xpBonus: 0, rarityBonus: 0, discountBonus: 0, dropModifier: 0 }
     }
 
     const bonus: ToolBonus = {
@@ -95,6 +95,7 @@ export const useToolsStore = defineStore('tools', () => {
       xpBonus: 0,
       rarityBonus: 0,
       discountBonus: 0,
+      dropModifier: 0,
     }
 
     equipped.effects.forEach((effect) => {
@@ -113,6 +114,9 @@ export const useToolsStore = defineStore('tools', () => {
           break
         case 'discount':
           bonus.discountBonus = effect.value
+          break
+        case 'dropModifier':
+          bonus.dropModifier = effect.value
           break
       }
     })

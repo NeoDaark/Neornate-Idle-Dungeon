@@ -38,8 +38,14 @@ export function formatEffect(
 ): string {
   let text = i18nText
 
-  // Reemplazar {VALUE} con el valor del efecto
-  text = text.replace('{VALUE}', String(effect.value))
+  // Para efectos de XP y Rarity, multiplicar el valor por 100 para mostrar como porcentaje
+  let displayValue = effect.value
+  if (effect.type === 'xp' || effect.type === 'rarity' || effect.type === 'dropModifier') {
+    displayValue = effect.value * 100
+  }
+
+  // Reemplazar {VALUE} con el valor del efecto formateado
+  text = text.replace('{VALUE}', String(displayValue % 1 === 0 ? Math.round(displayValue) : displayValue.toFixed(1)))
 
   // Reemplazar {ITEM} con el nombre del ítem
   // Si no hay nombre, remover el placeholder dejando solo el número

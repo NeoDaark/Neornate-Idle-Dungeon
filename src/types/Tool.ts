@@ -39,4 +39,5 @@ export interface ToolBonus {
   xpBonus: number // En porcentaje (0.3 = 30%)
   rarityBonus: number // En porcentaje
   discountBonus: number // En porcentaje
+  dropModifier: number // En porcentaje (solo para Quemado/Woodburning)
 }

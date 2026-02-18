@@ -29,7 +29,7 @@ export const WOODBURNING_TOOLS: Tool[] = [
     requiredLevel: 10,
     effects: [
       { type: 'speed', value: 0.50, description: 'effects.speed' },
-      { type: 'dropModifier', value: 5, description: 'effects.dropModifier' },
+      { type: 'dropModifier', value: 0.05, description: 'effects.dropModifier' },
       { type: 'xp', value: 0.10, description: 'effects.xp' },
     ],
   },
@@ -45,7 +45,7 @@ export const WOODBURNING_TOOLS: Tool[] = [
     requiredLevel: 20,
     effects: [
       { type: 'speed', value: 0.75, description: 'effects.speed' },
-      { type: 'dropModifier', value: 10, description: 'effects.dropModifier' },
+      { type: 'dropModifier', value: 0.10, description: 'effects.dropModifier' },
       { type: 'xp', value: 0.15, description: 'effects.xp' },
     ],
   },
@@ -61,7 +61,7 @@ export const WOODBURNING_TOOLS: Tool[] = [
     requiredLevel: 40,
     effects: [
       { type: 'speed', value: 1.00, description: 'effects.speed' },
-      { type: 'dropModifier', value: 15, description: 'effects.dropModifier' },
+      { type: 'dropModifier', value: 0.15, description: 'effects.dropModifier' },
       { type: 'xp', value: 0.20, description: 'effects.xp' },
     ],
   },
@@ -77,7 +77,7 @@ export const WOODBURNING_TOOLS: Tool[] = [
     requiredLevel: 60,
     effects: [
       { type: 'speed', value: 1.25, description: 'effects.speed' },
-      { type: 'dropModifier', value: 20, description: 'effects.dropModifier' },
+      { type: 'dropModifier', value: 0.20, description: 'effects.dropModifier' },
       { type: 'xp', value: 0.25, description: 'effects.xp' },
     ],
   },
@@ -93,7 +93,7 @@ export const WOODBURNING_TOOLS: Tool[] = [
     requiredLevel: 80,
     effects: [
       { type: 'speed', value: 1.50, description: 'effects.speed' },
-      { type: 'dropModifier', value: 25, description: 'effects.dropModifier' },
+      { type: 'dropModifier', value: 0.25, description: 'effects.dropModifier' },
       { type: 'xp', value: 0.30, description: 'effects.xp' },
     ],
   },
@@ -109,7 +109,7 @@ export const WOODBURNING_TOOLS: Tool[] = [
     requiredLevel: 100,
     effects: [
       { type: 'speed', value: 1.75, description: 'effects.speed' },
-      { type: 'dropModifier', value: 30, description: 'effects.dropModifier' },
+      { type: 'dropModifier', value: 0.30, description: 'effects.dropModifier' },
       { type: 'xp', value: 0.35, description: 'effects.xp' },
     ],
   },
@@ -125,7 +125,7 @@ export const WOODBURNING_TOOLS: Tool[] = [
     requiredLevel: 120,
     effects: [
       { type: 'speed', value: 2.00, description: 'effects.speed' },
-      { type: 'dropModifier', value: 35, description: 'effects.dropModifier' },
+      { type: 'dropModifier', value: 0.35, description: 'effects.dropModifier' },
       { type: 'xp', value: 0.40, description: 'effects.xp' },
     ],
   },

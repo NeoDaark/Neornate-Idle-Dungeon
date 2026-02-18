@@ -39,12 +39,14 @@ watch(() => ({
     const toolBonus = toolsStore.calculateToolBonus(Skill.FUNDICION)
     
     // Calcular valores finales con bonuses
-    const finalXP = Math.floor(selectedProduct.value.xpReward * (1 + toolBonus.xpBonus))
+    const finalXPCalculated = selectedProduct.value.xpReward * (1 + toolBonus.xpBonus)
+    const finalXP = Math.round(finalXPCalculated * 10) / 10
     const finalQuantity = selectedProduct.value.quantity + toolBonus.quantityBonus
     
     // Mostrar notificación con valores finales
+    const xpDisplay = finalXP % 1 !== 0 ? finalXP.toFixed(1) : finalXP
     const bonusText = (toolBonus.xpBonus > 0 || toolBonus.quantityBonus > 0) ? ' ⚡' : ''
-    showMessage(`+${finalXP} XP | +${finalQuantity}x ${productName}${bonusText}`)
+    showMessage(`+${xpDisplay} XP | +${finalQuantity}x ${productName}${bonusText}`)
   }
 }, { deep: true })
 

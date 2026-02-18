@@ -39,7 +39,12 @@
     "continue": "Continue",
     "drops": "Drops",
     "nothing": "Nothing",
-    "selectLog": "Select a log"
+    "selectLog": "Select a log",
+    "woodburning": {
+      "dropDistribution": "Drop Distribution",
+      "carbonPercentage": "{percent}% Coal",
+      "ashPercentage": "{percent}% Ash"
+    }
   },
   "inventory": {
     "quantity": "Quantity",

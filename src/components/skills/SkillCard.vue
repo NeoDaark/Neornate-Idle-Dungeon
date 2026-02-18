@@ -36,6 +36,13 @@ const xpNeededForNextLevel = computed((): number => {
 const xpProgress = computed((): number => {
   return Math.min(100, Math.round((props.skillState.experience / xpNeededForNextLevel.value) * 100))
 })
+
+const formatXP = (xp: number): string => {
+  // Mostrar con máximo 1 decimal, pero solo si hay decimales
+  if (typeof xp !== 'number') return String(xp)
+  if (xp % 1 === 0) return String(Math.floor(xp)) // Es un entero
+  return xp.toFixed(1) // Tiene decimales
+}
 </script>
 
 <template>
@@ -54,7 +61,7 @@ const xpProgress = computed((): number => {
       <div class="progress-bar">
         <div class="progress-fill" :style="{ width: xpProgress + '%' }"></div>
       </div>
-      <p class="xp-text">{{ skillState.experience }} / {{ xpNeededForNextLevel }} XP</p>
+      <p class="xp-text">{{ formatXP(skillState.experience) }} / {{ xpNeededForNextLevel }} XP</p>
     </div>
 
     <!-- Status -->

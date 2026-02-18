@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { useToolsStore } from '@/stores/toolsStore'
+import { useSkillsStore } from '@/stores/skillsStore'
 import type { SkillProduct } from '@/types/Skill'
 import type { Skill } from '@/types/Game'
 import { SKILL_CONFIGS } from '@/types/Game'
@@ -26,6 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
 const { t } = useI18n()
 const inventoryStore = useInventoryStore()
 const toolsStore = useToolsStore()
+const skillsStore = useSkillsStore()
 
 const isImageIcon = (icon: string): boolean => {
   // Si contiene una barra inclinada o un punto seguido de extensión, es una imagen
@@ -35,6 +37,13 @@ const isImageIcon = (icon: string): boolean => {
 const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
 const isDropdownOpen = ref(false)
+
+// Inicializar la distribución de drops desde el estado guardado o con valor por defecto
+const skillState = skillsStore.getSkillState(props.skill)
+const dropDistribution = ref(props.skill === 'quemado' && skillState?.woodburningDropDistribution !== undefined
+  ? skillState.woodburningDropDistribution
+  : 50
+) // 0-100: % para carbón, resto va a ceniza
 
 const skillAction = computed((): string => {
   return t(`skills.${SKILL_CONFIGS[props.skill].name}.action`)
@@ -66,7 +75,10 @@ const finalXP = computed(() => {
   if (!props.currentProduct) return 0
   const baseXP = props.currentProduct.xpReward
   // En Quemado no hay bonuses de herramientas
-  return props.isWoodburning ? baseXP : Math.floor(baseXP * (1 + toolBonus.value.xpBonus))
+  if (props.isWoodburning) return baseXP
+  const calculated = baseXP * (1 + toolBonus.value.xpBonus)
+  // Redondear a 1 decimal manteniendo la precisión
+  return Math.round(calculated * 10) / 10
 })
 
 const finalCycleDuration = computed(() => {
@@ -147,6 +159,15 @@ const getMaterialName = (itemId: string): string => {
   
   return itemId
 }
+
+// Watcher para actualizar la distribución de drops en el state de skills
+watch(dropDistribution, (newValue) => {
+  if (props.skill === 'quemado') {
+    skillsStore.updateWoodburningDropDistribution(newValue)
+    // Persistir cambios a localStorage
+    skillsStore.saveToLocalStorage()
+  }
+})
 </script>
 
 <template>
@@ -202,7 +223,7 @@ const getMaterialName = (itemId: string): string => {
             <h4>{{ skillAction }} {{ getProductDisplayName(currentProduct) }}</h4>
             <div class="stats-row">
               <span class="stat">{{ t('labels.level') }}: {{ currentProduct.level }}</span>
-              <span class="stat">{{ finalXP }} XP <span v-if="!isWoodburning && toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>
+              <span class="stat">{{ typeof finalXP === 'number' && finalXP % 1 !== 0 ? finalXP.toFixed(1) : finalXP }} XP <span v-if="!isWoodburning && toolBonus.xpBonus > 0" class="bonus">+{{ Math.round(toolBonus.xpBonus * 100) }}%</span></span>
               <span v-if="isWoodburning" class="stat">x1 (gasta 1 tronco)</span>
               <span v-else class="stat">x{{ finalQuantity }} <span v-if="toolBonus.quantityBonus > 0" class="bonus">+{{ toolBonus.quantityBonus }}</span></span>
               <span class="stat">⏱️ {{ (finalCycleDuration / 1000).toFixed(1) }}s <span v-if="toolBonus.speedBonus < 0" class="bonus">{{ Math.round(toolBonus.speedBonus) }}s</span></span>
@@ -280,6 +301,32 @@ const getMaterialName = (itemId: string): string => {
             <div class="drop-name">{{ t('ui.nothing') || 'Nada' }}</div>
             <div class="drop-percentage">40%</div>
           </div>
+        </div>
+      </div>
+
+      <!-- Slider para distribuir el bonus de drop -->
+      <div v-if="toolBonus.dropModifier > 0" class="drop-distribution-slider">
+        <div class="slider-label">
+          {{ t('ui.woodburning.dropDistribution') }}
+        </div>
+        <div class="slider-container">
+          <span class="slider-tag coal">{{ t('items.carbon') }}</span>
+          <input
+            v-model.number="dropDistribution"
+            type="range"
+            min="0"
+            max="100"
+            class="range-input"
+          />
+          <span class="slider-tag ash">{{ t('items.ceniza') }}</span>
+        </div>
+        <div class="slider-values">
+          <span class="coal-value">
+            {{ t('ui.woodburning.carbonPercentage').replace('{percent}', dropDistribution.toString()) }}
+          </span>
+          <span class="ash-value">
+            {{ t('ui.woodburning.ashPercentage').replace('{percent}', (100 - dropDistribution).toString()) }}
+          </span>
         </div>
       </div>
     </div>
@@ -1058,5 +1105,120 @@ const getMaterialName = (itemId: string): string => {
 
 .drop-item.no-drop .drop-percentage {
   color: var(--text-muted);
+}
+
+/* Estilos para el slider de distribución de drops */
+.drop-distribution-slider {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 165, 0, 0.15);
+}
+
+.slider-label {
+  color: var(--text-secondary);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.slider-tag {
+  font-size: 9px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  padding: 2px 4px;
+  border-radius: 2px;
+  background: rgba(255, 165, 0, 0.08);
+  border: 1px solid rgba(255, 165, 0, 0.15);
+  min-width: 40px;
+  text-align: center;
+}
+
+.slider-tag.coal {
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.slider-tag.ash {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.range-input {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-secondary) 0%,
+    var(--color-primary) 50%,
+    var(--color-warning) 100%
+  );
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+}
+
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  border: 2px solid var(--bg-card);
+  box-shadow: 0 0 4px rgba(255, 165, 0, 0.5);
+  transition: all 0.2s ease;
+}
+
+.range-input::-webkit-slider-thumb:hover {
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 8px rgba(255, 165, 0, 0.7);
+}
+
+.range-input::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  border: 2px solid var(--bg-card);
+  box-shadow: 0 0 4px rgba(255, 165, 0, 0.5);
+  transition: all 0.2s ease;
+}
+
+.range-input::-moz-range-thumb:hover {
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 8px rgba(255, 165, 0, 0.7);
+}
+
+.slider-values {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 9px;
+}
+
+.coal-value {
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+.ash-value {
+  color: var(--color-secondary);
+  font-weight: 600;
 }
 </style>

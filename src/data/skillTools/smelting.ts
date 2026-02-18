@@ -24,8 +24,8 @@ export const SMELTING_TOOLS: Tool[] = [
     requiredLevel: 10,
     effects: [
       { type: 'speed', value: 0.50, description: 'effects.speed' },
-      { type: 'rarity', value: 10, description: 'effects.rarity' },
-      { type: 'xp', value: 10, description: 'effects.xp' },
+      { type: 'rarity', value: 0.1, description: 'effects.rarity' },
+      { type: 'xp', value: 0.1, description: 'effects.xp' },
     ],
   },
   {
@@ -40,8 +40,8 @@ export const SMELTING_TOOLS: Tool[] = [
     requiredLevel: 20,
     effects: [
       { type: 'speed', value: 0.75, description: 'effects.speed' },
-      { type: 'rarity', value: 15, description: 'effects.rarity' },
-      { type: 'xp', value: 15, description: 'effects.xp' },
+      { type: 'rarity', value: 0.15, description: 'effects.rarity' },
+      { type: 'xp', value: 0.15, description: 'effects.xp' },
     ],
   },
   {
@@ -56,8 +56,8 @@ export const SMELTING_TOOLS: Tool[] = [
     requiredLevel: 40,
     effects: [
       { type: 'speed', value: 1.00, description: 'effects.speed' },
-      { type: 'rarity', value: 20, description: 'effects.rarity' },
-      { type: 'xp', value: 20, description: 'effects.xp' },
+      { type: 'rarity', value: 0.20, description: 'effects.rarity' },
+      { type: 'xp', value: 0.20, description: 'effects.xp' },
     ],
   },
   {
@@ -72,8 +72,8 @@ export const SMELTING_TOOLS: Tool[] = [
     requiredLevel: 60,
     effects: [
       { type: 'speed', value: 1.25, description: 'effects.speed' },
-      { type: 'rarity', value: 25, description: 'effects.rarity' },
-      { type: 'xp', value: 25, description: 'effects.xp' },
+      { type: 'rarity', value: 0.25, description: 'effects.rarity' },
+      { type: 'xp', value: 0.25, description: 'effects.xp' },
     ],
   },
   {
@@ -88,8 +88,8 @@ export const SMELTING_TOOLS: Tool[] = [
     requiredLevel: 80,
     effects: [
       { type: 'speed', value: 1.50, description: 'effects.speed' },
-      { type: 'rarity', value: 30, description: 'effects.rarity' },
-      { type: 'xp', value: 30, description: 'effects.xp' },
+      { type: 'rarity', value: 0.30, description: 'effects.rarity' },
+      { type: 'xp', value: 0.30, description: 'effects.xp' },
     ],
   },
   {
@@ -104,8 +104,8 @@ export const SMELTING_TOOLS: Tool[] = [
     requiredLevel: 100,
     effects: [
       { type: 'speed', value: 1.75, description: 'effects.speed' },
-      { type: 'rarity', value: 35, description: 'effects.rarity' },
-      { type: 'xp', value: 35, description: 'effects.xp' },
+      { type: 'rarity', value: 0.35, description: 'effects.rarity' },
+      { type: 'xp', value: 0.35, description: 'effects.xp' },
     ],
   },
   {
@@ -120,8 +120,8 @@ export const SMELTING_TOOLS: Tool[] = [
     requiredLevel: 120,
     effects: [
       { type: 'speed', value: 2.00, description: 'effects.speed' },
-      { type: 'rarity', value: 40, description: 'effects.rarity' },
-      { type: 'xp', value: 40, description: 'effects.xp' },
+      { type: 'rarity', value: 0.40, description: 'effects.rarity' },
+      { type: 'xp', value: 0.40, description: 'effects.xp' },
     ],
   },
 ]

@@ -23,9 +23,9 @@ export const SMELTING_TOOLS: Tool[] = [
     price: calculatePrice(1, 2.0),
     requiredLevel: 10,
     effects: [
-      { type: 'speed', value: -1, description: '-1s al ciclo' },
-      { type: 'rarity', value: 0.1, description: '+10% rareza' },
-      { type: 'xp', value: 0.1, description: '+10% XP' },
+      { type: 'speed', value: -0.5, description: '-0.5s al ciclo' },
+      { type: 'rarity', value: 0.10, description: '+10% rareza' },
+      { type: 'xp', value: 0.10, description: '+10% XP' },
     ],
   },
   {
@@ -39,9 +39,9 @@ export const SMELTING_TOOLS: Tool[] = [
     price: calculatePrice(2, 2.0),
     requiredLevel: 20,
     effects: [
-      { type: 'speed', value: -2, description: '-2s al ciclo' },
+      { type: 'speed', value: -0.5, description: '-0.5s al ciclo' },
       { type: 'rarity', value: 0.15, description: '+15% rareza' },
-      { type: 'xp', value: 0.2, description: '+20% XP' },
+      { type: 'xp', value: 0.15, description: '+15% XP' },
     ],
   },
   {
@@ -55,9 +55,9 @@ export const SMELTING_TOOLS: Tool[] = [
     price: calculatePrice(3, 2.0),
     requiredLevel: 40,
     effects: [
-      { type: 'speed', value: -3, description: '-3s al ciclo' },
-      { type: 'rarity', value: 0.25, description: '+25% rareza' },
-      { type: 'xp', value: 0.3, description: '+30% XP' },
+      { type: 'speed', value: -1, description: '-1s al ciclo' },
+      { type: 'rarity', value: 0.20, description: '+20% rareza' },
+      { type: 'xp', value: 0.20, description: '+20% XP' },
     ],
   },
   {
@@ -71,9 +71,9 @@ export const SMELTING_TOOLS: Tool[] = [
     price: calculatePrice(4, 2.0),
     requiredLevel: 60,
     effects: [
-      { type: 'speed', value: -4, description: '-4s al ciclo' },
-      { type: 'rarity', value: 0.35, description: '+35% rareza' },
-      { type: 'xp', value: 0.4, description: '+40% XP' },
+      { type: 'speed', value: -1, description: '-1s al ciclo' },
+      { type: 'rarity', value: 0.25, description: '+25% rareza' },
+      { type: 'xp', value: 0.25, description: '+25% XP' },
     ],
   },
   {
@@ -87,9 +87,9 @@ export const SMELTING_TOOLS: Tool[] = [
     price: calculatePrice(5, 2.0),
     requiredLevel: 80,
     effects: [
-      { type: 'speed', value: -4, description: '-4s al ciclo' },
-      { type: 'rarity', value: 0.45, description: '+45% rareza' },
-      { type: 'xp', value: 0.5, description: '+50% XP' },
+      { type: 'speed', value: -1.5, description: '-1.5s al ciclo' },
+      { type: 'rarity', value: 0.30, description: '+30% rareza' },
+      { type: 'xp', value: 0.30, description: '+30% XP' },
     ],
   },
   {
@@ -103,9 +103,9 @@ export const SMELTING_TOOLS: Tool[] = [
     price: calculatePrice(6, 2.0),
     requiredLevel: 100,
     effects: [
-      { type: 'speed', value: -4, description: '-4s al ciclo' },
-      { type: 'rarity', value: 0.5, description: '+50% rareza' },
-      { type: 'xp', value: 0.5, description: '+50% XP' },
+      { type: 'speed', value: -1.5, description: '-1.5s al ciclo' },
+      { type: 'rarity', value: 0.35, description: '+35% rareza' },
+      { type: 'xp', value: 0.35, description: '+35% XP' },
     ],
   },
   {
@@ -119,9 +119,9 @@ export const SMELTING_TOOLS: Tool[] = [
     price: calculatePrice(7, 2.0),
     requiredLevel: 120,
     effects: [
-      { type: 'speed', value: -4, description: '-4s al ciclo' },
-      { type: 'rarity', value: 0.6, description: '+60% rareza' },
-      { type: 'xp', value: 0.5, description: '+50% XP' },
+      { type: 'speed', value: -2, description: '-2s al ciclo' },
+      { type: 'rarity', value: 0.40, description: '+40% rareza' },
+      { type: 'xp', value: 0.40, description: '+40% XP' },
     ],
   },
 ]

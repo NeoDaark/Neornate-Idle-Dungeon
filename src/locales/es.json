@@ -483,7 +483,13 @@
       "furnace_divine": "El horno supremo del poder infinito"
     }
   },
-    "market": {
+  "effects": {
+    "speed": "-{VALUE}s al ciclo",
+    "quantity": "+{VALUE} {ITEM}",
+    "xp": "+{VALUE}% XP",
+    "rarity": "+{VALUE}% rareza"
+  },
+  "market": {
     "sell": {
       "title": "Vender Recursos",
       "inventory": "Inventario",

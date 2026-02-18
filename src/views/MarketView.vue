@@ -3,7 +3,7 @@
     <div class="market-header">
       <h1>{{ t('ui.menu.market') }}</h1>
       <div class="gold-display">
-        <span class="gold-amount">{{ playerStore.player.gold }}</span>
+        <span class="gold-amount">{{ formatGoldSimple(playerStore.player.gold) }}</span>
         <span class="gold-icon">💰</span>
       </div>
     </div>
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
 import { usePlayerStore } from '@/stores/playerStore'
+import { formatGoldSimple } from '@/utils/formatEffect'
 import ToolMarketSection from '@/components/tools/ToolMarketSection.vue'
 
 const { t } = useI18n()

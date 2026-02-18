@@ -484,6 +484,12 @@
       "furnace_divine": "The supreme furnace of infinite power"
     }
   },
+  "effects": {
+    "speed": "-{VALUE}s per cycle",
+    "quantity": "+{VALUE} {ITEM}",
+    "xp": "+{VALUE}% XP",
+    "rarity": "+{VALUE}% rarity"
+  },
   "market": {
     "sell": {
       "title": "Sell Resources",

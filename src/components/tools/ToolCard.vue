@@ -10,10 +10,10 @@
             <span class="compact-tier">{{ t(`tools.tier${tool.tier}`) }}</span>
           </div>
           <div v-if="tool.effects.length > 0" class="compact-effects">
-            {{ tool.effects.map(e => e.description).join(' | ') }}
+            {{ formatEffectsList(tool.effects) }}
           </div>
           <div class="compact-price">
-            <span>{{ tool.price }} 💰</span>
+            <span>{{ formatGoldSimple(tool.price) }} 💰</span>
             <span v-if="!isAvailable" class="compact-locked-reason">
               {{ t('tools.requireLevel') }}: {{ tool.requiredLevel }} ({{ t('tools.currentLevel') }}: {{ playerLevel }})
             </span>
@@ -50,14 +50,14 @@
 
       <div class="tool-effects">
         <div v-for="effect in tool.effects" :key="`${tool.id}-${effect.type}`" class="effect">
-          <span class="effect-type">{{ effect.description }}</span>
+          <span class="effect-type">{{ formatEffect(effect, t(effect.description), getSkillProductName(tool.skillId)) }}</span>
         </div>
       </div>
 
       <div class="tool-footer">
         <div class="tool-price">
           <span class="price-label">{{ t('ui.price') }}</span>
-          <span class="price-value">{{ tool.price }} 💰</span>
+          <span class="price-value">{{ formatGoldSimple(tool.price) }} 💰</span>
         </div>
 
         <button
@@ -91,6 +91,7 @@ import { useToolsStore } from '@/stores/toolsStore'
 import { useSkillsStore } from '@/stores/skillsStore'
 import { usePlayerStore } from '@/stores/playerStore'
 import { useI18n } from '@/composables/useI18n'
+import { formatEffect, formatGoldSimple, getSkillProductName } from '@/utils/formatEffect'
 
 interface Props {
   tool: Tool
@@ -118,6 +119,20 @@ const isEquipped = computed(
 )
 
 const hasEnoughGold = computed(() => playerStore.player.gold >= props.tool.price)
+
+/**
+ * Formatea la lista de efectos traduciendo las claves i18n
+ */
+const formatEffectsList = (effects: typeof props.tool.effects): string => {
+  const productName = getSkillProductName(props.tool.skillId)
+  return effects
+    .map(effect => {
+      const i18nKey = effect.description
+      const i18nText = t(i18nKey)
+      return formatEffect(effect, i18nText, productName)
+    })
+    .join(' | ')
+}
 
 const handleBuy = () => {
   if (!hasEnoughGold.value) {

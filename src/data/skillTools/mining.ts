@@ -23,9 +23,9 @@ export const MINING_TOOLS: Tool[] = [
     price: calculatePrice(1),
     requiredLevel: 10,
     effects: [
-      { type: 'speed', value: -0.5, description: '-0.5s al ciclo' },
-      { type: 'quantity', value: 1, description: '+1 mineral' },
-      { type: 'xp', value: 0.10, description: '+10% XP' },
+      { type: 'speed', value: 0.5, description: 'effects.speed' },
+      { type: 'quantity', value: 1, description: 'effects.quantity' },
+      { type: 'xp', value: 10, description: 'effects.xp' },
     ],
   },
   {
@@ -39,9 +39,9 @@ export const MINING_TOOLS: Tool[] = [
     price: calculatePrice(2),
     requiredLevel: 20,
     effects: [
-      { type: 'speed', value: -0.5, description: '-0.5s al ciclo' },
-      { type: 'quantity', value: 1, description: '+1 mineral' },
-      { type: 'xp', value: 0.15, description: '+15% XP' },
+      { type: 'speed', value: 0.5, description: 'effects.speed' },
+      { type: 'quantity', value: 1, description: 'effects.quantity' },
+      { type: 'xp', value: 15, description: 'effects.xp' },
     ],
   },
   {
@@ -55,9 +55,9 @@ export const MINING_TOOLS: Tool[] = [
     price: calculatePrice(3),
     requiredLevel: 40,
     effects: [
-      { type: 'speed', value: -1, description: '-1s al ciclo' },
-      { type: 'quantity', value: 2, description: '+2 minerales' },
-      { type: 'xp', value: 0.20, description: '+20% XP' },
+      { type: 'speed', value: 1, description: 'effects.speed' },
+      { type: 'quantity', value: 2, description: 'effects.quantity' },
+      { type: 'xp', value: 20, description: 'effects.xp' },
     ],
   },
   {
@@ -71,9 +71,9 @@ export const MINING_TOOLS: Tool[] = [
     price: calculatePrice(4),
     requiredLevel: 60,
     effects: [
-      { type: 'speed', value: -1, description: '-1s al ciclo' },
-      { type: 'quantity', value: 2, description: '+2 minerales' },
-      { type: 'xp', value: 0.25, description: '+25% XP' },
+      { type: 'speed', value: 1, description: 'effects.speed' },
+      { type: 'quantity', value: 2, description: 'effects.quantity' },
+      { type: 'xp', value: 25, description: 'effects.xp' },
     ],
   },
   {
@@ -87,9 +87,9 @@ export const MINING_TOOLS: Tool[] = [
     price: calculatePrice(5),
     requiredLevel: 80,
     effects: [
-      { type: 'speed', value: -1.5, description: '-1.5s al ciclo (máximo)' },
-      { type: 'quantity', value: 3, description: '+3 minerales' },
-      { type: 'xp', value: 0.30, description: '+30% XP' },
+      { type: 'speed', value: 1.5, description: 'effects.speed' },
+      { type: 'quantity', value: 3, description: 'effects.quantity' },
+      { type: 'xp', value: 30, description: 'effects.xp' },
     ],
   },
   {
@@ -103,9 +103,9 @@ export const MINING_TOOLS: Tool[] = [
     price: calculatePrice(6),
     requiredLevel: 100,
     effects: [
-      { type: 'speed', value: -1.5, description: '-1.5s al ciclo (máximo)' },
-      { type: 'quantity', value: 3, description: '+3 minerales' },
-      { type: 'xp', value: 0.35, description: '+35% XP' },
+      { type: 'speed', value: 1.5, description: 'effects.speed' },
+      { type: 'quantity', value: 3, description: 'effects.quantity' },
+      { type: 'xp', value: 35, description: 'effects.xp' },
     ],
   },
   {
@@ -119,9 +119,9 @@ export const MINING_TOOLS: Tool[] = [
     price: calculatePrice(7),
     requiredLevel: 120,
     effects: [
-      { type: 'speed', value: -2, description: '-2s al ciclo (máximo)' },
-      { type: 'quantity', value: 4, description: '+4 minerales' },
-      { type: 'xp', value: 0.40, description: '+40% XP' },
+      { type: 'speed', value: 2, description: 'effects.speed' },
+      { type: 'quantity', value: 4, description: 'effects.quantity' },
+      { type: 'xp', value: 40, description: 'effects.xp' },
     ],
   },
 ]

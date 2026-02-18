@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import type { SkillState } from '@/types/Skill'
-import { SKILL_CONFIGS, Tier } from '@/types/Game'
+import { SKILL_CONFIGS, calculateXpForLevel } from '@/types/Game'
 
 interface Props {
   skillState: SkillState
@@ -28,14 +28,9 @@ const skillAction = computed(() => {
   return t(`skills.${skillConfig.value.name}.action`)
 })
 
-const tierIndex = computed((): number => {
-  const tiers = Object.values(Tier)
-  return tiers.indexOf(props.skillState.tier)
-})
-
 const xpNeededForNextLevel = computed((): number => {
-  const tierBonus = (tierIndex.value + 1) * 300
-  return 100 + props.skillState.level * 50 + tierBonus
+  // Usar la función de cálculo oficial que incluye los nuevos multiplicadores
+  return calculateXpForLevel(props.skillState.level + 1)
 })
 
 const xpProgress = computed((): number => {

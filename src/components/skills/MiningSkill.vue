@@ -175,7 +175,6 @@ onMounted(() => {
         <div class="progress-bar">
           <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
         </div>
-        <p class="progress-text">{{ Math.round(cycleProgress) }}%</p>
       </div>
 
       <!-- Action Buttons -->

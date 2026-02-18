@@ -33,7 +33,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotCopper,
       iconType: 'image' as const,
-      value: 0.5,
+      value: 5,
       skill: Skill.FUNDICION,
     } as any,
     level: 1,
@@ -41,7 +41,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 20,
     requiredMaterials: [
-      { itemId: 'cobre', quantity: 1 },
+      { itemId: 'cobre', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -56,7 +56,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotIron,
       iconType: 'image' as const,
-      value: 1.5,
+      value: 15,
       skill: Skill.FUNDICION,
     } as any,
     level: 20,
@@ -64,7 +64,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 35,
     requiredMaterials: [
-      { itemId: 'hierro', quantity: 2 },
+      { itemId: 'hierro', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -77,7 +77,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotSilver,
       iconType: 'image' as const,
-      value: 2.5,
+      value: 25,
       skill: Skill.FUNDICION,
     } as any,
     level: 25,
@@ -85,7 +85,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 45,
     requiredMaterials: [
-      { itemId: 'plata', quantity: 2 },
+      { itemId: 'plata', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -100,7 +100,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotTungsten,
       iconType: 'image' as const,
-      value: 3.5,
+      value: 35,
       skill: Skill.FUNDICION,
     } as any,
     level: 40,
@@ -108,7 +108,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 70,
     requiredMaterials: [
-      { itemId: 'tungsteno', quantity: 2 },
+      { itemId: 'tungsteno', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -121,7 +121,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotGold,
       iconType: 'image' as const,
-      value: 5,
+      value: 50,
       skill: Skill.FUNDICION,
     } as any,
     level: 45,
@@ -129,7 +129,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 85,
     requiredMaterials: [
-      { itemId: 'oro', quantity: 1 },
+      { itemId: 'oro', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -144,7 +144,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotPlatinum,
       iconType: 'image' as const,
-      value: 8,
+      value: 80,
       skill: Skill.FUNDICION,
     } as any,
     level: 60,
@@ -152,7 +152,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 110,
     requiredMaterials: [
-      { itemId: 'platino', quantity: 1 },
+      { itemId: 'platino', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -165,7 +165,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotObsidian,
       iconType: 'image' as const,
-      value: 10,
+      value: 100,
       skill: Skill.FUNDICION,
     } as any,
     level: 65,
@@ -173,7 +173,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 130,
     requiredMaterials: [
-      { itemId: 'obsidiana', quantity: 1 },
+      { itemId: 'obsidiana', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -188,7 +188,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotCobalt,
       iconType: 'image' as const,
-      value: 13,
+      value: 130,
       skill: Skill.FUNDICION,
     } as any,
     level: 80,
@@ -196,7 +196,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 155,
     requiredMaterials: [
-      { itemId: 'cobalto', quantity: 1 },
+      { itemId: 'cobalto', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -209,7 +209,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotMythril,
       iconType: 'image' as const,
-      value: 16,
+      value: 160,
       skill: Skill.FUNDICION,
     } as any,
     level: 90,
@@ -217,7 +217,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 180,
     requiredMaterials: [
-      { itemId: 'mithril', quantity: 1 },
+      { itemId: 'mithril', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -232,7 +232,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotOrichalcum,
       iconType: 'image' as const,
-      value: 22,
+      value: 220,
       skill: Skill.FUNDICION,
     } as any,
     level: 100,
@@ -240,7 +240,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 210,
     requiredMaterials: [
-      { itemId: 'oricalco', quantity: 1 },
+      { itemId: 'oricalco', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -253,7 +253,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotAdamantite,
       iconType: 'image' as const,
-      value: 26,
+      value: 260,
       skill: Skill.FUNDICION,
     } as any,
     level: 105,
@@ -261,7 +261,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 240,
     requiredMaterials: [
-      { itemId: 'adamantita', quantity: 1 },
+      { itemId: 'adamantita', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -276,7 +276,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotTitanium,
       iconType: 'image' as const,
-      value: 30,
+      value: 300,
       skill: Skill.FUNDICION,
     } as any,
     level: 120,
@@ -284,7 +284,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 300,
     requiredMaterials: [
-      { itemId: 'titanio', quantity: 1 },
+      { itemId: 'titanio', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },
@@ -297,7 +297,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
       type: ItemType.MATERIAL,
       icon: ingotDragonite,
       iconType: 'image' as const,
-      value: 32,
+      value: 320,
       skill: Skill.FUNDICION,
     } as any,
     level: 150,
@@ -305,7 +305,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 380,
     requiredMaterials: [
-      { itemId: 'draconita', quantity: 1 },
+      { itemId: 'draconita', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
     ],
   },

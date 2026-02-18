@@ -36,7 +36,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     } as Resource,
     level: 1,
     tier: Tier.T1,
-    quantity: 2,
+    quantity: 1,
     xpReward: 15
   },
 

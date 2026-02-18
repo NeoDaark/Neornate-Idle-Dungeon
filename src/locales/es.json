@@ -377,7 +377,12 @@
     "loading": "Cargando...",
     "error": "Error",
     "success": "Éxito",
-    "confirm": "¿Estás seguro?"
+    "confirm": "¿Estás seguro?",
+    "danger_zone": "Zona de peligro - Operaciones destructivas",
+    "clear_all_data_confirm": "¿Deseas eliminar TODOS los datos? Esta acción no se puede deshacer.",
+    "clear_all_data_double_confirm": "¿Estás completamente seguro? Los datos no se podrán recuperar.",
+    "clear_all_data_success": "Todos los datos han sido eliminados. La página se recargará.",
+    "clear_all_data_error": "Hubo un error al eliminar los datos. Revisa la consola para más detalles."
   },
   "labels": {
     "level": "Nivel",
@@ -423,7 +428,10 @@
     "stored_quantity": "Almacenado",
     "blocked_materials": "Ver {count} materiales bloqueados",
     "possible_drops": "Puede otorgar",
-    "you_have": "Tienes"
+    "you_have": "Tienes",
+    "danger": "Peligro",
+    "clear_all_data": "Eliminar todos los datos",
+    "second_confirmation": "Segunda confirmación"
   },
   "errors": {
     "notFound": "No encontrado",

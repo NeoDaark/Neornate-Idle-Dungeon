@@ -59,6 +59,7 @@ export const useToolsStore = defineStore('tools', () => {
       [Skill.MINERIA]: [],
       [Skill.TALA]: [],
       [Skill.FUNDICION]: [],
+      [Skill.QUEMADO]: [],
       [Skill.HERRERIA]: [],
       [Skill.PESCA]: [],
       [Skill.COCINA]: [],
@@ -321,6 +322,23 @@ export const useToolsStore = defineStore('tools', () => {
     localStorage.setItem('tools_inventory', JSON.stringify(inventoryTools.value))
   }
 
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    equippedTools.value = {
+      [Skill.MINERIA]: null,
+      [Skill.TALA]: null,
+      [Skill.FUNDICION]: null,
+      [Skill.QUEMADO]: null,
+      [Skill.HERRERIA]: null,
+      [Skill.PESCA]: null,
+      [Skill.COCINA]: null,
+      [Skill.AVENTURA]: null,
+    }
+    inventoryTools.value = []
+  }
+
   return {
     // Estado
     equippedTools,
@@ -342,5 +360,6 @@ export const useToolsStore = defineStore('tools', () => {
     validatePurchaseIntegrity,
     loadFromStorage,
     saveToStorage,
+    reset,
   }
 })

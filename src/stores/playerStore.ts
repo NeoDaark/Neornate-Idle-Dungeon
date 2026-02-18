@@ -187,6 +187,13 @@ export const usePlayerStore = defineStore('player', () => {
     }
   }
 
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    player.value = createPlayer('player-1', 'Aventurero', BaseClass.WARRIOR)
+  }
+
   return {
     // State
     player,
@@ -210,5 +217,6 @@ export const usePlayerStore = defineStore('player', () => {
     saveToStorage,
     saveToLocalStorage,
     loadFromLocalStorage,
+    reset,
   }
 })

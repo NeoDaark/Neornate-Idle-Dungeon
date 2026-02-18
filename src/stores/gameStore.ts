@@ -292,6 +292,19 @@ export const useGameStore = defineStore('game', () => {
     gameState.value.lastSaveTime = Date.now()
   }
 
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    gameState.value = {
+      isInitialized: false,
+      gameStartedAt: 0,
+      lastSaveTime: 0,
+      gamePausedAt: 0,
+    }
+    offlineHarvestSummary.value = null
+  }
+
   return {
     // State
     gameState,
@@ -309,5 +322,6 @@ export const useGameStore = defineStore('game', () => {
     calculateOfflineProgress,
     clearOfflineHarvestSummary,
     resetGame,
+    reset,
   }
 })

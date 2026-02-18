@@ -222,6 +222,15 @@ export const useMarketStore = defineStore('market', () => {
     }
   }
 
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    basePrices.value = {}
+    transactionHistory.value = []
+    vendorListings.value = []
+  }
+
   return {
     // State
     basePrices,
@@ -247,5 +256,6 @@ export const useMarketStore = defineStore('market', () => {
     clearHistory,
     saveToLocalStorage,
     loadFromLocalStorage,
+    reset,
   }
 })

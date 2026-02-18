@@ -454,7 +454,34 @@
     "tier4": "Tier 4",
     "tier5": "Tier 5",
     "tier6": "Tier 6",
-    "tier7": "Tier 7"
+    "tier7": "Tier 7",
+    "mineria": {
+      "pickaxe_copper": "Un pico básico de cobre que acelera la minería",
+      "pickaxe_iron": "Un pico de hierro más eficiente",
+      "pickaxe_steel": "Un pico de acero robusto y rápido",
+      "pickaxe_mithril": "Un legendario pico de mithril",
+      "pickaxe_adamantite": "Uno de los mejores picos jamás creados",
+      "pickaxe_orichalcum": "Un pico mágico de gran poder",
+      "pickaxe_divine": "El pico supremo de poder infinito"
+    },
+    "tala": {
+      "axe_wood": "Un hacha básica de madera",
+      "axe_copper": "Un hacha de cobre más resistente",
+      "axe_iron": "Un hacha de hierro afilada",
+      "axe_steel": "Un hacha de acero de primera",
+      "axe_mithril": "Un legendario hacha de mithril",
+      "axe_orichalcum": "Un hacha mágica de Orichalco",
+      "axe_divine": "El hacha suprema del poder infinito"
+    },
+    "fundicion": {
+      "furnace_basic": "Un horno de piedra básico",
+      "furnace_copper": "Un horno de cobre eficiente",
+      "furnace_iron": "Un horno de hierro de calidad",
+      "furnace_steel": "Un horno de acero de maestría",
+      "furnace_mithril": "Un legendario horno de mithril",
+      "furnace_orichalcum": "Un horno mágico de Orichalco",
+      "furnace_divine": "El horno supremo del poder infinito"
+    }
   },
     "market": {
     "sell": {

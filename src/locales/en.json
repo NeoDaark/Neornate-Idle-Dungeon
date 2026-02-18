@@ -455,7 +455,34 @@
     "tier4": "Tier 4",
     "tier5": "Tier 5",
     "tier6": "Tier 6",
-    "tier7": "Tier 7"
+    "tier7": "Tier 7",
+    "mineria": {
+      "pickaxe_copper": "A basic copper pickaxe that speeds up mining",
+      "pickaxe_iron": "A more efficient iron pickaxe",
+      "pickaxe_steel": "A robust and fast steel pickaxe",
+      "pickaxe_mithril": "A legendary mithril pickaxe",
+      "pickaxe_adamantite": "One of the best pickaxes ever created",
+      "pickaxe_orichalcum": "A magical pickaxe of great power",
+      "pickaxe_divine": "The supreme pickaxe of infinite power"
+    },
+    "tala": {
+      "axe_wood": "A basic wooden axe",
+      "axe_copper": "A more durable copper axe",
+      "axe_iron": "A sharp iron axe",
+      "axe_steel": "A first-class steel axe",
+      "axe_mithril": "A legendary mithril axe",
+      "axe_orichalcum": "A magical Orichalcum axe",
+      "axe_divine": "The supreme axe of infinite power"
+    },
+    "fundicion": {
+      "furnace_basic": "A basic stone furnace",
+      "furnace_copper": "An efficient copper furnace",
+      "furnace_iron": "A quality iron furnace",
+      "furnace_steel": "A mastery steel furnace",
+      "furnace_mithril": "A legendary mithril furnace",
+      "furnace_orichalcum": "A magical Orichalcum furnace",
+      "furnace_divine": "The supreme furnace of infinite power"
+    }
   },
   "market": {
     "sell": {

@@ -25,6 +25,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
   // T1
   'cobre': {
     id: 'cobre',
+    name: 'Cobre',
     i18nKey: 'resources.mineral.cobre.name',
     i18nDescriptionKey: 'resources.mineral.cobre.description',
     item: {
@@ -37,12 +38,13 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 1,
     tier: Tier.T1,
     quantity: 1,
-    xpReward: 15
+    xpReward: 7.5
   },
 
   // T2
   'hierro': {
     id: 'hierro',
+    name: 'Hierro',
     i18nKey: 'resources.mineral.hierro.name',
     i18nDescriptionKey: 'resources.mineral.hierro.description',
     item: {
@@ -55,10 +57,11 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 20,
     tier: Tier.T2,
     quantity: 1,
-    xpReward: 30,
+    xpReward: 15,
   },
   'plata': {
     id: 'plata',
+    name: 'Plata',
     i18nKey: 'resources.mineral.plata.name',
     i18nDescriptionKey: 'resources.mineral.plata.description',
     item: {
@@ -71,12 +74,13 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 25,
     tier: Tier.T2,
     quantity: 1,
-    xpReward: 40,
+    xpReward: 20,
   },
 
   // T3
   'tungsteno': {
     id: 'tungsteno',
+    name: 'Tungsteno',
     i18nKey: 'resources.mineral.tungsteno.name',
     i18nDescriptionKey: 'resources.mineral.tungsteno.description',
     item: {
@@ -89,10 +93,11 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 40,
     tier: Tier.T3,
     quantity: 1,
-    xpReward: 60,
+    xpReward: 30,
   },
   'oro': {
     id: 'oro',
+    name: 'Oro',
     i18nKey: 'resources.mineral.oro.name',
     i18nDescriptionKey: 'resources.mineral.oro.description',
     item: {
@@ -105,12 +110,13 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 45,
     tier: Tier.T3,
     quantity: 1,
-    xpReward: 75,
+    xpReward: 37.5,
   },
 
   // T4
   'platino': {
     id: 'platino',
+    name: 'Platino',
     i18nKey: 'resources.mineral.platino.name',
     i18nDescriptionKey: 'resources.mineral.platino.description',
     item: {
@@ -123,10 +129,11 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 60,
     tier: Tier.T4,
     quantity: 1,
-    xpReward: 100,
+    xpReward: 50,
   },
   'obsidiana': {
     id: 'obsidiana',
+    name: 'Obsidiana',
     i18nKey: 'resources.mineral.obsidiana.name',
     i18nDescriptionKey: 'resources.mineral.obsidiana.description',
     item: {
@@ -139,12 +146,13 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 65,
     tier: Tier.T4,
     quantity: 1,
-    xpReward: 120,
+    xpReward: 60,
   },
 
   // T5
   'cobalto': {
     id: 'cobalto',
+    name: 'Cobalto',
     i18nKey: 'resources.mineral.cobalto.name',
     i18nDescriptionKey: 'resources.mineral.cobalto.description',
     item: {
@@ -157,10 +165,11 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 80,
     tier: Tier.T5,
     quantity: 1,
-    xpReward: 150,
+    xpReward: 75,
   },
   'mithril': {
     id: 'mithril',
+    name: 'Mithril',
     i18nKey: 'resources.mineral.mithril.name',
     i18nDescriptionKey: 'resources.mineral.mithril.description',
     item: {
@@ -173,12 +182,13 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 85,
     tier: Tier.T5,
     quantity: 1,
-    xpReward: 180,
+    xpReward: 90,
   },
 
   // T6
   'oricalco': {
     id: 'oricalco',
+    name: 'Oricalco',
     i18nKey: 'resources.mineral.oricalco.name',
     i18nDescriptionKey: 'resources.mineral.oricalco.description',
     item: {
@@ -191,10 +201,11 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 100,
     tier: Tier.T6,
     quantity: 1,
-    xpReward: 220,
+    xpReward: 110,
   },
   'adamantita': {
     id: 'adamantita',
+    name: 'Adamantita',
     i18nKey: 'resources.mineral.adamantita.name',
     i18nDescriptionKey: 'resources.mineral.adamantita.description',
     item: {
@@ -207,12 +218,13 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 105,
     tier: Tier.T6,
     quantity: 1,
-    xpReward: 260,
+    xpReward: 130,
   },
 
   // T7
   'titanio': {
     id: 'titanio',
+    name: 'Titanio',
     i18nKey: 'resources.mineral.titanio.name',
     i18nDescriptionKey: 'resources.mineral.titanio.description',
     item: {
@@ -225,10 +237,11 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 120,
     tier: Tier.T7,
     quantity: 1,
-    xpReward: 350,
+    xpReward: 175,
   },
   'draconita': {
     id: 'draconita',
+    name: 'Draconita',
     i18nKey: 'resources.mineral.draconita.name',
     i18nDescriptionKey: 'resources.mineral.draconita.description',
     item: {
@@ -241,6 +254,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     level: 150,
     tier: Tier.T7,
     quantity: 1,
-    xpReward: 400,
+    xpReward: 200,
   },
 }

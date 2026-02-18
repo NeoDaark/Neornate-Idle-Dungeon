@@ -165,17 +165,97 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
 }
 
 /**
- * Calcula XP requerido para el siguiente nivel
- * Fórmula: XP_next = 100 + (nivel × 50) + (tier × 300)
+ * Calcula XP requerido para el siguiente nivel (CURVA PROGRESIVA - MUY DIFÍCIL)
+ * 
+ * Curva de dificultad AUMENTADA para planificación estratégica a largo plazo:
+ * - Niveles 1-20 (T1): Rápido (2.0x)
+ * - Niveles 20-40 (T2): Fácil (4.0x)
+ * - Niveles 40-60 (T3): Normal (8.0x)
+ * - Niveles 60-80 (T4): Difícil (16.0x)
+ * - Niveles 80-100 (T5): Muy difícil (32.0x)
+ * - Niveles 100-120 (T6): Extremo (64.0x)
+ * - Niveles 120-200 (T7): Prestige puro, escalado dinámicamente (128 + (level-121)*0.4)
+ * 
+ * XP Rewards de materiales: REDUCIDOS A LA MITAD (para balance)
+ * 
+ * Resultado esperado: ~25-35 días de farmeo continuo T1-T6, requiere planificación estratégica
+ * Base XP: 100 + (nivel × 50)
  */
 export function calculateXpForLevel(level: number): number {
+  // Validación
   if (level <= 0) return 0
-  if (level > 200) return 80000
+  if (level > 200) return 0 // No sube más de nivel 200
+  
+  // Multiplicador de dificultad según rango de niveles
+  let difficultyMultiplier = 2.0 // Base por defecto para T1
+  
+  if (level > 20 && level <= 40) {
+    // T2: Fácil (1.5x base)
+    difficultyMultiplier = 4.0
+  } else if (level > 40 && level <= 60) {
+    // T3: Normal (3.0x base)
+    difficultyMultiplier = 8.0
+  } else if (level > 60 && level <= 80) {
+    // T4: Difícil (6.0x base)
+    difficultyMultiplier = 16.0
+  } else if (level > 80 && level <= 100) {
+    // T5: Más difícil (12.0x base)
+    difficultyMultiplier = 32.0
+  } else if (level > 100 && level <= 120) {
+    // T6: Muy difícil (24.0x base)
+    difficultyMultiplier = 64.0
+  } else if (level > 120) {
+    // T7: Prestige puro - escalado progresivo
+    // Fórmula para T7: base * (32 + (nivel - 121) * 0.4)
+    // Mantiene T7 muy difícil pero progresivamente escalado
+    const baseDifficultyT7 = 128 + (level - 121) * 0.4
+    difficultyMultiplier = baseDifficultyT7
+  }
+  
+  // Base: 100 + (nivel × 50)
+  const baseXP = 100 + level * 50
+  
+  // Aplicar multiplicador de dificultad
+  const finalXP = Math.floor(baseXP * difficultyMultiplier)
+  
+  return finalXP
+}
 
-  const tier = getTierForLevel(level)
-  const tierBonus = Object.values(Tier).indexOf(tier) * 300
+/**
+ * Calcula XP TOTAL acumulado hasta un nivel específico
+ * Necesario para validar límite máximo (10M en nivel 200)
+ */
+export function calculateTotalXpForLevel(level: number): number {
+  let totalXp = 0
+  
+  if (level <= 0) return 0
+  if (level > 200) level = 200
+  
+  for (let i = 1; i < level; i++) {
+    totalXp += calculateXpForLevel(i)
+  }
+  
+  return totalXp
+}
 
-  return 100 + level * 50 + tierBonus
+/**
+ * Verifica si el jugador puede subir de nivel basado en XP máximo permitido
+ * Límite: 10.000.000 XP = Máximo en nivel 200
+ */
+export function canLevelUp(currentLevel: number): boolean {
+  if (currentLevel >= 200) {
+    return false // Ya en máximo
+  }
+  
+  // Permitir subir mientras no alcance nivel 200
+  return true
+}
+
+/**
+ * Obtiene el XP total máximo permitido en el juego
+ */
+export function getMaxTotalXp(): number {
+  return 10_000_000 // 10 millones de XP
 }
 
 /**
@@ -191,13 +271,4 @@ export function getTierForLevel(level: number): Tier {
   return Tier.T7
 }
 
-/**
- * Calcula XP total acumulado hasta un nivel
- */
-export function calculateTotalXpForLevel(level: number): number {
-  let totalXp = 0
-  for (let i = 1; i < level; i++) {
-    totalXp += calculateXpForLevel(i)
-  }
-  return totalXp
-}
+

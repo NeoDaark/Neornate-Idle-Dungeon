@@ -41,6 +41,11 @@ const routes: RouteRecordRaw[] = [
     name: 'settings',
     component: () => import('@/views/SettingsView.vue'),
   },
+  {
+    path: '/dev',
+    name: 'dev-xp',
+    component: () => import('@/views/DevXpView.vue'),
+  },
   // Catchall para rutas no encontradas - redirige a home
   {
     path: '/:pathMatch(.*)*',

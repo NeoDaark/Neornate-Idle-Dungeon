@@ -26,6 +26,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   // T1
   'cobre_ingot': {
     id: 'cobre_ingot',
+    name: 'Ingot de Cobre',
     i18nKey: 'resources.ingots.cobre.name',
     i18nDescriptionKey: 'resources.ingots.cobre.description',
     item: {
@@ -39,7 +40,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 1,
     tier: Tier.T1,
     quantity: 1,
-    xpReward: 20,
+    xpReward: 10,
     requiredMaterials: [
       { itemId: 'cobre', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -49,6 +50,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   // T2
   'hierro_ingot': {
     id: 'hierro_ingot',
+    name: 'Ingot de Hierro',
     i18nKey: 'resources.ingots.hierro.name',
     i18nDescriptionKey: 'resources.ingots.hierro.description',
     item: {
@@ -62,7 +64,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 20,
     tier: Tier.T2,
     quantity: 1,
-    xpReward: 35,
+    xpReward: 17.5,
     requiredMaterials: [
       { itemId: 'hierro', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -70,6 +72,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   },
   'plata_ingot': {
     id: 'plata_ingot',
+    name: 'Ingot de Plata',
     i18nKey: 'resources.ingots.plata.name',
     i18nDescriptionKey: 'resources.ingots.plata.description',
     item: {
@@ -83,7 +86,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 25,
     tier: Tier.T2,
     quantity: 1,
-    xpReward: 45,
+    xpReward: 22.5,
     requiredMaterials: [
       { itemId: 'plata', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -93,6 +96,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   // T3
   'tungsteno_ingot': {
     id: 'tungsteno_ingot',
+    name: 'Ingot de Tungsteno',
     i18nKey: 'resources.ingots.tungsteno.name',
     i18nDescriptionKey: 'resources.ingots.tungsteno.description',
     item: {
@@ -106,7 +110,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 40,
     tier: Tier.T3,
     quantity: 1,
-    xpReward: 70,
+    xpReward: 35,
     requiredMaterials: [
       { itemId: 'tungsteno', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -114,6 +118,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   },
   'oro_ingot': {
     id: 'oro_ingot',
+    name: 'Ingot de Oro',
     i18nKey: 'resources.ingots.oro.name',
     i18nDescriptionKey: 'resources.ingots.oro.description',
     item: {
@@ -127,7 +132,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 45,
     tier: Tier.T3,
     quantity: 1,
-    xpReward: 85,
+    xpReward: 42.5,
     requiredMaterials: [
       { itemId: 'oro', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -137,6 +142,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   // T4
   'platino_ingot': {
     id: 'platino_ingot',
+    name: 'Ingot de Platino',
     i18nKey: 'resources.ingots.platino.name',
     i18nDescriptionKey: 'resources.ingots.platino.description',
     item: {
@@ -150,7 +156,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 60,
     tier: Tier.T4,
     quantity: 1,
-    xpReward: 110,
+    xpReward: 55,
     requiredMaterials: [
       { itemId: 'platino', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -158,6 +164,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   },
   'obsidiana_ingot': {
     id: 'obsidiana_ingot',
+    name: 'Ingot de Obsidiana',
     i18nKey: 'resources.ingots.obsidiana.name',
     i18nDescriptionKey: 'resources.ingots.obsidiana.description',
     item: {
@@ -171,7 +178,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 65,
     tier: Tier.T4,
     quantity: 1,
-    xpReward: 130,
+    xpReward: 65,
     requiredMaterials: [
       { itemId: 'obsidiana', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -181,6 +188,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   // T5
   'cobalto_ingot': {
     id: 'cobalto_ingot',
+    name: 'Ingot de Cobalto',
     i18nKey: 'resources.ingots.cobalto.name',
     i18nDescriptionKey: 'resources.ingots.cobalto.description',
     item: {
@@ -194,7 +202,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 80,
     tier: Tier.T5,
     quantity: 1,
-    xpReward: 155,
+    xpReward: 77.5,
     requiredMaterials: [
       { itemId: 'cobalto', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -202,6 +210,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   },
   'mithril_ingot': {
     id: 'mithril_ingot',
+    name: 'Ingot de Mithril',
     i18nKey: 'resources.ingots.mithril.name',
     i18nDescriptionKey: 'resources.ingots.mithril.description',
     item: {
@@ -215,7 +224,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 90,
     tier: Tier.T5,
     quantity: 1,
-    xpReward: 180,
+    xpReward: 90,
     requiredMaterials: [
       { itemId: 'mithril', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -225,6 +234,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   // T6
   'oricalco_ingot': {
     id: 'oricalco_ingot',
+    name: 'Ingot de Oricalco',
     i18nKey: 'resources.ingots.oricalco.name',
     i18nDescriptionKey: 'resources.ingots.oricalco.description',
     item: {
@@ -238,7 +248,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 100,
     tier: Tier.T6,
     quantity: 1,
-    xpReward: 210,
+    xpReward: 105,
     requiredMaterials: [
       { itemId: 'oricalco', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -246,6 +256,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   },
   'adamantita_ingot': {
     id: 'adamantita_ingot',
+    name: 'Ingot de Adamantita',
     i18nKey: 'resources.ingots.adamantita.name',
     i18nDescriptionKey: 'resources.ingots.adamantita.description',
     item: {
@@ -259,7 +270,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 105,
     tier: Tier.T6,
     quantity: 1,
-    xpReward: 240,
+    xpReward: 120,
     requiredMaterials: [
       { itemId: 'adamantita', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -269,6 +280,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   // T7
   'titanio_ingot': {
     id: 'titanio_ingot',
+    name: 'Ingot de Titanio',
     i18nKey: 'resources.ingots.titanio.name',
     i18nDescriptionKey: 'resources.ingots.titanio.description',
     item: {
@@ -282,7 +294,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 120,
     tier: Tier.T7,
     quantity: 1,
-    xpReward: 300,
+    xpReward: 150,
     requiredMaterials: [
       { itemId: 'titanio', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }
@@ -290,6 +302,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
   },
   'draconita_ingot': {
     id: 'draconita_ingot',
+    name: 'Ingot de Draconita',
     i18nKey: 'resources.ingots.draconita.name',
     i18nDescriptionKey: 'resources.ingots.draconita.description',
     item: {
@@ -303,7 +316,7 @@ export const SMELTING_PRODUCTS: Record<string, SkillProduct> = {
     level: 150,
     tier: Tier.T7,
     quantity: 1,
-    xpReward: 380,
+    xpReward: 190,
     requiredMaterials: [
       { itemId: 'draconita', quantity: 10 },
       { itemId: 'carbon', quantity: 1 }

@@ -211,7 +211,27 @@ Guía para navegar la documentación del game loop.
 
 ---
 
-## 📍 Ubicaciones de Código
+## � Documentación Relacionada (No Game Loop, pero Importante)
+
+### 27-CURVA_PROGRESIVA_XP.md
+**Tema**: Sistema de curva de XP progresiva y niveles  
+**Cuándo leer**: Si preguntas "¿Por qué subo de nivel tan rápido/lento?"
+
+Contiene:
+- Problema: Ciclos de 5s universales hicieron progresión muy fácil
+- Solución: Curva de dificultad progresiva (1x → 16x → 60x)
+- Tabla: XP requerido por nivel (niveles 1-200)
+- Impacto: Ciclos necesarios para subir de nivel
+- Implementación: Función centralizada `calculateXpForLevel()`
+
+**Archivos modificados:**
+- `src/types/Game.ts` → Nueva función de cálculo de XP
+- `src/stores/playerStore.ts` → Usa nueva función
+- `src/stores/skillsStore.ts` → Usa nueva función
+
+---
+
+## �📍 Ubicaciones de Código
 
 | Función | Archivo | Líneas |
 |---|---|---|

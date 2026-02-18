@@ -7,6 +7,7 @@ import type { Item } from './Item'
 
 export interface SkillProduct {
   id: string
+  name: string // nombre simple del producto (e.g., 'Cobre', 'Hierro')
   i18nKey: string // clave para i18n (e.g., 'resources.mineral.carbon.name')
   i18nDescriptionKey: string // clave para descripción i18n (e.g., 'resources.mineral.carbon.description')
   item: Item
@@ -99,6 +100,7 @@ export function createSkillState(skill: Skill): SkillState {
  */
 export function createSkillProduct(
   id: string,
+  name: string,
   i18nKey: string,
   i18nDescriptionKey: string,
   item: Item,
@@ -110,6 +112,7 @@ export function createSkillProduct(
 ): SkillProduct {
   return {
     id,
+    name,
     i18nKey,
     i18nDescriptionKey,
     item,

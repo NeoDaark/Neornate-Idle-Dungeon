@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { SkillState, SkillProduct, CycleResult } from '@/types/Skill'
-import { Skill, Tier } from '@/types/Game'
+import { Skill, Tier, calculateXpForLevel, canLevelUp } from '@/types/Game'
 import { SKILL_PRODUCTS_MAP, WOODBURNING_DROP_TABLE, LOGGING_PRODUCTS } from '@/data/skillProducts'
 import { useToolsStore } from '@/stores/toolsStore'
 
@@ -51,13 +51,19 @@ export const useSkillsStore = defineStore('skills', () => {
 
   /**
    * Computed: Calcular XP requerido para siguiente nivel
-   * Fórmula: 100 + (nivel × 50) + (tier × 300)
+   * NUEVA CURVA PROGRESIVA (ver Game.ts calculateXpForLevel)
+   * - T1 (1-20): Muy fácil
+   * - T2 (20-40): Fácil
+   * - T3 (40-60): Normal
+   * - T4 (60-80): Difícil
+   * - T5 (80-100): Más difícil
+   * - T6 (100-120): Muy difícil
+   * - T7 (120-200): Extremo, escalado progresivo
    */
   const getNextLevelXP = (skill: Skill): number => {
     const state = skillStates.value[skill]
-    const tierIndex = TIER_ORDER.indexOf(state.tier)
-    const tierNumber = tierIndex + 1
-    return 100 + state.level * 50 + tierNumber * 300
+    // El siguiente nivel es currentLevel + 1
+    return calculateXpForLevel(state.level + 1)
   }
 
   /**
@@ -98,32 +104,38 @@ export const useSkillsStore = defineStore('skills', () => {
   }
 
   /**
-   * Ganar XP en un skill
+   * Ganar XP en un skill (hasta máximo nivel 200)
    */
   const addExperience = (skill: Skill, xpAmount: number) => {
     const state = skillStates.value[skill]
+    
+    // Si ya está en nivel máximo, no acumula más XP
+    if (state.level >= 200) {
+      return
+    }
+
     state.experience += xpAmount
     state.totalExperience += xpAmount
 
-    // Manejar level-ups automáticos
-    while (state.experience >= getNextLevelXP(skill) && state.level < 120) {
+    // Manejar level-ups automáticos hasta nivel 200
+    while (state.experience >= getNextLevelXP(skill) && state.level < 200 && canLevelUp(state.level)) {
       state.experience -= getNextLevelXP(skill)
       levelUp(skill)
     }
 
-    // Sanity check para T7
-    if (state.tier === Tier.T7 && state.level > 120) {
-      state.level = 120
+    // Sanity check: no sobrepase nivel 200
+    if (state.level > 200) {
+      state.level = 200
       state.experience = 0
     }
   }
 
   /**
-   * Subir de nivel un skill
+   * Subir de nivel un skill (hasta máximo nivel 200)
    */
   const levelUp = (skill: Skill) => {
     const state = skillStates.value[skill]
-    if (state.level >= 120) return
+    if (state.level >= 200) return
 
     state.level += 1
 

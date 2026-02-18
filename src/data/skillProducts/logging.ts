@@ -115,6 +115,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
   // T1
   'madera-pino': {
     id: 'madera-pino',
+    name: 'Madera de Pino',
     i18nKey: 'resources.wood.madera-pino.name',
     i18nDescriptionKey: 'resources.wood.madera-pino.description',
     item: {
@@ -126,11 +127,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 1,
     tier: Tier.T1,
     quantity: 1,
-    xpReward: 12,
+    xpReward: 6,
     treeId: 'pino',
   },
   'madera-abedul': {
     id: 'madera-abedul',
+    name: 'Madera de Abedul',
     i18nKey: 'resources.wood.madera-abedul.name',
     i18nDescriptionKey: 'resources.wood.madera-abedul.description',
     item: {
@@ -142,13 +144,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 5,
     tier: Tier.T1,
     quantity: 1,
-    xpReward: 18,
+    xpReward: 9,
     treeId: 'abedul',
   },
 
   // T2
   'madera-abeto': {
     id: 'madera-abeto',
+    name: 'Madera de Abeto',
     i18nKey: 'resources.wood.madera-abeto.name',
     i18nDescriptionKey: 'resources.wood.madera-abeto.description',
     item: {
@@ -160,11 +163,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 20,
     tier: Tier.T2,
     quantity: 1,
-    xpReward: 35,
+    xpReward: 17.5,
     treeId: 'abeto',
   },
   'madera-nogal': {
     id: 'madera-nogal',
+    name: 'Madera de Nogal',
     i18nKey: 'resources.wood.madera-nogal.name',
     i18nDescriptionKey: 'resources.wood.madera-nogal.description',
     item: {
@@ -176,13 +180,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 25,
     tier: Tier.T2,
     quantity: 1,
-    xpReward: 45,
+    xpReward: 22.5,
     treeId: 'nogal',
   },
 
   // T3
   'madera-caoba': {
     id: 'madera-caoba',
+    name: 'Madera de Caoba',
     i18nKey: 'resources.wood.madera-caoba.name',
     i18nDescriptionKey: 'resources.wood.madera-caoba.description',
     item: {
@@ -194,11 +199,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 40,
     tier: Tier.T3,
     quantity: 1,
-    xpReward: 65,
+    xpReward: 32.5,
     treeId: 'caoba',
   },
   'madera-ebano': {
     id: 'madera-ebano',
+    name: 'Madera de Ébano',
     i18nKey: 'resources.wood.madera-ebano.name',
     i18nDescriptionKey: 'resources.wood.madera-ebano.description',
     item: {
@@ -210,13 +216,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 45,
     tier: Tier.T3,
     quantity: 1,
-    xpReward: 80,
+    xpReward: 40,
     treeId: 'ebano',
   },
 
   // T4
   'madera-teca': {
     id: 'madera-teca',
+    name: 'Madera de Teca',
     i18nKey: 'resources.wood.madera-teca.name',
     i18nDescriptionKey: 'resources.wood.madera-teca.description',
     item: {
@@ -228,11 +235,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 60,
     tier: Tier.T4,
     quantity: 1,
-    xpReward: 110,
+    xpReward: 55,
     treeId: 'teca',
   },
   'madera-cedro': {
     id: 'madera-cedro',
+    name: 'Madera de Cedro',
     i18nKey: 'resources.wood.madera-cedro.name',
     i18nDescriptionKey: 'resources.wood.madera-cedro.description',
     item: {
@@ -244,13 +252,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 65,
     tier: Tier.T4,
     quantity: 1,
-    xpReward: 130,
+    xpReward: 65,
     treeId: 'cedro',
   },
 
   // T5
   'madera-maldita': {
     id: 'madera-maldita',
+    name: 'Madera Maldita',
     i18nKey: 'resources.wood.madera-maldita.name',
     i18nDescriptionKey: 'resources.wood.madera-maldita.description',
     item: {
@@ -262,11 +271,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 80,
     tier: Tier.T5,
     quantity: 1,
-    xpReward: 160,
+    xpReward: 80,
     treeId: 'maldito',
   },
   'madera-mistica': {
     id: 'madera-mistica',
+    name: 'Madera Mística',
     i18nKey: 'resources.wood.madera-mistica.name',
     i18nDescriptionKey: 'resources.wood.madera-mistica.description',
     item: {
@@ -278,13 +288,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 85,
     tier: Tier.T5,
     quantity: 1,
-    xpReward: 190,
+    xpReward: 95,
     treeId: 'mistico',
   },
 
   // T6
   'madera-sagrada': {
     id: 'madera-sagrada',
+    name: 'Madera Sagrada',
     i18nKey: 'resources.wood.madera-sagrada.name',
     i18nDescriptionKey: 'resources.wood.madera-sagrada.description',
     item: {
@@ -296,11 +307,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 100,
     tier: Tier.T6,
     quantity: 1,
-    xpReward: 240,
+    xpReward: 120,
     treeId: 'sagrado',
   },
   'madera-primordial': {
     id: 'madera-primordial',
+    name: 'Madera Primordial',
     i18nKey: 'resources.wood.madera-primordial.name',
     i18nDescriptionKey: 'resources.wood.madera-primordial.description',
     item: {
@@ -312,13 +324,14 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 105,
     tier: Tier.T6,
     quantity: 1,
-    xpReward: 280,
+    xpReward: 140,
     treeId: 'primordial',
   },
 
   // T7
   'madera-dimensional': {
     id: 'madera-dimensional',
+    name: 'Madera Dimensional',
     i18nKey: 'resources.wood.madera-dimensional.name',
     i18nDescriptionKey: 'resources.wood.madera-dimensional.description',
     item: {
@@ -330,11 +343,12 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 120,
     tier: Tier.T7,
     quantity: 1,
-    xpReward: 380,
+    xpReward: 190,
     treeId: 'dimensional',
   },
   'madera-dragonica': {
     id: 'madera-dragonica',
+    name: 'Madera Dragónica',
     i18nKey: 'resources.wood.madera-dragonica.name',
     i18nDescriptionKey: 'resources.wood.madera-dragonica.description',
     item: {
@@ -346,7 +360,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     level: 150,
     tier: Tier.T7,
     quantity: 1,
-    xpReward: 450,
+    xpReward: 225,
     treeId: 'dragonico',
   },
 }

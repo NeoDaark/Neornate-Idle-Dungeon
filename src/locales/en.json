@@ -457,38 +457,86 @@
     "tier6": "Tier 6",
     "tier7": "Tier 7",
     "mineria": {
-      "pickaxe_copper": "A basic copper pickaxe that speeds up mining",
-      "pickaxe_iron": "A more efficient iron pickaxe",
-      "pickaxe_steel": "A robust and fast steel pickaxe",
-      "pickaxe_mithril": "A legendary mithril pickaxe",
-      "pickaxe_adamantite": "One of the best pickaxes ever created",
-      "pickaxe_orichalcum": "A magical pickaxe of great power",
-      "pickaxe_divine": "The supreme pickaxe of infinite power"
+      "pickaxe_copper": "Copper Pickaxe",
+      "pickaxe_iron": "Iron Pickaxe",
+      "pickaxe_steel": "Steel Pickaxe",
+      "pickaxe_mithril": "Mithril Pickaxe",
+      "pickaxe_adamantite": "Adamantite Pickaxe",
+      "pickaxe_orichalcum": "Orichalcum Pickaxe",
+      "pickaxe_divine": "Divine Pickaxe"
     },
     "tala": {
-      "axe_wood": "A basic wooden axe",
-      "axe_copper": "A more durable copper axe",
-      "axe_iron": "A sharp iron axe",
-      "axe_steel": "A first-class steel axe",
-      "axe_mithril": "A legendary mithril axe",
-      "axe_orichalcum": "A magical Orichalcum axe",
-      "axe_divine": "The supreme axe of infinite power"
+      "axe_wood": "Wooden Axe",
+      "axe_copper": "Copper Axe",
+      "axe_iron": "Iron Axe",
+      "axe_steel": "Steel Axe",
+      "axe_mithril": "Mithril Axe",
+      "axe_orichalcum": "Orichalcum Axe",
+      "axe_divine": "Divine Axe"
     },
     "fundicion": {
-      "furnace_basic": "A basic stone furnace",
-      "furnace_copper": "An efficient copper furnace",
-      "furnace_iron": "A quality iron furnace",
-      "furnace_steel": "A mastery steel furnace",
-      "furnace_mithril": "A legendary mithril furnace",
-      "furnace_orichalcum": "A magical Orichalcum furnace",
-      "furnace_divine": "The supreme furnace of infinite power"
+      "furnace_basic": "Basic Furnace",
+      "furnace_copper": "Copper Furnace",
+      "furnace_iron": "Iron Furnace",
+      "furnace_steel": "Steel Furnace",
+      "furnace_mithril": "Mithril Furnace",
+      "furnace_orichalcum": "Orichalcum Furnace",
+      "furnace_divine": "Divine Furnace"
+    },
+    "quemado": {
+      "bonfire_flickering": "Flickering Fire",
+      "bonfire_burning": "Burning Flame",
+      "bonfire_infernal": "Infernal Blaze",
+      "bonfire_roaring": "Roaring Inferno",
+      "bonfire_celestial": "Celestial Pyre",
+      "bonfire_eternal": "Eternal Flame",
+      "bonfire_cosmic": "Cosmic Inferno"
+    },
+    "descriptions": {
+      "mineria": {
+        "pickaxe_copper": "A basic copper pickaxe that speeds up mining",
+        "pickaxe_iron": "A more efficient iron pickaxe",
+        "pickaxe_steel": "A robust and fast steel pickaxe",
+        "pickaxe_mithril": "A legendary mithril pickaxe",
+        "pickaxe_adamantite": "One of the best pickaxes ever created",
+        "pickaxe_orichalcum": "A magical pickaxe of great power",
+        "pickaxe_divine": "The supreme pickaxe of infinite power"
+      },
+      "tala": {
+        "axe_wood": "A basic wooden axe",
+        "axe_copper": "A more durable copper axe",
+        "axe_iron": "A sharp iron axe",
+        "axe_steel": "A first-class steel axe",
+        "axe_mithril": "A legendary mithril axe",
+        "axe_orichalcum": "A magical Orichalcum axe",
+        "axe_divine": "The supreme axe of infinite power"
+      },
+      "fundicion": {
+        "furnace_basic": "A basic stone furnace",
+        "furnace_copper": "An efficient copper furnace",
+        "furnace_iron": "A quality iron furnace",
+        "furnace_steel": "A mastery steel furnace",
+        "furnace_mithril": "A legendary mithril furnace",
+        "furnace_orichalcum": "A magical Orichalcum furnace",
+        "furnace_divine": "The supreme furnace of infinite power"
+      },
+      "quemado": {
+        "bonfire_flickering": "A bonfire that flickers weakly",
+        "bonfire_burning": "A bonfire that burns intensely",
+        "bonfire_infernal": "An infernal bonfire of pure fire",
+        "bonfire_roaring": "A roaring bonfire of devastation",
+        "bonfire_celestial": "A celestial bonfire of ethereal fire",
+        "bonfire_eternal": "An eternal bonfire that never goes out",
+        "bonfire_cosmic": "A cosmic bonfire of infinite power"
+      }
     }
   },
   "effects": {
     "speed": "-{VALUE}s per cycle",
     "quantity": "+{VALUE} {ITEM}",
     "xp": "+{VALUE}% XP",
-    "rarity": "+{VALUE}% rarity"
+    "rarity": "+{VALUE}% rarity",
+    "dropModifier": "+{VALUE}% drop improvement"
   },
   "market": {
     "sell": {

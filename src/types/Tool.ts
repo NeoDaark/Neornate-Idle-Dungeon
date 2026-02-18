@@ -4,7 +4,7 @@
 
 import type { Skill } from './Game'
 
-export type ToolEffect = 'speed' | 'quantity' | 'xp' | 'rarity' | 'discount'
+export type ToolEffect = 'speed' | 'quantity' | 'xp' | 'rarity' | 'discount' | 'dropModifier'
 
 export interface Tool {
   id: string // "pickaxe_copper", "axe_iron"

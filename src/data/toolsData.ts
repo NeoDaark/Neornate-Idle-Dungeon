@@ -11,18 +11,21 @@ import type { Tool } from '@/types/Tool'
 import { MINING_TOOLS } from './skillTools/mining'
 import { WOODCUTTING_TOOLS } from './skillTools/logging'
 import { SMELTING_TOOLS } from './skillTools/smelting'
+import { WOODBURNING_TOOLS } from './skillTools/woodburning'
 
 // Exportar todas las herramientas en un array
 export const ALL_TOOLS: Tool[] = [
   ...MINING_TOOLS,
   ...WOODCUTTING_TOOLS,
   ...SMELTING_TOOLS,
+  ...WOODBURNING_TOOLS,
 ]
 
 // Mapa rápido por oficio
 export const TOOLS_BY_SKILL: Record<string, Tool[]> = {
   [Skill.MINERIA]: MINING_TOOLS,
   [Skill.TALA]: WOODCUTTING_TOOLS,
+  [Skill.QUEMADO]: WOODBURNING_TOOLS,
   [Skill.FUNDICION]: SMELTING_TOOLS,
 }
 
@@ -39,3 +42,4 @@ export const TOOLS_MAP: Record<string, Tool> = ALL_TOOLS.reduce(
 export { MINING_TOOLS } from './skillTools/mining'
 export { WOODCUTTING_TOOLS } from './skillTools/logging'
 export { SMELTING_TOOLS } from './skillTools/smelting'
+export { WOODBURNING_TOOLS } from './skillTools/woodburning'

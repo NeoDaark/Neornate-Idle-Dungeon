@@ -456,38 +456,86 @@
     "tier6": "Tier 6",
     "tier7": "Tier 7",
     "mineria": {
-      "pickaxe_copper": "Un pico básico de cobre que acelera la minería",
-      "pickaxe_iron": "Un pico de hierro más eficiente",
-      "pickaxe_steel": "Un pico de acero robusto y rápido",
-      "pickaxe_mithril": "Un legendario pico de mithril",
-      "pickaxe_adamantite": "Uno de los mejores picos jamás creados",
-      "pickaxe_orichalcum": "Un pico mágico de gran poder",
-      "pickaxe_divine": "El pico supremo de poder infinito"
+      "pickaxe_copper": "Pico de Cobre",
+      "pickaxe_iron": "Pico de Hierro",
+      "pickaxe_steel": "Pico de Acero",
+      "pickaxe_mithril": "Pico de Mithril",
+      "pickaxe_adamantite": "Pico de Adamantita",
+      "pickaxe_orichalcum": "Pico de Orichalco",
+      "pickaxe_divine": "Pico Divino"
     },
     "tala": {
-      "axe_wood": "Un hacha básica de madera",
-      "axe_copper": "Un hacha de cobre más resistente",
-      "axe_iron": "Un hacha de hierro afilada",
-      "axe_steel": "Un hacha de acero de primera",
-      "axe_mithril": "Un legendario hacha de mithril",
-      "axe_orichalcum": "Un hacha mágica de Orichalco",
-      "axe_divine": "El hacha suprema del poder infinito"
+      "axe_wood": "Hacha de Madera",
+      "axe_copper": "Hacha de Cobre",
+      "axe_iron": "Hacha de Hierro",
+      "axe_steel": "Hacha de Acero",
+      "axe_mithril": "Hacha de Mithril",
+      "axe_orichalcum": "Hacha de Orichalco",
+      "axe_divine": "Hacha Divina"
     },
     "fundicion": {
-      "furnace_basic": "Un horno de piedra básico",
-      "furnace_copper": "Un horno de cobre eficiente",
-      "furnace_iron": "Un horno de hierro de calidad",
-      "furnace_steel": "Un horno de acero de maestría",
-      "furnace_mithril": "Un legendario horno de mithril",
-      "furnace_orichalcum": "Un horno mágico de Orichalco",
-      "furnace_divine": "El horno supremo del poder infinito"
+      "furnace_basic": "Horno Básico",
+      "furnace_copper": "Horno de Cobre",
+      "furnace_iron": "Horno de Hierro",
+      "furnace_steel": "Horno de Acero",
+      "furnace_mithril": "Horno de Mithril",
+      "furnace_orichalcum": "Horno de Orichalco",
+      "furnace_divine": "Horno Divino"
+    },
+    "quemado": {
+      "bonfire_flickering": "Hoguera Titilante",
+      "bonfire_burning": "Hoguera Ardiente",
+      "bonfire_infernal": "Hoguera Infernal",
+      "bonfire_roaring": "Hoguera Rugiente",
+      "bonfire_celestial": "Hoguera Celestial",
+      "bonfire_eternal": "Hoguera Eterna",
+      "bonfire_cosmic": "Hoguera Cósmica"
+    },
+    "descriptions": {
+      "mineria": {
+        "pickaxe_copper": "Un pico básico de cobre que acelera la minería",
+        "pickaxe_iron": "Un pico de hierro más eficiente",
+        "pickaxe_steel": "Un pico de acero robusto y rápido",
+        "pickaxe_mithril": "Un legendario pico de mithril",
+        "pickaxe_adamantite": "Uno de los mejores picos jamás creados",
+        "pickaxe_orichalcum": "Un pico mágico de gran poder",
+        "pickaxe_divine": "El pico supremo de poder infinito"
+      },
+      "tala": {
+        "axe_wood": "Un hacha básica de madera",
+        "axe_copper": "Un hacha de cobre más resistente",
+        "axe_iron": "Un hacha de hierro afilada",
+        "axe_steel": "Un hacha de acero de primera",
+        "axe_mithril": "Un legendario hacha de mithril",
+        "axe_orichalcum": "Un hacha mágica de Orichalco",
+        "axe_divine": "El hacha suprema del poder infinito"
+      },
+      "fundicion": {
+        "furnace_basic": "Un horno de piedra básico",
+        "furnace_copper": "Un horno de cobre eficiente",
+        "furnace_iron": "Un horno de hierro de calidad",
+        "furnace_steel": "Un horno de acero de maestría",
+        "furnace_mithril": "Un legendario horno de mithril",
+        "furnace_orichalcum": "Un horno mágico de Orichalco",
+        "furnace_divine": "El horno supremo del poder infinito"
+      },
+      "quemado": {
+        "bonfire_flickering": "Una hoguera que parpadea débilmente",
+        "bonfire_burning": "Una hoguera que arde intensamente",
+        "bonfire_infernal": "Una hoguera infernal de fuego puro",
+        "bonfire_roaring": "Una hoguera rugiente y devastadora",
+        "bonfire_celestial": "Una hoguera celestial de fuego etéreo",
+        "bonfire_eternal": "Una hoguera eterna que nunca se apaga",
+        "bonfire_cosmic": "Una hoguera cósmica de poder infinito"
+      }
     }
   },
   "effects": {
     "speed": "-{VALUE}s al ciclo",
     "quantity": "+{VALUE} {ITEM}",
     "xp": "+{VALUE}% XP",
-    "rarity": "+{VALUE}% rareza"
+    "rarity": "+{VALUE}% rareza",
+    "dropModifier": "+{VALUE}% mejora de drops"
   },
   "market": {
     "sell": {

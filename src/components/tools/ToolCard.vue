@@ -6,7 +6,7 @@
         <div class="compact-icon">{{ tool.icon }}</div>
         <div class="compact-info">
           <div class="compact-name-tier">
-            <span class="compact-name">{{ tool.name }}</span>
+            <span class="compact-name">{{ toolName }}</span>
             <span class="compact-tier">{{ t(`tools.tier${tool.tier}`) }}</span>
           </div>
           <div v-if="tool.effects.length > 0" class="compact-effects">
@@ -41,12 +41,12 @@
       <div class="tool-header">
         <span class="tool-icon">{{ tool.icon }}</span>
         <div class="tool-info">
-          <h3 class="tool-name">{{ tool.name }}</h3>
+          <h3 class="tool-name">{{ toolName }}</h3>
           <p class="tool-tier">{{ t(`tools.tier${tool.tier}`) }}</p>
         </div>
       </div>
 
-      <p class="tool-description">{{ tool.description }}</p>
+      <p class="tool-description">{{ toolDescription }}</p>
 
       <div class="tool-effects">
         <div v-for="effect in tool.effects" :key="`${tool.id}-${effect.type}`" class="effect">
@@ -119,6 +119,42 @@ const isEquipped = computed(
 )
 
 const hasEnoughGold = computed(() => playerStore.player.gold >= props.tool.price)
+
+/**
+ * Obtiene el nombre traducido del tool basándose en su skillId e id
+ * Clave: tools.{skillId}.{toolId}
+ */
+const toolName = computed(() => {
+  const skillMap: Record<string, string> = {
+    'mineria': 'mineria',
+    'tala': 'tala',
+    'fundicion': 'fundicion',
+    'quemado': 'quemado',
+  }
+  const skillKey = skillMap[props.tool.skillId] || props.tool.skillId
+  const i18nKey = `tools.${skillKey}.${props.tool.id}`
+  const translated = t(i18nKey)
+  // Si la traducción falla (devuelve la clave), usar el nombre del tool
+  return translated === i18nKey ? props.tool.name : translated
+})
+
+/**
+ * Obtiene la descripción traducida del tool basándose en su skillId e id
+ * Clave: tools.descriptions.{skillId}.{toolId}
+ */
+const toolDescription = computed(() => {
+  const skillMap: Record<string, string> = {
+    'mineria': 'mineria',
+    'tala': 'tala',
+    'fundicion': 'fundicion',
+    'quemado': 'quemado',
+  }
+  const skillKey = skillMap[props.tool.skillId] || props.tool.skillId
+  const i18nKey = `tools.descriptions.${skillKey}.${props.tool.id}`
+  const translated = t(i18nKey)
+  // Si la traducción falla, usar la descripción original del tool
+  return translated === i18nKey ? props.tool.description : translated
+})
 
 /**
  * Formatea la lista de efectos traduciendo las claves i18n

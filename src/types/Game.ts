@@ -99,84 +99,66 @@ export const GAME_CONSTANTS: GameConstants = {
 
 export interface SkillConfig {
   name: string
-  displayName: string
   emoji: string
   icon: string
-  description: string
-  type: 'extraction' | 'crafting' | 'combat'
+  type: 'extraction' | 'crafting' | 'combat' | 'burning'
   baseCycleDuration: number // segundos
 }
 
 export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
   [Skill.MINERIA]: {
     name: 'mineria',
-    displayName: 'Minería',
     emoji: '⛏️',
     icon: 'pickaxe',
-    description: 'Extrae minerales de la tierra',
     type: 'extraction',
     baseCycleDuration: 5,
   },
   [Skill.TALA]: {
     name: 'tala',
-    displayName: 'Tala',
     emoji: '🌲',
     icon: 'tree',
-    description: 'Corta árboles para obtener madera',
     type: 'extraction',
     baseCycleDuration: 5,
   },
   [Skill.FUNDICION]: {
     name: 'fundicion',
-    displayName: 'Fundición',
     emoji: '🔥',
     icon: 'furnace',
-    description: 'Funde minerales en lingotes',
     type: 'crafting',
     baseCycleDuration: 5,
   },
   [Skill.QUEMADO]: {
     name: 'quemado',
-    displayName: 'Quemado',
     emoji: '🔥',
     icon: 'burn',
-    description: 'Quema troncos para obtener carbón',
-    type: 'crafting',
+    type: 'burning',
     baseCycleDuration: 5,
   },
   [Skill.HERRERIA]: {
     name: 'herreria',
-    displayName: 'Herrería',
     emoji: '🔨',
     icon: 'hammer',
-    description: 'Forja armas y armaduras',
     type: 'crafting',
     baseCycleDuration: 5,
   },
   [Skill.PESCA]: {
     name: 'pesca',
-    displayName: 'Pesca',
     emoji: '🎣',
     icon: 'fishing',
-    description: 'Pesca peces en el río',
     type: 'extraction',
     baseCycleDuration: 5,
   },
   [Skill.COCINA]: {
     name: 'cocina',
-    displayName: 'Cocina',
     emoji: '🍳',
     icon: 'cooking',
-    description: 'Prepara comidas deliciosas',
     type: 'crafting',
     baseCycleDuration: 5,
   },
   [Skill.AVENTURA]: {
     name: 'aventura',
-    displayName: 'Aventura',
     emoji: '🗺️',
     icon: 'adventure',
-    description: 'Explora dungeons y combate',
     type: 'combat',
     baseCycleDuration: 5,
   },

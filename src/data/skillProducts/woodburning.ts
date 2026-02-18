@@ -1,7 +1,7 @@
 /**
  * woodburning.ts - Productos de la habilidad Quemado (Woodburning)
  * 
- * Mecánica: Selecciona un tronco de Tala, quémalo durante su duración (burningTime)
+ * Mecánica: Selecciona un tronco de Tala, quémalo durante la duracion del ciclo, al finalizar el ciclo se genera un drop basado en la tabla de drops.
  * Drops con probabilidad:
  * - 40% Carbón
  * - 20% Ceniza
@@ -36,7 +36,7 @@ export const WOODBURNING_DROPS: Record<string, Resource> = {
 
 /**
  * Tabla de probabilidades para los drops
- * Se escoge un tronco y se quema durante su burningTime
+ * Se escoge un tronco y se quema durante el ciclo, al finalizar se genera un drop basado en esta tabla
  */
 export const WOODBURNING_DROP_TABLE = {
   carbon: {

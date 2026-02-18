@@ -39,8 +39,7 @@
     "continue": "Continue",
     "drops": "Drops",
     "nothing": "Nothing",
-    "selectLog": "Select a log",
-    "burningTime": "Burning time"
+    "selectLog": "Select a log"
   },
   "inventory": {
     "quantity": "Quantity",

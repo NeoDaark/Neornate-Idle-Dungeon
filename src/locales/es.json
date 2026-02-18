@@ -39,8 +39,7 @@
     "continue": "Continuar",
     "drops": "Drops",
     "nothing": "Nada",
-    "selectLog": "Selecciona un tronco",
-    "burningTime": "Tiempo de quemado"
+    "selectLog": "Selecciona un tronco"
   },
   "inventory": {
     "quantity": "Cantidad",
@@ -97,7 +96,7 @@
       "description": "Funde minerales en lingotes"
     },
     "quemado": {
-      "name": "Quemado",
+      "name": "Carbonización",
       "action": "Quemar",
       "description": "Quema troncos para obtener carbón"
     },

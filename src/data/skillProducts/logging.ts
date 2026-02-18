@@ -127,7 +127,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T1,
     quantity: 2,
     xpReward: 12,
-    burningTime: 30,
     treeId: 'pino',
   },
   'madera-abedul': {
@@ -144,7 +143,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T1,
     quantity: 2,
     xpReward: 18,
-    burningTime: 28,
     treeId: 'abedul',
   },
 
@@ -163,7 +161,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 35,
-    burningTime: 35,
+    treeId: 'abeto',
   },
   'madera-nogal': {
     id: 'madera-nogal',
@@ -179,7 +177,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 45,
-    burningTime: 40,
+    treeId: 'nogal',
   },
 
   // T3
@@ -197,7 +195,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 65,
-    burningTime: 50,
     treeId: 'caoba',
   },
   'madera-ebano': {
@@ -214,7 +211,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 80,
-    burningTime: 60,
     treeId: 'ebano',
   },
 
@@ -233,7 +229,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 110,
-    burningTime: 75,
+    treeId: 'teca',
   },
   'madera-cedro': {
     id: 'madera-cedro',
@@ -267,7 +263,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 160,
-    burningTime: 100,
+    treeId: 'maldito',
   },
   'madera-mistica': {
     id: 'madera-mistica',
@@ -283,7 +279,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 190,
-    burningTime: 120,
     treeId: 'mistico',
   },
 
@@ -302,7 +297,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 240,
-    burningTime: 150,
     treeId: 'sagrado',
   },
   'madera-primordial': {
@@ -319,7 +313,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 280,
-    burningTime: 180,
     treeId: 'primordial',
   },
 
@@ -338,7 +331,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 380,
-    burningTime: 240,
     treeId: 'dimensional',
   },
   'madera-dragonica': {
@@ -355,7 +347,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 450,
-    burningTime: 300,
     treeId: 'dragonico',
   },
 }

@@ -125,9 +125,7 @@ const startBurning = () => {
   
   if (quemadoState.cycleEndTime === 0) {
     // No hay ciclo pendiente, crear uno nuevo
-    // IMPORTANTE: Usar baseCycleDuration como todos los demás skills (5 segundos)
-    // No usar burningTime que está deprecado (era 28-300 segundos)
-    const cycleDuration = quemadoConfig.value.baseCycleDuration * 1000
+    const cycleDuration = SKILL_CONFIGS[Skill.QUEMADO].baseCycleDuration * 1000
     skillsStore.activateSkill(Skill.QUEMADO, selectedProduct.value, cycleDuration)
   } else {
     // Hay ciclo pendiente, pero puede que currentProduct se haya perdido en localStorage

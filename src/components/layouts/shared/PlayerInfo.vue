@@ -53,22 +53,6 @@ const productQuantity = computed(() => {
   if (!activeSkill.value?.currentProduct) return 0
   return inventoryStore.getItemQuantity(activeSkill.value.currentProduct.item.id)
 })
-
-// Progreso del skill activo (ciclo actual)
-const skillProgress = computed(() => {
-  if (!activeSkill.value || !activeSkill.value.currentProduct) return 0
-  
-  // Usar now.value para forzar re-compute
-  const current = now.value
-  const cycleEndTime = activeSkill.value.cycleEndTime
-  const cycleDuration = activeSkill.value.currentProduct.cycleDuration * 1000 // convertir a ms
-  const cycleStartTime = cycleEndTime - cycleDuration
-  
-  const elapsed = Math.max(0, current - cycleStartTime)
-  const progress = Math.min(100, Math.round((elapsed / cycleDuration) * 100))
-  
-  return progress
-})
 </script>
 
 <template>
@@ -81,9 +65,11 @@ const skillProgress = computed(() => {
         <span class="work-level">Lvl {{ skillLevel }}</span>
       </div>
       <div v-if="productName" class="work-product">
+        <span class="separator"><FaIcon :icon="'fas fa-caret-left'" /></span> 
+        <span class="product-qty">{{ productQuantity }}</span>
+        <span class="separator"><FaIcon :icon="'fas fa-caret-right'" /></span>
         <span class="product-name">{{ productName }}</span>
-        <span class="separator">|</span>
-        <span class="product-storage">{{ t('labels.stored_quantity') }}: <span class="product-qty">{{ productQuantity }}</span></span>
+        
       </div>
     </div>
   </div>
@@ -103,19 +89,7 @@ const skillProgress = computed(() => {
   overflow: visible;
 }
 
-.active-work::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-success), var(--color-success), rgba(85, 255, 85, 0.5));
-  transition: width 0.3s ease;
-  width: v-bind('skillProgress + "%"');
-  box-shadow: 0 0 6px var(--color-success), inset 0 0 4px rgba(85, 255, 85, 0.5);
-  border-radius: 0 2px 2px 0;
-}
+
 
 .work-emoji {
   font-size: 1.3rem;
@@ -176,13 +150,8 @@ const skillProgress = computed(() => {
   font-size: 0.65rem;
 }
 
-.product-storage {
-  color: var(--text-muted);
-  font-size: 0.65rem;
-}
-
 .product-qty {
-  color: var(--text-muted);
+  color: var(--text-primary);
   font-weight: 500;
   font-size: 0.65rem;
   flex-shrink: 0;

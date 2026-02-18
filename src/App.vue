@@ -100,8 +100,6 @@ onMounted(() => {
       // Procesar skills activos
       const activeSkills = skillsStore.activeSkills
 
-      console.log(`[Game Loop] Procesando ${activeSkills.length} skills activos`);
-
       activeSkills.forEach(skill => {
         const now = Date.now()
         // Si el ciclo se completó
@@ -134,10 +132,7 @@ onMounted(() => {
       inventoryStore.saveToLocalStorage()
       playerStore.saveToLocalStorage()
       toolsStore.saveToStorage()
-      //console.log('[Game] Auto-save realizado')
     }, GAME_CONSTANTS.AUTO_SAVE_INTERVAL)
-
-    //console.log('[App] Game loop iniciado')
   }
 })
 

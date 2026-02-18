@@ -34,7 +34,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
       iconType: 'image' as const,
       value: 0.5
     } as Resource,
-    level: 5,
+    level: 1,
     tier: Tier.T1,
     quantity: 2,
     xpReward: 15

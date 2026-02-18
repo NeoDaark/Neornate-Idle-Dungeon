@@ -99,7 +99,9 @@ onMounted(() => {
     gameLoopInterval = setInterval(() => {
       // Procesar skills activos
       const activeSkills = skillsStore.activeSkills
-      
+
+      console.log(`[Game Loop] Procesando ${activeSkills.length} skills activos`);
+
       activeSkills.forEach(skill => {
         const now = Date.now()
         // Si el ciclo se completó

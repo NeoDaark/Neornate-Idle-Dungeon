@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { SkillState, SkillProduct, CycleResult } from '@/types/Skill'
 import { Skill, Tier } from '@/types/Game'
-import { SKILL_PRODUCTS_MAP, WOODBURNING_DROP_TABLE } from '@/data/skillProducts'
+import { SKILL_PRODUCTS_MAP, WOODBURNING_DROP_TABLE, LOGGING_PRODUCTS } from '@/data/skillProducts'
 import { useToolsStore } from '@/stores/toolsStore'
 
 const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T7]
@@ -11,7 +11,14 @@ const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T
  * Inicializar estado de skill con productos
  */
 const initializeSkillState = (skill: Skill): SkillState => {
-  const skillProducts = SKILL_PRODUCTS_MAP[skill] || {}
+  let skillProducts = SKILL_PRODUCTS_MAP[skill] || {}
+  
+  // ESPECIAL: Para Quemado, usar los productos de Tala (troncos)
+  // porque Quemado quema troncos, no tiene productos propios
+  if (skill === Skill.QUEMADO) {
+    skillProducts = LOGGING_PRODUCTS
+  }
+  
   const products = Object.values(skillProducts)
   
   return {
@@ -140,11 +147,13 @@ export const useSkillsStore = defineStore('skills', () => {
     state.cycleEndTime = 0
 
     // Desactivar todos los otros skills (solo puede haber 1 activo)
+    // IMPORTANTE: Limpiar cycleEndTime de TODOS los demás skills
+    // (no solo los activos, porque podría haber uno pausado con cycleEndTime guardado)
     Object.entries(skillStates.value).forEach(([otherSkill, otherState]) => {
-      if ((otherSkill as unknown as Skill) !== skill && otherState.isActive) {
+      if ((otherSkill as unknown as Skill) !== skill) {
         otherState.isActive = false
         otherState.currentProduct = undefined
-        otherState.cycleEndTime = 0
+        otherState.cycleEndTime = 0  // ← Limpiar SIEMPRE, no solo si isActive
         // console.log(`[Skills] Desactivando ${otherSkill} para activar ${skill}`)
       }
     })
@@ -286,6 +295,9 @@ export const useSkillsStore = defineStore('skills', () => {
         console.error(`[Skill] Error inesperado: no se pudo consumir tronco para quemar`)
         return null
       }
+      
+      // Log para verificar consumo (descomenta para debugging)
+      // console.log(`[Skill] QUEMADO: Tronco consumido (${currentProduct.item.id}), inventario restante: ${inventoryStore.getItemQuantity(currentProduct.item.id)}`)
 
       // Generar drops por probabilidad
       const roll = Math.random()

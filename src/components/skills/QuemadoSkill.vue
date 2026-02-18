@@ -20,6 +20,7 @@ const cycleProgress = ref(0)
 const showNotification = ref(false)
 const notificationMessage = ref('')
 const lastProcessedExperience = ref(0)
+const userStoppedManually = ref(false) // Bandera para diferenciar parada manual vs por materiales
 
 // Todos los troncos (incluyendo bloqueados)
 const allLogs = computed(() => {
@@ -58,9 +59,18 @@ watch(() => quemadoSkillState.value.totalExperience, (newTotalExp) => {
 
 // Detectar si se detuvo por falta de troncos
 watch(() => quemadoSkillState.value.isActive, (isNowActive, wasActive) => {
-  if (!isNowActive && wasActive && quemadoSkillState.value.currentProduct) {
-    // Cambió de activo a inactivo - mostrar mensaje de falta de material
+  // Solo mostrar mensaje si:
+  // 1. El skill cambió de activo a inactivo
+  // 2. El usuario NO lo detuvo manualmente
+  // 3. Hay un producto activo (para saber cuál era)
+  if (!isNowActive && wasActive && quemadoSkillState.value.currentProduct && !userStoppedManually.value) {
+    // Game loop detuvo por falta de materiales
     showMessage(`Se acabó ${t(quemadoSkillState.value.currentProduct.i18nKey)}`)
+  }
+  
+  // Resetear la bandera después de procesar
+  if (!isNowActive && wasActive) {
+    userStoppedManually.value = false
   }
 })
 
@@ -120,21 +130,10 @@ const startBurning = () => {
     }
   }
 
-  // Verificar si hay un ciclo pendiente
-  const quemadoState = skillsStore.getSkillState(Skill.QUEMADO)
-  
-  if (quemadoState.cycleEndTime === 0) {
-    // No hay ciclo pendiente, crear uno nuevo
-    const cycleDuration = SKILL_CONFIGS[Skill.QUEMADO].baseCycleDuration * 1000
-    skillsStore.activateSkill(Skill.QUEMADO, selectedProduct.value, cycleDuration)
-  } else {
-    // Hay ciclo pendiente, pero puede que currentProduct se haya perdido en localStorage
-    // Si es así, restaurarlo con el producto seleccionado actualmente
-    if (!quemadoState.currentProduct) {
-      quemadoState.currentProduct = selectedProduct.value
-    }
-    quemadoState.isActive = true
-  }
+  // Siempre llamar a activateSkill para resetear cycleEndTime
+  // activateSkill() ya resetea cycleEndTime = 0 al inicio, así que comienza de 0
+  const cycleDuration = SKILL_CONFIGS[Skill.QUEMADO].baseCycleDuration * 1000
+  skillsStore.activateSkill(Skill.QUEMADO, selectedProduct.value, cycleDuration)
   
   cycleProgress.value = 0
   updateProgress()
@@ -142,6 +141,7 @@ const startBurning = () => {
 
 // Detener quemado
 const stopBurning = () => {
+  userStoppedManually.value = true // Marcar que el usuario paró manualmente
   skillsStore.deactivateSkill(Skill.QUEMADO, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }

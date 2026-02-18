@@ -98,21 +98,10 @@ const startMining = () => {
     }
   }
 
-  // Verificar si hay un ciclo pendiente
-  const miningState = skillsStore.getSkillState(Skill.MINERIA)
-  if (miningState.cycleEndTime === 0) {
-    // No hay ciclo pendiente, crear uno nuevo
-    const cycleDuration = SKILL_CONFIGS[Skill.MINERIA].baseCycleDuration * 1000
-    skillsStore.activateSkill(Skill.MINERIA, selectedProduct.value, cycleDuration)
-  } else {
-    // Hay ciclo pendiente, pero puede que currentProduct se haya perdido
-    // Si es así, restaurarlo con el producto seleccionado actualmente
-    if (!miningState.currentProduct) {
-      miningState.currentProduct = selectedProduct.value
-    }
-    // Reactivar
-    miningState.isActive = true
-  }
+  // Siempre llamar a activateSkill para resetear cycleEndTime
+  // activateSkill() ya resetea cycleEndTime = 0 al inicio, así que comienza de 0
+  const cycleDuration = SKILL_CONFIGS[Skill.MINERIA].baseCycleDuration * 1000
+  skillsStore.activateSkill(Skill.MINERIA, selectedProduct.value, cycleDuration)
   
   cycleProgress.value = 0
   updateProgress()

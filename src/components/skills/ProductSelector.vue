@@ -101,8 +101,8 @@ const carbonChancePercent = computed(() => {
   }
   
   // El slider distribuye el dropModifier entre carbón y ceniza
-  // dropModifier es un decimal (0.05 = 5%)
-  const bonusToCarbon = toolBonus.value.dropModifier * (dropDistribution.value / 100)
+  // Invertir: dropDistribution 0 = todo a ceniza, 100 = todo a carbón
+  const bonusToCarbon = toolBonus.value.dropModifier * ((100 - dropDistribution.value) / 100)
   return (WOODBURNING_DROP_TABLE.carbon.chance * 100) + (bonusToCarbon * 100)
 })
 
@@ -112,8 +112,8 @@ const ashChancePercent = computed(() => {
   }
   
   // El slider distribuye el dropModifier entre carbón y ceniza
-  // dropModifier es un decimal (0.05 = 5%)
-  const bonusToAsh = toolBonus.value.dropModifier * ((100 - dropDistribution.value) / 100)
+  // Invertir: dropDistribution 0 = todo a ceniza, 100 = todo a carbón
+  const bonusToAsh = toolBonus.value.dropModifier * (dropDistribution.value / 100)
   return (WOODBURNING_DROP_TABLE.ceniza.chance * 100) + (bonusToAsh * 100)
 })
 
@@ -125,6 +125,18 @@ const nothingChancePercent = computed(() => {
   // Nada pierde el total del bonus de drop
   // dropModifier es un decimal (0.05 = 5%)
   return (WOODBURNING_DROP_TABLE.nothing.chance * 100) - (toolBonus.value.dropModifier * 100)
+})
+
+// Calcular el step para la barra basado en dropModifier
+// Si dropModifier = 0.05 (5%), queremos 5 posiciones, entonces step = 100/5 = 20
+// Pero restamos 1 porque el rango 0-100 contiene 101 valores (incluyendo 0)
+const sliderStep = computed(() => {
+  if (toolBonus.value.dropModifier <= 0) return 1
+  const posiciones = Math.ceil(toolBonus.value.dropModifier * 100)
+  // Evitar división por 0
+  if (posiciones <= 1) return 100
+  // step = 100 / (posiciones - 1) para tener exactamente "posiciones" valores
+  return Math.round((100 / (posiciones - 1)) * 10) / 10
 })
 
 const selectProduct = (product: SkillProduct) => {
@@ -363,8 +375,8 @@ watch(dropDistribution, (newValue) => {
             type="range"
             min="0"
             max="100"
+            :step="sliderStep"
             class="range-input"
-            style="transform: scaleX(-1);"
           />
           <span class="slider-tag coal">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</span>
         </div>

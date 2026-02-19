@@ -101,7 +101,7 @@ const carbonChancePercent = computed(() => {
   }
   
   // El slider distribuye el dropModifier entre carbón y ceniza
-  // Invertir: dropDistribution 0 = todo a ceniza, 100 = todo a carbón
+  // dropDistribution 0 = todo a carbón, 100 = todo a ceniza
   const bonusToCarbon = toolBonus.value.dropModifier * ((100 - dropDistribution.value) / 100)
   return (WOODBURNING_DROP_TABLE.carbon.chance * 100) + (bonusToCarbon * 100)
 })
@@ -112,7 +112,7 @@ const ashChancePercent = computed(() => {
   }
   
   // El slider distribuye el dropModifier entre carbón y ceniza
-  // Invertir: dropDistribution 0 = todo a ceniza, 100 = todo a carbón
+  // dropDistribution 0 = todo a carbón, 100 = todo a ceniza
   const bonusToAsh = toolBonus.value.dropModifier * (dropDistribution.value / 100)
   return (WOODBURNING_DROP_TABLE.ceniza.chance * 100) + (bonusToAsh * 100)
 })

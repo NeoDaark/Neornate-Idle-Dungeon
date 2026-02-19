@@ -345,10 +345,11 @@ export const useSkillsStore = defineStore('skills', () => {
       if (toolBonus.dropModifier > 0) {
         const modifierDecimal = toolBonus.dropModifier / 100
         
-        // Obtener la distribución preferida del usuario (0-100, % para carbón)
+        // Obtener la distribución preferida del usuario (0-100)
+        // 0 = todo a Carbón (izquierda), 100 = todo a Ceniza (derecha)
         const dropDistribution = state.woodburningDropDistribution ?? 50
-        const carbonPercentage = dropDistribution / 100
-        const ashPercentage = 1 - carbonPercentage
+        const carbonPercentage = (100 - dropDistribution) / 100
+        const ashPercentage = dropDistribution / 100
         
         // Distribuir el modifier según la preferencia
         const carbonBoost = modifierDecimal * carbonPercentage

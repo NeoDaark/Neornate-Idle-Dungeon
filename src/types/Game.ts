@@ -122,7 +122,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
   },
   [Skill.FUNDICION]: {
     name: 'fundicion',
-    emoji: '🔥',
+    emoji: '🫕',
     icon: 'furnace',
     type: 'crafting',
     baseCycleDuration: 5,

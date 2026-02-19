@@ -3,7 +3,7 @@ import { computed } from 'vue'
 
 interface Props {
   spriteId?: string
-  spriteType?: 'tree' | 'log' | 'mineral' | 'generic'
+  spriteType?: 'tree' | 'log' | 'mineral' | 'ingot' | 'generic'
   fallbackEmoji?: string
   alt?: string
   size?: 'xs' | 'sm' | 'md' | 'ls' | 'lg' | 'xl'
@@ -40,6 +40,8 @@ const spritePath = computed<string>(() => {
       return `${basePath}/loggs/${props.spriteId}.png`
     case 'mineral':
       return `${basePath}/ores/${props.spriteId}.png`
+    case 'ingot':
+      return `${basePath}/ingots/${props.spriteId}.png`
     default:
       return `${basePath}/${props.spriteId}.png`
   }

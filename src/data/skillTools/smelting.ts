@@ -19,7 +19,7 @@ export const SMELTING_TOOLS: Tool[] = [
     tier: 1,
     baseMaterial: 'stone',
     description: 'tools.fundicion.furnace_basic',
-    icon: '🔥',
+    icon: '🫕',
     price: calculatePrice(1, 2.0),
     requiredLevel: 10,
     effects: [
@@ -35,7 +35,7 @@ export const SMELTING_TOOLS: Tool[] = [
     tier: 2,
     baseMaterial: 'copper',
     description: 'tools.fundicion.furnace_copper',
-    icon: '🔥',
+    icon: '🫕',
     price: calculatePrice(2, 2.0),
     requiredLevel: 20,
     effects: [
@@ -51,7 +51,7 @@ export const SMELTING_TOOLS: Tool[] = [
     tier: 3,
     baseMaterial: 'iron',
     description: 'tools.fundicion.furnace_iron',
-    icon: '🔥',
+    icon: '🫕',
     price: calculatePrice(3, 2.0),
     requiredLevel: 40,
     effects: [
@@ -67,7 +67,7 @@ export const SMELTING_TOOLS: Tool[] = [
     tier: 4,
     baseMaterial: 'steel',
     description: 'tools.fundicion.furnace_steel',
-    icon: '🔥',
+    icon: '🫕',
     price: calculatePrice(4, 2.0),
     requiredLevel: 60,
     effects: [
@@ -83,7 +83,7 @@ export const SMELTING_TOOLS: Tool[] = [
     tier: 5,
     baseMaterial: 'mithril',
     description: 'tools.fundicion.furnace_mithril',
-    icon: '🔥',
+    icon: '🫕',
     price: calculatePrice(5, 2.0),
     requiredLevel: 80,
     effects: [
@@ -99,7 +99,7 @@ export const SMELTING_TOOLS: Tool[] = [
     tier: 6,
     baseMaterial: 'orichalcum',
     description: 'tools.fundicion.furnace_orichalcum',
-    icon: '🔥',
+    icon: '🫕',
     price: calculatePrice(6, 2.0),
     requiredLevel: 100,
     effects: [
@@ -115,7 +115,7 @@ export const SMELTING_TOOLS: Tool[] = [
     tier: 7,
     baseMaterial: 'divine',
     description: 'tools.fundicion.furnace_divine',
-    icon: '🔥',
+    icon: '🫕',
     price: calculatePrice(7, 2.0),
     requiredLevel: 120,
     effects: [

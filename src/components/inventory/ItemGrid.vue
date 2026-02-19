@@ -91,6 +91,13 @@ const handleItemAction = (stack: InventoryStack) => {
           size="ls"
         />
         <IconSprite 
+          v-else-if="stack.itemId.includes('_ingot') && typeof stack.item.icon === 'string' && stack.item.icon.includes('ingot')"
+          :spriteId="stack.item.icon.split('/').pop()?.replace('.png', '')"
+          spriteType="ingot"
+          :fallbackEmoji="'⚙️'"
+          size="ls"
+        />
+        <IconSprite 
           v-else-if="LOGGING_PRODUCTS[stack.itemId]?.logSpriteId"
           :spriteId="LOGGING_PRODUCTS[stack.itemId].logSpriteId"
           spriteType="log"

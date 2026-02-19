@@ -13,7 +13,7 @@
             {{ formatEffectsList(tool.effects) }}
           </div>
           <div class="compact-price">
-            <span>{{ formatGoldSimple(tool.price) }} 💰</span>
+            <span>{{ formatGold(tool.price) }} 💰</span>
             <span v-if="!isAvailable" class="compact-locked-reason">
               {{ t('tools.requireLevel') }}: {{ tool.requiredLevel }} ({{ t('tools.currentLevel') }}: {{ playerLevel }})
             </span>
@@ -57,7 +57,7 @@
       <div class="tool-footer">
         <div class="tool-price">
           <span class="price-label">{{ t('ui.price') }}</span>
-          <span class="price-value">{{ formatGoldSimple(tool.price) }} 💰</span>
+          <span class="price-value">{{ formatGold(tool.price) }} 💰</span>
         </div>
 
         <button
@@ -91,7 +91,7 @@ import { useToolsStore } from '@/stores/toolsStore'
 import { useSkillsStore } from '@/stores/skillsStore'
 import { usePlayerStore } from '@/stores/playerStore'
 import { useI18n } from '@/composables/useI18n'
-import { formatEffect, formatGoldSimple, getSkillProductName } from '@/utils/formatEffect'
+import { formatEffect, formatGold, getSkillProductName } from '@/utils/formatEffect'
 
 interface Props {
   tool: Tool

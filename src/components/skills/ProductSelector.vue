@@ -274,6 +274,13 @@ watch(dropDistribution, (newValue) => {
               :fallbackEmoji="currentProduct.item.icon"
               size="ls"
             />
+            <IconSprite 
+              v-else-if="props.skill === 'fundicion' && typeof currentProduct.item.icon === 'string' && currentProduct.item.icon.includes('ingot')"
+              :spriteId="currentProduct.item.icon.split('/').pop()?.replace('.png', '')"
+              spriteType="ingot"
+              :fallbackEmoji="'⚙️'"
+              size="ls"
+            />
             <span v-else>{{ currentProduct.item.icon }}</span>
           </div>
           <div class="details">

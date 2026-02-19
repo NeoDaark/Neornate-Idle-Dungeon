@@ -38,7 +38,7 @@ import { usePlayerStore } from '@/stores/playerStore'
 import { useSkillsStore } from '@/stores/skillsStore'
 import { TOOLS_MAP, ALL_TOOLS, TOOLS_BY_SKILL } from '@/data/toolsData'
 import { useI18n } from '@/composables/useI18n'
-import { formatGoldSimple } from '@/utils/formatEffect'
+import { formatGold } from '@/utils/formatEffect'
 import ToolCard from './ToolCard.vue'
 
 const { t } = useI18n()
@@ -125,8 +125,8 @@ const nextToolsBySkill = computed((): SkillToolsGroup[] => {
     if (playerGold < nextTool.price) {
       const goldNeeded = nextTool.price - playerGold
       blockReasons.push(
-        `${t('ui.price') || 'Precio'} ${formatGoldSimple(nextTool.price)} 💰 ` +
-        `(tienes ${formatGoldSimple(playerGold)}, necesitas ${formatGoldSimple(goldNeeded)} más)`
+        `${t('ui.price') || 'Precio'} ${formatGold(nextTool.price)} 💰 ` +
+        `(tienes ${formatGold(playerGold)}, necesitas ${formatGold(goldNeeded)} más)`
       )
     }
 

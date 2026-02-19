@@ -197,7 +197,7 @@ onMounted(() => {
           :disabled="!selectedProduct || !canSmelt"
           @click="startSmelting"
         >
-          🔥 {{ t('skills.fundicion.action') }}
+          {{ smeltingConfig.emoji }} {{ t('skills.fundicion.action') }}
         </button>
         <button
           v-else

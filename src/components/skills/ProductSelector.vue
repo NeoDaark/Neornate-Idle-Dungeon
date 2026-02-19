@@ -4,10 +4,12 @@ import { useI18n } from '@/composables/useI18n'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { useToolsStore } from '@/stores/toolsStore'
 import { useSkillsStore } from '@/stores/skillsStore'
+import IconSprite from '@/components/common/IconSprite.vue'
 import type { SkillProduct } from '@/types/Skill'
 import type { Skill } from '@/types/Game'
 import { SKILL_CONFIGS } from '@/types/Game'
 import { WOODBURNING_DROP_TABLE } from '@/data/skillProducts'
+import { TREES } from '@/data/skillProducts/logging'
 
 interface Props {
   products: SkillProduct[]
@@ -28,11 +30,6 @@ const { t } = useI18n()
 const inventoryStore = useInventoryStore()
 const toolsStore = useToolsStore()
 const skillsStore = useSkillsStore()
-
-const isImageIcon = (icon: string): boolean => {
-  // Si contiene una barra inclinada o un punto seguido de extensión, es una imagen
-  return icon.includes('/') || /\.\w+$/.test(icon)
-}
 
 const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
@@ -211,11 +208,26 @@ watch(dropDistribution, (newValue) => {
       <div class="info-content">
         <div class="product-header">
           <div class="icon">
-            <img
-              v-if="currentProduct.item.iconType === 'image'"
-              :src="currentProduct.item.icon"
-              :alt="t(currentProduct.i18nKey)"
-              class="product-image"
+            <IconSprite 
+              v-if="props.skill === 'tala' && currentProduct.treeId"
+              :spriteId="TREES[currentProduct.treeId]?.spriteId"
+              spriteType="tree"
+              :fallbackEmoji="currentProduct.item.icon"
+              size="ls"
+            />
+            <IconSprite 
+              v-else-if="props.skill === 'mineria' && currentProduct.mineralSpriteId"
+              :spriteId="currentProduct.mineralSpriteId"
+              spriteType="mineral"
+              :fallbackEmoji="currentProduct.item.icon"
+              size="ls"
+            />
+            <IconSprite 
+              v-else-if="props.skill === 'quemado' && currentProduct.logSpriteId"
+              :spriteId="currentProduct.logSpriteId"
+              spriteType="log"
+              :fallbackEmoji="currentProduct.item.icon"
+              size="ls"
             />
             <span v-else>{{ currentProduct.item.icon }}</span>
           </div>
@@ -265,32 +277,34 @@ watch(dropDistribution, (newValue) => {
       <div class="drops-grid">
         <div class="drop-item">
           <div class="drop-icon">
-            <img
-              v-if="isImageIcon(WOODBURNING_DROP_TABLE.carbon.item.icon)"
-              :src="WOODBURNING_DROP_TABLE.carbon.item.icon"
-              :alt="t('items.carbon')"
-              class="drop-image"
+            <IconSprite 
+              v-if="WOODBURNING_DROP_TABLE.carbon.item.mineralSpriteId"
+              :spriteId="WOODBURNING_DROP_TABLE.carbon.item.mineralSpriteId"
+              spriteType="mineral"
+              :fallbackEmoji="WOODBURNING_DROP_TABLE.carbon.item.icon"
+              size="md"
             />
             <span v-else>{{ WOODBURNING_DROP_TABLE.carbon.item.icon }}</span>
           </div>
           <div class="drop-details">
-            <div class="drop-name">{{ t('items.carbon') }}</div>
+            <div class="drop-name">{{ t(WOODBURNING_DROP_TABLE.carbon.item.i18nKey || 'items.carbon') }}</div>
             <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.carbon.chance * 100).toFixed(0) }}%</div>
             <div class="drop-quantity">{{ t('labels.you_have') }}: x{{ inventoryStore.getItemQuantity('carbon') }}</div>
           </div>
         </div>
         <div class="drop-item">
           <div class="drop-icon">
-            <img
-              v-if="isImageIcon(WOODBURNING_DROP_TABLE.ceniza.item.icon)"
-              :src="WOODBURNING_DROP_TABLE.ceniza.item.icon"
-              :alt="t('items.ceniza')"
-              class="drop-image"
+            <IconSprite 
+              v-if="WOODBURNING_DROP_TABLE.ceniza.item.logSpriteId"
+              :spriteId="WOODBURNING_DROP_TABLE.ceniza.item.logSpriteId"
+              spriteType="log"
+              :fallbackEmoji="WOODBURNING_DROP_TABLE.ceniza.item.icon"
+              size="md"
             />
             <span v-else>{{ WOODBURNING_DROP_TABLE.ceniza.item.icon }}</span>
           </div>
           <div class="drop-details">
-            <div class="drop-name">{{ t('items.ceniza') }}</div>
+            <div class="drop-name">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</div>
             <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.ceniza.chance * 100).toFixed(0) }}%</div>
             <div class="drop-quantity">{{ t('labels.you_have') }}: x{{ inventoryStore.getItemQuantity('ceniza') }}</div>
           </div>
@@ -310,7 +324,7 @@ watch(dropDistribution, (newValue) => {
           {{ t('ui.woodburning.dropDistribution') }}
         </div>
         <div class="slider-container">
-          <span class="slider-tag coal">{{ t('items.carbon') }}</span>
+          <span class="slider-tag coal">{{ t(WOODBURNING_DROP_TABLE.carbon.item.i18nKey || 'items.carbon') }}</span>
           <input
             v-model.number="dropDistribution"
             type="range"
@@ -318,7 +332,7 @@ watch(dropDistribution, (newValue) => {
             max="100"
             class="range-input"
           />
-          <span class="slider-tag ash">{{ t('items.ceniza') }}</span>
+          <span class="slider-tag ash">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</span>
         </div>
         <div class="slider-values">
           <span class="coal-value">
@@ -368,13 +382,7 @@ watch(dropDistribution, (newValue) => {
             {{ t('ui.m_cancel') }}
           </button>
           <button class="btn btn-accept" @click="confirmSwitch">
-            <span v-if="pendingProduct?.item.iconType === 'image'">
-              <img :src="pendingProduct.item.icon" :alt="t(pendingProduct.i18nKey)" class="modal-icon" />
-              {{ skillAction }}
-            </span>
-            <span v-else>
-              {{ skillAction }} {{ pendingProduct?.item.icon }}
-            </span>
+            {{ skillAction }} {{ pendingProduct?.item.icon }}
           </button>
         </div>
       </div>

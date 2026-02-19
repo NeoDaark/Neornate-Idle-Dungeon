@@ -16,6 +16,8 @@ export interface SkillProduct {
   quantity: number // cantidad producida
   xpReward: number
   treeId?: string // para maderas: referencia al árbol que se tala (e.g., 'pino')
+  logSpriteId?: string // ID del sprite del tronco/madera (e.g., 'log_pino' -> log_pino.png)
+  mineralSpriteId?: string // ID del sprite del mineral (e.g., 'ore_copper' -> ore_copper.png)
   requiredMaterials?: SkillMaterial[] // para crafting
 }
 

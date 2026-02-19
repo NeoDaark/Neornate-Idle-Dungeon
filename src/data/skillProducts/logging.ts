@@ -14,12 +14,14 @@ export const TREES: Record<string, Tree> = {
     i18nKey: 'trees.pino.name',
     level: 1,
     tier: Tier.T1,
+    spriteId: 'tree_pino',
   },
   'abedul': {
     id: 'abedul',
     i18nKey: 'trees.abedul.name',
     level: 5,
     tier: Tier.T1,
+    spriteId: 'tree_abedul',
   },
 
   // T2
@@ -28,12 +30,14 @@ export const TREES: Record<string, Tree> = {
     i18nKey: 'trees.abeto.name',
     level: 20,
     tier: Tier.T2,
+    spriteId: 'tree_abeto',
   },
   'nogal': {
     id: 'nogal',
     i18nKey: 'trees.nogal.name',
     level: 25,
     tier: Tier.T2,
+    spriteId: 'tree_nogal',
   },
 
   // T3
@@ -42,12 +46,14 @@ export const TREES: Record<string, Tree> = {
     i18nKey: 'trees.caoba.name',
     level: 40,
     tier: Tier.T3,
+    spriteId: 'tree_caoba',
   },
   'ebano': {
     id: 'ebano',
     i18nKey: 'trees.ebano.name',
     level: 45,
     tier: Tier.T3,
+    spriteId: 'tree_ebano',
   },
 
   // T4
@@ -56,12 +62,14 @@ export const TREES: Record<string, Tree> = {
     i18nKey: 'trees.teca.name',
     level: 60,
     tier: Tier.T4,
+    spriteId: 'tree_teca',
   },
   'cedro': {
     id: 'cedro',
     i18nKey: 'trees.cedro.name',
     level: 65,
     tier: Tier.T4,
+    spriteId: 'tree_cedro',
   },
 
   // T5
@@ -70,12 +78,14 @@ export const TREES: Record<string, Tree> = {
     i18nKey: 'trees.maldito.name',
     level: 80,
     tier: Tier.T5,
+    spriteId: 'tree_maldito',
   },
   'mistico': {
     id: 'mistico',
     i18nKey: 'trees.mistico.name',
     level: 85,
     tier: Tier.T5,
+    spriteId: 'tree_mistico',
   },
 
   // T6
@@ -84,12 +94,14 @@ export const TREES: Record<string, Tree> = {
     i18nKey: 'trees.sagrado.name',
     level: 100,
     tier: Tier.T6,
+    spriteId: 'tree_sagrado',
   },
   'primordial': {
     id: 'primordial',
     i18nKey: 'trees.primordial.name',
     level: 105,
     tier: Tier.T6,
+    spriteId: 'tree_primordial',
   },
 
   // T7
@@ -98,12 +110,14 @@ export const TREES: Record<string, Tree> = {
     i18nKey: 'trees.dimensional.name',
     level: 120,
     tier: Tier.T7,
+    spriteId: 'tree_dimensional',
   },
   'dragonico': {
     id: 'dragonico',
     i18nKey: 'trees.dragonico.name',
     level: 150,
     tier: Tier.T7,
+    spriteId: 'tree_dragonico',
   },
 }
 
@@ -129,6 +143,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 6,
     treeId: 'pino',
+    logSpriteId: 'log_pino',
   },
   'madera-abedul': {
     id: 'madera-abedul',
@@ -146,6 +161,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 9,
     treeId: 'abedul',
+    logSpriteId: 'log_abedul',
   },
 
   // T2
@@ -165,6 +181,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 17.5,
     treeId: 'abeto',
+    logSpriteId: 'log_abeto',
   },
   'madera-nogal': {
     id: 'madera-nogal',
@@ -182,6 +199,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 22.5,
     treeId: 'nogal',
+    logSpriteId: 'log_nogal',
   },
 
   // T3
@@ -201,6 +219,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 32.5,
     treeId: 'caoba',
+    logSpriteId: 'log_caoba',
   },
   'madera-ebano': {
     id: 'madera-ebano',
@@ -218,6 +237,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 40,
     treeId: 'ebano',
+    logSpriteId: 'log_ebano',
   },
 
   // T4
@@ -237,6 +257,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 55,
     treeId: 'teca',
+    logSpriteId: 'log_teca',
   },
   'madera-cedro': {
     id: 'madera-cedro',
@@ -254,6 +275,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 65,
     treeId: 'cedro',
+    logSpriteId: 'log_cedro',
   },
 
   // T5
@@ -273,6 +295,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 80,
     treeId: 'maldito',
+    logSpriteId: 'log_maldito',
   },
   'madera-mistica': {
     id: 'madera-mistica',
@@ -290,6 +313,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 95,
     treeId: 'mistico',
+    logSpriteId: 'log_mistico',
   },
 
   // T6
@@ -309,6 +333,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 120,
     treeId: 'sagrado',
+    logSpriteId: 'log_sagrado',
   },
   'madera-primordial': {
     id: 'madera-primordial',
@@ -326,6 +351,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 140,
     treeId: 'primordial',
+    logSpriteId: 'log_primordial',
   },
 
   // T7
@@ -345,6 +371,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 190,
     treeId: 'dimensional',
+    logSpriteId: 'log_dimensional',
   },
   'madera-dragonica': {
     id: 'madera-dragonica',
@@ -362,5 +389,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 225,
     treeId: 'dragonico',
+    logSpriteId: 'log_dragonico',
   },
 }

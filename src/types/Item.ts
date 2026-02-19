@@ -12,11 +12,14 @@ export interface Item {
   iconType?: 'emoji' | 'image' // tipo de icono (por defecto emoji para compatibilidad)
   value: number // precio en oro
   tier?: Tier // opcional - ya está definido en SkillProduct o Equipment
+  logSpriteId?: string // para maderas (e.g., 'log_pino' -> log_pino.png)
+  mineralSpriteId?: string // para minerales (e.g., 'ore_copper' -> ore_copper.png)
 }
 
 export interface Resource extends Item {
   type: ItemType.RESOURCE
   skill: Skill // de qué skill viene
+  i18nKey?: string // ruta de traducción para el nombre del recurso
 }
 
 export interface Material extends Item {

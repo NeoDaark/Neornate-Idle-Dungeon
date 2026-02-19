@@ -9,4 +9,5 @@ export interface Tree {
   i18nKey: string
   level: number
   tier: Tier
+  spriteId?: string // ID del sprite del árbol (e.g., 'tree_pino' -> tree_pino.png)
 }

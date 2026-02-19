@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
+import IconSprite from '@/components/common/IconSprite.vue'
+import { LOGGING_PRODUCTS } from '@/data/skillProducts/logging'
+import { MINING_PRODUCTS } from '@/data/skillProducts/mining'
 import type { InventoryStack } from '@/stores/inventoryStore'
 
 interface Props {
@@ -13,11 +16,6 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
-
-const isImageIcon = (icon: string): boolean => {
-  // Si contiene una barra inclinada o un punto seguido de extensión, es una imagen
-  return icon.includes('/') || /\.\w+$/.test(icon)
-}
 
 const getItemColor = (value: number) => {
   if (value >= 500) return 'legendary'
@@ -34,6 +32,11 @@ const getItemName = (stack: InventoryStack): string => {
   if (itemId.includes('_ingot')) {
     const baseId = itemId.replace('_ingot', '')
     return t(`resources.ingots.${baseId}.name`)
+  }
+
+  // Ceniza (ash) - caso especial
+  if (itemId === 'ceniza') {
+    return t('resources.ash.ceniza.name')
   }
 
   // Determinar la ruta de i18n según el tipo
@@ -73,11 +76,33 @@ const handleItemAction = (stack: InventoryStack) => {
       :class="`rarity-${getItemColor(stack.item.value)}`"
     >
       <div class="item-icon">
-        <img
-          v-if="isImageIcon(stack.item.icon)"
-          :src="stack.item.icon"
-          :alt="getItemName(stack)"
-          class="item-image"
+        <IconSprite 
+          v-if="stack.item.logSpriteId"
+          :spriteId="stack.item.logSpriteId"
+          spriteType="log"
+          :fallbackEmoji="stack.item.icon"
+          size="ls"
+        />
+        <IconSprite 
+          v-else-if="stack.item.mineralSpriteId"
+          :spriteId="stack.item.mineralSpriteId"
+          spriteType="mineral"
+          :fallbackEmoji="stack.item.icon"
+          size="ls"
+        />
+        <IconSprite 
+          v-else-if="LOGGING_PRODUCTS[stack.itemId]?.logSpriteId"
+          :spriteId="LOGGING_PRODUCTS[stack.itemId].logSpriteId"
+          spriteType="log"
+          :fallbackEmoji="stack.item.icon"
+          size="ls"
+        />
+        <IconSprite 
+          v-else-if="MINING_PRODUCTS[stack.itemId]?.mineralSpriteId"
+          :spriteId="MINING_PRODUCTS[stack.itemId].mineralSpriteId"
+          spriteType="mineral"
+          :fallbackEmoji="stack.item.icon"
+          size="ls"
         />
         <span v-else>{{ stack.item.icon }}</span>
       </div>

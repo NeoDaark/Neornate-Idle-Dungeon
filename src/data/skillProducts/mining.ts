@@ -6,21 +6,6 @@ import { Tier, ItemType } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
 import type { Resource } from '@/types/Item'
 
-// Importar imágenes de ores
-import oreCopper from '@/assets/sprites/custom/ores/ore_copper.png'
-import oreIron from '@/assets/sprites/custom/ores/ore_iron.png'
-import oreSilver from '@/assets/sprites/custom/ores/ore_silver.png'
-import oreTungsten from '@/assets/sprites/custom/ores/ore_tungsten.png'
-import oreGold from '@/assets/sprites/custom/ores/ore_gold.png'
-import orePlatinum from '@/assets/sprites/custom/ores/ore_platinum.png'
-import oreObsidian from '@/assets/sprites/custom/ores/ore_obsidian.png'
-import oreCobalt from '@/assets/sprites/custom/ores/ore_cobalt.png'
-import oreMythril from '@/assets/sprites/custom/ores/ore_mythril.png'
-import oreOrichalcum from '@/assets/sprites/custom/ores/ore_orichalcum.png'
-import oreAdamantite from '@/assets/sprites/custom/ores/ore_adamantite.png'
-import oreTitanium from '@/assets/sprites/custom/ores/ore_titanium.png'
-import oreDragonite from '@/assets/sprites/custom/ores/ore_dragonite.png'
-
 export const MINING_PRODUCTS: Record<string, SkillProduct> = {
   // T1
   'cobre': {
@@ -31,14 +16,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'cobre',
       type: ItemType.RESOURCE,
-      icon: oreCopper,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 0.5
     } as Resource,
     level: 1,
     tier: Tier.T1,
     quantity: 1,
-    xpReward: 7.5
+    xpReward: 7.5,
+    mineralSpriteId: 'ore_copper',
   },
 
   // T2
@@ -50,14 +35,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'hierro',
       type: ItemType.RESOURCE,
-      icon: oreIron,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 0.5
     } as Resource,
     level: 20,
     tier: Tier.T2,
     quantity: 1,
     xpReward: 15,
+    mineralSpriteId: 'ore_iron',
   },
   'plata': {
     id: 'plata',
@@ -67,14 +52,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'plata',
       type: ItemType.RESOURCE,
-      icon: oreSilver,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 1
     } as Resource,
     level: 25,
     tier: Tier.T2,
     quantity: 1,
     xpReward: 20,
+    mineralSpriteId: 'ore_silver',
   },
 
   // T3
@@ -86,14 +71,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'tungsteno',
       type: ItemType.RESOURCE,
-      icon: oreTungsten,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 1.5
     } as Resource,
     level: 40,
     tier: Tier.T3,
     quantity: 1,
     xpReward: 30,
+    mineralSpriteId: 'ore_tungsten',
   },
   'oro': {
     id: 'oro',
@@ -103,14 +88,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'oro',
       type: ItemType.RESOURCE,
-      icon: oreGold,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 2.5
     } as Resource,
     level: 45,
     tier: Tier.T3,
     quantity: 1,
     xpReward: 37.5,
+    mineralSpriteId: 'ore_gold',
   },
 
   // T4
@@ -122,14 +107,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'platino',
       type: ItemType.RESOURCE,
-      icon: orePlatinum,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 4
     } as Resource,
     level: 60,
     tier: Tier.T4,
     quantity: 1,
     xpReward: 50,
+    mineralSpriteId: 'ore_platinum',
   },
   'obsidiana': {
     id: 'obsidiana',
@@ -139,14 +124,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'obsidiana',
       type: ItemType.RESOURCE,
-      icon: oreObsidian,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 5
     } as Resource,
     level: 65,
     tier: Tier.T4,
     quantity: 1,
     xpReward: 60,
+    mineralSpriteId: 'ore_obsidian',
   },
 
   // T5
@@ -158,14 +143,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'cobalto',
       type: ItemType.RESOURCE,
-      icon: oreCobalt,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 6.5
     } as Resource,
     level: 80,
     tier: Tier.T5,
     quantity: 1,
     xpReward: 75,
+    mineralSpriteId: 'ore_cobalt',
   },
   'mithril': {
     id: 'mithril',
@@ -175,14 +160,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'mithril',
       type: ItemType.RESOURCE,
-      icon: oreMythril,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 8
     } as Resource,
     level: 85,
     tier: Tier.T5,
     quantity: 1,
     xpReward: 90,
+    mineralSpriteId: 'ore_mythril',
   },
 
   // T6
@@ -194,14 +179,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'oricalco',
       type: ItemType.RESOURCE,
-      icon: oreOrichalcum,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 11
     } as Resource,
     level: 100,
     tier: Tier.T6,
     quantity: 1,
     xpReward: 110,
+    mineralSpriteId: 'ore_orichalcum',
   },
   'adamantita': {
     id: 'adamantita',
@@ -211,14 +196,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'adamantita',
       type: ItemType.RESOURCE,
-      icon: oreAdamantite,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 13
     } as Resource,
     level: 105,
     tier: Tier.T6,
     quantity: 1,
     xpReward: 130,
+    mineralSpriteId: 'ore_adamantite',
   },
 
   // T7
@@ -230,14 +215,14 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'titanio',
       type: ItemType.RESOURCE,
-      icon: oreTitanium,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 19
     } as Resource,
     level: 120,
     tier: Tier.T7,
     quantity: 1,
     xpReward: 175,
+    mineralSpriteId: 'ore_titanium',
   },
   'draconita': {
     id: 'draconita',
@@ -247,13 +232,13 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     item: {
       id: 'draconita',
       type: ItemType.RESOURCE,
-      icon: oreDragonite,
-      iconType: 'image' as const,
+      icon: '⛏️',
       value: 25
     } as Resource,
     level: 150,
     tier: Tier.T7,
     quantity: 1,
     xpReward: 200,
+    mineralSpriteId: 'ore_dragonite',
   },
 }

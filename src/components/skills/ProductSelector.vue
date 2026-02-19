@@ -94,6 +94,39 @@ const finalQuantity = computed(() => {
   return props.currentProduct.quantity + toolBonus.value.quantityBonus
 })
 
+// Calcular porcentajes dinámicos considerando el bonus de la herramienta
+const carbonChancePercent = computed(() => {
+  if (!props.isWoodburning || toolBonus.value.dropModifier <= 0) {
+    return WOODBURNING_DROP_TABLE.carbon.chance * 100
+  }
+  
+  // El slider distribuye el dropModifier entre carbón y ceniza
+  // dropModifier es un decimal (0.05 = 5%)
+  const bonusToCarbon = toolBonus.value.dropModifier * (dropDistribution.value / 100)
+  return (WOODBURNING_DROP_TABLE.carbon.chance * 100) + (bonusToCarbon * 100)
+})
+
+const ashChancePercent = computed(() => {
+  if (!props.isWoodburning || toolBonus.value.dropModifier <= 0) {
+    return WOODBURNING_DROP_TABLE.ceniza.chance * 100
+  }
+  
+  // El slider distribuye el dropModifier entre carbón y ceniza
+  // dropModifier es un decimal (0.05 = 5%)
+  const bonusToAsh = toolBonus.value.dropModifier * ((100 - dropDistribution.value) / 100)
+  return (WOODBURNING_DROP_TABLE.ceniza.chance * 100) + (bonusToAsh * 100)
+})
+
+const nothingChancePercent = computed(() => {
+  if (!props.isWoodburning || toolBonus.value.dropModifier <= 0) {
+    return WOODBURNING_DROP_TABLE.nothing.chance * 100
+  }
+  
+  // Nada pierde el total del bonus de drop
+  // dropModifier es un decimal (0.05 = 5%)
+  return (WOODBURNING_DROP_TABLE.nothing.chance * 100) - (toolBonus.value.dropModifier * 100)
+})
+
 const selectProduct = (product: SkillProduct) => {
   // Si no hay farmeo activo, cambiar directamente
   if (!props.isActive || !props.currentProduct) {
@@ -288,7 +321,7 @@ watch(dropDistribution, (newValue) => {
           </div>
           <div class="drop-details">
             <div class="drop-name">{{ t(WOODBURNING_DROP_TABLE.carbon.item.i18nKey || 'items.carbon') }}</div>
-            <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.carbon.chance * 100).toFixed(0) }}%</div>
+            <div class="drop-percentage">{{ carbonChancePercent.toFixed(0) }}%</div>
             <div class="drop-quantity">{{ t('labels.you_have') }}: x{{ inventoryStore.getItemQuantity('carbon') }}</div>
           </div>
         </div>
@@ -305,7 +338,7 @@ watch(dropDistribution, (newValue) => {
           </div>
           <div class="drop-details">
             <div class="drop-name">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</div>
-            <div class="drop-percentage">{{ (WOODBURNING_DROP_TABLE.ceniza.chance * 100).toFixed(0) }}%</div>
+            <div class="drop-percentage">{{ ashChancePercent.toFixed(0) }}%</div>
             <div class="drop-quantity">{{ t('labels.you_have') }}: x{{ inventoryStore.getItemQuantity('ceniza') }}</div>
           </div>
         </div>
@@ -313,7 +346,7 @@ watch(dropDistribution, (newValue) => {
           <div class="drop-icon">❌</div>
           <div class="drop-details">
             <div class="drop-name">{{ t('ui.nothing') || 'Nada' }}</div>
-            <div class="drop-percentage">40%</div>
+            <div class="drop-percentage">{{ nothingChancePercent.toFixed(0) }}%</div>
           </div>
         </div>
       </div>
@@ -324,23 +357,16 @@ watch(dropDistribution, (newValue) => {
           {{ t('ui.woodburning.dropDistribution') }}
         </div>
         <div class="slider-container">
-          <span class="slider-tag coal">{{ t(WOODBURNING_DROP_TABLE.carbon.item.i18nKey || 'items.carbon') }}</span>
+          <span class="slider-tag ash">{{ t(WOODBURNING_DROP_TABLE.carbon.item.i18nKey || 'items.carbon') }}</span>
           <input
             v-model.number="dropDistribution"
             type="range"
             min="0"
             max="100"
             class="range-input"
+            style="transform: scaleX(-1);"
           />
-          <span class="slider-tag ash">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</span>
-        </div>
-        <div class="slider-values">
-          <span class="coal-value">
-            {{ t('ui.woodburning.carbonPercentage').replace('{percent}', dropDistribution.toString()) }}
-          </span>
-          <span class="ash-value">
-            {{ t('ui.woodburning.ashPercentage').replace('{percent}', (100 - dropDistribution).toString()) }}
-          </span>
+          <span class="slider-tag coal">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</span>
         </div>
       </div>
     </div>

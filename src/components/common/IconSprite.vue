@@ -3,7 +3,6 @@ import { computed } from 'vue'
 
 interface Props {
   spriteId?: string
-  spriteType?: 'tree' | 'log' | 'mineral' | 'ingot' | 'generic'
   fallbackEmoji?: string
   alt?: string
   size?: 'xs' | 'sm' | 'md' | 'ls' | 'lg' | 'xl'
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  spriteType: 'generic',
   fallbackEmoji: '❓',
   alt: 'Icono',
   size: 'ls',
@@ -31,19 +29,14 @@ const sizePixels = {
 const spritePath = computed<string>(() => {
   if (!props.useSprite || !props.spriteId) return ''
 
-  const basePath = `/src/assets/sprites/custom`
-  
-  switch (props.spriteType) {
-    case 'tree':
-      return `${basePath}/trees/${props.spriteId}.png`
-    case 'log':
-      return `${basePath}/loggs/${props.spriteId}.png`
-    case 'mineral':
-      return `${basePath}/ores/${props.spriteId}.png`
-    case 'ingot':
-      return `${basePath}/ingots/${props.spriteId}.png`
-    default:
-      return `${basePath}/${props.spriteId}.png`
+  try {
+    // Usar new URL() para que Vite bundlee correctamente en dev y prod
+    // Todos los sprites están en: src/assets/sprites/custom/items/
+    const relativePath = `../../assets/sprites/custom/items/${props.spriteId}.png`
+    const url = new URL(relativePath, import.meta.url).href
+    return url
+  } catch {
+    return ''
   }
 })
 

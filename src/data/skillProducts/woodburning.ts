@@ -22,7 +22,7 @@ export const WOODBURNING_DROPS: Record<string, Resource> = {
     icon: '⛏️',
     value: 0.5,
     skill: Skill.QUEMADO,
-    mineralSpriteId: 'ore_coal',
+    spriteId: 'ore_coal',
     i18nKey: 'resources.mineral.carbon.name',
   } as Resource,
   'ceniza': {
@@ -31,7 +31,7 @@ export const WOODBURNING_DROPS: Record<string, Resource> = {
     icon: '🌫️',
     value: 0.25,
     skill: Skill.QUEMADO,
-    logSpriteId: 'log_ceniza',
+    spriteId: 'log_ceniza',
     i18nKey: 'resources.ash.ceniza.name',
   } as Resource,
 }

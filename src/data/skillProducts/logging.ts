@@ -143,7 +143,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 6,
     treeId: 'pino',
-    logSpriteId: 'log_pino',
+    spriteId: 'log_pino',
   },
   'madera-abedul': {
     id: 'madera-abedul',
@@ -161,7 +161,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 9,
     treeId: 'abedul',
-    logSpriteId: 'log_abedul',
+    spriteId: 'log_abedul',
   },
 
   // T2
@@ -181,7 +181,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 17.5,
     treeId: 'abeto',
-    logSpriteId: 'log_abeto',
+    spriteId: 'log_abeto',
   },
   'madera-nogal': {
     id: 'madera-nogal',
@@ -199,7 +199,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 22.5,
     treeId: 'nogal',
-    logSpriteId: 'log_nogal',
+    spriteId: 'log_nogal',
   },
 
   // T3
@@ -219,7 +219,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 32.5,
     treeId: 'caoba',
-    logSpriteId: 'log_caoba',
+    spriteId: 'log_caoba',
   },
   'madera-ebano': {
     id: 'madera-ebano',
@@ -237,7 +237,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 40,
     treeId: 'ebano',
-    logSpriteId: 'log_ebano',
+    spriteId: 'log_ebano',
   },
 
   // T4
@@ -257,7 +257,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 55,
     treeId: 'teca',
-    logSpriteId: 'log_teca',
+    spriteId: 'log_teca',
   },
   'madera-cedro': {
     id: 'madera-cedro',
@@ -275,7 +275,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 65,
     treeId: 'cedro',
-    logSpriteId: 'log_cedro',
+    spriteId: 'log_cedro',
   },
 
   // T5
@@ -295,7 +295,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 80,
     treeId: 'maldito',
-    logSpriteId: 'log_maldito',
+    spriteId: 'log_maldito',
   },
   'madera-mistica': {
     id: 'madera-mistica',
@@ -313,7 +313,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 95,
     treeId: 'mistico',
-    logSpriteId: 'log_mistico',
+    spriteId: 'log_mistico',
   },
 
   // T6
@@ -333,7 +333,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 120,
     treeId: 'sagrado',
-    logSpriteId: 'log_sagrado',
+    spriteId: 'log_sagrado',
   },
   'madera-primordial': {
     id: 'madera-primordial',
@@ -351,7 +351,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 140,
     treeId: 'primordial',
-    logSpriteId: 'log_primordial',
+    spriteId: 'log_primordial',
   },
 
   // T7
@@ -371,7 +371,7 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 190,
     treeId: 'dimensional',
-    logSpriteId: 'log_dimensional',
+    spriteId: 'log_dimensional',
   },
   'madera-dragonica': {
     id: 'madera-dragonica',
@@ -389,6 +389,6 @@ export const LOGGING_PRODUCTS: Record<string, SkillProduct> = {
     quantity: 1,
     xpReward: 225,
     treeId: 'dragonico',
-    logSpriteId: 'log_dragonico',
+    spriteId: 'log_dragonico',
   },
 }

@@ -23,7 +23,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T1,
     quantity: 1,
     xpReward: 7.5,
-    mineralSpriteId: 'ore_copper',
+    spriteId: 'ore_copper',
   },
 
   // T2
@@ -42,7 +42,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 15,
-    mineralSpriteId: 'ore_iron',
+    spriteId: 'ore_iron',
   },
   'plata': {
     id: 'plata',
@@ -59,7 +59,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T2,
     quantity: 1,
     xpReward: 20,
-    mineralSpriteId: 'ore_silver',
+    spriteId: 'ore_silver',
   },
 
   // T3
@@ -78,7 +78,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 30,
-    mineralSpriteId: 'ore_tungsten',
+    spriteId: 'ore_tungsten',
   },
   'oro': {
     id: 'oro',
@@ -95,7 +95,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T3,
     quantity: 1,
     xpReward: 37.5,
-    mineralSpriteId: 'ore_gold',
+    spriteId: 'ore_gold',
   },
 
   // T4
@@ -114,7 +114,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 50,
-    mineralSpriteId: 'ore_platinum',
+    spriteId: 'ore_platinum',
   },
   'obsidiana': {
     id: 'obsidiana',
@@ -131,7 +131,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T4,
     quantity: 1,
     xpReward: 60,
-    mineralSpriteId: 'ore_obsidian',
+    spriteId: 'ore_obsidian',
   },
 
   // T5
@@ -150,7 +150,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 75,
-    mineralSpriteId: 'ore_cobalt',
+    spriteId: 'ore_cobalt',
   },
   'mithril': {
     id: 'mithril',
@@ -167,7 +167,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T5,
     quantity: 1,
     xpReward: 90,
-    mineralSpriteId: 'ore_mythril',
+    spriteId: 'ore_mythril',
   },
 
   // T6
@@ -186,7 +186,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 110,
-    mineralSpriteId: 'ore_orichalcum',
+    spriteId: 'ore_orichalcum',
   },
   'adamantita': {
     id: 'adamantita',
@@ -203,7 +203,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T6,
     quantity: 1,
     xpReward: 130,
-    mineralSpriteId: 'ore_adamantite',
+    spriteId: 'ore_adamantite',
   },
 
   // T7
@@ -222,7 +222,7 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 175,
-    mineralSpriteId: 'ore_titanium',
+    spriteId: 'ore_titanium',
   },
   'draconita': {
     id: 'draconita',
@@ -239,6 +239,6 @@ export const MINING_PRODUCTS: Record<string, SkillProduct> = {
     tier: Tier.T7,
     quantity: 1,
     xpReward: 200,
-    mineralSpriteId: 'ore_dragonite',
+    spriteId: 'ore_dragonite',
   },
 }

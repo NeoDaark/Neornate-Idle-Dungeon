@@ -9,7 +9,6 @@ import type { SkillProduct } from '@/types/Skill'
 import type { Skill } from '@/types/Game'
 import { SKILL_CONFIGS } from '@/types/Game'
 import { WOODBURNING_DROP_TABLE } from '@/data/skillProducts'
-import { TREES } from '@/data/skillProducts/logging'
 
 interface Props {
   products: SkillProduct[]
@@ -254,31 +253,9 @@ watch(dropDistribution, (newValue) => {
         <div class="product-header">
           <div class="icon">
             <IconSprite 
-              v-if="props.skill === 'tala' && currentProduct.treeId"
-              :spriteId="TREES[currentProduct.treeId]?.spriteId"
-              spriteType="tree"
+              v-if="currentProduct.spriteId"
+              :spriteId="currentProduct.spriteId"
               :fallbackEmoji="currentProduct.item.icon"
-              size="ls"
-            />
-            <IconSprite 
-              v-else-if="props.skill === 'mineria' && currentProduct.mineralSpriteId"
-              :spriteId="currentProduct.mineralSpriteId"
-              spriteType="mineral"
-              :fallbackEmoji="currentProduct.item.icon"
-              size="ls"
-            />
-            <IconSprite 
-              v-else-if="props.skill === 'quemado' && currentProduct.logSpriteId"
-              :spriteId="currentProduct.logSpriteId"
-              spriteType="log"
-              :fallbackEmoji="currentProduct.item.icon"
-              size="ls"
-            />
-            <IconSprite 
-              v-else-if="props.skill === 'fundicion' && typeof currentProduct.item.icon === 'string' && currentProduct.item.icon.includes('ingot')"
-              :spriteId="currentProduct.item.icon.split('/').pop()?.replace('.png', '')"
-              spriteType="ingot"
-              :fallbackEmoji="'⚙️'"
               size="ls"
             />
             <span v-else>{{ currentProduct.item.icon }}</span>
@@ -330,9 +307,8 @@ watch(dropDistribution, (newValue) => {
         <div class="drop-item">
           <div class="drop-icon">
             <IconSprite 
-              v-if="WOODBURNING_DROP_TABLE.carbon.item.mineralSpriteId"
-              :spriteId="WOODBURNING_DROP_TABLE.carbon.item.mineralSpriteId"
-              spriteType="mineral"
+              v-if="WOODBURNING_DROP_TABLE.carbon.item.spriteId"
+              :spriteId="WOODBURNING_DROP_TABLE.carbon.item.spriteId"
               :fallbackEmoji="WOODBURNING_DROP_TABLE.carbon.item.icon"
               size="md"
             />
@@ -347,9 +323,8 @@ watch(dropDistribution, (newValue) => {
         <div class="drop-item">
           <div class="drop-icon">
             <IconSprite 
-              v-if="WOODBURNING_DROP_TABLE.ceniza.item.logSpriteId"
-              :spriteId="WOODBURNING_DROP_TABLE.ceniza.item.logSpriteId"
-              spriteType="log"
+              v-if="WOODBURNING_DROP_TABLE.ceniza.item.spriteId"
+              :spriteId="WOODBURNING_DROP_TABLE.ceniza.item.spriteId"
               :fallbackEmoji="WOODBURNING_DROP_TABLE.ceniza.item.icon"
               size="md"
             />

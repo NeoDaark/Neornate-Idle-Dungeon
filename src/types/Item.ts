@@ -12,8 +12,7 @@ export interface Item {
   iconType?: 'emoji' | 'image' // tipo de icono (por defecto emoji para compatibilidad)
   value: number // precio en oro
   tier?: Tier // opcional - ya está definido en SkillProduct o Equipment
-  logSpriteId?: string // para maderas (e.g., 'log_pino' -> log_pino.png)
-  mineralSpriteId?: string // para minerales (e.g., 'ore_copper' -> ore_copper.png)
+  spriteId?: string // ID del sprite (ruta en src/assets/sprites/custom/items/)
 }
 
 export interface Resource extends Item {

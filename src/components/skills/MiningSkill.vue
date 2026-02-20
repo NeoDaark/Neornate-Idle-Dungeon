@@ -164,6 +164,7 @@ onMounted(() => {
       <IconRenderer
         :icon-id="miningConfig.icon"
         :fa-icon="miningConfig.faIcon"
+        size="xs"
         class="skill-icon"
       />
       <h2>{{ t('skills.mineria.name') }}</h2>

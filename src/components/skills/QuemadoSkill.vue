@@ -195,6 +195,7 @@ onMounted(() => {
       <IconRenderer
         :icon-id="quemadoConfig.icon"
         :fa-icon="quemadoConfig.faIcon"
+        size="xs"
         class="skill-icon"
       />
       <h2>{{ t('skills.quemado.name') }}</h2>

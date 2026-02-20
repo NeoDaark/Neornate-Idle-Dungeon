@@ -62,6 +62,7 @@ const productQuantity = computed(() => {
     <IconRenderer
       :icon-id="skillConfig.icon"
       :fa-icon="skillConfig.faIcon"
+      size="xs"
       class="work-icon"
     />
     <div class="work-content">
@@ -69,11 +70,12 @@ const productQuantity = computed(() => {
         <span class="work-name">{{ skillName }}</span>
         <span class="work-level">Lvl {{ skillLevel }}</span>
       </div>
-      <div v-if="productName" class="work-product">
-        <span class="separator"><FaIcon :icon="'fas fa-caret-left'" /></span> 
-        <span class="product-qty">{{ productQuantity }}</span>
-        <span class="separator"><FaIcon :icon="'fas fa-caret-right'" /></span>
-        <span class="product-name">{{ productName }}</span>
+      <div v-if="productName" class="work-product ">
+        <div class="work-title work-level center">
+          <span class="product-name">{{ productName }}</span>
+          <span class="separator"><FaIcon :icon="'fas fa-caret-right'" /></span>
+          <span class="product-qty ">{{ productQuantity }}</span>
+        </div>
         
       </div>
     </div>
@@ -95,23 +97,12 @@ const productQuantity = computed(() => {
 }
 
 .work-icon {
-  font-size: 1.3rem;
+  font-size: 1rem;
   display: inline-block;
   animation: pulse 1.5s ease-in-out infinite;
   flex-shrink: 0;
-  min-width: 24px;
   text-align: center;
-  margin-top: 1px;
-}
-
-.work-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  flex: 1;
-  min-width: 0;
-  position: relative;
-  z-index: 1;
+  margin-left: 5px;
 }
 
 .work-title {
@@ -123,17 +114,26 @@ const productQuantity = computed(() => {
 
 .work-name {
   color: var(--color-primary);
-  font-size: 0.8rem;
   font-weight: 600;
 }
 
 .work-level {
-  color: var(--text-muted);
-  font-size: 0.65rem;
+  color: var(--text-secondary);
   background: rgba(0, 0, 0, 0.2);
   padding: 1px 3px;
   border-radius: 2px;
   flex-shrink: 0;
+}
+
+.work-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+  font-size:  0.60rem !important;
 }
 
 .work-product {
@@ -141,25 +141,36 @@ const productQuantity = computed(() => {
   align-items: center;
   gap: 3px;
   line-height: 1;
+  font-size: 0.55rem !important;
 }
 
 .product-name {
   color: var(--text-primary);
-  font-size: 0.75rem;
   font-weight: 500;
   flex-shrink: 0;
 }
 
 .separator {
   color: var(--text-muted);
-  font-size: 0.65rem;
+  font-size: 0.58rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  height: 1em;
+  transform: translateY(1px);
 }
 
 .product-qty {
-  color: var(--text-primary);
+  color: var(--text-muted);
   font-weight: 500;
-  font-size: 0.65rem;
   flex-shrink: 0;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes pulse {

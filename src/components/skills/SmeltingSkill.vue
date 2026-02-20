@@ -174,6 +174,7 @@ onMounted(() => {
       <IconRenderer
         :icon-id="smeltingConfig.icon"
         :fa-icon="smeltingConfig.faIcon"
+        size="xs"
         class="skill-icon"
       />
       <h2>{{ t('skills.fundicion.name') }}</h2>

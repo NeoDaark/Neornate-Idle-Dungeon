@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 
 interface Props {
   spriteId?: string
@@ -26,28 +26,25 @@ const sizePixels = {
   xl: '96px',    // 1.5x
 }
 
+const spriteLoadFailed = ref(false)
+
+// Construir la ruta del sprite usando rutas relativas válidas para new URL()
 const spritePath = computed<string>(() => {
   if (!props.useSprite || !props.spriteId) return ''
-
-  try {
-    // Usar new URL() para que Vite bundlee correctamente en dev y prod
-    // Todos los sprites están en: src/assets/sprites/custom/items/
-    const relativePath = `../../assets/sprites/custom/items/${props.spriteId}.png`
-    const url = new URL(relativePath, import.meta.url).href
-    return url
-  } catch {
-    return ''
-  }
+  // Desde src/components/common/ hacia src/assets/sprites/custom/items/
+  // son 2 niveles arriba para llegar a src/, luego assets/
+  return new URL(
+    `../../assets/sprites/custom/items/${props.spriteId}.png`,
+    import.meta.url
+  ).href
 })
-
-const showSprite = computed(() => !!spritePath.value)
 </script>
 
 <template>
   <div :class="`inline-flex items-center justify-center`" :style="{ width: sizePixels[size], height: sizePixels[size] }">
     <!-- Mostrar sprite si está disponible -->
     <img
-      v-if="showSprite && spritePath"
+      v-if="spritePath && !spriteLoadFailed"
       :src="spritePath"
       :alt="alt"
       :style="{ width: sizePixels[size], height: sizePixels[size] }"

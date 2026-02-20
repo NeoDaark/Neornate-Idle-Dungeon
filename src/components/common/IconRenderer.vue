@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref, computed } from 'vue'
 
 interface Props {
   /**
@@ -18,22 +18,28 @@ interface Props {
    * Clase CSS adicional para el contenedor
    */
   class?: string
+
+  /**
+   * Tamaño del icono: xs, sm, md, ls, lg, xl
+   */
+  size?: 'xs' | 'sm' | 'md' | 'ls' | 'lg' | 'xl'
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  size: 'ls',
+})
 
 const imageLoadFailed = ref(false)
 
-const iconPath = computed<string>(() => {
-  try {
-    // Usar new URL() para que Vite bundlee correctamente en dev y prod
-    // Los iconos custom de skills están en: src/assets/sprites/custom/ui/
-    const relativePath = `../../assets/sprites/custom/ui/${props.iconId}.png`
-    const url = new URL(relativePath, import.meta.url).href
-    return url
-  } catch {
-    return ''
-  }
+// Construir la ruta del sprite usando rutas relativas válidas para new URL()
+const iconPath = computed(() => {
+  if (!props.iconId) return ''
+  // Desde src/components/common/ hacia src/assets/sprites/custom/ui/
+  // son 2 niveles arriba para llegar a src/, luego assets/
+  return new URL(
+    `../../assets/sprites/custom/ui/${props.iconId}.png`,
+    import.meta.url
+  ).href
 })
 
 const handleImageError = () => {
@@ -46,12 +52,12 @@ const handleImageLoad = () => {
 </script>
 
 <template>
-  <div class="icon-renderer" :class="props.class">
+  <div :class="['icon-renderer', `icon-renderer--${props.size}`, props.class]">
     <!-- Custom icon (si existe) -->
     <img
       v-if="iconPath && !imageLoadFailed"
       :src="iconPath"
-      :alt="iconId"
+      :alt="`Icon: ${props.iconId}`"
       class="custom-icon"
       @error="handleImageError"
       @load="handleImageLoad"
@@ -73,15 +79,69 @@ const handleImageLoad = () => {
   justify-content: center;
 }
 
+/* Size variants */
+.icon-renderer--xs {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.icon-renderer--sm {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.icon-renderer--md {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.icon-renderer--ls {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.icon-renderer--lg {
+  width: 64px;
+  height: 64px;
+  font-size: 64px;
+  min-width: 64px;
+  min-height: 64px;
+}
+
+.icon-renderer--xl {
+  width: 96px;
+  height: 96px;
+  font-size: 96px;
+  min-width: 96px;
+  min-height: 96px;
+}
+
 .custom-icon {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
 .fa-icon {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-style: normal;
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
 }
 </style>

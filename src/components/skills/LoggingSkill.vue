@@ -170,6 +170,7 @@ onMounted(() => {
       <IconRenderer
         :icon-id="loggingConfig.icon"
         :fa-icon="loggingConfig.faIcon"
+        size="xs"
         class="skill-icon"
       />
       <h2>{{ t('skills.tala.name') }}</h2>

@@ -51,6 +51,7 @@
               <IconRenderer
                 :icon-id="SKILL_CONFIGS[skill.skill].icon"
                 :fa-icon="SKILL_CONFIGS[skill.skill].faIcon"
+                size="sm"
                 class="icon"
               />
               <div class="subitem-content">

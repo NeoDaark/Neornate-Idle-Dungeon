@@ -53,6 +53,7 @@ const formatXP = (xp: number): string => {
       <IconRenderer
         :icon-id="skillConfig.icon"
         :fa-icon="skillConfig.faIcon"
+        size="md"
         class="icon-container"
       />
       <div class="info">

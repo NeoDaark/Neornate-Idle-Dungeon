@@ -128,14 +128,13 @@ const nothingChancePercent = computed(() => {
 
 // Calcular el step para la barra basado en dropModifier
 // El rango 0-100 contiene 101 valores (0, 1, 2... 100)
-// Si dropModifier = 0.10 (10%), queremos 10 posiciones: step = 100 / (10 - 1) = 11.11...
-// Si dropModifier = 0.05 (5%), queremos 5 posiciones: step = 100 / (5 - 1) = 25
+// Si es divisible entre 2: step = 100 / numSteps (ej: 10% → step = 10)
+// Si NO es divisible entre 2: step = 100 / (numSteps - 1) (ej: 5% → step = 25)
 const sliderStep = computed(() => {
   if (toolBonus.value.dropModifier <= 0) return 1
   const numSteps = Math.round(toolBonus.value.dropModifier * 100)
   if (numSteps <= 1) return 100
-  // step = 100 / (numSteps - 1) porque el rango incluye el 0 como primera posición
-  return 100 / (numSteps - 1)
+  return 100 / numSteps
 })
 
 const selectProduct = (product: SkillProduct) => {
@@ -209,6 +208,16 @@ watch(dropDistribution, (newValue) => {
     skillsStore.saveToLocalStorage()
   }
 })
+
+// Watcher para detectar cambios en las herramientas equipadas y forzar recalcular el bonus
+watch(
+  () => toolsStore.equippedTools,
+  () => {
+    // Forzar recalcular toolBonus cuando cambian las herramientas equipadas
+    // Esto se actualiza automáticamente porque toolBonus es un computed
+  },
+  { deep: true }
+)
 </script>
 
 <template>

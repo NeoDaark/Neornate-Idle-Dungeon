@@ -34,12 +34,23 @@ const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
 const isDropdownOpen = ref(false)
 
+// Computed que siempre lee el valor más actualizado del store
+const storedDropDistribution = computed(() => {
+  if (props.skill !== 'quemado') return 50
+  const skillState = skillsStore.getSkillState(props.skill)
+  return skillState?.woodburningDropDistribution ?? 50
+})
+
 // Inicializar la distribución de drops desde el estado guardado o con valor por defecto
-const skillState = skillsStore.getSkillState(props.skill)
-const dropDistribution = ref(props.skill === 'quemado' && skillState?.woodburningDropDistribution !== undefined
-  ? skillState.woodburningDropDistribution
-  : 50
-) // 0-100: % para carbón, resto va a ceniza
+const dropDistribution = ref(50)
+
+// Cuando el componente carga por primera vez, sincronizar con el stored value
+watch(storedDropDistribution, (newValue) => {
+  // Solo sincronizar si dropDistribution aún no ha sido modificado por el usuario
+  if (dropDistribution.value === 50 && newValue !== 50) {
+    dropDistribution.value = newValue
+  }
+}, { immediate: true })
 
 const skillAction = computed((): string => {
   return t(`skills.${SKILL_CONFIGS[props.skill].name}.action`)

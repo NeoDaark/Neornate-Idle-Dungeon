@@ -7,6 +7,7 @@ import { Skill, SKILL_CONFIGS } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
 import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const skillsStore = useSkillsStore()
 const toolsStore = useToolsStore()
@@ -166,7 +167,12 @@ onMounted(() => {
   <div class="skill-view">
     <!-- Header -->
     <div class="skill-header">
-      <h2>{{ loggingConfig.emoji }} {{ t('skills.tala.name') }}</h2>
+      <IconRenderer
+        :icon-id="loggingConfig.icon"
+        :fa-icon="loggingConfig.faIcon"
+        class="skill-icon"
+      />
+      <h2>{{ t('skills.tala.name') }}</h2>
       <p class="skill-header-desc">{{ t('skills.tala.description') }}</p>
     </div>
 

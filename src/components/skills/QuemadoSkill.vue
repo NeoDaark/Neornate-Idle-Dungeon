@@ -8,6 +8,7 @@ import { LOGGING_PRODUCTS } from '@/data/skillProducts'
 import type { SkillProduct } from '@/types/Skill'
 import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const skillsStore = useSkillsStore()
 const inventoryStore = useInventoryStore()
@@ -191,7 +192,12 @@ onMounted(() => {
   <div class="skill-view">
     <!-- Header -->
     <div class="skill-header">
-      <h2>{{ quemadoConfig.emoji }} {{ t('skills.quemado.name') }}</h2>
+      <IconRenderer
+        :icon-id="quemadoConfig.icon"
+        :fa-icon="quemadoConfig.faIcon"
+        class="skill-icon"
+      />
+      <h2>{{ t('skills.quemado.name') }}</h2>
       <p class="skill-header-desc">{{ t('skills.quemado.description') }}</p>
     </div>
 

@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import type { SkillState } from '@/types/Skill'
 import { SKILL_CONFIGS, calculateXpForLevel } from '@/types/Game'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 interface Props {
   skillState: SkillState
@@ -49,7 +50,11 @@ const formatXP = (xp: number): string => {
   <div class="skill-card" :class="{ active: isActive }" @click="onClick">
     <!-- Header -->
     <div class="skill-header">
-      <span class="emoji">{{ skillConfig.emoji }}</span>
+      <IconRenderer
+        :icon-id="skillConfig.icon"
+        :fa-icon="skillConfig.faIcon"
+        class="icon-container"
+      />
       <div class="info">
         <h3>{{ displayName }}</h3>
         <p class="level">{{ t('labels.level') }} {{ skillState.level }}</p>
@@ -107,10 +112,11 @@ const formatXP = (xp: number): string => {
   margin-bottom: 10px;
 }
 
-.emoji {
+.icon-container {
   font-size: 28px;
   min-width: 32px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .info h3 {

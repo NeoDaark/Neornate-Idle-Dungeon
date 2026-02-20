@@ -101,6 +101,7 @@ export interface SkillConfig {
   name: string
   emoji: string
   icon: string
+  faIcon: string // FontAwesome icon class (e.g., 'fa-solid fa-mountain')
   type: 'extraction' | 'crafting' | 'combat' | 'burning'
   baseCycleDuration: number // segundos
 }
@@ -110,6 +111,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     name: 'mineria',
     emoji: '⛏️',
     icon: 'pickaxe',
+    faIcon: 'fa-solid fa-mountain',
     type: 'extraction',
     baseCycleDuration: 5,
   },
@@ -117,20 +119,23 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     name: 'tala',
     emoji: '🌲',
     icon: 'tree',
+    faIcon: 'fa-solid fa-tree',
     type: 'extraction',
     baseCycleDuration: 5,
   },
   [Skill.FUNDICION]: {
     name: 'fundicion',
-    emoji: '🫕',
+    emoji: '🔥',
     icon: 'furnace',
+    faIcon: 'fa-solid fa-fire',
     type: 'crafting',
     baseCycleDuration: 5,
   },
   [Skill.QUEMADO]: {
     name: 'quemado',
     emoji: '🔥',
-    icon: 'burn',
+    icon: 'quemado',
+    faIcon: 'fa-solid fa-fire-flame-curved',
     type: 'burning',
     baseCycleDuration: 5,
   },
@@ -138,6 +143,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     name: 'herreria',
     emoji: '🔨',
     icon: 'hammer',
+    faIcon: 'fa-solid fa-hammer',
     type: 'crafting',
     baseCycleDuration: 5,
   },
@@ -145,6 +151,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     name: 'pesca',
     emoji: '🎣',
     icon: 'fishing',
+    faIcon: 'fa-solid fa-fish',
     type: 'extraction',
     baseCycleDuration: 5,
   },
@@ -152,6 +159,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     name: 'cocina',
     emoji: '🍳',
     icon: 'cooking',
+    faIcon: 'fa-solid fa-utensils',
     type: 'crafting',
     baseCycleDuration: 5,
   },
@@ -159,6 +167,7 @@ export const SKILL_CONFIGS: Record<Skill, SkillConfig> = {
     name: 'aventura',
     emoji: '🗺️',
     icon: 'adventure',
+    faIcon: 'fa-solid fa-wand-magic-sparkles',
     type: 'combat',
     baseCycleDuration: 5,
   },

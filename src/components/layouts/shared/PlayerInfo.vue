@@ -4,6 +4,7 @@ import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { useI18n } from '@/composables/useI18n'
 import { SKILL_CONFIGS } from '@/types/Game'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const skillsStore = useSkillsStore()
 const inventoryStore = useInventoryStore()
@@ -58,7 +59,11 @@ const productQuantity = computed(() => {
 <template>
   <!-- Solo mostrar el trabajo activo, el nivel y XP lo maneja el header de desktop -->
   <div v-if="skillConfig" class="active-work">
-    <span class="work-emoji">{{ skillConfig.emoji }}</span>
+    <IconRenderer
+      :icon-id="skillConfig.icon"
+      :fa-icon="skillConfig.faIcon"
+      class="work-icon"
+    />
     <div class="work-content">
       <div class="work-title">
         <span class="work-name">{{ skillName }}</span>
@@ -89,13 +94,13 @@ const productQuantity = computed(() => {
   overflow: visible;
 }
 
-
-
-.work-emoji {
+.work-icon {
   font-size: 1.3rem;
   display: inline-block;
   animation: pulse 1.5s ease-in-out infinite;
   flex-shrink: 0;
+  min-width: 24px;
+  text-align: center;
   margin-top: 1px;
 }
 

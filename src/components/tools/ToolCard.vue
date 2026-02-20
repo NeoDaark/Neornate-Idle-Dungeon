@@ -3,7 +3,13 @@
     <!-- COMPACT MODE -->
     <template v-if="isCompact">
       <div class="tool-card-compact">
-        <div class="compact-icon">{{ tool.icon }}</div>
+        <div class="compact-icon">
+          <IconRenderer
+            :iconId="SKILL_CONFIGS[props.tool.skillId].icon"
+            :faIcon="SKILL_CONFIGS[props.tool.skillId].faIcon"
+            size="sm"
+          />
+        </div>
         <div class="compact-info">
           <div class="compact-name-tier">
             <span class="compact-name">{{ toolName }}</span>
@@ -39,7 +45,13 @@
     <!-- REGULAR MODE -->
     <template v-else>
       <div class="tool-header">
-        <span class="tool-icon">{{ tool.icon }}</span>
+        <div class="tool-icon">
+          <IconRenderer
+            :iconId="SKILL_CONFIGS[props.tool.skillId].icon"
+            :faIcon="SKILL_CONFIGS[props.tool.skillId].faIcon"
+            size="lg"
+          />
+        </div>
         <div class="tool-info">
           <h3 class="tool-name">{{ toolName }}</h3>
           <p class="tool-tier">{{ t(`tools.tier${tool.tier}`) }}</p>
@@ -92,6 +104,8 @@ import { useSkillsStore } from '@/stores/skillsStore'
 import { usePlayerStore } from '@/stores/playerStore'
 import { useI18n } from '@/composables/useI18n'
 import { formatEffect, formatGold, getSkillProductName } from '@/utils/formatEffect'
+import IconRenderer from '@/components/common/IconRenderer.vue'
+import { SKILL_CONFIGS } from '@/types/Game'
 
 interface Props {
   tool: Tool
@@ -218,10 +232,10 @@ const handleBuy = () => {
 }
 
 .compact-icon {
-  font-size: 28px;
-  line-height: 1;
-  min-width: 32px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .compact-info {
@@ -322,8 +336,10 @@ const handleBuy = () => {
 }
 
 .tool-icon {
-  font-size: 24px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .tool-info {

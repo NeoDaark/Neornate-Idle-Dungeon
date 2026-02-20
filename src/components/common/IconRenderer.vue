@@ -20,9 +20,9 @@ interface Props {
   class?: string
 
   /**
-   * Tamaño del icono: xs, sm, md, ls, lg, xl
+   * Tamaño del icono: xs, xm, sm, md, ls, lg, xl
    */
-  size?: 'xs' | 'sm' | 'md' | 'ls' | 'lg' | 'xl'
+  size?: 'xs' | 'xm' | 'sm' | 'md' | 'ls' | 'lg' | 'xl'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -86,6 +86,14 @@ const handleImageLoad = () => {
   font-size: 16px;
   min-width: 16px;
   min-height: 16px;
+}
+
+.icon-renderer--xm {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  min-width: 20px;
+  min-height: 20px;
 }
 
 .icon-renderer--sm {

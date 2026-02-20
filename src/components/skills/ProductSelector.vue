@@ -127,15 +127,15 @@ const nothingChancePercent = computed(() => {
 })
 
 // Calcular el step para la barra basado en dropModifier
-// Si dropModifier = 0.05 (5%), queremos 5 posiciones, entonces step = 100/5 = 20
-// Pero restamos 1 porque el rango 0-100 contiene 101 valores (incluyendo 0)
+// El rango 0-100 contiene 101 valores (0, 1, 2... 100)
+// Si dropModifier = 0.10 (10%), queremos 10 posiciones: step = 100 / (10 - 1) = 11.11...
+// Si dropModifier = 0.05 (5%), queremos 5 posiciones: step = 100 / (5 - 1) = 25
 const sliderStep = computed(() => {
   if (toolBonus.value.dropModifier <= 0) return 1
-  const posiciones = Math.ceil(toolBonus.value.dropModifier * 100)
-  // Evitar división por 0
-  if (posiciones <= 1) return 100
-  // step = 100 / (posiciones - 1) para tener exactamente "posiciones" valores
-  return Math.round((100 / (posiciones - 1)) * 10) / 10
+  const numSteps = Math.round(toolBonus.value.dropModifier * 100)
+  if (numSteps <= 1) return 100
+  // step = 100 / (numSteps - 1) porque el rango incluye el 0 como primera posición
+  return 100 / (numSteps - 1)
 })
 
 const selectProduct = (product: SkillProduct) => {
@@ -361,6 +361,11 @@ watch(dropDistribution, (newValue) => {
             class="range-input"
           />
           <span class="slider-tag coal">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</span>
+        </div>
+        <div class="slider-debug">
+          <span>dropModifier: {{ (toolBonus.dropModifier * 100).toFixed(1) }}%</span>
+          <span>distribución: {{ dropDistribution }}/100</span>
+          <span>step: {{ sliderStep }}</span>
         </div>
       </div>
     </div>
@@ -1248,5 +1253,24 @@ watch(dropDistribution, (newValue) => {
 .ash-value {
   color: var(--color-secondary);
   font-weight: 600;
+}
+
+.slider-debug {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 6px;
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 3px;
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.slider-debug span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 </style>

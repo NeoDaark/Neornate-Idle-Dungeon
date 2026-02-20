@@ -16,10 +16,9 @@ Estos prompts están optimizados para:
 ### 1️⃣ COBRE (Copper)
 
 ```
-Isometric pixel art ore of copper, 32x32 sprite sheet, 
-metallic orange-reddish color, rough crystalline texture, 
-shiny reflective surface, game asset, pixel art style, 
-top-down view, on transparent background, RPG game style
+Isometric pixel art ore of copper, metallic orange-reddish color, 
+rough crystalline texture, shiny reflective surface, pixel art style, 
+top-down view, grey background, no shadows
 ```
 
 ---
@@ -27,10 +26,9 @@ top-down view, on transparent background, RPG game style
 ### 2️⃣ CARBÓN (Coal)
 
 ```
-Pixel art coal ore sprite, 32x32 pixel, isometric view, 
-dark black and grey colors with rough texture, coal crystal 
-formation, game asset style, subtle shadow, transparent 
-background, mining game sprite
+Pixel art coal ore sprite, isometric view, dark black and grey colors 
+with rough texture, coal crystal formation, subtle shadow, 
+grey background, no shadows
 ```
 
 ---
@@ -38,10 +36,9 @@ background, mining game sprite
 ### 3️⃣ HIERRO (Iron)
 
 ```
-Pixel art iron ore sprite, 32x32 pixels, isometric perspective, 
-metallic grey color with orange-brown rust accents, rough metallic 
-texture, cubic crystalline structure, game asset, transparent 
-background, RPG mining game style
+Pixel art iron ore sprite, isometric perspective, metallic grey color 
+with orange-brown rust accents, rough metallic texture, cubic crystalline 
+structure, grey background, no shadows
 ```
 
 ---
@@ -49,10 +46,9 @@ background, RPG mining game style
 ### 4️⃣ PLATA (Silver)
 
 ```
-Pixel art silver ore sprite, 32x32 pixels, isometric view, 
-bright metallic silver color, shiny reflective surface, 
-crystalline faceted structure, bright highlights, game asset 
-style, transparent background, fantasy RPG mining game
+Pixel art silver ore sprite, isometric view, bright metallic silver color, 
+shiny reflective surface, crystalline faceted structure, bright highlights, 
+grey background, no shadows
 ```
 
 ---
@@ -60,10 +56,9 @@ style, transparent background, fantasy RPG mining game
 ### 5️⃣ TUNGSTENO (Tungsten)
 
 ```
-Pixel art tungsten ore sprite, 32x32 pixels, isometric perspective, 
-dark metallic grey color, dense heavy appearance, angular crystal 
-formation, strong metallic sheen, game asset, transparent background, 
-RPG mining game asset
+Pixel art tungsten ore sprite, isometric perspective, dark metallic grey 
+color, dense heavy appearance, angular crystal formation, strong metallic 
+sheen, grey background, no shadows
 ```
 
 ---
@@ -71,10 +66,9 @@ RPG mining game asset
 ### 6️⃣ ORO (Gold)
 
 ```
-Pixel art gold ore sprite, 32x32 pixels, isometric perspective, 
-bright golden yellow color, radiant luminous appearance, shiny 
-reflective surface, wealth appearance, game asset style, transparent 
-background, fantasy RPG mining game
+Pixel art gold ore sprite, isometric perspective, bright golden yellow 
+color, radiant luminous appearance, shiny reflective surface, wealth 
+appearance, grey background, no shadows
 ```
 
 ---
@@ -82,10 +76,9 @@ background, fantasy RPG mining game
 ### 7️⃣ PLATINO (Platinum)
 
 ```
-Pixel art platinum ore sprite, 32x32 pixels, isometric perspective, 
-pale silver-white color, premium metallic sheen, crystalline faceted 
-structure, bright reflections, elegant appearance, game asset, 
-transparent background, fantasy RPG mining
+Pixel art platinum ore sprite, isometric perspective, pale silver-white 
+color, premium metallic sheen, crystalline faceted structure, bright 
+reflections, elegant appearance, grey background, no shadows
 ```
 
 ---
@@ -93,10 +86,9 @@ transparent background, fantasy RPG mining
 ### 8️⃣ OBSIDIANA (Obsidian)
 
 ```
-Pixel art obsidian ore sprite, 32x32 pixels, isometric perspective, 
-pure jet black color with dark purple-blue reflections, smooth glass-like 
-surface, volcanic appearance, sharp angular edges, game asset, transparent 
-background, fantasy RPG mining game
+Pixel art obsidian ore sprite, isometric perspective, pure jet black 
+color with dark purple-blue reflections, smooth glass-like surface, 
+volcanic appearance, sharp angular edges, grey background, no shadows
 ```
 
 ---
@@ -104,10 +96,9 @@ background, fantasy RPG mining game
 ### 9️⃣ COBALTO (Cobalt)
 
 ```
-Pixel art cobalt ore sprite, 32x32 pixels, isometric perspective, 
-deep blue metallic color, vibrant rich appearance, crystalline structure 
-with bright highlights, intense color, exotic appearance, game asset, 
-transparent background, fantasy RPG mining
+Pixel art cobalt ore sprite, isometric perspective, deep blue metallic 
+color, vibrant rich appearance, crystalline structure with bright 
+highlights, intense color, exotic appearance, grey background, no shadows
 ```
 
 ---
@@ -115,10 +106,9 @@ transparent background, fantasy RPG mining
 ### 🔟 MITHRIL (Mithril/Mythril)
 
 ```
-Pixel art mithril ore sprite, 32x32 pixels, isometric perspective, 
-shimmering silvery-blue color, magical luminous appearance, ethereal 
-glow, crystalline mystical structure, bright highlights, legendary 
-appearance, game asset, transparent background, fantasy RPG
+Pixel art mithril ore sprite, isometric perspective, shimmering silvery-blue 
+color, magical luminous appearance, ethereal glow, crystalline mystical 
+structure, bright highlights, legendary appearance, grey background, no shadows
 ```
 
 ---
@@ -126,10 +116,9 @@ appearance, game asset, transparent background, fantasy RPG
 ### 1️⃣1️⃣ ORICALCO (Orichalcum)
 
 ```
-Pixel art orichalcum ore sprite, 32x32 pixels, isometric perspective, 
-radiant golden-copper color with mystical light, divine metallic sheen, 
-crystalline structure with prismatic reflections, legendary mythical 
-appearance, game asset, transparent background, fantasy RPG
+Pixel art orichalcum ore sprite, isometric perspective, radiant golden-copper 
+color with mystical light, divine metallic sheen, crystalline structure with 
+prismatic reflections, legendary mythical appearance, grey background, no shadows
 ```
 
 ---
@@ -137,10 +126,9 @@ appearance, game asset, transparent background, fantasy RPG
 ### 1️⃣2️⃣ ADAMANTITA (Adamantite)
 
 ```
-Pixel art adamantite ore sprite, 32x32 pixels, isometric perspective, 
-deep purple-pink color, indestructible legendary appearance, crystalline 
-geometric structure, bright magical reflections, unbreakable metallic sheen, 
-game asset, transparent background, epic fantasy RPG
+Pixel art adamantite ore sprite, isometric perspective, deep purple-pink 
+color, indestructible legendary appearance, crystalline geometric structure, 
+bright magical reflections, unbreakable metallic sheen, grey background, no shadows
 ```
 
 ---
@@ -148,10 +136,9 @@ game asset, transparent background, epic fantasy RPG
 ### 1️⃣3️⃣ TITANIO (Titanium)
 
 ```
-Pixel art titanium ore sprite, 32x32 pixels, isometric perspective, 
-silvery-grey metallic color, extreme durability appearance, strong 
-angular crystalline structure, intense metallic sheen, powerful legendary 
-appearance, game asset, transparent background, epic fantasy RPG mining
+Pixel art titanium ore sprite, isometric perspective, silvery-grey metallic 
+color, extreme durability appearance, strong angular crystalline structure, 
+intense metallic sheen, powerful legendary appearance, grey background, no shadows
 ```
 
 ---
@@ -159,11 +146,9 @@ appearance, game asset, transparent background, epic fantasy RPG mining
 ### 1️⃣4️⃣ DRACONITA (Dragonite)
 
 ```
-Pixel art dragonite ore sprite, 32x32 pixels, isometric perspective, 
-blood-red crimson color with dark purple accents, draconic legendary 
-appearance, jagged intimidating structure, inner glow effect, divine 
-power appearance, game asset, transparent background, ultimate fantasy 
-RPG mining
+Pixel art dragonite ore sprite, isometric perspective, blood-red crimson 
+color with dark purple accents, draconic legendary appearance, jagged 
+intimidating structure, inner glow effect, divine power appearance, grey background, no shadows
 ```
 
 ---

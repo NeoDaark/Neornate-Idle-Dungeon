@@ -3,17 +3,23 @@
     <!-- COMPACT MODE -->
     <template v-if="isCompact">
       <div class="tool-card-compact">
-        <div class="compact-icon">{{ tool.icon }}</div>
+        <div class="compact-icon">
+          <IconRenderer
+            :iconId="SKILL_CONFIGS[props.tool.skillId].icon"
+            :faIcon="SKILL_CONFIGS[props.tool.skillId].faIcon"
+            size="sm"
+          />
+        </div>
         <div class="compact-info">
           <div class="compact-name-tier">
-            <span class="compact-name">{{ tool.name }}</span>
+            <span class="compact-name">{{ toolName }}</span>
             <span class="compact-tier">{{ t(`tools.tier${tool.tier}`) }}</span>
           </div>
           <div v-if="tool.effects.length > 0" class="compact-effects">
-            {{ tool.effects.map(e => e.description).join(' | ') }}
+            {{ formatEffectsList(tool.effects) }}
           </div>
           <div class="compact-price">
-            <span>{{ tool.price }} 💰</span>
+            <span>{{ formatGold(tool.price) }} 💰</span>
             <span v-if="!isAvailable" class="compact-locked-reason">
               {{ t('tools.requireLevel') }}: {{ tool.requiredLevel }} ({{ t('tools.currentLevel') }}: {{ playerLevel }})
             </span>
@@ -39,25 +45,31 @@
     <!-- REGULAR MODE -->
     <template v-else>
       <div class="tool-header">
-        <span class="tool-icon">{{ tool.icon }}</span>
+        <div class="tool-icon">
+          <IconRenderer
+            :iconId="SKILL_CONFIGS[props.tool.skillId].icon"
+            :faIcon="SKILL_CONFIGS[props.tool.skillId].faIcon"
+            size="lg"
+          />
+        </div>
         <div class="tool-info">
-          <h3 class="tool-name">{{ tool.name }}</h3>
+          <h3 class="tool-name">{{ toolName }}</h3>
           <p class="tool-tier">{{ t(`tools.tier${tool.tier}`) }}</p>
         </div>
       </div>
 
-      <p class="tool-description">{{ tool.description }}</p>
+      <p class="tool-description">{{ toolDescription }}</p>
 
       <div class="tool-effects">
         <div v-for="effect in tool.effects" :key="`${tool.id}-${effect.type}`" class="effect">
-          <span class="effect-type">{{ effect.description }}</span>
+          <span class="effect-type">{{ formatEffect(effect, t(effect.description), getSkillProductName(tool.skillId)) }}</span>
         </div>
       </div>
 
       <div class="tool-footer">
         <div class="tool-price">
           <span class="price-label">{{ t('ui.price') }}</span>
-          <span class="price-value">{{ tool.price }} 💰</span>
+          <span class="price-value">{{ formatGold(tool.price) }} 💰</span>
         </div>
 
         <button
@@ -91,6 +103,9 @@ import { useToolsStore } from '@/stores/toolsStore'
 import { useSkillsStore } from '@/stores/skillsStore'
 import { usePlayerStore } from '@/stores/playerStore'
 import { useI18n } from '@/composables/useI18n'
+import { formatEffect, formatGold, getSkillProductName } from '@/utils/formatEffect'
+import IconRenderer from '@/components/common/IconRenderer.vue'
+import { SKILL_CONFIGS } from '@/types/Game'
 
 interface Props {
   tool: Tool
@@ -118,6 +133,56 @@ const isEquipped = computed(
 )
 
 const hasEnoughGold = computed(() => playerStore.player.gold >= props.tool.price)
+
+/**
+ * Obtiene el nombre traducido del tool basándose en su skillId e id
+ * Clave: tools.{skillId}.{toolId}
+ */
+const toolName = computed(() => {
+  const skillMap: Record<string, string> = {
+    'mineria': 'mineria',
+    'tala': 'tala',
+    'fundicion': 'fundicion',
+    'quemado': 'quemado',
+  }
+  const skillKey = skillMap[props.tool.skillId] || props.tool.skillId
+  const i18nKey = `tools.${skillKey}.${props.tool.id}`
+  const translated = t(i18nKey)
+  // Si la traducción falla (devuelve la clave), usar el nombre del tool
+  return translated === i18nKey ? props.tool.name : translated
+})
+
+/**
+ * Obtiene la descripción traducida del tool basándose en su skillId e id
+ * Clave: tools.descriptions.{skillId}.{toolId}
+ */
+const toolDescription = computed(() => {
+  const skillMap: Record<string, string> = {
+    'mineria': 'mineria',
+    'tala': 'tala',
+    'fundicion': 'fundicion',
+    'quemado': 'quemado',
+  }
+  const skillKey = skillMap[props.tool.skillId] || props.tool.skillId
+  const i18nKey = `tools.descriptions.${skillKey}.${props.tool.id}`
+  const translated = t(i18nKey)
+  // Si la traducción falla, usar la descripción original del tool
+  return translated === i18nKey ? props.tool.description : translated
+})
+
+/**
+ * Formatea la lista de efectos traduciendo las claves i18n
+ */
+const formatEffectsList = (effects: typeof props.tool.effects): string => {
+  const productName = getSkillProductName(props.tool.skillId)
+  return effects
+    .map(effect => {
+      const i18nKey = effect.description
+      const i18nText = t(i18nKey)
+      return formatEffect(effect, i18nText, productName)
+    })
+    .join(' | ')
+}
 
 const handleBuy = () => {
   if (!hasEnoughGold.value) {
@@ -167,10 +232,10 @@ const handleBuy = () => {
 }
 
 .compact-icon {
-  font-size: 28px;
-  line-height: 1;
-  min-width: 32px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .compact-info {
@@ -271,8 +336,10 @@ const handleBuy = () => {
 }
 
 .tool-icon {
-  font-size: 24px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .tool-info {

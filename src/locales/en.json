@@ -36,7 +36,15 @@
     "price": "Price",
     "buy": "Buy",
     "locked": "Locked",
-    "continue": "Continue"
+    "continue": "Continue",
+    "drops": "Drops",
+    "nothing": "Nothing",
+    "selectLog": "Select a log",
+    "woodburning": {
+      "dropDistribution": "Drop Distribution",
+      "carbonPercentage": "{percent}% Coal",
+      "ashPercentage": "{percent}% Ash"
+    }
   },
   "inventory": {
     "quantity": "Quantity",
@@ -63,7 +71,11 @@
       "sellDesc": "Sell this resource for gold",
       "quantity": "Quantity to sell",
       "unitPrice": "Unit price",
-      "total": "Total",
+      "global": "Global",
+      "grossEarnings": "Gross earnings",
+      "marketFee": "Market fee",
+      "netEarningsPerUnit": "Net earnings per unit",
+      "totalFinalPrice": "Total final price",
       "sellConfirm": "Confirm sale",
       "quantityDiscard": "Quantity to discard",
       "discardWarning": "This will permanently delete the items",
@@ -88,6 +100,11 @@
       "name": "Smelting",
       "action": "Smelt",
       "description": "Smelt minerals into ingots"
+    },
+    "quemado": {
+      "name": "Woodburning",
+      "action": "Burn",
+      "description": "Burn logs to obtain coal"
     },
     "herreria": {
       "name": "Smithing",
@@ -116,6 +133,7 @@
     "fish": "Fish",
     "food": "Food",
     "ingots": "Ingots",
+    "ash": "Ash",
     "carbon": "Coal",
     "cobre": "Copper",
     "hierro": "Iron",
@@ -130,15 +148,21 @@
     "adamantita": "Adamantite",
     "titanio": "Titanium",
     "draconita": "Dragonite",
-    "madera-blanda": "Softwood",
-    "madera-comun": "Common Wood",
-    "roble": "Oak Wood",
-    "nogal": "Walnut Wood",
-    "caoba": "Mahogany Wood",
-    "ebano": "Ebony Wood",
-    "petreo": "Petrified Wood",
-    "ancestral": "Ancestral Wood",
-    "divino": "Divine Wood",
+    "madera-pino": "Pine Wood",
+    "madera-abedul": "Birch Wood",
+    "madera-abeto": "Fir Wood",
+    "madera-nogal": "Walnut Wood",
+    "madera-caoba": "Mahogany Wood",
+    "madera-ebano": "Ebony Wood",
+    "madera-teca": "Teak Wood",
+    "madera-cedro": "Cedar Wood",
+    "madera-maldita": "Cursed Wood",
+    "madera-mistica": "Mystical Wood",
+    "madera-sagrada": "Sacred Wood",
+    "madera-primordial": "Primordial Wood",
+    "madera-dimensional": "Dimensional Wood",
+    "madera-meteorica": "Meteoric Wood",
+    "ceniza": "Ash",
     "pez": "Fish",
     "trucha": "Trout",
     "salmon": "Salmon",
@@ -218,61 +242,75 @@
       }
     },
     "wood": {
-      "madera-blanda": {
-        "name": "Soft Wood",
-        "description": "Light wood easy to cut. Perfect for beginners."
+      "madera-pino": {
+        "name": "Pine Wood",
+        "tree-name": "Pine",
+        "description": "Light wood from conifers. Easy to work, perfect for beginners."
       },
-      "madera-comun": {
-        "name": "Common Wood",
-        "description": "Versatile general-purpose wood. Stable resource."
+      "madera-abedul": {
+        "name": "Birch Wood",
+        "tree-name": "Birch",
+        "description": "Bright and flexible wood. Excellent strength-to-weight ratio."
       },
-      "roble": {
-        "name": "Oak Wood",
-        "description": "Robust and durable wood. Ideal for structures."
+      "madera-abeto": {
+        "name": "Fir Wood",
+        "tree-name": "Fir",
+        "description": "Fine-grained conifer wood. Versatile and reliable."
       },
-      "nogal": {
+      "madera-nogal": {
         "name": "Walnut Wood",
-        "description": "Dense dark wood. Excellent for fine finishes."
+        "tree-name": "Walnut",
+        "description": "Dense dark-colored wood. Excellent for refined finishes."
       },
-      "caoba": {
+      "madera-caoba": {
         "name": "Mahogany Wood",
-        "description": "Precious reddish wood. Highly appreciated by craftsmen."
+        "tree-name": "Mahogany",
+        "description": "Precious reddish wood. Highly appreciated for its beauty."
       },
-      "ebano": {
+      "madera-ebano": {
         "name": "Ebony Wood",
-        "description": "Rare black wood. Symbol of elegance and power."
+        "tree-name": "Ebony",
+        "description": "Rare and hard black wood. Symbol of supreme elegance."
       },
-      "petreo": {
-        "name": "Petrified Wood",
-        "description": "Fossilized wood almost turned to stone. Extremely hard."
+      "madera-teca": {
+        "name": "Teak Wood",
+        "tree-name": "Teak",
+        "description": "Durable tropical wood. Resists the ravages of time perfectly."
       },
-      "ancestral": {
-        "name": "Ancestral Wood",
-        "description": "Ancient wood from past ages. Imbued with history."
+      "madera-cedro": {
+        "name": "Cedar Wood",
+        "tree-name": "Cedar",
+        "description": "Noble aromatic wood. Incomparable fragrance."
       },
-      "cristalina": {
-        "name": "Crystalline Wood",
-        "description": "Transparent shiny wood. Almost translucent."
+      "madera-maldita": {
+        "name": "Cursed Wood",
+        "tree-name": "Cursed Tree",
+        "description": "Wood imbued with ancient curses. Latent dark power."
       },
-      "magica": {
-        "name": "Magical Wood",
-        "description": "Enchanted wood with arcane power. Channels magic."
+      "madera-mistica": {
+        "name": "Mystical Wood",
+        "tree-name": "Mystical Tree",
+        "description": "Wood wrapped in arcane mystery. Channels occult energy."
       },
-      "sagrada": {
+      "madera-sagrada": {
         "name": "Sacred Wood",
-        "description": "Blessed wood from temples. Radiates peace and protection."
+        "tree-name": "Sacred Tree",
+        "description": "Blessed wood from ancestral temples. Radiates divine protection."
       },
-      "primordial": {
+      "madera-primordial": {
         "name": "Primordial Wood",
-        "description": "Wood from the first times. Essence of the ancient forest."
+        "tree-name": "Primordial Tree",
+        "description": "Wood from the first times. Pure essence of the ancient forest."
       },
-      "dimensional": {
+      "madera-dimensional": {
         "name": "Dimensional Wood",
-        "description": "Wood from other dimensions. Defies the laws of physics."
+        "tree-name": "Dimensional Tree",
+        "description": "Wood extracted from other dimensions. Defies physical logic."
       },
-      "divina": {
-        "name": "Divine Wood",
-        "description": "Wood of the gods. Supreme celestial material."
+      "madera-dragonica": {
+        "name": "Dragon Bone Wood",
+        "tree-name": "Dragon Bone Tree",
+        "description": "Wood extracted from ancient dragon trees. Legendary and epic material."
       }
     },
     "ingots": {
@@ -332,13 +370,24 @@
         "name": "Dragonite Ingot",
         "description": "Dragon ingot. Concentrated draconic power."
       }
+    },
+    "ash": {
+      "ceniza": {
+        "name": "Ash",
+        "description": "Gray powder resulting from burning wood. Byproduct of woodburning."
+      }
     }
   },
   "messages": {
     "loading": "Loading...",
     "error": "Error",
     "success": "Success",
-    "confirm": "Are you sure?"
+    "confirm": "Are you sure?",
+    "danger_zone": "Danger zone - Destructive operations",
+    "clear_all_data_confirm": "Do you want to delete ALL data? This action cannot be undone.",
+    "clear_all_data_double_confirm": "Are you completely sure? The data cannot be recovered.",
+    "clear_all_data_success": "All data has been deleted. The page will reload.",
+    "clear_all_data_error": "There was an error deleting the data. Check the console for more details."
   },
   "labels": {
     "level": "Level",
@@ -382,7 +431,12 @@
     "xp_reward": "XP Reward",
     "quantity": "Quantity",
     "stored_quantity": "Stored",
-    "blocked_materials": "View {count} blocked materials"
+    "blocked_materials": "View {count} blocked materials",
+    "possible_drops": "Possible Drops",
+    "you_have": "You have",
+    "danger": "Danger",
+    "clear_all_data": "Clear all data",
+    "second_confirmation": "Second confirmation"
   },
   "errors": {
     "notFound": "Not found",
@@ -406,7 +460,88 @@
     "tier4": "Tier 4",
     "tier5": "Tier 5",
     "tier6": "Tier 6",
-    "tier7": "Tier 7"
+    "tier7": "Tier 7",
+    "mineria": {
+      "pickaxe_copper": "Copper Pickaxe",
+      "pickaxe_iron": "Iron Pickaxe",
+      "pickaxe_steel": "Steel Pickaxe",
+      "pickaxe_mithril": "Mithril Pickaxe",
+      "pickaxe_adamantite": "Adamantite Pickaxe",
+      "pickaxe_orichalcum": "Orichalcum Pickaxe",
+      "pickaxe_divine": "Divine Pickaxe"
+    },
+    "tala": {
+      "axe_wood": "Wooden Axe",
+      "axe_copper": "Copper Axe",
+      "axe_iron": "Iron Axe",
+      "axe_steel": "Steel Axe",
+      "axe_mithril": "Mithril Axe",
+      "axe_orichalcum": "Orichalcum Axe",
+      "axe_divine": "Divine Axe"
+    },
+    "fundicion": {
+      "furnace_basic": "Basic Furnace",
+      "furnace_copper": "Copper Furnace",
+      "furnace_iron": "Iron Furnace",
+      "furnace_steel": "Steel Furnace",
+      "furnace_mithril": "Mithril Furnace",
+      "furnace_orichalcum": "Orichalcum Furnace",
+      "furnace_divine": "Divine Furnace"
+    },
+    "quemado": {
+      "bonfire_flickering": "Flickering Fire",
+      "bonfire_burning": "Burning Flame",
+      "bonfire_infernal": "Infernal Blaze",
+      "bonfire_roaring": "Roaring Inferno",
+      "bonfire_celestial": "Celestial Pyre",
+      "bonfire_eternal": "Eternal Flame",
+      "bonfire_cosmic": "Cosmic Inferno"
+    },
+    "descriptions": {
+      "mineria": {
+        "pickaxe_copper": "A basic copper pickaxe that speeds up mining",
+        "pickaxe_iron": "A more efficient iron pickaxe",
+        "pickaxe_steel": "A robust and fast steel pickaxe",
+        "pickaxe_mithril": "A legendary mithril pickaxe",
+        "pickaxe_adamantite": "One of the best pickaxes ever created",
+        "pickaxe_orichalcum": "A magical pickaxe of great power",
+        "pickaxe_divine": "The supreme pickaxe of infinite power"
+      },
+      "tala": {
+        "axe_wood": "A basic wooden axe",
+        "axe_copper": "A more durable copper axe",
+        "axe_iron": "A sharp iron axe",
+        "axe_steel": "A first-class steel axe",
+        "axe_mithril": "A legendary mithril axe",
+        "axe_orichalcum": "A magical Orichalcum axe",
+        "axe_divine": "The supreme axe of infinite power"
+      },
+      "fundicion": {
+        "furnace_basic": "A basic stone furnace",
+        "furnace_copper": "An efficient copper furnace",
+        "furnace_iron": "A quality iron furnace",
+        "furnace_steel": "A mastery steel furnace",
+        "furnace_mithril": "A legendary mithril furnace",
+        "furnace_orichalcum": "A magical Orichalcum furnace",
+        "furnace_divine": "The supreme furnace of infinite power"
+      },
+      "quemado": {
+        "bonfire_flickering": "A bonfire that flickers weakly",
+        "bonfire_burning": "A bonfire that burns intensely",
+        "bonfire_infernal": "An infernal bonfire of pure fire",
+        "bonfire_roaring": "A roaring bonfire of devastation",
+        "bonfire_celestial": "A celestial bonfire of ethereal fire",
+        "bonfire_eternal": "An eternal bonfire that never goes out",
+        "bonfire_cosmic": "A cosmic bonfire of infinite power"
+      }
+    }
+  },
+  "effects": {
+    "speed": "-{VALUE}s per cycle",
+    "quantity": "+{VALUE} {ITEM}",
+    "xp": "+{VALUE}% XP",
+    "rarity": "+{VALUE}% rarity",
+    "dropModifier": "+{VALUE}% drop improvement"
   },
   "market": {
     "sell": {

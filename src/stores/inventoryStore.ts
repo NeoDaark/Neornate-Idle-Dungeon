@@ -240,6 +240,17 @@ export const useInventoryStore = defineStore('inventory', () => {
     }
   }
 
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    inventory.value = {
+      items: [],
+      equipment: {},
+      gold: 0,
+    }
+  }
+
   return {
     // State
     inventory,
@@ -261,5 +272,6 @@ export const useInventoryStore = defineStore('inventory', () => {
     saveToStorage,
     saveToLocalStorage,
     loadFromLocalStorage,
+    reset,
   }
 })

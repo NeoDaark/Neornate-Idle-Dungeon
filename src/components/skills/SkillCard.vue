@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 import type { SkillState } from '@/types/Skill'
-import { SKILL_CONFIGS, Tier } from '@/types/Game'
+import { SKILL_CONFIGS, calculateXpForLevel } from '@/types/Game'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 interface Props {
   skillState: SkillState
@@ -28,26 +29,33 @@ const skillAction = computed(() => {
   return t(`skills.${skillConfig.value.name}.action`)
 })
 
-const tierIndex = computed((): number => {
-  const tiers = Object.values(Tier)
-  return tiers.indexOf(props.skillState.tier)
-})
-
 const xpNeededForNextLevel = computed((): number => {
-  const tierBonus = (tierIndex.value + 1) * 300
-  return 100 + props.skillState.level * 50 + tierBonus
+  // Usar la función de cálculo oficial que incluye los nuevos multiplicadores
+  return calculateXpForLevel(props.skillState.level + 1)
 })
 
 const xpProgress = computed((): number => {
   return Math.min(100, Math.round((props.skillState.experience / xpNeededForNextLevel.value) * 100))
 })
+
+const formatXP = (xp: number): string => {
+  // Mostrar con máximo 1 decimal, pero solo si hay decimales
+  if (typeof xp !== 'number') return String(xp)
+  if (xp % 1 === 0) return String(Math.floor(xp)) // Es un entero
+  return xp.toFixed(1) // Tiene decimales
+}
 </script>
 
 <template>
   <div class="skill-card" :class="{ active: isActive }" @click="onClick">
     <!-- Header -->
     <div class="skill-header">
-      <span class="emoji">{{ skillConfig.emoji }}</span>
+      <IconRenderer
+        :icon-id="skillConfig.icon"
+        :fa-icon="skillConfig.faIcon"
+        size="md"
+        class="icon-container"
+      />
       <div class="info">
         <h3>{{ displayName }}</h3>
         <p class="level">{{ t('labels.level') }} {{ skillState.level }}</p>
@@ -59,7 +67,7 @@ const xpProgress = computed((): number => {
       <div class="progress-bar">
         <div class="progress-fill" :style="{ width: xpProgress + '%' }"></div>
       </div>
-      <p class="xp-text">{{ skillState.experience }} / {{ xpNeededForNextLevel }} XP</p>
+      <p class="xp-text">{{ formatXP(skillState.experience) }} / {{ xpNeededForNextLevel }} XP</p>
     </div>
 
     <!-- Status -->
@@ -105,10 +113,11 @@ const xpProgress = computed((): number => {
   margin-bottom: 10px;
 }
 
-.emoji {
+.icon-container {
   font-size: 28px;
   min-width: 32px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .info h3 {

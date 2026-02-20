@@ -8,6 +8,7 @@ import { Skill, SKILL_CONFIGS } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
 import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const skillsStore = useSkillsStore()
 const inventoryStore = useInventoryStore()
@@ -39,12 +40,14 @@ watch(() => ({
     const toolBonus = toolsStore.calculateToolBonus(Skill.FUNDICION)
     
     // Calcular valores finales con bonuses
-    const finalXP = Math.floor(selectedProduct.value.xpReward * (1 + toolBonus.xpBonus))
+    const finalXPCalculated = selectedProduct.value.xpReward * (1 + toolBonus.xpBonus)
+    const finalXP = Math.round(finalXPCalculated * 10) / 10
     const finalQuantity = selectedProduct.value.quantity + toolBonus.quantityBonus
     
     // Mostrar notificación con valores finales
+    const xpDisplay = finalXP % 1 !== 0 ? finalXP.toFixed(1) : finalXP
     const bonusText = (toolBonus.xpBonus > 0 || toolBonus.quantityBonus > 0) ? ' ⚡' : ''
-    showMessage(`+${finalXP} XP | +${finalQuantity}x ${productName}${bonusText}`)
+    showMessage(`+${xpDisplay} XP | +${finalQuantity}x ${productName}${bonusText}`)
   }
 }, { deep: true })
 
@@ -113,15 +116,18 @@ const startSmelting = () => {
     }
   }
 
-  const cycleDuration = selectedProduct.value.cycleDuration * 1000
+  // Siempre llamar a activateSkill para resetear cycleEndTime
+  // activateSkill() ya resetea cycleEndTime = 0 al inicio, así que comienza de 0
+  const cycleDuration = SKILL_CONFIGS[Skill.FUNDICION].baseCycleDuration * 1000
   skillsStore.activateSkill(Skill.FUNDICION, selectedProduct.value, cycleDuration)
+  
   cycleProgress.value = 0
   updateProgress()
 }
 
 // Detener fundición
 const stopSmelting = () => {
-  skillsStore.deactivateSkill(Skill.FUNDICION)
+  skillsStore.deactivateSkill(Skill.FUNDICION, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }
 
@@ -165,7 +171,13 @@ onMounted(() => {
   <div class="skill-view">
     <!-- Header -->
     <div class="skill-header">
-      <h2>{{ smeltingConfig.emoji }} {{ t('skills.fundicion.name') }}</h2>
+      <IconRenderer
+        :icon-id="smeltingConfig.icon"
+        :fa-icon="smeltingConfig.faIcon"
+        size="xs"
+        class="skill-icon"
+      />
+      <h2>{{ t('skills.fundicion.name') }}</h2>
       <p class="skill-header-desc">{{ t('skills.fundicion.description') }}</p>
     </div>
 
@@ -182,7 +194,6 @@ onMounted(() => {
         <div class="progress-bar">
           <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
         </div>
-        <p class="progress-text">{{ Math.round(cycleProgress) }}%</p>
       </div>
 
       <!-- Action Buttons -->
@@ -193,7 +204,7 @@ onMounted(() => {
           :disabled="!selectedProduct || !canSmelt"
           @click="startSmelting"
         >
-          🔥 {{ t('skills.fundicion.action') }}
+          {{ smeltingConfig.emoji }} {{ t('skills.fundicion.action') }}
         </button>
         <button
           v-else

@@ -48,7 +48,12 @@
               :class="{ active: isSkillItemActive(skill.path), 'is-farming': isSkillActive(skill.skill) }"
               @click="$emit('navigate')"
             >
-              <FaIcon :icon="skill.icon" class="icon" />
+              <IconRenderer
+                :icon-id="SKILL_CONFIGS[skill.skill].icon"
+                :fa-icon="SKILL_CONFIGS[skill.skill].faIcon"
+                size="sm"
+                class="icon"
+              />
               <div class="subitem-content">
                 <div class="subitem-header">
                   <span class="label">{{ t(skill.label) }}</span>
@@ -133,7 +138,8 @@ import { useRoute } from 'vue-router'
 import { useI18n } from '@/composables/useI18n'
 import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
-import { Skill } from '@/types/Game'
+import { Skill, SKILL_CONFIGS } from '@/types/Game'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const route = useRoute()
 const { t } = useI18n()
@@ -142,11 +148,11 @@ const inventoryStore = useInventoryStore()
 
 const skillsExpanded = ref(false)
 
-// Expandir automáticamente cuando estamos en /skills
+// Expandir automáticamente cuando estamos en /skills o /woodburning
 watch(
   () => route.path,
   (newPath) => {
-    if (newPath === '/skills') {
+    if (newPath === '/skills' || newPath === '/woodburning') {
       skillsExpanded.value = true
     }
   },
@@ -157,17 +163,17 @@ interface SkillMenuItem {
   skill: Skill
   path: string
   label: string
-  icon: string
 }
 
 const skillMenuItems: SkillMenuItem[] = [
-  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name', icon: 'fa-solid fa-mountain' },
-  { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name', icon: 'fa-solid fa-tree' },
-  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name', icon: 'fa-solid fa-fire' },
-  { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name', icon: 'fa-solid fa-hammer' },
-  { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name', icon: 'fa-solid fa-fish' },
-  { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name', icon: 'fa-solid fa-utensils' },
-  { skill: Skill.AVENTURA, path: '/skills?skill=aventura', label: 'skills.aventura.name', icon: 'fa-solid fa-wand-magic-sparkles' },
+  { skill: Skill.MINERIA, path: '/skills?skill=mineria', label: 'skills.mineria.name' },
+  { skill: Skill.TALA, path: '/skills?skill=tala', label: 'skills.tala.name' },
+  { skill: Skill.QUEMADO, path: '/skills?skill=quemado', label: 'skills.quemado.name' },
+  { skill: Skill.FUNDICION, path: '/skills?skill=fundicion', label: 'skills.fundicion.name' },
+  { skill: Skill.HERRERIA, path: '/skills?skill=herreria', label: 'skills.herreria.name' },
+  { skill: Skill.PESCA, path: '/skills?skill=pesca', label: 'skills.pesca.name' },
+  { skill: Skill.COCINA, path: '/skills?skill=cocina', label: 'skills.cocina.name' },
+  { skill: Skill.AVENTURA, path: '/skills?skill=aventura', label: 'skills.aventura.name' },
 ]
 
 const isActive = (path: string) => {
@@ -178,7 +184,8 @@ const isSkillsGroupActive = () => {
   return route.path === '/skills'
 }
 
-const isSkillItemActive = (skillPath: string): boolean => {
+const isSkillItemActive = (skillPath: string): boolean => {  
+  // Para rutas con query parameters como /skills?skill=mineria
   if (route.path !== '/skills') return false
   
   // Extraer el parámetro skill de la URL actual

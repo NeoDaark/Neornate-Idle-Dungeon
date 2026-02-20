@@ -30,15 +30,15 @@
         </div>
       </div>
 
-      <!-- Development: Clear All Data -->
-      <div v-if="isDevelopment" class="settings-section danger-section">
+      <!-- Clear All Data -->
+      <div class="settings-section danger-section">
         <div class="section-header">
-          <h2><FaIcon icon="fa-solid fa-triangle-exclamation" /> Desarrollo</h2>
+          <h2><FaIcon icon="fa-solid fa-triangle-exclamation" /> {{ t('labels.danger') }}</h2>
         </div>
         <div class="section-content">
-          <p class="warning-text">⚠️ Esta sección solo es visible en modo desarrollo</p>
+          <p class="warning-text">⚠️ {{ t('messages.danger_zone') }}</p>
           <button class="btn-danger" @click="clearAllData">
-            <FaIcon icon="fa-solid fa-trash" /> Eliminar todos los datos
+            <FaIcon icon="fa-solid fa-trash" /> {{ t('labels.clear_all_data') }}
           </button>
         </div>
       </div>
@@ -48,39 +48,142 @@
 
 <script setup lang="ts">
 import { useI18n, type Locale } from '@/composables/useI18n'
+import { useNotification } from '@/composables/useNotification'
+import {
+  useGameStore,
+  usePlayerStore,
+  useInventoryStore,
+  useSkillsStore,
+  useMarketStore,
+} from '@/stores'
+import { useToolsStore } from '@/stores/toolsStore'
 
 const { t, locale, setLocale } = useI18n()
+const { confirm, success, error } = useNotification()
 
-// Solo mostrar opciones de desarrollo en desarrollo
-const isDevelopment = import.meta.env.DEV
+const clearAllData = async () => {
+  // Confirmar con popup elegante
+  await confirm(
+    t('labels.danger'),
+    t('messages.clear_all_data_confirm'),
+    async () => {
+      // Segunda confirmación
+      const doubleConfirmed = await confirm(
+        `⚠️ ${t('labels.second_confirmation')}`,
+        t('messages.clear_all_data_double_confirm'),
+      )
 
-const clearAllData = () => {
-  // Confirmación antes de eliminar
-  if (!confirm('⚠️ ¿Estás seguro de que deseas eliminar TODOS los datos? Esta acción no se puede deshacer.')) {
-    return
-  }
+      if (!doubleConfirmed) return
 
-  // Confirmar segunda vez
-  if (!confirm('Segunda confirmación: ¿Eliminar todos los datos de la cuenta?')) {
-    return
-  }
+      try {
+        console.log('🔄 Iniciando limpieza de datos...')
 
-  try {
-    // Limpiar localStorage
-    localStorage.clear()
-    
-    // Reiniciar stores a estado inicial (esto no persiste, pero limpia la memoria)
-    // Los stores se reiniciarán cuando se recargue la página
-    
-    // Mostrar mensaje de éxito
-    alert('✓ Todos los datos han sido eliminados. La página se recargará.')
-    
-    // Recargar la página para que los stores se reinicien
-    window.location.reload()
-  } catch (error) {
-    console.error('Error al eliminar datos:', error)
-    alert('❌ Hubo un error al eliminar los datos.')
-  }
+        // 1. Eliminar todas las claves específicas de los stores
+        const keysToDelete = [
+          'neornate_player',
+          'neornate_inventory',
+          'neornate_skills',
+          'neornate_market',
+          'tools_equipped',
+          'tools_inventory',
+          'neornate_lastActiveTime',
+          'neornate_inventory_migrated_v1',
+          'neornate_inventory_migrated_v2',
+        ]
+
+        console.log('1️⃣ Eliminando claves específicas...')
+        keysToDelete.forEach((key) => {
+          try {
+            localStorage.removeItem(key)
+            console.log(`  ✓ Eliminada clave: ${key}`)
+          } catch (err) {
+            console.warn(`  ⚠️ Error eliminando ${key}:`, err)
+          }
+        })
+
+        // 2. Limpiar localStorage completamente como medida extra
+        console.log('2️⃣ Ejecutando localStorage.clear()...')
+        localStorage.clear()
+        console.log('✓ localStorage limpiado. Claves restantes:', localStorage.length)
+
+        // 3. Resetear todos los stores a su estado inicial
+        console.log('3️⃣ Reseteando stores...')
+
+        try {
+          const gameStore = useGameStore()
+          console.log('  ✓ gameStore obtenido')
+          gameStore.reset()
+          console.log('  ✓ gameStore reseteado')
+        } catch (err) {
+          console.error('  ❌ Error en gameStore:', err)
+        }
+
+        try {
+          const playerStore = usePlayerStore()
+          console.log('  ✓ playerStore obtenido')
+          playerStore.reset()
+          console.log('  ✓ playerStore reseteado')
+        } catch (err) {
+          console.error('  ❌ Error en playerStore:', err)
+        }
+
+        try {
+          const inventoryStore = useInventoryStore()
+          console.log('  ✓ inventoryStore obtenido')
+          inventoryStore.reset()
+          console.log('  ✓ inventoryStore reseteado')
+        } catch (err) {
+          console.error('  ❌ Error en inventoryStore:', err)
+        }
+
+        try {
+          const skillsStore = useSkillsStore()
+          console.log('  ✓ skillsStore obtenido')
+          skillsStore.reset()
+          console.log('  ✓ skillsStore reseteado')
+        } catch (err) {
+          console.error('  ❌ Error en skillsStore:', err)
+        }
+
+        try {
+          const marketStore = useMarketStore()
+          console.log('  ✓ marketStore obtenido')
+          marketStore.reset()
+          console.log('  ✓ marketStore reseteado')
+        } catch (err) {
+          console.error('  ❌ Error en marketStore:', err)
+        }
+
+        try {
+          const toolsStore = useToolsStore()
+          console.log('  ✓ toolsStore obtenido')
+          toolsStore.reset()
+          console.log('  ✓ toolsStore reseteado')
+        } catch (err) {
+          console.error('  ❌ Error en toolsStore:', err)
+        }
+
+        console.log('✓ Todos los stores reseteados')
+
+        // 4. Mostrar mensaje de éxito
+        console.log('4️⃣ Mostrando notificación de éxito...')
+        success(t('messages.success'), t('messages.clear_all_data_success'))
+
+        // 5. Recargar la página forzando recarga completa desde servidor
+        console.log('5️⃣ Recargando página...')
+        setTimeout(() => {
+          window.location.href = window.location.pathname + '?nocache=' + Date.now()
+        }, 1500)
+      } catch (err) {
+        console.error('❌ Error general al eliminar datos:', err)
+        console.error('Detalles del error:', {
+          message: err instanceof Error ? err.message : String(err),
+          stack: err instanceof Error ? err.stack : 'No stack available',
+        })
+        error(t('messages.error'), t('messages.clear_all_data_error'))
+      }
+    },
+  )
 }
 </script>
 

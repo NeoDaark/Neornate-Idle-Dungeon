@@ -4,7 +4,7 @@
 
 import type { Skill } from './Game'
 
-export type ToolEffect = 'speed' | 'quantity' | 'xp' | 'rarity' | 'discount'
+export type ToolEffect = 'speed' | 'quantity' | 'xp' | 'rarity' | 'discount' | 'dropModifier'
 
 export interface Tool {
   id: string // "pickaxe_copper", "axe_iron"
@@ -39,4 +39,5 @@ export interface ToolBonus {
   xpBonus: number // En porcentaje (0.3 = 30%)
   rarityBonus: number // En porcentaje
   discountBonus: number // En porcentaje
+  dropModifier: number // En porcentaje (solo para Quemado/Woodburning)
 }

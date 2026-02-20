@@ -36,7 +36,15 @@
     "price": "Precio",
     "buy": "Comprar",
     "locked": "Bloqueado",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "drops": "Drops",
+    "nothing": "Nada",
+    "selectLog": "Selecciona un tronco",
+    "woodburning": {
+      "dropDistribution": "Distribución de Drops",
+      "carbonPercentage": "{percent}% Carbón",
+      "ashPercentage": "{percent}% Ceniza"
+    }
   },
   "inventory": {
     "quantity": "Cantidad",
@@ -63,7 +71,11 @@
       "sellDesc": "Vende este recurso por oro",
       "quantity": "Cantidad a vender",
       "unitPrice": "Precio unitario",
-      "total": "Total",
+      "global": "Global",
+      "grossEarnings": "Ganancia bruta",
+      "marketFee": "Cuota de mercado",
+      "netEarningsPerUnit": "Ganancia neta por unidad",
+      "totalFinalPrice": "Precio final total",
       "sellConfirm": "Confirmar venta",
       "quantityDiscard": "Cantidad a tirar",
       "discardWarning": "Esto eliminará permanentemente los items",
@@ -87,6 +99,11 @@
       "name": "Fundición",
       "action": "Fundir", 
       "description": "Funde minerales en lingotes"
+    },
+    "quemado": {
+      "name": "Carbonización",
+      "action": "Quemar",
+      "description": "Quema troncos para obtener carbón"
     },
     "herreria": {
       "name": "Herrería",
@@ -169,61 +186,75 @@
       }
     },
     "wood": {
-      "madera-blanda": {
-        "name": "Madera Blanda",
-        "description": "Madera ligera de fácil corte. Perfecta para principiantes."
+      "madera-pino": {
+        "name": "Madera de Pino",
+        "tree-name": "Pino",
+        "description": "Madera ligera de coníferas. Fácil de trabajar, perfecta para principiantes."
       },
-      "madera-comun": {
-        "name": "Madera Común",
-        "description": "Madera versátil de uso general. Recurso estable."
+      "madera-abedul": {
+        "name": "Madera de Abedul",
+        "tree-name": "Abedul",
+        "description": "Madera clara y flexible. Excelente relación resistencia-peso."
       },
-      "roble": {
-        "name": "Madera de Roble",
-        "description": "Madera robusta y duradera. Ideal para estructuras."
+      "madera-abeto": {
+        "name": "Madera de Abeto",
+        "tree-name": "Abeto",
+        "description": "Madera de conífera de grano fino. Versátil y confiable."
       },
-      "nogal": {
+      "madera-nogal": {
         "name": "Madera de Nogal",
-        "description": "Madera densa oscura. Excelente para acabados finos."
+        "tree-name": "Nogal",
+        "description": "Madera densa de color oscuro. Excelente para acabados refinados."
       },
-      "caoba": {
+      "madera-caoba": {
         "name": "Madera de Caoba",
-        "description": "Madera roja preciosa. Muy apreciada por artesanos."
+        "tree-name": "Caoba",
+        "description": "Madera roja preciosa. Muy apreciada por su belleza."
       },
-      "ebano": {
+      "madera-ebano": {
         "name": "Madera de Ébano",
-        "description": "Madera negra rara. Símbolo de elegancia y poder."
+        "tree-name": "Ébano",
+        "description": "Madera negra rara y dura. Símbolo de elegancia suprema."
       },
-      "petreo": {
-        "name": "Madera Pétreo",
-        "description": "Madera fosilizada casi convertida en piedra. Extremadamente dura."
+      "madera-teca": {
+        "name": "Madera de Teca",
+        "tree-name": "Teca",
+        "description": "Madera tropical duradera. Resiste perfectamente el tiempo."
       },
-      "ancestral": {
-        "name": "Madera Ancestral",
-        "description": "Madera antigua de épocas pasadas. Imbuida de historia."
+      "madera-cedro": {
+        "name": "Madera de Cedro",
+        "tree-name": "Cedro",
+        "description": "Madera aromática noble. Fragancia incomparable."
       },
-      "cristalina": {
-        "name": "Madera Cristalina",
-        "description": "Madera transparente brillante. Casi translúcida."
+      "madera-maldita": {
+        "name": "Madera Maldita",
+        "tree-name": "Árbol Maldito",
+        "description": "Madera imbuida de maldiciones antiguas. Poder oscuro latente."
       },
-      "magica": {
-        "name": "Madera Mágica",
-        "description": "Madera encantada con poder arcano. Canaliza la magia."
+      "madera-mistica": {
+        "name": "Madera Mística",
+        "tree-name": "Árbol Místico",
+        "description": "Madera envuelta en misterio arcano. Canaliza energía oculta."
       },
-      "sagrada": {
+      "madera-sagrada": {
         "name": "Madera Sagrada",
-        "description": "Madera bendita de templos. Irradia paz y protección."
+        "tree-name": "Árbol Sagrado",
+        "description": "Madera bendita de templos ancestrales. Irradia protección divina."
       },
-      "primordial": {
+      "madera-primordial": {
         "name": "Madera Primordial",
-        "description": "Madera de los tiempos primeros. Esencia del bosque antiguo."
+        "tree-name": "Árbol Primordial",
+        "description": "Madera de los tiempos primeros. Esencia pura del bosque antiguo."
       },
-      "dimensional": {
+      "madera-dimensional": {
         "name": "Madera Dimensional",
-        "description": "Madera de otras dimensiones. Desafía las leyes de la física."
+        "tree-name": "Árbol Dimensional",
+        "description": "Madera extraída de otras dimensiones. Desafía la lógica física."
       },
-      "divina": {
-        "name": "Madera Divina",
-        "description": "Madera de los dioses. Material celestial supremo."
+      "madera-dragonica": {
+        "name": "Madera de Hueso de Dragón",
+        "tree-name": "Árbol de Hueso de Dragón",
+        "description": "Madera extraída de antiguos árboles de dragón. Material legendario y épico."
       }
     },
     "ingots": {
@@ -283,6 +314,12 @@
         "name": "Lingote de Draconita",
         "description": "Lingote de dragón. Poder dracónico concentrado."
       }
+    },
+    "ash": {
+      "ceniza": {
+        "name": "Ceniza",
+        "description": "Polvo gris resultante de la quema de madera. Subproducto del quemado."
+      }
     }
   },
   "items": {
@@ -291,6 +328,7 @@
     "fish": "Pescado",
     "food": "Comida",
     "ingots": "Lingotes",
+    "ash": "Ceniza",
     "carbon": "Carbón",
     "cobre": "Cobre",
     "hierro": "Hierro",
@@ -305,15 +343,21 @@
     "adamantita": "Adamantita",
     "titanio": "Titanio",
     "draconita": "Draconita",
-    "madera-blanda": "Madera Blanda",
-    "madera-comun": "Madera Común",
-    "roble": "Madera de Roble",
-    "nogal": "Madera de Nogal",
-    "caoba": "Madera de Caoba",
-    "ebano": "Madera de Ébano",
-    "petreo": "Madera Pétreo",
-    "ancestral": "Madera Ancestral",
-    "divino": "Madera Divina",
+    "madera-pino": "Madera de Pino",
+    "madera-abedul": "Madera de Abedul",
+    "madera-abeto": "Madera de Abeto",
+    "madera-nogal": "Madera de Nogal",
+    "madera-caoba": "Madera de Caoba",
+    "madera-ebano": "Madera de Ébano",
+    "madera-teca": "Madera de Teca",
+    "madera-cedro": "Madera de Cedro",
+    "madera-maldita": "Madera Maldita",
+    "madera-mistica": "Madera Mística",
+    "madera-sagrada": "Madera Sagrada",
+    "madera-primordial": "Madera Primordial",
+    "madera-dimensional": "Madera Dimensional",
+    "madera-meteorica": "Madera Meteórica",
+    "ceniza": "Ceniza",
     "pez": "Pez",
     "trucha": "Trucha",
     "salmon": "Salmón",
@@ -337,7 +381,12 @@
     "loading": "Cargando...",
     "error": "Error",
     "success": "Éxito",
-    "confirm": "¿Estás seguro?"
+    "confirm": "¿Estás seguro?",
+    "danger_zone": "Zona de peligro - Operaciones destructivas",
+    "clear_all_data_confirm": "¿Deseas eliminar TODOS los datos? Esta acción no se puede deshacer.",
+    "clear_all_data_double_confirm": "¿Estás completamente seguro? Los datos no se podrán recuperar.",
+    "clear_all_data_success": "Todos los datos han sido eliminados. La página se recargará.",
+    "clear_all_data_error": "Hubo un error al eliminar los datos. Revisa la consola para más detalles."
   },
   "labels": {
     "level": "Nivel",
@@ -381,7 +430,12 @@
     "xp_reward": "Recompensa XP",
     "quantity": "Cantidad",
     "stored_quantity": "Almacenado",
-    "blocked_materials": "Ver {count} materiales bloqueados"
+    "blocked_materials": "Ver {count} materiales bloqueados",
+    "possible_drops": "Puede otorgar",
+    "you_have": "Tienes",
+    "danger": "Peligro",
+    "clear_all_data": "Eliminar todos los datos",
+    "second_confirmation": "Segunda confirmación"
   },
   "errors": {
     "notFound": "No encontrado",
@@ -405,9 +459,90 @@
     "tier4": "Tier 4",
     "tier5": "Tier 5",
     "tier6": "Tier 6",
-    "tier7": "Tier 7"
+    "tier7": "Tier 7",
+    "mineria": {
+      "pickaxe_copper": "Pico de Cobre",
+      "pickaxe_iron": "Pico de Hierro",
+      "pickaxe_steel": "Pico de Acero",
+      "pickaxe_mithril": "Pico de Mithril",
+      "pickaxe_adamantite": "Pico de Adamantita",
+      "pickaxe_orichalcum": "Pico de Orichalco",
+      "pickaxe_divine": "Pico Divino"
+    },
+    "tala": {
+      "axe_wood": "Hacha de Madera",
+      "axe_copper": "Hacha de Cobre",
+      "axe_iron": "Hacha de Hierro",
+      "axe_steel": "Hacha de Acero",
+      "axe_mithril": "Hacha de Mithril",
+      "axe_orichalcum": "Hacha de Orichalco",
+      "axe_divine": "Hacha Divina"
+    },
+    "fundicion": {
+      "furnace_basic": "Horno Básico",
+      "furnace_copper": "Horno de Cobre",
+      "furnace_iron": "Horno de Hierro",
+      "furnace_steel": "Horno de Acero",
+      "furnace_mithril": "Horno de Mithril",
+      "furnace_orichalcum": "Horno de Orichalco",
+      "furnace_divine": "Horno Divino"
+    },
+    "quemado": {
+      "bonfire_flickering": "Hoguera Titilante",
+      "bonfire_burning": "Hoguera Ardiente",
+      "bonfire_infernal": "Hoguera Infernal",
+      "bonfire_roaring": "Hoguera Rugiente",
+      "bonfire_celestial": "Hoguera Celestial",
+      "bonfire_eternal": "Hoguera Eterna",
+      "bonfire_cosmic": "Hoguera Cósmica"
+    },
+    "descriptions": {
+      "mineria": {
+        "pickaxe_copper": "Un pico básico de cobre que acelera la minería",
+        "pickaxe_iron": "Un pico de hierro más eficiente",
+        "pickaxe_steel": "Un pico de acero robusto y rápido",
+        "pickaxe_mithril": "Un legendario pico de mithril",
+        "pickaxe_adamantite": "Uno de los mejores picos jamás creados",
+        "pickaxe_orichalcum": "Un pico mágico de gran poder",
+        "pickaxe_divine": "El pico supremo de poder infinito"
+      },
+      "tala": {
+        "axe_wood": "Un hacha básica de madera",
+        "axe_copper": "Un hacha de cobre más resistente",
+        "axe_iron": "Un hacha de hierro afilada",
+        "axe_steel": "Un hacha de acero de primera",
+        "axe_mithril": "Un legendario hacha de mithril",
+        "axe_orichalcum": "Un hacha mágica de Orichalco",
+        "axe_divine": "El hacha suprema del poder infinito"
+      },
+      "fundicion": {
+        "furnace_basic": "Un horno de piedra básico",
+        "furnace_copper": "Un horno de cobre eficiente",
+        "furnace_iron": "Un horno de hierro de calidad",
+        "furnace_steel": "Un horno de acero de maestría",
+        "furnace_mithril": "Un legendario horno de mithril",
+        "furnace_orichalcum": "Un horno mágico de Orichalco",
+        "furnace_divine": "El horno supremo del poder infinito"
+      },
+      "quemado": {
+        "bonfire_flickering": "Una hoguera que parpadea débilmente",
+        "bonfire_burning": "Una hoguera que arde intensamente",
+        "bonfire_infernal": "Una hoguera infernal de fuego puro",
+        "bonfire_roaring": "Una hoguera rugiente y devastadora",
+        "bonfire_celestial": "Una hoguera celestial de fuego etéreo",
+        "bonfire_eternal": "Una hoguera eterna que nunca se apaga",
+        "bonfire_cosmic": "Una hoguera cósmica de poder infinito"
+      }
+    }
   },
-    "market": {
+  "effects": {
+    "speed": "-{VALUE}s al ciclo",
+    "quantity": "+{VALUE} {ITEM}",
+    "xp": "+{VALUE}% XP",
+    "rarity": "+{VALUE}% rareza",
+    "dropModifier": "+{VALUE}% mejora de drops"
+  },
+  "market": {
     "sell": {
       "title": "Vender Recursos",
       "inventory": "Inventario",

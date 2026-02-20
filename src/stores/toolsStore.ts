@@ -59,6 +59,7 @@ export const useToolsStore = defineStore('tools', () => {
       [Skill.MINERIA]: [],
       [Skill.TALA]: [],
       [Skill.FUNDICION]: [],
+      [Skill.QUEMADO]: [],
       [Skill.HERRERIA]: [],
       [Skill.PESCA]: [],
       [Skill.COCINA]: [],
@@ -85,7 +86,7 @@ export const useToolsStore = defineStore('tools', () => {
   const calculateToolBonus = (skillId: Skill): ToolBonus => {
     const equipped = equippedTools.value[skillId]
     if (!equipped) {
-      return { speedBonus: 0, quantityBonus: 0, xpBonus: 0, rarityBonus: 0, discountBonus: 0 }
+      return { speedBonus: 0, quantityBonus: 0, xpBonus: 0, rarityBonus: 0, discountBonus: 0, dropModifier: 0 }
     }
 
     const bonus: ToolBonus = {
@@ -94,6 +95,7 @@ export const useToolsStore = defineStore('tools', () => {
       xpBonus: 0,
       rarityBonus: 0,
       discountBonus: 0,
+      dropModifier: 0,
     }
 
     equipped.effects.forEach((effect) => {
@@ -112,6 +114,9 @@ export const useToolsStore = defineStore('tools', () => {
           break
         case 'discount':
           bonus.discountBonus = effect.value
+          break
+        case 'dropModifier':
+          bonus.dropModifier = effect.value
           break
       }
     })
@@ -321,6 +326,23 @@ export const useToolsStore = defineStore('tools', () => {
     localStorage.setItem('tools_inventory', JSON.stringify(inventoryTools.value))
   }
 
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    equippedTools.value = {
+      [Skill.MINERIA]: null,
+      [Skill.TALA]: null,
+      [Skill.FUNDICION]: null,
+      [Skill.QUEMADO]: null,
+      [Skill.HERRERIA]: null,
+      [Skill.PESCA]: null,
+      [Skill.COCINA]: null,
+      [Skill.AVENTURA]: null,
+    }
+    inventoryTools.value = []
+  }
+
   return {
     // Estado
     equippedTools,
@@ -342,5 +364,6 @@ export const useToolsStore = defineStore('tools', () => {
     validatePurchaseIntegrity,
     loadFromStorage,
     saveToStorage,
+    reset,
   }
 })

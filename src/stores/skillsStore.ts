@@ -1,17 +1,35 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { SkillState, SkillProduct, CycleResult } from '@/types/Skill'
-import { Skill, Tier } from '@/types/Game'
-import { SKILL_PRODUCTS_MAP } from '@/data/skillProducts'
+import { Skill, Tier, calculateXpForLevel, canLevelUp } from '@/types/Game'
+import { SKILL_PRODUCTS_MAP, WOODBURNING_DROP_TABLE, LOGGING_PRODUCTS } from '@/data/skillProducts'
 import { useToolsStore } from '@/stores/toolsStore'
 
 const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T7]
 
 /**
+ * Garantizar que un número tenga máximo 1 decimal
+ * Evita errores de punto flotante
+ */
+const ensureDecimal = (value: number): number => {
+  // Redondear a 1 decimal
+  const rounded = Math.round(value * 10) / 10
+  // Asegurar que es un número válido
+  return Number(rounded.toFixed(1))
+}
+
+/**
  * Inicializar estado de skill con productos
  */
 const initializeSkillState = (skill: Skill): SkillState => {
-  const skillProducts = SKILL_PRODUCTS_MAP[skill] || {}
+  let skillProducts = SKILL_PRODUCTS_MAP[skill] || {}
+  
+  // ESPECIAL: Para Quemado, usar los productos de Tala (troncos)
+  // porque Quemado quema troncos, no tiene productos propios
+  if (skill === Skill.QUEMADO) {
+    skillProducts = LOGGING_PRODUCTS
+  }
+  
   const products = Object.values(skillProducts)
   
   return {
@@ -35,6 +53,7 @@ export const useSkillsStore = defineStore('skills', () => {
     [Skill.MINERIA]: initializeSkillState(Skill.MINERIA),
     [Skill.TALA]: initializeSkillState(Skill.TALA),
     [Skill.FUNDICION]: initializeSkillState(Skill.FUNDICION),
+    [Skill.QUEMADO]: initializeSkillState(Skill.QUEMADO),
     [Skill.HERRERIA]: initializeSkillState(Skill.HERRERIA),
     [Skill.PESCA]: initializeSkillState(Skill.PESCA),
     [Skill.COCINA]: initializeSkillState(Skill.COCINA),
@@ -43,13 +62,19 @@ export const useSkillsStore = defineStore('skills', () => {
 
   /**
    * Computed: Calcular XP requerido para siguiente nivel
-   * Fórmula: 100 + (nivel × 50) + (tier × 300)
+   * NUEVA CURVA PROGRESIVA (ver Game.ts calculateXpForLevel)
+   * - T1 (1-20): Muy fácil
+   * - T2 (20-40): Fácil
+   * - T3 (40-60): Normal
+   * - T4 (60-80): Difícil
+   * - T5 (80-100): Más difícil
+   * - T6 (100-120): Muy difícil
+   * - T7 (120-200): Extremo, escalado progresivo
    */
   const getNextLevelXP = (skill: Skill): number => {
     const state = skillStates.value[skill]
-    const tierIndex = TIER_ORDER.indexOf(state.tier)
-    const tierNumber = tierIndex + 1
-    return 100 + state.level * 50 + tierNumber * 300
+    // El siguiente nivel es currentLevel + 1
+    return calculateXpForLevel(state.level + 1)
   }
 
   /**
@@ -90,32 +115,39 @@ export const useSkillsStore = defineStore('skills', () => {
   }
 
   /**
-   * Ganar XP en un skill
+   * Ganar XP en un skill (hasta máximo nivel 200)
    */
   const addExperience = (skill: Skill, xpAmount: number) => {
     const state = skillStates.value[skill]
-    state.experience += xpAmount
-    state.totalExperience += xpAmount
+    
+    // Si ya está en nivel máximo, no acumula más XP
+    if (state.level >= 200) {
+      return
+    }
 
-    // Manejar level-ups automáticos
-    while (state.experience >= getNextLevelXP(skill) && state.level < 120) {
-      state.experience -= getNextLevelXP(skill)
+    // Sumar XP y asegurar precisión con decimales
+    state.experience = ensureDecimal(state.experience + xpAmount)
+    state.totalExperience = ensureDecimal(state.totalExperience + xpAmount)
+
+    // Manejar level-ups automáticos hasta nivel 200
+    while (state.experience >= getNextLevelXP(skill) && state.level < 200 && canLevelUp(state.level)) {
+      state.experience = ensureDecimal(state.experience - getNextLevelXP(skill))
       levelUp(skill)
     }
 
-    // Sanity check para T7
-    if (state.tier === Tier.T7 && state.level > 120) {
-      state.level = 120
+    // Sanity check: no sobrepase nivel 200
+    if (state.level > 200) {
+      state.level = 200
       state.experience = 0
     }
   }
 
   /**
-   * Subir de nivel un skill
+   * Subir de nivel un skill (hasta máximo nivel 200)
    */
   const levelUp = (skill: Skill) => {
     const state = skillStates.value[skill]
-    if (state.level >= 120) return
+    if (state.level >= 200) return
 
     state.level += 1
 
@@ -132,17 +164,23 @@ export const useSkillsStore = defineStore('skills', () => {
    * Por eso desactivamos todos los demás automáticamente
    */
   const activateSkill = (skill: Skill, product: SkillProduct, cycleDurationMs: number = 3000) => {
+    const state = skillStates.value[skill]
+    
+    // IMPORTANTE: Resetear cycleEndTime a 0 PRIMERO
+    // Esto limpia cualquier ciclo anterior incompleto
+    state.cycleEndTime = 0
+
     // Desactivar todos los otros skills (solo puede haber 1 activo)
-    Object.entries(skillStates.value).forEach(([otherSkill, state]) => {
-      if ((otherSkill as unknown as Skill) !== skill && state.isActive) {
-        state.isActive = false
-        state.currentProduct = undefined
-        state.cycleEndTime = 0
+    // IMPORTANTE: Limpiar cycleEndTime de TODOS los demás skills
+    // (no solo los activos, porque podría haber uno pausado con cycleEndTime guardado)
+    Object.entries(skillStates.value).forEach(([otherSkill, otherState]) => {
+      if ((otherSkill as unknown as Skill) !== skill) {
+        otherState.isActive = false
+        otherState.currentProduct = undefined
+        otherState.cycleEndTime = 0  // ← Limpiar SIEMPRE, no solo si isActive
         // console.log(`[Skills] Desactivando ${otherSkill} para activar ${skill}`)
       }
     })
-
-    const state = skillStates.value[skill]
 
     // Aplicar speedBonus de herramienta (restar segundos de duración)
     const toolsStore = useToolsStore()
@@ -159,6 +197,11 @@ export const useSkillsStore = defineStore('skills', () => {
     state.currentProduct = product
     state.lastCycleTime = now
     state.cycleEndTime = now + finalDurationMs
+
+    // 🔴 IMPORTANTE: Guardar lastActiveTime INMEDIATAMENTE cuando activas un skill
+    // Esto asegura que si haces F5 antes del auto-save, el sistema offline
+    // sigue detectando que estabas farmando
+    localStorage.setItem('neornate_lastActiveTime', now.toString())
   }
 
   /**
@@ -169,7 +212,13 @@ export const useSkillsStore = defineStore('skills', () => {
   const deactivateSkill = (skill: Skill, preserveCycleTime: boolean = false) => {
     const state = skillStates.value[skill]
     state.isActive = false
-    state.currentProduct = undefined
+    
+    // Solo limpiar currentProduct si NO preservamos cycleTime
+    // Si preservamos cycleTime, necesitamos mantener currentProduct para cuando haya materiales
+    if (!preserveCycleTime) {
+      state.currentProduct = undefined
+    }
+    
     if (!preserveCycleTime) {
       state.cycleEndTime = 0
     }
@@ -186,6 +235,12 @@ export const useSkillsStore = defineStore('skills', () => {
       return null
     }
 
+    // ⚠️ IMPORTANTE: inventoryStore es obligatorio para procesar ciclos
+    if (!inventoryStore) {
+      console.error(`[Skill] completeCycle(${skill}): inventoryStore is UNDEFINED! No se puede procesar ciclo.`)
+      return null
+    }
+
     const product = state.currentProduct
     
     // Obtener bonus de herramienta equipada para este skill (ANTES de calcular XP)
@@ -195,7 +250,11 @@ export const useSkillsStore = defineStore('skills', () => {
     // Calcular XP con bonus de herramienta
     let xpGained = product.xpReward
     if (toolBonus.xpBonus > 0) {
-      xpGained = Math.floor(product.xpReward * (1 + toolBonus.xpBonus))
+      const calculated = product.xpReward * (1 + toolBonus.xpBonus)
+      xpGained = ensureDecimal(calculated)
+    } else {
+      // Asegurar que incluso sin bonus, es un número válido
+      xpGained = ensureDecimal(xpGained)
     }
 
     addExperience(skill, xpGained)
@@ -221,6 +280,23 @@ export const useSkillsStore = defineStore('skills', () => {
       }
     }
 
+    // Procesar Quemado PRIMERO: validar que hay tronco ANTES de hacer cambios
+    // Esto evita consumir tronco si algo falla después
+    if (skill === Skill.QUEMADO) {
+      const currentProduct = state.currentProduct
+      if (!currentProduct) {
+        console.error(`[Skill] QUEMADO: currentProduct is undefined`)
+        return null
+      }
+      
+      // VALIDACIÓN: Verificar que hay tronco disponible
+      const troncoDisponible = inventoryStore.getItemQuantity(currentProduct.item.id)
+      if (troncoDisponible < 1) {
+        console.warn(`[Skill] No hay suficientes troncos para quemar: necesita 1 de ${currentProduct.item.id}`)
+        return null
+      }
+    }
+
     // Calcular cantidad con bonus de herramienta
     let finalQuantity = product.quantity
     
@@ -230,10 +306,76 @@ export const useSkillsStore = defineStore('skills', () => {
     }
 
     // Agregar item al inventario si está disponible
-    if (inventoryStore) {
+    // NOTA: Quemado (Woodburning) no añade items aquí - lo maneja abajo
+    if (inventoryStore && skill !== Skill.QUEMADO) {
       inventoryStore.addItem(product.item, finalQuantity)
       // TODO: Implementar rarityBonus (aumentar rarity de items generados)
       // TODO: Implementar discountBonus (descuentos en mercado)
+    }
+
+    // Procesar Quemado: consumir tronco AL FINAL del ciclo y generar drops
+    // Se consume DESPUÉS de validar materiales y calcular drops
+    if (skill === Skill.QUEMADO) {
+      const currentProduct = state.currentProduct
+      if (!currentProduct) {
+        console.error(`[Skill] QUEMADO: currentProduct is undefined`)
+        return null
+      }
+      
+      // CONSUMIR el tronco (ya fue validado arriba)
+      const success = inventoryStore.removeItem(currentProduct.item.id, 1)
+      if (!success) {
+        console.error(`[Skill] Error inesperado: no se pudo consumir tronco para quemar`)
+        return null
+      }
+      
+      // Log para verificar consumo (descomenta para debugging)
+      // console.log(`[Skill] QUEMADO: Tronco consumido (${currentProduct.item.id}), inventario restante: ${inventoryStore.getItemQuantity(currentProduct.item.id)}`)
+
+      // CALCULAR PROBABILIDADES CON DROP MODIFIER
+      // Base: 40% carbón, 20% ceniza, 40% nada
+      // dropModifier suma al porcentaje total disponible (quitado de "nada")
+      // La distribución del modifier se controla con dropDistribution slider (0-100)
+      
+      let carbonChance = WOODBURNING_DROP_TABLE.carbon.chance
+      let ashChance = WOODBURNING_DROP_TABLE.ceniza.chance
+      let nothingChance = WOODBURNING_DROP_TABLE.nothing.chance
+      
+      // Aplicar dropModifier (convertir de porcentaje a decimal)
+      if (toolBonus.dropModifier > 0) {
+        const modifierDecimal = toolBonus.dropModifier / 100
+        
+        // Obtener la distribución preferida del usuario (0-100)
+        // 0 = todo a Carbón (izquierda), 100 = todo a Ceniza (derecha)
+        const dropDistribution = state.woodburningDropDistribution ?? 50
+        const carbonPercentage = (100 - dropDistribution) / 100
+        const ashPercentage = dropDistribution / 100
+        
+        // Distribuir el modifier según la preferencia
+        const carbonBoost = modifierDecimal * carbonPercentage
+        const ashBoost = modifierDecimal * ashPercentage
+        
+        carbonChance += carbonBoost
+        ashChance += ashBoost
+        nothingChance -= modifierDecimal
+        
+        // Asegurar que las probabilidades no se salgan del rango [0, 1]
+        carbonChance = Math.min(1, Math.max(0, carbonChance))
+        ashChance = Math.min(1, Math.max(0, ashChance))
+        nothingChance = Math.max(0, 1 - carbonChance - ashChance)
+      }
+      
+      // Generar drops por probabilidad
+      const roll = Math.random()
+      
+      if (roll < carbonChance) {
+        // Carbón
+        inventoryStore.addItem(WOODBURNING_DROP_TABLE.carbon.item, WOODBURNING_DROP_TABLE.carbon.quantity)
+      } else if (roll < carbonChance + ashChance) {
+        // Ceniza
+        inventoryStore.addItem(WOODBURNING_DROP_TABLE.ceniza.item, WOODBURNING_DROP_TABLE.ceniza.quantity)
+      }
+      // El resto es "nada" (nothingChance) - no se agrega nada al inventario
     }
 
     // Resetear ciclo solo si se especifica (para no resetear en farmeo offline)
@@ -261,6 +403,14 @@ export const useSkillsStore = defineStore('skills', () => {
   }
 
   /**
+   * Actualizar la distribución de drops para Quemado (0-100)
+   */
+  const updateWoodburningDropDistribution = (percentage: number) => {
+    const state = skillStates.value[Skill.QUEMADO]
+    state.woodburningDropDistribution = Math.max(0, Math.min(100, percentage))
+  }
+
+  /**
    * Guardar a localStorage (sin productos, ya que se cargan desde skillProducts.ts)
    */
   const saveToLocalStorage = () => {
@@ -275,7 +425,8 @@ export const useSkillsStore = defineStore('skills', () => {
           autoComplete: state.autoComplete,
           lastCycleTime: state.lastCycleTime,
           cycleEndTime: state.cycleEndTime,
-          currentProduct: state.currentProduct,
+          currentProductId: state.currentProduct?.id || undefined, // ← Guardar solo el ID
+          woodburningDropDistribution: state.woodburningDropDistribution || 50, // ← Guardar distribución de drops
         }
         return acc
       }, {} as any)
@@ -307,6 +458,11 @@ export const useSkillsStore = defineStore('skills', () => {
             skillStates.value[skill].isActive = loadedData.isActive ?? false
             skillStates.value[skill].lastCycleTime = loadedData.lastCycleTime ?? 0
             
+            // Restaurar distribución de drops para Quemado
+            if (skill === Skill.QUEMADO) {
+              skillStates.value[skill].woodburningDropDistribution = loadedData.woodburningDropDistribution ?? 50
+            }
+            
             // IMPORTANTE: Siempre preservar cycleEndTime si existe
             // El procesamiento offline usará este valor para calcular ciclos completados
             // calculateOfflineProgress() es responsable de decidir si procesarlos o no
@@ -322,17 +478,45 @@ export const useSkillsStore = defineStore('skills', () => {
               skillStates.value[skill].cycleEndTime = 0
             }
             
-            if (loadedData.currentProduct) {
-              // Buscar el producto en la lista cargada
+            if (loadedData.currentProductId) {
+              // Buscar el producto en la lista cargada usando el ID guardado
               skillStates.value[skill].currentProduct = skillStates.value[skill].products.find(
-                p => p.id === loadedData.currentProduct.id
+                p => p.id === loadedData.currentProductId
               )
+              if (!skillStates.value[skill].currentProduct) {
+                console.warn(`[Skills] No se encontró producto con ID ${loadedData.currentProductId} para ${skill}`)
+                // Fallback: Si hay cycleEndTime pero no encontramos el producto, usar el primero disponible
+                if (savedCycleEndTime > 0 && skillStates.value[skill].products.length > 0) {
+                  console.warn(`[Skills] Usando fallback: primer producto disponible para ${skill}`)
+                  skillStates.value[skill].currentProduct = skillStates.value[skill].products[0]
+                }
+              }
+            } else if (savedCycleEndTime > 0 && skillStates.value[skill].products.length > 0) {
+              // Si hay cycleEndTime pero no hay currentProductId guardado, usar el primer producto
+              console.warn(`[Skills] No hay currentProductId pero hay cycleEndTime para ${skill}, usando fallback`)
+              skillStates.value[skill].currentProduct = skillStates.value[skill].products[0]
             }
           }
         })
       }
     } catch (error) {
       console.error('Error cargando skills:', error)
+    }
+  }
+
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    skillStates.value = {
+      [Skill.MINERIA]: initializeSkillState(Skill.MINERIA),
+      [Skill.TALA]: initializeSkillState(Skill.TALA),
+      [Skill.FUNDICION]: initializeSkillState(Skill.FUNDICION),
+      [Skill.QUEMADO]: initializeSkillState(Skill.QUEMADO),
+      [Skill.HERRERIA]: initializeSkillState(Skill.HERRERIA),
+      [Skill.PESCA]: initializeSkillState(Skill.PESCA),
+      [Skill.COCINA]: initializeSkillState(Skill.COCINA),
+      [Skill.AVENTURA]: initializeSkillState(Skill.AVENTURA),
     }
   }
 
@@ -355,7 +539,9 @@ export const useSkillsStore = defineStore('skills', () => {
     deactivateSkill,
     completeCycle,
     toggleAutoComplete,
+    updateWoodburningDropDistribution,
     saveToLocalStorage,
     loadFromLocalStorage,
+    reset,
   }
 })

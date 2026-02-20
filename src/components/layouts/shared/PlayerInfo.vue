@@ -4,6 +4,7 @@ import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { useI18n } from '@/composables/useI18n'
 import { SKILL_CONFIGS } from '@/types/Game'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const skillsStore = useSkillsStore()
 const inventoryStore = useInventoryStore()
@@ -53,37 +54,29 @@ const productQuantity = computed(() => {
   if (!activeSkill.value?.currentProduct) return 0
   return inventoryStore.getItemQuantity(activeSkill.value.currentProduct.item.id)
 })
-
-// Progreso del skill activo (ciclo actual)
-const skillProgress = computed(() => {
-  if (!activeSkill.value || !activeSkill.value.currentProduct) return 0
-  
-  // Usar now.value para forzar re-compute
-  const current = now.value
-  const cycleEndTime = activeSkill.value.cycleEndTime
-  const cycleDuration = activeSkill.value.currentProduct.cycleDuration * 1000 // convertir a ms
-  const cycleStartTime = cycleEndTime - cycleDuration
-  
-  const elapsed = Math.max(0, current - cycleStartTime)
-  const progress = Math.min(100, Math.round((elapsed / cycleDuration) * 100))
-  
-  return progress
-})
 </script>
 
 <template>
   <!-- Solo mostrar el trabajo activo, el nivel y XP lo maneja el header de desktop -->
   <div v-if="skillConfig" class="active-work">
-    <span class="work-emoji">{{ skillConfig.emoji }}</span>
+    <IconRenderer
+      :icon-id="skillConfig.icon"
+      :fa-icon="skillConfig.faIcon"
+      size="xs"
+      class="work-icon"
+    />
     <div class="work-content">
       <div class="work-title">
         <span class="work-name">{{ skillName }}</span>
         <span class="work-level">Lvl {{ skillLevel }}</span>
       </div>
-      <div v-if="productName" class="work-product">
-        <span class="product-name">{{ productName }}</span>
-        <span class="separator">|</span>
-        <span class="product-storage">{{ t('labels.stored_quantity') }}: <span class="product-qty">{{ productQuantity }}</span></span>
+      <div v-if="productName" class="work-product ">
+        <div class="work-title work-level center">
+          <span class="product-name">{{ productName }}</span>
+          <span class="separator"><FaIcon :icon="'fas fa-caret-right'" /></span>
+          <span class="product-qty ">{{ productQuantity }}</span>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -103,36 +96,13 @@ const skillProgress = computed(() => {
   overflow: visible;
 }
 
-.active-work::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-success), var(--color-success), rgba(85, 255, 85, 0.5));
-  transition: width 0.3s ease;
-  width: v-bind('skillProgress + "%"');
-  box-shadow: 0 0 6px var(--color-success), inset 0 0 4px rgba(85, 255, 85, 0.5);
-  border-radius: 0 2px 2px 0;
-}
-
-.work-emoji {
-  font-size: 1.3rem;
+.work-icon {
+  font-size: 1rem;
   display: inline-block;
   animation: pulse 1.5s ease-in-out infinite;
   flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.work-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  flex: 1;
-  min-width: 0;
-  position: relative;
-  z-index: 1;
+  text-align: center;
+  margin-left: 5px;
 }
 
 .work-title {
@@ -144,17 +114,26 @@ const skillProgress = computed(() => {
 
 .work-name {
   color: var(--color-primary);
-  font-size: 0.8rem;
   font-weight: 600;
 }
 
 .work-level {
-  color: var(--text-muted);
-  font-size: 0.65rem;
+  color: var(--text-secondary);
   background: rgba(0, 0, 0, 0.2);
   padding: 1px 3px;
   border-radius: 2px;
   flex-shrink: 0;
+}
+
+.work-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+  font-size:  0.60rem !important;
 }
 
 .work-product {
@@ -162,30 +141,36 @@ const skillProgress = computed(() => {
   align-items: center;
   gap: 3px;
   line-height: 1;
+  font-size: 0.55rem !important;
 }
 
 .product-name {
   color: var(--text-primary);
-  font-size: 0.75rem;
   font-weight: 500;
   flex-shrink: 0;
 }
 
 .separator {
   color: var(--text-muted);
-  font-size: 0.65rem;
-}
-
-.product-storage {
-  color: var(--text-muted);
-  font-size: 0.65rem;
+  font-size: 0.58rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  height: 1em;
+  transform: translateY(1px);
 }
 
 .product-qty {
   color: var(--text-muted);
   font-weight: 500;
-  font-size: 0.65rem;
   flex-shrink: 0;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes pulse {

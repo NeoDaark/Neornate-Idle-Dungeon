@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Player, PlayerClass } from '@/types/Player'
 import { CLASS_METADATA, createPlayer, BaseClass } from '@/types/Player'
-import { Tier } from '@/types/Game'
+import { Tier, calculateXpForLevel, canLevelUp } from '@/types/Game'
 
 const TIER_ORDER = [Tier.T1, Tier.T2, Tier.T3, Tier.T4, Tier.T5, Tier.T6, Tier.T7] as const
 
@@ -21,13 +21,18 @@ export const usePlayerStore = defineStore('player', () => {
 
   /**
    * Computed: Calcular XP requerido para el siguiente nivel
-   * Fórmula: 100 + (nivel × 50) + (tier × 300)
+   * NUEVA CURVA PROGRESIVA (ver Game.ts calculateXpForLevel)
+   * - T1 (1-20): Muy fácil
+   * - T2 (20-40): Fácil
+   * - T3 (40-60): Normal
+   * - T4 (60-80): Difícil
+   * - T5 (80-100): Más difícil
+   * - T6 (100-120): Muy difícil
+   * - T7 (120-200): Extremo, escalado progresivo
    */
   const nextLevelXP = computed(() => {
-    const { level, currentTier } = player.value
-    const tierIndex = TIER_ORDER.indexOf(currentTier)
-    const tierNumber = tierIndex + 1 // T1 = 1, T2 = 2, etc.
-    return 100 + level * 50 + tierNumber * 300
+    const currentLevel = player.value.level
+    return calculateXpForLevel(currentLevel + 1)
   })
 
   /**
@@ -64,28 +69,34 @@ export const usePlayerStore = defineStore('player', () => {
 
   /**
    * Ganar experiencia y manejar level-up automático
+   * El máximo nivel es 200, después de eso no sube más
    */
   const addExperience = (xpAmount: number) => {
+    // Si ya está en nivel máximo, no acumula más XP
+    if (player.value.level >= 200) {
+      return
+    }
+
     player.value.experience += xpAmount
 
-    // Manejar level-ups automáticos
-    while (player.value.experience >= nextLevelXP.value && player.value.level < 120) {
+    // Manejar level-ups automáticos hasta nivel 200
+    while (player.value.experience >= nextLevelXP.value && player.value.level < 200 && canLevelUp(player.value.level)) {
       player.value.experience -= nextLevelXP.value
       levelUp()
     }
 
-    // Sanity check: asegurar que no sobrepase T7 con nivel 120
-    if (player.value.currentTier === Tier.T7 && player.value.level > 120) {
-      player.value.level = 120
+    // Sanity check: asegurar que no sobrepase nivel 200
+    if (player.value.level > 200) {
+      player.value.level = 200
       player.value.experience = 0
     }
   }
 
   /**
-   * Subir de nivel
+   * Subir de nivel (hasta máximo nivel 200)
    */
   const levelUp = () => {
-    if (player.value.level >= 120) return
+    if (player.value.level >= 200) return
 
     player.value.level += 1
 
@@ -187,6 +198,13 @@ export const usePlayerStore = defineStore('player', () => {
     }
   }
 
+  /**
+   * Resetear store a su estado inicial
+   */
+  const reset = () => {
+    player.value = createPlayer('player-1', 'Aventurero', BaseClass.WARRIOR)
+  }
+
   return {
     // State
     player,
@@ -210,5 +228,6 @@ export const usePlayerStore = defineStore('player', () => {
     saveToStorage,
     saveToLocalStorage,
     loadFromLocalStorage,
+    reset,
   }
 })

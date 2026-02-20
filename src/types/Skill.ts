@@ -7,6 +7,7 @@ import type { Item } from './Item'
 
 export interface SkillProduct {
   id: string
+  name: string // nombre simple del producto (e.g., 'Cobre', 'Hierro')
   i18nKey: string // clave para i18n (e.g., 'resources.mineral.carbon.name')
   i18nDescriptionKey: string // clave para descripción i18n (e.g., 'resources.mineral.carbon.description')
   item: Item
@@ -14,7 +15,8 @@ export interface SkillProduct {
   tier: Tier
   quantity: number // cantidad producida
   xpReward: number
-  cycleDuration: number // duración del ciclo en segundos
+  treeId?: string // para maderas: referencia al árbol que se tala (e.g., 'pino')
+  spriteId?: string // ID del sprite (e.g., 'log_pino', 'ore_copper', 'ingot_copper' -> items/sprite.png)
   requiredMaterials?: SkillMaterial[] // para crafting
 }
 
@@ -45,6 +47,7 @@ export interface SkillState {
   cycleEndTime: number // timestamp cuando termina el ciclo actual
   currentProduct?: SkillProduct
   products: SkillProduct[] // todos los productos disponibles para este skill
+  woodburningDropDistribution?: number // para Quemado: 0-100, % destinado a carbón (el resto va a ceniza)
 }
 
 export interface CycleResult {
@@ -99,6 +102,7 @@ export function createSkillState(skill: Skill): SkillState {
  */
 export function createSkillProduct(
   id: string,
+  name: string,
   i18nKey: string,
   i18nDescriptionKey: string,
   item: Item,
@@ -106,11 +110,11 @@ export function createSkillProduct(
   tier: Tier,
   quantity: number,
   xpReward: number,
-  cycleDuration: number,
   requiredMaterials?: SkillMaterial[]
 ): SkillProduct {
   return {
     id,
+    name,
     i18nKey,
     i18nDescriptionKey,
     item,
@@ -118,7 +122,6 @@ export function createSkillProduct(
     tier,
     quantity,
     xpReward,
-    cycleDuration,
     requiredMaterials,
   }
 }

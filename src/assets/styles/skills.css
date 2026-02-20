@@ -12,6 +12,20 @@
 .skill-header {
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.skill-icon {
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
 }
 
 .skill-header h2 {
@@ -22,9 +36,10 @@
 }
 
 .skill-header-desc {
-  margin: 3px 0 0 0;
+  margin: 0;
   color: var(--text-secondary);
   font-size: 12px;
+  flex-basis: 100%;
 }
 
 /* Control panel (contains progress, buttons, etc) */

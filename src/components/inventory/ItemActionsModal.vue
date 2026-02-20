@@ -52,7 +52,7 @@
                 </div>
                 <div v-if="canSell" class="info-item">
                   <span class="label">{{ t('market.sell.pricePerUnit') }}:</span>
-                  <span class="value">{{ itemPrice }} 💰</span>
+                  <span class="value">{{ formatPrice(itemPrice) }} 💰</span>
                 </div>
               </div>
             </div>
@@ -78,16 +78,48 @@
               </div>
 
               <div class="sell-summary">
-                <div class="summary-line">
-                  <span>{{ t('inventory.actions.unitPrice') }}</span>
-                  <span>{{ itemPrice }} 💰</span>
+                <!-- Precio Unitario Section -->
+                <div class="summary-section">
+                  <div class="summary-line original-price">
+                    <span>{{ t('inventory.actions.unitPrice') }}</span>
+                    <span>{{ formatPrice(itemPrice) }} 💰</span>
+                  </div>
                 </div>
-                <div class="summary-line">
-                  <span>× {{ sellQuantity }}</span>
+
+                <!-- Desglose de deducciones -->
+                <div class="summary-section deductions">
+                  <div class="section-title">{{ t('inventory.actions.global') }}</div>
+                  <div class="summary-line gross-earnings">
+                    <span class="deduction-label">{{ t('inventory.actions.grossEarnings') }} (80%)</span>
+                    <span class="gross-value">{{ formatPrice(itemPriceAfterNegotiation) }} 💰</span>
+                  </div>
+                  <div class="summary-line market-fee-info">
+                    <span class="market-fee-label">{{ t('inventory.actions.marketFee') }} (−10%)</span>
+                    <span class="market-fee-value">−{{ formatPrice(marketFeeDeduction) }} 💰</span>
+                  </div>
                 </div>
-                <div class="summary-line total">
-                  <span>{{ t('inventory.actions.total') }}</span>
-                  <span class="total-gold">{{ totalSellPrice }} 💰</span>
+
+                <!-- Ganancia Neta por Unidad -->
+                <div class="summary-section net-earnings">
+                  <div class="summary-line net-price">
+                    <span>{{ t('inventory.actions.netEarningsPerUnit') }}</span>
+                    <span class="net-value">{{ formatPrice(itemPriceWithDiscount) }} 💰</span>
+                  </div>
+                </div>
+
+                <!-- Multiplicador -->
+                <div class="summary-section multiplier">
+                  <div class="summary-line">
+                    <span>× {{ sellQuantity }}</span>
+                  </div>
+                </div>
+
+                <!-- Precio Final Total -->
+                <div class="summary-section total">
+                  <div class="summary-line total-final">
+                    <span>{{ t('inventory.actions.totalFinalPrice') }}</span>
+                    <span class="total-gold">{{ formatPrice(totalSellPrice) }} 💰</span>
+                  </div>
                 </div>
               </div>
 
@@ -143,7 +175,6 @@ import { ref, computed } from 'vue'
 import type { InventoryStack } from '@/stores/inventoryStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { usePlayerStore } from '@/stores/playerStore'
-import { RESOURCE_PRICES_MAP, getResourcePrice } from '@/data/marketData'
 import { useI18n } from '@/composables/useI18n'
 
 interface Props {
@@ -232,17 +263,66 @@ const itemDescription = computed(() => {
 
 const canSell = computed(() => {
   if (!itemStack.value) return false
-  const resourcePrice = RESOURCE_PRICES_MAP[itemStack.value.itemId]
-  return !!resourcePrice
+  // Todos los items con value > 0 pueden venderse
+  return (itemStack.value.item.value || 0) > 0
 })
+
+/**
+ * Redondea un número a 2 decimales para evitar errores de precisión en punto flotante
+ * Ej: 1.2000000000000002 → 1.2
+ */
+const roundToTwoDecimals = (value: number): number => {
+  return Math.round(value * 100) / 100
+}
+
+/**
+ * Formatea un número para mostrar siempre 2 decimales
+ * Ej: 1.2 → "1.20", 1 → "1.00", 0.5 → "0.50"
+ */
+const formatPrice = (value: number): string => {
+  return value.toFixed(2)
+}
 
 const itemPrice = computed(() => {
   if (!itemStack.value) return 0
-  return getResourcePrice(itemStack.value.itemId, 1)
+  // Precio original del item
+  return (itemStack.value.item.value || 0)
+})
+
+/**
+ * Precio después de aplicar el descuento de negociación del 20%
+ * El item se vende al 80% de su valor
+ */
+const itemPriceAfterNegotiation = computed(() => {
+  if (!itemStack.value) return 0
+  // Descuento de negociación: venta al 80%
+  return roundToTwoDecimals(itemPrice.value * 0.8)
+})
+
+/**
+ * Precio final después de la cuota de mercado del 10%
+ * Se descuenta un 10% adicional por cuota obligatoria de mercado
+ * Resultado: 80% × 90% = 72% del valor original
+ * 
+ * TODO: Esta cuota podrá reducirse mediante suscripciones o items especiales
+ */
+const itemPriceWithDiscount = computed(() => {
+  if (!itemStack.value) return 0
+  // Cuota de mercado: 10% obligatoria
+  // El vendedor recibe el 90% del precio de negociación
+  return roundToTwoDecimals(itemPriceAfterNegotiation.value * 0.9)
+})
+/**
+ * Cantidad deducida por cuota de mercado (10%)
+ */
+const marketFeeDeduction = computed(() => {
+  return roundToTwoDecimals(itemPriceAfterNegotiation.value - itemPriceWithDiscount.value)
 })
 
 const totalSellPrice = computed(() => {
-  return getResourcePrice(itemStack.value?.itemId || '', sellQuantity.value)
+  if (!itemStack.value) return 0
+  // Total basado en el precio con descuento y cuota
+  return roundToTwoDecimals(itemPriceWithDiscount.value * sellQuantity.value)
 })
 
 const getTabLabel = (tab: string): string => {
@@ -319,7 +399,8 @@ const handleSell = () => {
     return
   }
 
-  const totalGold = getResourcePrice(itemStack.value.itemId, sellQuantity.value)
+  // Usar el precio con descuento redondeado correctamente
+  const totalGold = totalSellPrice.value
 
   // Remover del inventario
   inventoryStore.removeItem(itemStack.value.itemId, sellQuantity.value)
@@ -679,31 +760,113 @@ const resetState = () => {
 
 /* Sell Summary */
 .sell-summary {
-  padding: 12px;
+  padding: 10px;
   background: var(--bg-darker);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+}
+
+.summary-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.section-title {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 1px;
 }
 
 .summary-line {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
 }
 
-.summary-line.total {
+.summary-line.original-price {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.summary-line.gross-earnings {
+  color: var(--color-success);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.deduction-label {
+  font-size: 11px;
+}
+
+.gross-value {
+  color: var(--color-success);
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.summary-line.market-fee-info {
+  color: var(--color-danger);
+  font-weight: 500;
+  opacity: 0.9;
+  font-size: 12px;
+}
+
+.market-fee-label {
+  font-size: 11px;
+}
+
+.market-fee-value {
+  color: var(--color-danger);
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.summary-section.net-earnings {
   border-top: 1px solid var(--border-color);
-  padding-top: 8px;
+  border-bottom: 1px solid var(--border-color);
+  padding: 4px 0;
+}
+
+.summary-line.net-price {
   color: var(--text-primary);
   font-weight: bold;
+  font-size: 13px;
+}
+
+.net-value {
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.summary-section.multiplier {
+  opacity: 0.6;
+  font-size: 11px;
+}
+
+.summary-section.total {
+  padding-top: 2px;
+}
+
+.summary-line.total-final {
+  border-top: 2px solid var(--color-primary);
+  padding-top: 4px;
+  color: var(--text-primary);
+  font-weight: bold;
+  font-size: 13px;
 }
 
 .total-gold {
   color: var(--color-success);
   font-size: 14px;
+  font-weight: bold;
 }
 
 /* Buttons */

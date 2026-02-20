@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
+import IconSprite from '@/components/common/IconSprite.vue'
+import {
+  LOG_SPRITE_MAP,
+  MINERAL_SPRITE_MAP,
+  INGOT_SPRITE_MAP,
+  COAL_SPRITE_MAP,
+  ASH_SPRITE_MAP,
+} from '@/data/spriteMap'
 import type { InventoryStack } from '@/stores/inventoryStore'
 
 interface Props {
@@ -13,6 +21,41 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+
+// Helper para obtener spriteId de un item basándose en su ID
+const getSpriteIdForItem = (stack: InventoryStack): string | null => {
+  const { itemId } = stack
+
+  // Buscar en mapeos de sprites (en orden de prioridad)
+  let spriteId: string | undefined
+
+  // 1. LOG_SPRITE_MAP (maderas)
+  spriteId = LOG_SPRITE_MAP[itemId]
+  if (spriteId) return spriteId
+
+  // 2. MINERAL_SPRITE_MAP (minerales)
+  spriteId = MINERAL_SPRITE_MAP[itemId]
+  if (spriteId) return spriteId
+
+  // 3. INGOT_SPRITE_MAP (lingotes)
+  spriteId = INGOT_SPRITE_MAP[itemId]
+  if (spriteId) return spriteId
+
+  // 4. COAL_SPRITE_MAP (carbón producido)
+  spriteId = COAL_SPRITE_MAP[itemId]
+  if (spriteId) return spriteId
+
+  // 5. ASH_SPRITE_MAP (ceniza)
+  spriteId = ASH_SPRITE_MAP[itemId]
+  if (spriteId) return spriteId
+
+  // 6. Fallback al item directo si tiene spriteId
+  if (stack.item.spriteId) {
+    return stack.item.spriteId
+  }
+
+  return null
+}
 
 const getItemColor = (value: number) => {
   if (value >= 500) return 'legendary'
@@ -29,6 +72,11 @@ const getItemName = (stack: InventoryStack): string => {
   if (itemId.includes('_ingot')) {
     const baseId = itemId.replace('_ingot', '')
     return t(`resources.ingots.${baseId}.name`)
+  }
+
+  // Ceniza (ash) - caso especial
+  if (itemId === 'ceniza') {
+    return t('resources.ash.ceniza.name')
   }
 
   // Determinar la ruta de i18n según el tipo
@@ -68,12 +116,13 @@ const handleItemAction = (stack: InventoryStack) => {
       :class="`rarity-${getItemColor(stack.item.value)}`"
     >
       <div class="item-icon">
-        <img
-          v-if="stack.item.iconType === 'image'"
-          :src="stack.item.icon"
-          :alt="getItemName(stack)"
-          class="item-image"
-        />
+        <template v-if="getSpriteIdForItem(stack)">
+          <IconSprite 
+            :spriteId="getSpriteIdForItem(stack)!"
+            :fallbackEmoji="stack.item.icon"
+            size="ls"
+          />
+        </template>
         <span v-else>{{ stack.item.icon }}</span>
       </div>
 

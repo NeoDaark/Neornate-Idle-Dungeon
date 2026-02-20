@@ -6,8 +6,6 @@
 ```
 src/assets/sprites/
 ├── kyrises_rpg_icons/           # Íconos RPG (Kyrise, CC BY 4.0)
-├── free_16bit_ores/             # Ores básicos (VerySmallSquares)
-├── pixel_late_stones/           # Piedras y minerales (PixelLate)
 ├── oryx/                        # Assets Oryx (Propietario)
 └── custom/                      # ⭐ Tus modificaciones y assets propios
     ├── ores/                    # Ores personalizados
@@ -40,18 +38,6 @@ src/assets/sprites/
     - ✅ Usar en productos comerciales/gratuitos
     - ✅ Crédito obligatorio: www.oryxdesignlab.com
 
-#### Sprite Sheet Stones, Nodes, Ores & Bars
-- **Stones Nodes Ores and Bars!**
-  - Autor: PixelLate
-  - Licencia: Custom License (permisiva)
-  - URL: https://pixel-late.itch.io/stones-nodes-ores-and-bars
-  - Ubicación en proyecto: `src/assets/sprites/pixel_late_stones/`
-  - Uso: Piedras, nodos, minerales y lingotes para minería y crafting
-  - **Términos de uso** (ver licencia completa abajo):
-    - ✅ Usar en cualquier proyecto
-    - ✅ Modificar los archivos
-    - ❌ NO vender o redistribuir
-    - ℹ️ Crédito apreciado pero no obligatorio
 
 #### Assets Personalizados y Modificados
 - **Carpeta `custom/`**
@@ -105,25 +91,6 @@ Términos clave:
 - Crédito obligatorio dentro del producto o documentación
 
 Para más información: https://www.oryxdesignlab.com/license
-
----
-
-### PixelLate Custom License
-**Licencia Permisiva para Uso No Comercial**
-
-Permitido:
-- ✅ Usar en cualquier proyecto (comercial o gratuito)
-- ✅ Modificar los archivos
-- ✅ Usar en productos finales
-
-Prohibido:
-- ❌ Vender los archivos originales
-- ❌ Redistribuir sin modificación
-
-Crédito:
-- ℹ️ No es obligatorio pero está muy apreciado
-
-Licencia original: https://pixel-late.itch.io/stones-nodes-ores-and-bars
 
 ---
 

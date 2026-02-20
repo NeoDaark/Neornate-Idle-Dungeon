@@ -12,11 +12,13 @@ export interface Item {
   iconType?: 'emoji' | 'image' // tipo de icono (por defecto emoji para compatibilidad)
   value: number // precio en oro
   tier?: Tier // opcional - ya está definido en SkillProduct o Equipment
+  spriteId?: string // ID del sprite (ruta en src/assets/sprites/custom/items/)
 }
 
 export interface Resource extends Item {
   type: ItemType.RESOURCE
   skill: Skill // de qué skill viene
+  i18nKey?: string // ruta de traducción para el nombre del recurso
 }
 
 export interface Material extends Item {

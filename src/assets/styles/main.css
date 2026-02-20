@@ -22,6 +22,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Remover el tap highlight azul de Android */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
@@ -43,4 +45,32 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+/* ===== ELEMENTOS INTERACTIVOS ===== */
+button, 
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"],
+a,
+[role="button"] {
+  /* Remover outline azul de focus en Android */
+  outline: none;
+  /* Prevenir el efecto de tap azul */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* Para inputs range (sliders) */
+input[type="range"] {
+  -webkit-appearance: slider-horizontal;
+  appearance: slider-horizontal;
+  outline: none;
 }

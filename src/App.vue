@@ -8,6 +8,9 @@
   <!-- Notificación de farmeo offline -->
   <OfflineHarvestNotification />
 
+  <!-- Sistema de notificaciones global -->
+  <NotificationsContainer />
+
   <!-- Dev Console (solo en desarrollo) -->
   <DevConsole />
 </template>
@@ -16,6 +19,7 @@
 import ResponsiveLayout from '@/components/layouts/ResponsiveLayout.vue'
 import LoadingOverlay from '@/components/layouts/LoadingOverlay.vue'
 import OfflineHarvestNotification from '@/components/notifications/OfflineHarvestNotification.vue'
+import NotificationsContainer from '@/components/notifications/NotificationsContainer.vue'
 import DevConsole from '@/components/dev/DevConsole.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useGameStore } from '@/stores'
@@ -23,7 +27,7 @@ import { useSkillsStore } from '@/stores/skillsStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { usePlayerStore } from '@/stores/playerStore'
 import { useToolsStore } from '@/stores/toolsStore'
-import { GAME_CONSTANTS } from '@/types/Game'
+import { GAME_CONSTANTS, SKILL_CONFIGS } from '@/types/Game'
 
 // Logs de inicio
 //console.log('🚀 [App] Archivo App.vue cargado')
@@ -44,7 +48,6 @@ let saveInterval: ReturnType<typeof setInterval> | null = null
 let gameLoopInterval: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
-  //console.log('[App] Iniciando...')
   
   try {
     // Inicializar juego (cargar datos guardados)
@@ -61,13 +64,10 @@ onMounted(() => {
     // Simular tiempo de carga (3 segundos)
     setTimeout(() => {
       try {
-        //console.log('[App] Procesando farmeo offline...')
         // Procesar farmeo offline después de que "carga" termina
         gameStore.calculateOfflineProgress()
-        //console.log('[App] Offline procesado, ocultando loading...')
         // Mostrar layout
         isLoading.value = false
-        //console.log('[App] Layout visible')
         
         // Iniciar game loop DESPUÉS de procesar offline
         startGameLoop()
@@ -99,7 +99,7 @@ onMounted(() => {
     gameLoopInterval = setInterval(() => {
       // Procesar skills activos
       const activeSkills = skillsStore.activeSkills
-      
+
       activeSkills.forEach(skill => {
         const now = Date.now()
         // Si el ciclo se completó
@@ -110,13 +110,15 @@ onMounted(() => {
           if (result && skill.isActive) {
             const currentState = skillsStore.getSkillState(skill.skill)
             if (currentState.currentProduct) {
-              const cycleDurationMs = currentState.currentProduct.cycleDuration * 1000
+              // usamos el tiempo de ciclo de la skill gguardado en SKILL_CONFIGS
+              const duration = SKILL_CONFIGS[skill.skill].baseCycleDuration
+
+              const cycleDurationMs = duration * 1000
               skillsStore.activateSkill(skill.skill, currentState.currentProduct, cycleDurationMs)
             }
           } else if (!result && skill.isActive) {
             // Si completeCycle retorna null (materiales insuficientes), detener el skill
             // PERO preservar cycleEndTime para que calculateOfflineProgress pueda procesarlo
-            console.warn(`[Game] Skill ${skill.skill} detenido: materiales insuficientes`)
             skillsStore.deactivateSkill(skill.skill, true) // true = preservar cycleEndTime
           }
         }
@@ -130,10 +132,7 @@ onMounted(() => {
       inventoryStore.saveToLocalStorage()
       playerStore.saveToLocalStorage()
       toolsStore.saveToStorage()
-      //console.log('[Game] Auto-save realizado')
     }, GAME_CONSTANTS.AUTO_SAVE_INTERVAL)
-
-    //console.log('[App] Game loop iniciado')
   }
 })
 

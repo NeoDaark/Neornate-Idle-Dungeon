@@ -7,6 +7,7 @@ import { Skill, SKILL_CONFIGS } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
 import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const skillsStore = useSkillsStore()
 const toolsStore = useToolsStore()
@@ -37,12 +38,14 @@ watch(() => ({
     const toolBonus = toolsStore.calculateToolBonus(Skill.MINERIA)
     
     // Calcular valores finales con bonuses
-    const finalXP = Math.floor(selectedProduct.value.xpReward * (1 + toolBonus.xpBonus))
+    const finalXPCalculated = selectedProduct.value.xpReward * (1 + toolBonus.xpBonus)
+    const finalXP = Math.round(finalXPCalculated * 10) / 10
     const finalQuantity = selectedProduct.value.quantity + toolBonus.quantityBonus
     
     // Mostrar notificación con valores finales
+    const xpDisplay = finalXP % 1 !== 0 ? finalXP.toFixed(1) : finalXP
     const bonusText = (toolBonus.xpBonus > 0 || toolBonus.quantityBonus > 0) ? ' ⚡' : ''
-    showMessage(`+${finalXP} XP | +${finalQuantity}x ${productName}${bonusText}`)
+    showMessage(`+${xpDisplay} XP | +${finalQuantity}x ${productName}${bonusText}`)
   }
 }, { deep: true })
 
@@ -98,15 +101,18 @@ const startMining = () => {
     }
   }
 
-  const cycleDuration = selectedProduct.value.cycleDuration * 1000
+  // Siempre llamar a activateSkill para resetear cycleEndTime
+  // activateSkill() ya resetea cycleEndTime = 0 al inicio, así que comienza de 0
+  const cycleDuration = SKILL_CONFIGS[Skill.MINERIA].baseCycleDuration * 1000
   skillsStore.activateSkill(Skill.MINERIA, selectedProduct.value, cycleDuration)
+  
   cycleProgress.value = 0
   updateProgress()
 }
 
 // Detener minería
 const stopMining = () => {
-  skillsStore.deactivateSkill(Skill.MINERIA)
+  skillsStore.deactivateSkill(Skill.MINERIA, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }
 
@@ -155,7 +161,13 @@ onMounted(() => {
   <div class="skill-view">
     <!-- Header -->
     <div class="skill-header">
-      <h2>{{ miningConfig.emoji }} {{ t('skills.mineria.name') }}</h2>
+      <IconRenderer
+        :icon-id="miningConfig.icon"
+        :fa-icon="miningConfig.faIcon"
+        size="xs"
+        class="skill-icon"
+      />
+      <h2>{{ t('skills.mineria.name') }}</h2>
       <p class="skill-header-desc">{{ t('skills.mineria.description') }}</p>
     </div>
 
@@ -172,7 +184,6 @@ onMounted(() => {
         <div class="progress-bar">
           <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
         </div>
-        <p class="progress-text">{{ Math.round(cycleProgress) }}%</p>
       </div>
 
       <!-- Action Buttons -->

@@ -7,6 +7,7 @@ import { Skill, SKILL_CONFIGS } from '@/types/Game'
 import type { SkillProduct } from '@/types/Skill'
 import SkillCard from './SkillCard.vue'
 import ProductSelector from './ProductSelector.vue'
+import IconRenderer from '@/components/common/IconRenderer.vue'
 
 const skillsStore = useSkillsStore()
 const toolsStore = useToolsStore()
@@ -18,6 +19,12 @@ const selectedProduct = ref<SkillProduct | undefined>()
 const cycleProgress = ref(0)
 const showNotification = ref(false)
 const notificationMessage = ref('')
+
+// Obtener nombre del árbol actual
+const currentTreeName = computed(() => {
+  if (!selectedProduct.value) return ''
+  return t(`resources.wood.${selectedProduct.value.id}.tree-name`)
+})
 
 // Sincronizar producto actual si está definido
 watch(() => loggingSkillState.value.currentProduct, (newProduct) => {
@@ -37,12 +44,14 @@ watch(() => ({
     const toolBonus = toolsStore.calculateToolBonus(Skill.TALA)
     
     // Calcular valores finales con bonuses
-    const finalXP = Math.floor(selectedProduct.value.xpReward * (1 + toolBonus.xpBonus))
+    const finalXPCalculated = selectedProduct.value.xpReward * (1 + toolBonus.xpBonus)
+    const finalXP = Math.round(finalXPCalculated * 10) / 10
     const finalQuantity = selectedProduct.value.quantity + toolBonus.quantityBonus
     
     // Mostrar notificación con valores finales
+    const xpDisplay = finalXP % 1 !== 0 ? finalXP.toFixed(1) : finalXP
     const bonusText = (toolBonus.xpBonus > 0 || toolBonus.quantityBonus > 0) ? ' ⚡' : ''
-    showMessage(`+${finalXP} XP | +${finalQuantity}x ${productName}${bonusText}`)
+    showMessage(`+${xpDisplay} XP | +${finalQuantity}x ${productName}${bonusText}`)
   }
 }, { deep: true })
 
@@ -98,15 +107,18 @@ const startLogging = () => {
     }
   }
 
-  const cycleDuration = selectedProduct.value.cycleDuration * 1000
+  // Siempre llamar a activateSkill para resetear cycleEndTime
+  // activateSkill() ya resetea cycleEndTime = 0 al inicio, así que comienza de 0
+  const cycleDuration = SKILL_CONFIGS[Skill.TALA].baseCycleDuration * 1000
   skillsStore.activateSkill(Skill.TALA, selectedProduct.value, cycleDuration)
+  
   cycleProgress.value = 0
   updateProgress()
 }
 
 // Detener tala
 const stopLogging = () => {
-  skillsStore.deactivateSkill(Skill.TALA)
+  skillsStore.deactivateSkill(Skill.TALA, true) // true = preservar cycleEndTime
   cycleProgress.value = 0
 }
 
@@ -155,7 +167,13 @@ onMounted(() => {
   <div class="skill-view">
     <!-- Header -->
     <div class="skill-header">
-      <h2>{{ loggingConfig.emoji }} {{ t('skills.tala.name') }}</h2>
+      <IconRenderer
+        :icon-id="loggingConfig.icon"
+        :fa-icon="loggingConfig.faIcon"
+        size="xs"
+        class="skill-icon"
+      />
+      <h2>{{ t('skills.tala.name') }}</h2>
       <p class="skill-header-desc">{{ t('skills.tala.description') }}</p>
     </div>
 
@@ -172,7 +190,6 @@ onMounted(() => {
         <div class="progress-bar">
           <div class="progress-fill" :style="{ width: cycleProgress + '%' }"></div>
         </div>
-        <p class="progress-text">{{ Math.round(cycleProgress) }}%</p>
       </div>
 
       <!-- Action Buttons -->
@@ -183,7 +200,7 @@ onMounted(() => {
           :disabled="!selectedProduct"
           @click="startLogging"
         >
-          🌲 {{ t('skills.tala.action') }}
+          🌲 {{ t('skills.tala.action') }} {{ currentTreeName }}
         </button>
         <button
           v-else

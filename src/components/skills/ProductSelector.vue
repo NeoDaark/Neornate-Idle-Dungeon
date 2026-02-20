@@ -34,6 +34,9 @@ const showConfirmation = ref(false)
 const pendingProduct = ref<SkillProduct | undefined>()
 const isDropdownOpen = ref(false)
 
+// Variable para mostrar debug solo en desarrollo
+const isDev = import.meta.env.DEV
+
 // Computed que siempre lee el valor más actualizado del store
 const storedDropDistribution = computed(() => {
   if (props.skill !== 'quemado') return 50
@@ -382,7 +385,7 @@ watch(
           />
           <span class="slider-tag coal">{{ t(WOODBURNING_DROP_TABLE.ceniza.item.i18nKey || 'items.ceniza') }}</span>
         </div>
-        <div class="slider-debug">
+        <div class="slider-debug" v-if="isDev">
           <span>dropModifier: {{ (toolBonus.dropModifier * 100).toFixed(1) }}%</span>
           <span>distribución: {{ dropDistribution }}/100</span>
           <span>step: {{ sliderStep }}</span>

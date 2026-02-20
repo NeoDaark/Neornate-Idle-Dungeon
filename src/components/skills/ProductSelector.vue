@@ -214,6 +214,18 @@ const getMaterialName = (itemId: string): string => {
   return itemId
 }
 
+// Obtener el spriteId del icono a mostrar en el producto selector
+// Para Tala, mostrar el icono del árbol; para otros, el icono del producto
+const getProductIconSprite = (product: SkillProduct | undefined): string | undefined => {
+  if (!product) return undefined
+  // Para Tala, si tiene treeId, usar el sprite del árbol (tree_*)
+  if (props.skill === 'tala' && (product as any).treeId) {
+    return `tree_${(product as any).treeId}`
+  }
+  // Para otros skills, usar el sprite del producto
+  return product.spriteId
+}
+
 // Watcher para actualizar la distribución de drops en el state de skills
 watch(dropDistribution, (newValue) => {
   if (props.skill === 'quemado') {
@@ -276,8 +288,8 @@ watch(
         <div class="product-header">
           <div class="icon">
             <IconSprite 
-              v-if="currentProduct.spriteId"
-              :spriteId="currentProduct.spriteId"
+              v-if="getProductIconSprite(currentProduct)"
+              :spriteId="getProductIconSprite(currentProduct)!"
               :fallbackEmoji="currentProduct.item.icon"
               size="ls"
             />

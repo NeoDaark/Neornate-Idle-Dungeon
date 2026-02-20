@@ -106,9 +106,9 @@ highlights, intense color, exotic appearance, grey background, no shadows
 ### 🔟 MITHRIL (Mithril/Mythril)
 
 ```
-Pixel art mithril ore sprite, isometric perspective, shimmering silvery-blue 
+Pixel art mithril ore sprite, isometric perspective, shimmering silvery-turquoise 
 color, magical luminous appearance, ethereal glow, crystalline mystical 
-structure, bright highlights, legendary appearance, grey background, no shadows
+structure, turquoise highlights, legendary appearance, grey background, no shadows
 ```
 
 ---
